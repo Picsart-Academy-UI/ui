@@ -1,3 +1,3 @@
 ## COMPONENT FOLDER STRUCTURE
 
-Component folder contains index.js file and style.css file.
+Component folder contains index.js and componentSlice.js file (redux config)

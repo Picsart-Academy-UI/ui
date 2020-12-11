@@ -1,7 +1,10 @@
 // WHAT TO IMPORT AND WHERE
 // 1. import the external packages, tech tools here
-// 2. import local files, component
-// 3. import styles
+// 2. import internal files, components
+
+// CUSTOM STYLES with JSS
+
+// DEFINE PROPS WITH FLOWS
 
 // FUNCTIONAL COMPONENT DETAILS
 
