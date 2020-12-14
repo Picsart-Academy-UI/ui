@@ -5,7 +5,7 @@ import {
   decrement,
   increment,
   fetchTodo,
-} from '../../testStore/slices/TestSlice';
+} from '../../store/slices/TestSlice';
 
 function ExampleComponent() {
   const count = useSelector((state) => state.test.value);
