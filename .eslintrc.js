@@ -11,6 +11,10 @@ module.exports = {
     "quotes": ["warn", "single"],
     "no-param-reassign": "off",
     "import/no-extraneous-dependencies": ["warn", { "devDependencies": true }],
+    "import/order": ["error", {
+      "groups": ["builtin", "external", "parent", "sibling", "index"],
+      "newlines-between": "always-and-inside-groups",
+    }]
   },
   overrides: [
     {
@@ -25,13 +29,7 @@ module.exports = {
   settings: {
     "import/resolver": {
       "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx",
-          ".json",
-        ]
+        "extensions": [".js",".jsx",".ts",".tsx",".json",]
       }
     }
   }
