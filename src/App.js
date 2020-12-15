@@ -1,12 +1,8 @@
-import ExampleComponent from './testComponents/ExampleComponent';
 import './App.css';
+import Homepage from './pages/Login/components/Homepage';
 
 function App() {
-  return (
-    <div className="App">
-      <ExampleComponent />
-    </div>
-  );
+  return <Homepage />;
 }
 
 export default App;
