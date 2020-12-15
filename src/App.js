@@ -1,11 +1,8 @@
 import './App.css';
+import Homepage from './pages/Login/components/Homepage';
 
 function App() {
-  return (
-    <div className="App">
-      App
-    </div>
-  );
+  return <Homepage />;
 }
 
 export default App;

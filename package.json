@@ -16,8 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx,json}",
-    "pretty:write": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+    "lint:fix": "eslint --fix src/",
+    "pretty:write": "prettier --write src/"
   },
   "browserslist": {
     "production": [
