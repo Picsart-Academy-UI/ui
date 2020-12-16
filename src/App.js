@@ -1,8 +1,14 @@
 import './App.css';
-import Homepage from './pages/Login/components/Homepage';
+import { BrowserRouter } from 'react-router-dom';
+
+import Router from './routes';
 
 function App() {
-  return <Homepage />;
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
 }
 
 export default App;
