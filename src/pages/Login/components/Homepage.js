@@ -9,24 +9,26 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import useStyles from '../../../hooks/style/useStyles';
+import useStylesMain from '../../../hooks/style/useStylesMain';
+import useStylesCustom from '../useStylesCustom';
 
-function Homepage() {
-  const classes = useStyles();
+function Homepage({ onForgotPasswordClick }) {
+  const classesMain = useStylesMain();
+  const classesCustom = useStylesCustom();
 
   return (
-    <div className={classes.paperContainer}>
-      <Typography component="h1" variant="h2" className={classes.header}>
+    <div className={classesMain.paperBackgroundImage}>
+      <Typography component="h1" variant="h2" className={classesCustom.header}>
         Office Space Management
       </Typography>
       <Container
         component="main"
         maxWidth="xs"
-        className={classes.MuiContainerRoot}
+        className={classesCustom.MuiContainerRoot}
       >
         <CssBaseline />
-        <div className={classes.paper}>
-          <form className={classes.form} noValidate>
+        <div className={classesCustom.paper}>
+          <form className={classesCustom.form} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -57,13 +59,13 @@ function Homepage() {
               type="submit"
               fullWidth
               variant="contained"
-              className={classes.submit}
+              className={classesCustom.submit}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={onForgotPasswordClick}>
                   Forgot password?
                 </Link>
               </Grid>
