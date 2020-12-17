@@ -3,15 +3,15 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import NotFound from '../pages/NotFound';
 
-import Homepage from '../pages/Login/components/Homepage';
+import SignIn from '../pages/SignIn';
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/signin" component={Homepage} />
-      <Route path="/notFound" component={NotFound} />
+      <Route exact path="/signin" component={SignIn} />
+      <Route path="/notfound" component={NotFound} />
       <Redirect exact from="/" to="/signin" />
-      <Redirect to="/notFound" />
+      <Redirect to="/notfound" />
     </Switch>
   </BrowserRouter>
 );
