@@ -1,18 +1,19 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import NotFound from '../components/NotFound';
+import NotFound from '../pages/NotFound';
 
 import Homepage from '../pages/Login/components/Homepage';
 
-function Router() {
-  return (
+const Router = () => (
+  <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={Homepage} />
+      <Route exact path="/signin" component={Homepage} />
       <Route path="/notFound" component={NotFound} />
+      <Redirect exact from="/" to="/signin" />
       <Redirect to="/notFound" />
     </Switch>
-  );
-}
+  </BrowserRouter>
+);
 
 export default Router;
