@@ -4,10 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
 
-import useStylesMain from '../../../hooks/style/useStylesMain';
-import useStylesLocal from '../useStylesLocal';
+import useStylesMain from '../../hooks/style/useStylesMain';
 
-function Homepage() {
+import useStylesLocal from './useStylesLocal';
+
+function SignIn() {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
@@ -36,4 +37,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default SignIn;
