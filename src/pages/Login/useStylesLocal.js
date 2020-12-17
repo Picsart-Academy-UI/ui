@@ -1,15 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const chairPath = `${process.env.PUBLIC_URL}/images/chair.png`;
-
-const useStyles = makeStyles((theme) => ({
-  paperContainer: {
-    backgroundImage: `url(${chairPath})`,
-    backgroundSize: 'cover',
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-    height: '100%',
+const useStylesLocal = makeStyles((theme) => ({
+  MuiContainerRoot: {
+    float: 'left',
+    marginLeft: theme.spacing(5),
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    marginRight: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   header: {
     display: 'flex',
@@ -44,4 +45,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default useStyles;
+export default useStylesLocal;
