@@ -1,5 +1,3 @@
-// current Team -> member` name, surname, gmail, position , phone , registration date
-
 import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,7 +14,7 @@ import Box from '@material-ui/core/Box';
 
 import useStylesLocal from './style';
 
-const TeamsDashboard = () => {
+const Teams = () => {
   const classes = useStylesLocal();
 
   const createData = (name, memberCount) => ({ name, memberCount });
@@ -99,4 +97,4 @@ const TeamsDashboard = () => {
   );
 };
 
-export default TeamsDashboard;
+export default Teams;
