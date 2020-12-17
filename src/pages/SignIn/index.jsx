@@ -8,7 +8,7 @@ import useStylesMain from '../../hooks/style/useStylesMain';
 
 import useStylesLocal from './useStylesLocal';
 
-function SignIn() {
+const SignIn = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
@@ -35,6 +35,6 @@ function SignIn() {
       </Container>
     </div>
   );
-}
+};
 
 export default SignIn;
