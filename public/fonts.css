@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Aileron-Bold';
+  src: url('./fonts/Aileron/Aileron-Bold.otf');
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Aileron-Bold' !important;
+}
