@@ -74,7 +74,7 @@ const Profile = () => {
           className={classesLocal.positionField}
           value="Software Engineer 9 3/4"
           disabled
-        />{' '}
+        />
         {/* user.position */}
         <Button className={classesLocal.sbmtButton}>Submit Change</Button>
       </Grid>
