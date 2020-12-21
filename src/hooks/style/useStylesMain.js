@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { CHAIR_PATH } from '../../constants';
 
-const useStylesMain = makeStyles(() => ({
+const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
     backgroundImage: `url(${CHAIR_PATH})`,
     backgroundSize: 'cover',
@@ -11,6 +11,9 @@ const useStylesMain = makeStyles(() => ({
     left: 0,
     width: '100%',
     height: '100%',
+  },
+  paperPadding: {
+    padding: theme.spacing(4),
   },
 }));
 
