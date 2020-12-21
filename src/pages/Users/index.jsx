@@ -15,15 +15,15 @@ import UserRow from './components/UserRow';
 import DropDown from './components/DropDown';
 
 const createData = (name, surName, team, gmail, position, birthDay) => ({
-    name,
-    surName,
-    team,
-    gmail,
-    additionalInfo: {
-      date: birthDay,
-      position,
-    },
-  });
+  name,
+  surName,
+  team,
+  gmail,
+  additionalInfo: {
+    date: birthDay,
+    position,
+  },
+});
 
 const rows = [
   createData(
