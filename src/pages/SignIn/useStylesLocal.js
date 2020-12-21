@@ -18,7 +18,6 @@ const useStylesLocal = makeStyles((theme) => ({
     '@media (min-width:600px)': {
       fontSize: '3.8rem',
     },
-    fontFamily: 'Alieron',
     letterSpacing: 7,
     marginLeft: theme.spacing(5),
     marginTop: theme.spacing(3),
