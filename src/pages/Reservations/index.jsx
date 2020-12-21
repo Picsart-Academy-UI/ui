@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Box from '@material-ui/core/Box';
+import { useHistory } from 'react-router-dom';
 
 import CustomTable from './components/CustomTable';
 import useStyle from './style';
 
 const Reservations = () => {
   const styles = useStyle();
+  const history = useHistory();
 
   // needs to be used before the api is ready
   const createRes = (status) => {
@@ -21,28 +23,34 @@ const Reservations = () => {
     };
   };
 
-  const activeRes = [
+  const [activeRes, setActiveRes] = useState([
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
+  ]);
+
+  const historyRes = [
+    createRes('rejected'),
+    createRes('rejected'),
+    createRes('rejected'),
+    createRes('rejected'),
+    createRes('rejected'),
   ];
 
-  const history = [
-    createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
-  ];
+  const edit = () => {
+    history.push('/Reservations/create');
+  };
 
-  const edit = () => {};
+  const cancel = () => {
+    setActiveRes([]);
+  };
 
-  const cancel = () => {};
-
-  const add = () => {};
+  const add = () => {
+    history.push('/Reservations/create');
+  };
 
   return (
     <>
@@ -75,7 +83,7 @@ const Reservations = () => {
           <Box> History </Box>
         </Box>
         <CustomTable
-          data={history}
+          data={historyRes}
           isHistory={true}
           edit={edit}
           cancel={cancel}
