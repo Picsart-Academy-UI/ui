@@ -12,7 +12,7 @@ function Registration() {
   return (
     <div className={classes.paperContainer}>
       <Typography component="h1" variant="h2" className={classes.header}>
-        Registration Users
+        Invite User
       </Typography>
       <Container
         component="main"
@@ -33,13 +33,41 @@ function Registration() {
               autoComplete="email"
               autoFocus
             />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              autoComplete="name"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="surname"
+              label="Surname"
+              autoComplete="surname"
+              autoFocus
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               className={classes.submit}
             >
-              Invite User
+              Save
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+            >
+              Send Invitation
             </Button>
           </form>
         </div>

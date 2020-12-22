@@ -1,8 +1,8 @@
 import './App.css';
-import Homepage from './pages/Login/components/Homepage';
+import UsersCreate from './pages/UsersCreate/components/Registration';
 
 function App() {
-  return <Homepage />;
+  return <UsersCreate />;
 }
 
 export default App;
