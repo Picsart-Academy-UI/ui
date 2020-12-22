@@ -64,10 +64,8 @@ const UsersCreate = () => {
               label="Position"
             />
             <FormControlLabel
-              control={
-                <Checkbox checked={false} name="checkedB" color="primary" />
-              }
-              label="Is Admin:"
+              control={<Checkbox name="checkedB" color="primary" />}
+              label="Is Admin"
             />
             <Button
               type="submit"
