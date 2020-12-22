@@ -1,10 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
+
+import { useRequest } from '../../hooks/auth/auth';
 
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
@@ -14,10 +17,22 @@ import useStylesLocal from './useStylesLocal';
 const SignIn = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
+
+  const { makeRequest } = useRequest();
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSigninClick = () => {
+  const responseGoogle = async (response) => {
+    console.log(response);
+
+    const res = await makeRequest('', 'POST', {
+      token: response.tokeId,
+      user: response.profileObj,
+    });
+
+    console.log(res);
+
     dispatch(setIsLoggedIn());
     history.replace('/reservations');
   };
@@ -37,10 +52,22 @@ const SignIn = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box className={classesLocal.signInContainer}>
-          <Button className={classesLocal.buttonPcsrt} onClick={onSigninClick}>
-            <Avatar src="images/glogo.png" className={classesLocal.glogo} />
-            Sign In With Google
-          </Button>
+          <GoogleLogin
+            clientId="885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classesLocal.buttonPcsrt}
+                onClick={renderProps.onClick}
+              >
+                <Avatar src="images/glogo.png" className={classesLocal.glogo} />
+                Sign In With Google
+              </Button>
+            )}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
         </Box>
       </Container>
     </div>
