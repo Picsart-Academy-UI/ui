@@ -5,7 +5,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
 import Box from '@material-ui/core/Box';
 
 import UserRow from '../UserRow';
@@ -65,27 +64,27 @@ const rows = [
 ];
 
 const UsersTable = () => (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">SurName</TableCell>
-            <TableCell align="right">Team</TableCell>
-            <TableCell align="right">Gmail</TableCell>
-            <TableCell align="right">
-              <Box mr={5}>Actions</Box>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <UserRow key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+  <TableContainer component={Paper}>
+    <Table aria-label="collapsible table">
+      <TableHead>
+        <TableRow>
+          <TableCell />
+          <TableCell>Name</TableCell>
+          <TableCell align="right">SurName</TableCell>
+          <TableCell align="right">Team</TableCell>
+          <TableCell align="right">Gmail</TableCell>
+          <TableCell align="right">
+            <Box mr={5}>Actions</Box>
+          </TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rows.map((row) => (
+          <UserRow key={row.name} row={row} />
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+);
 
 export default UsersTable;
