@@ -6,9 +6,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
+import AddTeam from './components/AddTeam';
 import SearchBox from './components/SearchBox';
 import TeamRow from './components/TeamRow';
 
@@ -32,19 +32,10 @@ const Teams = () => {
     createData('Team 5', 5, 1),
   ];
 
-  const handleAddClick = () => {};
-
   return (
     <>
       <SearchBox />
-      <Box display="flex" justifyContent="flex-end">
-        <Box mr={3} m={1}>
-          <Button onClick={handleAddClick} color="primary" variant="contained">
-            Add Team
-          </Button>
-        </Box>
-      </Box>
-
+      <AddTeam />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
