@@ -11,11 +11,13 @@ import TextField from '@material-ui/core/TextField';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Box from '@material-ui/core/Box';
+import { useHistory } from 'react-router-dom';
 
 import useStylesLocal from './style';
 
 const Teams = () => {
   const classes = useStylesLocal();
+  const history = useHistory();
 
   const createData = (name, memberCount) => ({ name, memberCount });
 
@@ -34,7 +36,9 @@ const Teams = () => {
 
   const handleInputChange = () => {};
 
-  const handleAddClick = () => {};
+  const handleAddClick = () => {
+    history.push('/teams/create');
+  };
 
   return (
     <>
