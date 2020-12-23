@@ -39,9 +39,9 @@ const UserRow = ({ row, name }) => {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.surName}</TableCell>
-        <TableCell align="right">{row.team}</TableCell>
-        <TableCell align="right">{row.gmail}</TableCell>
+        <TableCell align="center">{row.surName}</TableCell>
+        <TableCell align="center">{row.team}</TableCell>
+        <TableCell align="center">{row.gmail}</TableCell>
         <TableCell align="right">
           <Button variant="contained" color="primary">
             Book a seat

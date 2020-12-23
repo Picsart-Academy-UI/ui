@@ -70,9 +70,9 @@ const UsersTable = () => (
         <TableRow>
           <TableCell />
           <TableCell>Name</TableCell>
-          <TableCell align="right">SurName</TableCell>
-          <TableCell align="right">Team</TableCell>
-          <TableCell align="right">Gmail</TableCell>
+          <TableCell align="center">SurName</TableCell>
+          <TableCell align="center">Team</TableCell>
+          <TableCell align="center">Gmail</TableCell>
           <TableCell align="right">
             <Box mr={5}>Actions</Box>
           </TableCell>
