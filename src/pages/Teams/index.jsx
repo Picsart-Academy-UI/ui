@@ -8,19 +8,19 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Box from '@material-ui/core/Box';
+
+import TeamRow from './components/TeamRow';
 
 import useStylesLocal from './style';
 
 const Teams = () => {
   const classes = useStylesLocal();
 
-  const createData = (name, memberCount, tableCount) => ({
+  const createData = (name, membersCount, tablesCount) => ({
     name,
-    memberCount,
-    tableCount,
+    membersCount,
+    tablesCount,
   });
 
   const rows = [
@@ -31,10 +31,6 @@ const Teams = () => {
     createData('Team 4', 8, 2),
     createData('Team 5', 5, 1),
   ];
-
-  const handleEditClick = () => {};
-
-  const handleDeleteClick = () => {};
 
   const handleInputChange = () => {};
 
@@ -67,8 +63,8 @@ const Teams = () => {
           <TableHead>
             <TableRow>
               <TableCell>Teams</TableCell>
-              <TableCell align="center">MemberCount</TableCell>
-              <TableCell align="center">TableCount</TableCell>
+              <TableCell align="center">MembersCount</TableCell>
+              <TableCell align="center">TablesCount</TableCell>
               <TableCell align="right">
                 <Box mr={5}>Actions</Box>
               </TableCell>
@@ -76,29 +72,11 @@ const Teams = () => {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="center">{row.memberCount}</TableCell>
-                <TableCell align="center">{row.tableCount}</TableCell>
-                <TableCell align="right">
-                  <Button
-                    title="Edit"
-                    onClick={handleEditClick}
-                    color="primary"
-                  >
-                    <EditOutlinedIcon />
-                  </Button>
-                  <Button
-                    title="Delete"
-                    onClick={handleDeleteClick}
-                    color="secondary"
-                  >
-                    <DeleteOutlineIcon />
-                  </Button>
-                </TableCell>
-              </TableRow>
+              <TeamRow
+                name={row.name}
+                membersCount={row.membersCount}
+                tablesCount={row.tablesCount}
+              />
             ))}
           </TableBody>
         </Table>
