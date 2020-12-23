@@ -5,11 +5,11 @@ import AddTeam from './components/AddTeam';
 import SearchBox from './components/SearchBox';
 
 const Teams = () => (
-    <>
-      <SearchBox />
-      <AddTeam />
-      <TeamsTable />
-    </>
-  );
+  <>
+    <SearchBox />
+    <AddTeam />
+    <TeamsTable />
+  </>
+);
 
 export default Teams;
