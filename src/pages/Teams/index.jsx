@@ -17,15 +17,19 @@ import useStylesLocal from './style';
 const Teams = () => {
   const classes = useStylesLocal();
 
-  const createData = (name, memberCount) => ({ name, memberCount });
+  const createData = (name, memberCount, tableCount) => ({
+    name,
+    memberCount,
+    tableCount,
+  });
 
   const rows = [
     // rows array containing each row as object
-    createData('Team 1', 6),
-    createData('Team 2', 10),
-    createData('Team 3', 12),
-    createData('Team 4', 8),
-    createData('Team 5', 5),
+    createData('Team 1', 6, 1),
+    createData('Team 2', 10, 2),
+    createData('Team 3', 12, 2),
+    createData('Team 4', 8, 2),
+    createData('Team 5', 5, 1),
   ];
 
   const handleEditClick = () => {};
@@ -63,7 +67,8 @@ const Teams = () => {
           <TableHead>
             <TableRow>
               <TableCell>Teams</TableCell>
-              <TableCell align="right">MemberCount</TableCell>
+              <TableCell align="center">MemberCount</TableCell>
+              <TableCell align="center">TableCount</TableCell>
               <TableCell align="right">
                 <Box mr={5}>Actions</Box>
               </TableCell>
@@ -75,7 +80,8 @@ const Teams = () => {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.memberCount}</TableCell>
+                <TableCell align="center">{row.memberCount}</TableCell>
+                <TableCell align="center">{row.tableCount}</TableCell>
                 <TableCell align="right">
                   <Button
                     title="Edit"
