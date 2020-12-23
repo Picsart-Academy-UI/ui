@@ -7,9 +7,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 
+import SearchBox from './components/SearchBox';
 import TeamRow from './components/TeamRow';
 
 import useStylesLocal from './style';
@@ -32,24 +32,11 @@ const Teams = () => {
     createData('Team 5', 5, 1),
   ];
 
-  const handleInputChange = () => {};
-
   const handleAddClick = () => {};
 
   return (
     <>
-      <Box display="flex" justifyContent="center" bgcolor="background.paper">
-        <Box>
-          <TextField
-            onChange={handleInputChange}
-            name="searchTeam"
-            id="searchTeam"
-            margin="normal"
-            placeholder="Search by name"
-            autoFocus
-          />
-        </Box>
-      </Box>
+      <SearchBox />
       <Box display="flex" justifyContent="flex-end">
         <Box mr={3} m={1}>
           <Button onClick={handleAddClick} color="primary" variant="contained">
