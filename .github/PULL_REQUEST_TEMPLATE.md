@@ -12,5 +12,7 @@
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Optimization (non-breaking change which optimizes existing code)
+- [ ] Refactoring (non-breaking change which refactors code)
+- [ ] Styling (non-breaking change which restyles design)
 - [ ] Other
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
