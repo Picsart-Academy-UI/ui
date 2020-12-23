@@ -2,24 +2,37 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 
+import useStyles from './styles';
+
 const ReservationsCreate = () => {
-  const create = () => {};
-  // default values
+  const styles = useStyles();
+
+  // default value
   const defaultFromValue = new Date();
   defaultFromValue.setDate(defaultFromValue.getDate() + 1);
-  console.log(defaultFromValue.toISOString());
+
   return (
     <>
-      <Container onClick={create}>
-        <Box>
-          Select date:
-          <TextField
-            id="datetime-from"
-            label="From"
-            type="datetime-local"
-            defaultValue={defaultFromValue.toISOString()}
-          />
-        </Box>
+      <Container
+        className={styles.topCont}
+        display="flex"
+        justifyContent="space-around"
+      >
+        <Box className={styles.text}>Select date:</Box>
+        <TextField
+          className={styles.datePicker}
+          id="datetime-from"
+          label="From"
+          type="datetime-local"
+          defaultValue={defaultFromValue.toISOString().slice(0, 16)}
+        />
+        <TextField
+          className={styles.datePicker}
+          id="datetime-to"
+          label="To"
+          type="datetime-local"
+          defaultValue={defaultFromValue.toISOString().slice(0, 16)}
+        />
       </Container>
     </>
   );

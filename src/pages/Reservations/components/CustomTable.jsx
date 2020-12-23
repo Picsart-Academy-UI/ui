@@ -13,10 +13,10 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from '../style';
 
 type Props = {
-  data: Array<{ date: String, place: String, status: String }>,
+  data: Array<{ date: String, place: String, status: String, id: number }>,
   isHistory: boolean,
   edit: Function,
-  cacnel: Function,
+  cancel: Function,
 };
 
 const CustomTable = (props: Props): React.Node => {
@@ -36,17 +36,17 @@ const CustomTable = (props: Props): React.Node => {
         </TableHead>
         <TableBody>
           {props.data.map((item) => (
-            <TableRow>
+            <TableRow key={item.id}>
               <TableCell>{item.date}</TableCell>
               <TableCell align="center">{item.place}</TableCell>
               <TableCell align="right">{item.status}</TableCell>
               {props.isHistory ? null : (
                 <TableCell align="right">
-                  <IconButton>
+                  <IconButton onClick={props.edit}>
                     {' '}
                     <EditIcon className={styles.edit} />{' '}
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={props.cancel}>
                     {' '}
                     <CancelIcon className={styles.cancel} />{' '}
                   </IconButton>

@@ -20,6 +20,7 @@ const Reservations = () => {
       date: `${date.getDay()} ${date.getMonth() + 1} ${date.getFullYear()}`,
       place: '0/0',
       status,
+      id: Math.floor(Math.random() * 10000),
     };
   };
 
@@ -41,7 +42,7 @@ const Reservations = () => {
   ];
 
   const edit = () => {
-    history.push('/Reservations/create');
+    history.push('/Reservations/edit');
   };
 
   const cancel = () => {
