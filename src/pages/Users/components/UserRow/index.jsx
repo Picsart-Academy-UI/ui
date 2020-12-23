@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,20 +14,11 @@ import Button from '@material-ui/core/Button';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-// book a seat on User
+import useStylesLocal from './style';
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-});
-
-const UserRow = (props) => {
-  const { row } = props;
+const UserRow = ({ row, name }) => {
   const [open, setOpen] = useState(false);
-  const classes = useRowStyles();
+  const classes = useStylesLocal();
 
   const handleEditClick = () => {};
 
@@ -49,9 +39,9 @@ const UserRow = (props) => {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.surName}</TableCell>
-        <TableCell align="right">{row.team}</TableCell>
-        <TableCell align="right">{row.gmail}</TableCell>
+        <TableCell align="center">{row.surName}</TableCell>
+        <TableCell align="center">{row.team}</TableCell>
+        <TableCell align="center">{row.gmail}</TableCell>
         <TableCell align="right">
           <Button variant="contained" color="primary">
             Book a seat
@@ -80,7 +70,7 @@ const UserRow = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow key={props.name}>
+                  <TableRow key={name}>
                     <TableCell component="th" scope="row">
                       {row.additionalInfo.date}
                     </TableCell>

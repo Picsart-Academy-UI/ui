@@ -1,26 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+import useStylesLocal from './style';
 
 const DropDown = () => {
-  const classes = useStyles();
+  // in future collect value from props
+  const classes = useStylesLocal();
 
   const handleSelectChange = () => {};
 
   return (
-    <div>
+    <Box ml={8} mb={1}>
       <FormControl className={classes.formControl}>
         <NativeSelect
           onChange={handleSelectChange}
@@ -37,7 +29,7 @@ const DropDown = () => {
         </NativeSelect>
         <FormHelperText>Teams</FormHelperText>
       </FormControl>
-    </div>
+    </Box>
   );
 };
 
