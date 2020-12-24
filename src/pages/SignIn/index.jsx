@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -24,18 +23,14 @@ const SignIn = () => {
     <div className={classesMain.paperContainer}>
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         We Make Office Space Management
-      </Typography>
-      <Typography
-        component="h1"
-        variant="h4"
-        className={`${classesLocal.header} ${classesLocal.colored}`}
-      >
-        AWESOME
+        <div>Awesome</div>
       </Typography>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box className={classesLocal.signInContainer}>
-          <Button className={classesLocal.buttonPcsrt} onClick={onSigninClick}>
+          <Button
+            className={classesLocal.buttonPicsart}
+            onClick={onSigninClick}
+          >
             <Avatar src="images/glogo.png" className={classesLocal.glogo} />
             Sign In With Google
           </Button>
