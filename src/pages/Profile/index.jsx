@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardContent,
-  Divider,
   Typography,
   Grid,
   TextField,
@@ -47,7 +46,6 @@ const Profile = () => {
             </Typography>
           </Box>
         </CardContent>
-        <Divider />
       </Card>
 
       <Grid container direction="column" justify="center" alignItems="center">
