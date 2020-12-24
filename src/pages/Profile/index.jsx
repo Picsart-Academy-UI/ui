@@ -12,7 +12,7 @@ import {
   Select,
 } from '@material-ui/core';
 
-import useStylesLocal from './useStylesLocal';
+import useStylesLocal from './style';
 
 const Profile = () => {
   const classesLocal = useStylesLocal();

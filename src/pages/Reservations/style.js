@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStylesLocal = makeStyles({
   boxHeader: {
     alignItems: 'center',
     minHeight: '5rem',
@@ -18,4 +18,4 @@ const useStyles = makeStyles({
   },
 });
 
-export default useStyles;
+export default useStylesLocal;

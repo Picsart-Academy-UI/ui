@@ -5,10 +5,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Box from '@material-ui/core/Box';
 
 import CustomTable from './components/CustomTable';
-import useStyle from './style';
+import useStylesLocal from './style';
 
 const Reservations = () => {
-  const styles = useStyle();
+  const styles = useStylesLocal();
 
   // needs to be used before the api is ready
   const createRes = (status) => {

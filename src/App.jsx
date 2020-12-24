@@ -6,8 +6,6 @@ import Header from './components/Header';
 import Router from './routes';
 import SignIn from './pages/SignIn';
 
-import './App.css';
-
 const App = () => {
   const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
 
