@@ -11,7 +11,6 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
-
 import useStylesLocal from './style';
 
 const Profile = () => {

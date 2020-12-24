@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
-
 import useStyles from '../style';
 
 type Props = {

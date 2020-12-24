@@ -5,10 +5,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
-
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
-
 import useStylesLocal from './style';
 
 const SignIn = () => {

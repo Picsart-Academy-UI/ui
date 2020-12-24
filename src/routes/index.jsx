@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Teams from '../pages/Teams';
@@ -13,7 +12,6 @@ import UsersEdit from '../pages/UsersEdit';
 import Reservations from '../pages/Reservations';
 import ReservationsCreate from '../pages/ReservationsCreate';
 import ReservationsEdit from '../pages/ReservationsEdit';
-
 import useStylesMain from '../hooks/style/useStylesMain';
 
 const Router = () => {

@@ -1,6 +1,5 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import useStylesLocal from './style';
 
 const NotFound = () => {

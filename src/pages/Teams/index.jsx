@@ -1,5 +1,4 @@
 import React from 'react';
-
 import TeamsTable from './components/TeamsTable';
 import AddTeam from './components/AddTeam';
 import SearchBox from './components/SearchBox';

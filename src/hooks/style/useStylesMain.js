@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-
 import { CHAIR_PATH } from '../../constants';
 
 const useStylesMain = makeStyles((theme) => ({
