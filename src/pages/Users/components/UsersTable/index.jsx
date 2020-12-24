@@ -6,7 +6,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-
 import UserRow from '../UserRow';
 
 const createData = (name, surName, team, gmail, position, birthDay) => ({

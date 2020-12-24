@@ -13,7 +13,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Button from '@material-ui/core/Button';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
 import useStylesLocal from './style';
 
 const UserRow = ({ row, name }) => {

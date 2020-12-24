@@ -1,4 +1,3 @@
-import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,9 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Box from '@material-ui/core/Box';
-
 import DropDown from './components/DropDown';
-
 import useStylesLocal from './style';
 
 const Users = () => {

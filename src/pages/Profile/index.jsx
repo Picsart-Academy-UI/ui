@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardContent,
-  Divider,
   Typography,
   Grid,
   TextField,
@@ -11,8 +10,7 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
-
-import useStylesLocal from './useStylesLocal';
+import useStylesLocal from './style';
 
 const Profile = () => {
   const classesLocal = useStylesLocal();
@@ -48,7 +46,6 @@ const Profile = () => {
             </Typography>
           </Box>
         </CardContent>
-        <Divider />
       </Card>
 
       <Grid container direction="column" justify="center" alignItems="center">
