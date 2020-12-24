@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
 
-import { useRequest } from '../../hooks/auth/auth';
+import { useRequest } from '../../hooks/http';
 
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
@@ -24,14 +24,9 @@ const SignIn = () => {
   const history = useHistory();
 
   const responseGoogle = async (response) => {
-    console.log(response);
-
-    const res = await makeRequest('', 'POST', {
-      token: response.tokeId,
-      user: response.profileObj,
+    await makeRequest('http://localhost:6789/api/v1/auth/signin', 'POST', {
+      token: response.tokenId,
     });
-
-    console.log(res);
 
     dispatch(setIsLoggedIn());
     history.replace('/reservations');

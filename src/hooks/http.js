@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-// import { useDispatch } from 'react-redux';
 
 export const useRequest = () => {
   const makeRequest = useCallback(async (url, method, body, headers = {}) => {
@@ -12,16 +11,19 @@ export const useRequest = () => {
 
       const result = await res.json();
 
-      if (!res.ok) {
-        console.log(result);
+      if (res.ok) {
+        console.log('Success');
       } else {
-        console.log('failure');
+        console.log('Failure during sign in');
       }
 
       return result;
     } catch (e) {
-      console.log(e.message);
+      console.log(
+        `The following error occured during http request ${  e.message}`
+      );
     }
+
     return 0;
   }, []);
   return { makeRequest };
