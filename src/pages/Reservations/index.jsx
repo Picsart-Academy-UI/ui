@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Box from '@material-ui/core/Box';
-import { useHistory } from 'react-router-dom';
-
 import CustomTable from './components/CustomTable';
-import useStyle from './style';
+import useStylesLocal from './style';
 
 const Reservations = () => {
-  const styles = useStyle();
+  const styles = useStylesLocal();
+
   const history = useHistory();
 
   // needs to be used before the api is ready

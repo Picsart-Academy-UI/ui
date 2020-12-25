@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { decrement, increment, fetchTodo } from '../../store/slices/TestSlice';
 
 function ExampleComponent() {

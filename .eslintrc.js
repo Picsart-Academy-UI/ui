@@ -10,10 +10,9 @@ module.exports = {
   rules: {
     "quotes": ["warn", "single"],
     "no-param-reassign": "off",
-    "import/prefer-default-export": "warn",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
-      "newlines-between": "always-and-inside-groups",
+      "newlines-between": "never",
     }]
   },
   overrides: [

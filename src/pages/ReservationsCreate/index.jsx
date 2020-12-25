@@ -8,9 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import Button from '@material-ui/core/Button';
-
 import Canvas from './components/Canvas/Canvas';
-
 import useStyles from './styles';
 
 const ReservationsCreate = () => {

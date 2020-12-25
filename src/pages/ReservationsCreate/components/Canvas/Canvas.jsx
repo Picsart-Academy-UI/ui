@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-
 import useStyles from './style';
 
 // document.getBoundingClientRect() - returns the absolute position of the component x - from left  y- from top
