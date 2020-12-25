@@ -22,7 +22,7 @@ const SignIn = () => {
   return (
     <div className={classesMain.paperContainer}>
       <Typography component="h1" variant="h4" className={classesLocal.header}>
-        We Make Office Space Management Easy
+        We Make Office Space Management Very Easy
         <div>Awesome</div>
       </Typography>
       <Container component="main" maxWidth="xs">
