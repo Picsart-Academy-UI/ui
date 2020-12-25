@@ -12,7 +12,7 @@ import { useRequest } from '../../hooks/http';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
 
-import useStylesLocal from './useStylesLocal';
+import useStylesLocal from './style';
 
 const SignIn = () => {
   const classesMain = useStylesMain();

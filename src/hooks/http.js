@@ -10,21 +10,20 @@ export const useRequest = () => {
       const res = await fetch(url, { method, body, headers });
 
       const result = await res.json();
-
       if (res.ok) {
         console.log('Success');
       } else {
-        console.log('Failure during sign in');
+        console.log(`Error message: ${res.message}`);
       }
 
       return result;
     } catch (e) {
       console.log(
-        `The following error occured during http request ${  e.message}`
+        `The following error occured during http request: ${e.message}`
       );
     }
 
-    return 0;
+    return -1;
   }, []);
   return { makeRequest };
 };
