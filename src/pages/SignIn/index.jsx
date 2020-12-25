@@ -24,11 +24,15 @@ const SignIn = () => {
   const history = useHistory();
 
   const responseGoogle = async (response) => {
-    await makeRequest('http://localhost:6789/api/v1/auth/signin', 'POST', {
-      token: response.tokenId,
-    });
+    const res = await makeRequest(
+      'http://localhost:6789/api/v1/auth/signin',
+      'POST',
+      {
+        token: response.tokenId,
+      }
+    );
 
-    dispatch(setIsLoggedIn());
+    dispatch(() => setIsLoggedIn(res.token));
     history.replace('/reservations');
   };
 
