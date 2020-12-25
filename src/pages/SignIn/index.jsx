@@ -31,9 +31,12 @@ const SignIn = () => {
         token: response.tokenId,
       }
     );
-
-    dispatch(setIsLoggedIn(res.token));
-    history.replace('/reservations');
+    if (res.ok) {
+      dispatch(setIsLoggedIn(res.token));
+      history.replace('/reservations');
+    } else {
+      console.log('Error during google auth');
+    }
   };
 
   return (
