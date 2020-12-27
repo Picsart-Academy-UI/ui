@@ -21,18 +21,18 @@ const Reservations = () => {
 
   const activeRes = [
     createRes('pending'),
+    createRes('approved'),
     createRes('pending'),
+    createRes('rejected'),
     createRes('pending'),
-    createRes('pending'),
-    createRes('pending'),
-    createRes('pending'),
+    createRes('approved'),
   ];
 
   const history = [
     createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
   ];
 
