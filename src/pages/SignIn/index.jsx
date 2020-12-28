@@ -27,7 +27,8 @@ const SignIn = () => {
         token: response.tokenId,
       }
     );
-    if (res.ok) {
+
+    if (res.token) {
       dispatch(setIsLoggedIn(res.token));
       history.replace('/reservations');
     } else {
