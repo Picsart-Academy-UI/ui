@@ -38,7 +38,9 @@ const CustomTable = (props: Props): React.Node => {
             <TableRow key={item.id}>
               <TableCell>{item.date}</TableCell>
               <TableCell align="center">{item.place}</TableCell>
-              <TableCell align="right">{item.status}</TableCell>
+              <TableCell align="right" className={styles[item.status]}>
+                {item.status}
+              </TableCell>
               {props.isHistory ? null : (
                 <TableCell align="right">
                   <IconButton onClick={props.edit}>

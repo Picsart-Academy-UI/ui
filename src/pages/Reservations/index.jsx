@@ -26,7 +26,9 @@ const Reservations = () => {
 
   const [activeRes, setActiveRes] = useState([
     createRes('pending'),
+    createRes('approved'),
     createRes('pending'),
+    createRes('rejected'),
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
@@ -35,9 +37,9 @@ const Reservations = () => {
 
   const historyRes = [
     createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
   ];
 

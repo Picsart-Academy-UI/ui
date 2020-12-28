@@ -16,6 +16,15 @@ const useStylesLocal = makeStyles({
   cancel: {
     color: '#f50057',
   },
+  pending: {
+    color: '#f9a825',
+  },
+  approved: {
+    color: '#2e7d32',
+  },
+  rejected: {
+    color: '#b71c1c',
+  },
 });
 
 export default useStylesLocal;
