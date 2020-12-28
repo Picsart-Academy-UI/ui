@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-export const useRequest = () => {
+const useRequest = () => {
   const makeRequest = useCallback(async (url, method, body, headers = {}) => {
     try {
       if (body) body = JSON.stringify(body);
@@ -26,3 +26,5 @@ export const useRequest = () => {
   }, []);
   return { makeRequest };
 };
+
+export default useRequest;

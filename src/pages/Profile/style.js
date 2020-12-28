@@ -1,10 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
-  root: {},
   avatar: {
-    height: 250,
-    width: 250,
+    height: 200,
+    width: 200,
   },
   emailField: {
     fontSize: '1rem',
@@ -27,6 +26,7 @@ const useStylesLocal = makeStyles((theme) => ({
     fontWeight: 500,
   },
   chngAvtr: {
+    padding: 0,
     backgroundColor: 'Transparent',
     boxShadow: 'none',
     '&:hover': {
