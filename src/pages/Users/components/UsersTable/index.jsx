@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import UserRow from '../UserRow';
-import TablePagination from '../TablePagination';
+import Pagination from '../../../../components/Pagination';
 
 const createData = (name, surName, team, gmail, position, birthDay) => ({
   name,
@@ -159,7 +159,7 @@ const UsersTable = () => {
             )}
           </TableBody>
         </Table>
-        <TablePagination
+        <Pagination
           rows={rows}
           page={page}
           rowsPerPage={rowsPerPage}
@@ -172,7 +172,3 @@ const UsersTable = () => {
 };
 
 export default UsersTable;
-
-// <TableRow style={{ height: 53 * emptyRows }}>
-//                 <TableCell colSpan={6} />
-//               </TableRow>
