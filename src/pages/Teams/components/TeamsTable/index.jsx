@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import TeamRow from '../TeamRow';
+import Pagination from '../../../../components/Pagination';
 import useStylesLocal from './style';
 
 const createData = (name, membersCount, tablesCount) => ({
@@ -22,10 +24,27 @@ const rows = [
   createData('Team 3', 12, 2),
   createData('Team 4', 8, 2),
   createData('Team 5', 5, 1),
+  createData('Team 6', 5, 1),
+  createData('Team 7', 5, 1),
 ];
 
 const TeamsTable = () => {
   const classes = useStylesLocal();
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (value) => {
+    setRowsPerPage(value);
+    setPage(0);
+  };
+
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <TableContainer component={Paper}>
@@ -41,15 +60,31 @@ const TeamsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((row) => (
             <TeamRow
               name={row.name}
               membersCount={row.membersCount}
               tablesCount={row.tablesCount}
             />
           ))}
+
+          {emptyRows > 0 && (
+            <TableRow>
+              <TableCell />
+            </TableRow>
+          )}
         </TableBody>
       </Table>
+      <Pagination
+        rows={rows}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </TableContainer>
   );
 };

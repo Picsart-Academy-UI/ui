@@ -8,9 +8,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import UserRow from '../UserRow';
-import TablePagination from '../TablePagination';
+import Pagination from '../../../../components/Pagination';
 
-const createData = (name, surName, team, gmail, position, birthDay) => ({
+const createData = (
+  name,
+  surName,
+  team,
+  gmail,
+  position,
+  birthDay,
+  phoneNumber
+) => ({
   name,
   surName,
   team,
@@ -18,6 +26,7 @@ const createData = (name, surName, team, gmail, position, birthDay) => ({
   additionalInfo: {
     date: birthDay,
     position,
+    phoneNumber,
   },
 });
 
@@ -28,7 +37,8 @@ const rows = [
     'Team 2',
     'us231.dalakyan@gmail.com',
     'Junior 1',
-    '12.10.1999'
+    '12.10.1999',
+    '+374 96785463'
   ),
   createData(
     'User 2',
@@ -36,7 +46,8 @@ const rows = [
     'Team 5',
     'us432.mkrtchyan@gmail.com',
     'Senior 3',
-    '14.02.1993'
+    '14.02.1993',
+    '+374 91345463'
   ),
   createData(
     'User 3',
@@ -44,7 +55,8 @@ const rows = [
     'Team 1',
     'us121.ayvazyan@gmail.com',
     'Midlle 2',
-    '29.10.1997'
+    '29.10.1997',
+    '+374 99756763'
   ),
   createData(
     'User 4',
@@ -52,7 +64,8 @@ const rows = [
     'Team 3',
     'us674.gevorgyan@gmail.com',
     'Junior 3',
-    '14.05.1998'
+    '14.05.1998',
+    '+374 96785463'
   ),
   createData(
     'User 5',
@@ -60,7 +73,8 @@ const rows = [
     'Team 4',
     'us456.ananyan@gmail.com',
     'Middle 1',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 6',
@@ -68,7 +82,8 @@ const rows = [
     'Team 6',
     'yu456.ananyan@gmail.com',
     'Middle 3',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 7',
@@ -76,7 +91,8 @@ const rows = [
     'Team 7',
     'kf478.ananyan@gmail.com',
     'Middle 1',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 8',
@@ -84,7 +100,8 @@ const rows = [
     'Team 8',
     'io478.ananyan@gmail.com',
     'Middle 1',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 9',
@@ -92,7 +109,8 @@ const rows = [
     'Team 9',
     'po478.ananyan@gmail.com',
     'Middle 1',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 10',
@@ -100,7 +118,8 @@ const rows = [
     'Team 10',
     'lm478.ananyan@gmail.com',
     'Middle 1',
-    '17.06.1997'
+    '17.06.1997',
+    '+374 96785463'
   ),
   createData(
     'User 11',
@@ -108,7 +127,8 @@ const rows = [
     'Team 11',
     'us231.dalakyan@gmail.com',
     'Junior 1',
-    '12.10.1999'
+    '12.10.1999',
+    '+374 96785463'
   ),
 ];
 
@@ -159,7 +179,7 @@ const UsersTable = () => {
             )}
           </TableBody>
         </Table>
-        <TablePagination
+        <Pagination
           rows={rows}
           page={page}
           rowsPerPage={rowsPerPage}
@@ -172,7 +192,3 @@ const UsersTable = () => {
 };
 
 export default UsersTable;
-
-// <TableRow style={{ height: 53 * emptyRows }}>
-//                 <TableCell colSpan={6} />
-//               </TableRow>

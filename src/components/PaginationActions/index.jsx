@@ -6,10 +6,12 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import useStylesLocal from './style';
 
-const TablePaginationActions = (props) => {
+const PaginationActions = (props) => {
   const classes = useStylesLocal();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
+
+  console.log('count', count);
 
   const handleFirstPageButtonClick = () => {
     onChangePage(0);
@@ -69,4 +71,4 @@ const TablePaginationActions = (props) => {
   );
 };
 
-export default TablePaginationActions;
+export default PaginationActions;
