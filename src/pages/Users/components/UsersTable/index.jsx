@@ -160,7 +160,7 @@ const UsersTable = () => {
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
               <TableCell align="right">
-                <Box mr={5}>Actions</Box>
+                <Box mr={13}>Actions</Box>
               </TableCell>
             </TableRow>
           </TableHead>
