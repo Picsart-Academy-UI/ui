@@ -57,23 +57,29 @@ const UserRow = ({ row, name }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
+            <Box margin={1} ml={4}>
               <Typography variant="h6" gutterBottom component="div">
                 Additional Info
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Birthdate</TableCell>
-                    <TableCell>Position</TableCell>
+                    <TableCell align="center">Birthdate</TableCell>
+                    <TableCell align="center">Position</TableCell>
+                    <TableCell align="center">PhoneNumber</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow key={name}>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center" component="th" scope="row">
                       {row.additionalInfo.date}
                     </TableCell>
-                    <TableCell>{row.additionalInfo.position}</TableCell>
+                    <TableCell align="center">
+                      {row.additionalInfo.position}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.additionalInfo.phoneNumber}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
