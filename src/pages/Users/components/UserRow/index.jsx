@@ -10,18 +10,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Button from '@material-ui/core/Button';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import BookaSeat from '../BookaSeat';
+import GoToProfile from '../GoToProfile';
+import DeleteRow from '../DeleteRow';
+import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
 const UserRow = ({ row, name }) => {
   const [open, setOpen] = useState(false);
   const classes = useStylesLocal();
-
-  const handleEditClick = () => {};
-
-  const handleDeleteClick = () => {};
 
   return (
     <>
@@ -42,15 +39,10 @@ const UserRow = ({ row, name }) => {
         <TableCell align="center">{row.team}</TableCell>
         <TableCell align="center">{row.gmail}</TableCell>
         <TableCell align="right">
-          <Button variant="contained" color="primary">
-            Book a seat
-          </Button>
-          <Button title="Edit" onClick={handleEditClick} color="primary">
-            <EditOutlinedIcon />
-          </Button>
-          <Button title="Delete" onClick={handleDeleteClick} color="secondary">
-            <DeleteOutlineIcon />
-          </Button>
+          <GoToProfile />
+          <BookaSeat />
+          <EditRow />
+          <DeleteRow />
         </TableCell>
       </TableRow>
 
