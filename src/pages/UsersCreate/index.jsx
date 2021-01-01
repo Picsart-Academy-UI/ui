@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import useFetch from '../../hooks/useFetch';
-import getUserInvitationRequestData from './service/getUserInvitationRequestData';
+import getUserInvitationRequestData from '../../services/users/getUserInvitationRequestData';
 import useStylesLocal from './style';
 
 const UsersCreate = () => {
@@ -27,7 +27,7 @@ const UsersCreate = () => {
     setDateType('text');
   };
 
-  const [checkedB, setCheckedB] = useState(true);
+  const [checkedB, setCheckedB] = useState(false);
 
   const handleChange = (event) => {
     setCheckedB(event.target.checked);

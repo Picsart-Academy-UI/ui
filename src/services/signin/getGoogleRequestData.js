@@ -1,5 +1,7 @@
+import { MAIN_ROUTE } from '../../constants';
+
 const getGoogleRequestData = (response) => ({
-  url: 'http://localhost:6789/api/v1/auth/signin/',
+  url: `${MAIN_ROUTE}auth/signin/`,
   options: {
     method: 'POST',
     headers: {
