@@ -1,38 +1,35 @@
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
-import useRequest from '../../hooks/http';
+import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
+import getGoogleRequestData from '../../services/signin/getGoogleRequestData';
 import useStylesLocal from './style';
 
 const SignIn = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
-  const { makeRequest } = useRequest();
+  const makeRequest = useFetch();
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const responseGoogle = async (response) => {
-    const res = await makeRequest(
-      'http://localhost:6789/api/v1/auth/signin',
-      'POST',
-      {
-        token: response.tokenId,
-      }
-    );
+    try {
+      const { url, options } = getGoogleRequestData(response);
+      const res = await makeRequest(url, options);
 
-    if (res.token) {
-      dispatch(setIsLoggedIn(res.token));
-      history.replace('/reservations');
-    } else {
-      console.log('Error during google auth');
+      if (res.token) {
+        dispatch(setIsLoggedIn(res.token));
+      }
+
+      return true;
+    } catch (err) {
+      return new Error(err.message);
     }
   };
 

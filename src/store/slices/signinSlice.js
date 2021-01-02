@@ -7,9 +7,9 @@ export const signinSlice = createSlice({
     token: '',
   },
   reducers: {
-    setIsLoggedIn: (state, token) => {
+    setIsLoggedIn: (state, action) => {
       state.isLoggedIn = true;
-      state.token = token.payload;
+      state.token = action.payload;
     },
     setIsLoggedOut: (state) => {
       state.isLoggedIn = false;

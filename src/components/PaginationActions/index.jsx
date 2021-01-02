@@ -11,8 +11,6 @@ const PaginationActions = (props) => {
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
-  console.log('count', count);
-
   const handleFirstPageButtonClick = () => {
     onChangePage(0);
   };
