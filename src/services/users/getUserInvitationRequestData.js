@@ -1,5 +1,7 @@
+import { MAIN_ROUTE } from '../../constants';
+
 const getUserInvitationRequestData = ({ token, body }) => ({
-  url: 'http://localhost:6789/api/v1/auth/invite',
+  url: `${MAIN_ROUTE}auth/invite`,
   options: {
     method: 'POST',
     headers: {
