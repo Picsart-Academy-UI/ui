@@ -6,7 +6,7 @@ import Teams from '../pages/Teams';
 import TeamsCreate from '../pages/TeamsCreate';
 import TeamsEdit from '../pages/TeamsEdit';
 import Users from '../pages/Users';
-import UsersCreate from '../pages/UsersCreate';
+import UsersInvite from '../pages/UsersInvite';
 import UsersEdit from '../pages/UsersEdit';
 import Reservations from '../pages/Reservations';
 import ReservationsCreate from '../pages/ReservationsCreate';
@@ -33,7 +33,7 @@ const Router = () => {
         <Route exact path="/teams/create" component={TeamsCreate} />
         <Route exact path="/teams/edit" component={TeamsEdit} />
         <Route exact path="/users" component={Users} />
-        <Route exact path="/users/create" component={UsersCreate} />
+        <Route exact path="/users/invite" component={UsersInvite} />
         <Route exact path="/users/edit" component={UsersEdit} />
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}

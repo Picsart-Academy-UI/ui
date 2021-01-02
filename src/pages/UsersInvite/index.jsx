@@ -10,7 +10,7 @@ import useFetch from '../../hooks/useFetch';
 import getUserInvitationRequestData from '../../services/users/getUserInvitationRequestData';
 import useStylesLocal from './style';
 
-const UsersCreate = () => {
+const UsersInvite = () => {
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const classesLocal = useStylesLocal();
@@ -183,4 +183,4 @@ const UsersCreate = () => {
   );
 };
 
-export default UsersCreate;
+export default UsersInvite;

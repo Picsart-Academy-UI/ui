@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 const AddUser = () => {
   const history = useHistory();
-  const onAddUserClick = () => history.push('/users/create');
+  const onAddUserClick = () => history.push('/users/invite');
 
   return (
     <Box display="flex" justifyContent="flex-end">
