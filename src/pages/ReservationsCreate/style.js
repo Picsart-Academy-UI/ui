@@ -39,6 +39,12 @@ const useStyles = makeStyles({
     marginLeft: '1rem',
     color: '#f50057',
   },
+  checkBtn: {
+    position: 'fixed',
+    right: '0',
+    bottom: '0',
+    padding: '1rem 2rem',
+  },
 });
 
 export default useStyles;

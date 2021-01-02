@@ -9,7 +9,7 @@ import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlin
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import Button from '@material-ui/core/Button';
 import Canvas from './components/Canvas/Canvas';
-import useStyles from './styles';
+import useStyles from './style';
 
 const ReservationsCreate = () => {
   const styles = useStyles();
@@ -21,10 +21,30 @@ const ReservationsCreate = () => {
   // Mock Data
   const selectedChair = '2/4';
   const data = [
-    { date: defaultValue, isFree: true, chair: selectedChair },
-    { date: defaultValue, isFree: false, chair: selectedChair },
-    { date: defaultValue, isFree: false, chair: selectedChair },
-    { date: defaultValue, isFree: true, chair: selectedChair },
+    {
+      date: defaultValue,
+      isFree: true,
+      chair: selectedChair,
+      id: Math.floor(Math.random() * 10000),
+    },
+    {
+      date: defaultValue,
+      isFree: false,
+      chair: selectedChair,
+      id: Math.floor(Math.random() * 10000),
+    },
+    {
+      date: defaultValue,
+      isFree: false,
+      chair: selectedChair,
+      id: Math.floor(Math.random() * 10000),
+    },
+    {
+      date: defaultValue,
+      isFree: true,
+      chair: selectedChair,
+      id: Math.floor(Math.random() * 10000),
+    },
   ];
 
   return (
@@ -67,12 +87,11 @@ const ReservationsCreate = () => {
         <Table className={styles.table}>
           <TableBody>
             {data.map((item) => (
-              <TableRow>
+              <TableRow key={item.id}>
                 <TableCell>{item.date.toISOString().slice(0, 16)}</TableCell>
                 <TableCell>
                   {item.isFree ? (
                     <Box className={styles.isFreeBox}>
-                      {' '}
                       free{' '}
                       <CheckCircleOutlineOutlinedIcon
                         className={styles.check}
@@ -89,8 +108,7 @@ const ReservationsCreate = () => {
                     item.chair
                   ) : (
                     <Button variant="contained" color="primary">
-                      {' '}
-                      Choose Another Seat{' '}
+                      Choose Another Seat
                     </Button>
                   )}
                 </TableCell>
