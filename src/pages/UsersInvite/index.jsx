@@ -59,7 +59,7 @@ const UsersInvite = () => {
     try {
       const res = await makeRequest(url, options);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.success) {
         resetForm();
