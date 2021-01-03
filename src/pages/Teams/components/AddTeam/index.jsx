@@ -13,7 +13,7 @@ const AddTeam = () => {
     <Box display="flex" justifyContent="flex-end">
       <Box mr={3} m={1}>
         <Button onClick={handleAddClick} color="primary" variant="contained">
-          Add Team
+          Add a Team
         </Button>
       </Box>
     </Box>
