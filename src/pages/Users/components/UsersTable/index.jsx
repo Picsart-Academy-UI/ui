@@ -134,6 +134,7 @@ import Pagination from '../../../../components/Pagination';
 
 const UsersTable = ({ rows }) => {
   console.log('rows', rows);
+  const { users } = rows.users;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -147,9 +148,11 @@ const UsersTable = ({ rows }) => {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.users.length - page * rowsPerPage);
+    users && users.length
+      ? rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
+      : 0;
 
-  return (
+  return users && users.length ? (
     <Paper>
       <TableContainer>
         <Table aria-label="collapsible table">
@@ -166,13 +169,12 @@ const UsersTable = ({ rows }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {!rows.users.length && null}
             {(rowsPerPage > 0
-              ? rows.users.slice(
+              ? users.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : rows.users
+              : users
             ).map((row) => (
               <UserRow key={row.name} row={row} />
             ))}
@@ -185,7 +187,7 @@ const UsersTable = ({ rows }) => {
           </TableBody>
         </Table>
         <Pagination
-          rows={rows}
+          rows={users}
           page={page}
           rowsPerPage={rowsPerPage}
           onChangePage={handleChangePage}
@@ -193,6 +195,10 @@ const UsersTable = ({ rows }) => {
         />
       </TableContainer>
     </Paper>
+  ) : (
+    <>
+      <h1>Loading</h1>
+    </>
   );
 };
 

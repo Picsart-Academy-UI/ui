@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
 import getLimitedUsersData from '../../services/users/getLimitedUsersData';
-import { fetchedUsersList, getUsers } from '../../store/slices/usersSlice';
+import { fetchedUsersList } from '../../store/slices/usersSlice';
 import DropDown from './components/DropDown';
 import UsersTable from './components/UsersTable';
 import SearchBox from './components/SearchBox';
@@ -12,8 +12,8 @@ import AddUser from './components/AddUser';
 const Users = () => {
   const limit = 5;
   const page = 2;
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmViNzViMTc5ZDMxMWRlZDkwNzk2ZDEiLCJlbWFpbCI6Imppci5hdmV0aXN5YW5AZ21haWwuY29tIiwidGVhbV9pZCI6IjVmZTIzZDU0YTcxMGViNTJhOWZlMDgzNSIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE2MDk2MTE4NTV9.lGOm36pzveWEazaqOdyx8jwXD7N4K3Wg7qfpl9dFhcQ';
+  const token = useSelector((state) => state.signin.token);
+  console.log(token);
   const makeRequest = useFetch();
   const { url, options } = getLimitedUsersData(token, limit, page);
 
@@ -29,7 +29,7 @@ const Users = () => {
     dispatch(fetchedUsersList(res));
   }, []);
 
-  const usersList = useSelector(getUsers);
+  const usersList = useSelector((state) => state.users);
 
   console.log('reRendering');
   console.log('usersList', usersList);

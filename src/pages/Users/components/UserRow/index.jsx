@@ -64,14 +64,10 @@ const UserRow = ({ row, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      {row.additionalInfo.date}
+                      "row.additionalInfo.date"
                     </TableCell>
-                    <TableCell align="center">
-                      {row.additionalInfo.position}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.additionalInfo.phoneNumber}
-                    </TableCell>
+                    <TableCell align="center">Postition</TableCell>
+                    <TableCell align="center">Phone</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
