@@ -42,27 +42,25 @@ const TeamsCreate = () => {
   return (
     <div>
       <Container component="main" maxWidth="xs">
-        <div>
-          <form noValidate={false} onSubmit={onAddTeam}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              inputRef={nameRef}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className={classesLocal.sbmtButton}
-            >
-              Add
-            </Button>
-          </form>
-        </div>
+        <form noValidate={false} onSubmit={onAddTeam}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            inputRef={nameRef}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            className={classesLocal.sbmtButton}
+          >
+            Add
+          </Button>
+        </form>
       </Container>
     </div>
   );
