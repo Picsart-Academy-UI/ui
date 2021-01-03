@@ -17,7 +17,7 @@ const Pagination = (props) => {
       rowsPerPageOptions={[5, 10, 25, 50]}
       component="div"
       colSpan={3}
-      count={rows.length}
+      count={rows}
       page={page}
       rowsPerPage={rowsPerPage}
       SelectProps={{
