@@ -11,17 +11,11 @@ import InputDate from './components/InputDate';
 import useStylesLocal from './style';
 
 const UsersInvite = () => {
+  const [dateType, setDateType] = useState('text');
+  const [checkedB, setCheckedB] = useState(false);
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const classesLocal = useStylesLocal();
-
-  const [dateType, setDateType] = useState('text');
-
-  const [checkedB, setCheckedB] = useState(false);
-
-  const handleChange = (event) => {
-    setCheckedB(event.target.checked);
-  };
 
   const emailRef = useRef();
   const nameRef = useRef();
@@ -31,6 +25,20 @@ const UsersInvite = () => {
   const positionRef = useRef();
   const phoneNumberRef = useRef();
   const adminRef = useRef();
+
+  const resetForm = () => {
+    adminRef.current.checked = false;
+    emailRef.current.value = '';
+    teamRef.current.value = '';
+    positionRef.current.value = '';
+    nameRef.current.value = '';
+    surnameRef.current.value = '';
+    birthDayRef.current.value = '';
+    setDateType('text');
+    phoneNumberRef.current.value = '';
+  };
+
+  const handleChange = (event) => setCheckedB(event.target.checked);
 
   const onSendInvitationSubmit = async (e) => {
     e.preventDefault();
@@ -52,18 +60,9 @@ const UsersInvite = () => {
       const res = await makeRequest(url, options);
 
       console.log(res);
-      if (res.success) {
-        console.log(res.msg);
 
-        adminRef.current.checked = false;
-        emailRef.current.value = '';
-        teamRef.current.value = '';
-        positionRef.current.value = '';
-        nameRef.current.value = '';
-        surnameRef.current.value = '';
-        birthDayRef.current.value = '';
-        setDateType('text');
-        phoneNumberRef.current.value = '';
+      if (res.success) {
+        resetForm();
         return true;
       }
       return false;
