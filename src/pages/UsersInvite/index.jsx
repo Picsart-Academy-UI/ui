@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import useFetch from '../../hooks/useFetch';
 import getUserInvitationRequestData from '../../services/users/getUserInvitationRequestData';
 import Input from './components/Input';
+import InputDate from './components/InputDate';
 import useStylesLocal from './style';
 
 const UsersInvite = () => {
@@ -16,16 +16,6 @@ const UsersInvite = () => {
   const classesLocal = useStylesLocal();
 
   const [dateType, setDateType] = useState('text');
-
-  const onDateTypeFocus = () => {
-    console.log(dateType);
-    setDateType('date');
-  };
-
-  const onDateTypeBlur = () => {
-    console.log(dateType);
-    setDateType('text');
-  };
 
   const [checkedB, setCheckedB] = useState(false);
 
@@ -88,17 +78,10 @@ const UsersInvite = () => {
         <Input id="email" label="Email Address" inputRef={emailRef} autoFocus />
         <Input id="name" label="Name" inputRef={nameRef} />
         <Input id="surname" label="Surname" inputRef={surnameRef} />
-        <TextField
-          required={false}
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          id="date"
-          label="Birthday"
+        <InputDate
           type={dateType}
-          onFocus={onDateTypeFocus}
-          onBlur={onDateTypeBlur}
           inputRef={birthDayRef}
+          setDateType={setDateType}
         />
         <Input
           id="team"
