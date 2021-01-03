@@ -11,7 +11,11 @@ import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
 
 const UsersTable = ({ rows }) => {
-  const { users } = rows.users;
+  console.log('rows', rows);
+  // const {count} = rows.users;
+  const { users, count } = rows.usersList;
+  console.log('users', users);
+  console.log('count', count);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -64,7 +68,7 @@ const UsersTable = ({ rows }) => {
           </TableBody>
         </Table>
         <Pagination
-          rows={users}
+          rows={count}
           page={page}
           rowsPerPage={rowsPerPage}
           onChangePage={handleChangePage}

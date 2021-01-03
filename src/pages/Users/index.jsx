@@ -28,7 +28,9 @@ const Users = () => {
     fetchData();
   }, []);
 
-  const usersList = useSelector((state) => state.users);
+  const usersData = useSelector((state) => state.users);
+
+  console.log('usersData', usersData);
 
   return (
     <>
@@ -37,7 +39,7 @@ const Users = () => {
         <DropDown />
       </Box>
       <AddUser />
-      <UsersTable rows={usersList} />
+      <UsersTable rows={usersData} />
     </>
   );
 };
