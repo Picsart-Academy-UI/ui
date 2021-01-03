@@ -20,9 +20,12 @@ const Users = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    const res = await makeRequest(url, options);
-    dispatch(fetchedUsersList(res));
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await makeRequest(url, options);
+      dispatch(fetchedUsersList(res));
+    };
+    fetchData();
   }, []);
 
   const usersList = useSelector((state) => state.users);

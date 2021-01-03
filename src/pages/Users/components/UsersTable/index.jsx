@@ -37,7 +37,7 @@ const UsersTable = ({ rows }) => {
             <TableRow>
               <TableCell />
               <TableCell>Name</TableCell>
-              <TableCell align="center">SurName</TableCell>
+              <TableCell align="center">Surname</TableCell>
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
               <TableCell align="right">
