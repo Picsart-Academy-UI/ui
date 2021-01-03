@@ -10,9 +10,14 @@ const AddTeam = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="flex-end">
+    <Box display="flex" justifyContent="flex-end" test="box-wrapper">
       <Box mr={3} m={1}>
-        <Button onClick={handleAddClick} color="primary" variant="contained">
+        <Button
+          onClick={handleAddClick}
+          color="primary"
+          variant="contained"
+          test="add-btn"
+        >
           Add Team
         </Button>
       </Box>

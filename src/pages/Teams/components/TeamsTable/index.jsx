@@ -63,11 +63,12 @@ const TeamsTable = () => {
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
-          ).map((row) => (
+          ).map((row, i) => (
             <TeamRow
               name={row.name}
               membersCount={row.membersCount}
               tablesCount={row.tablesCount}
+              key={i}
             />
           ))}
 

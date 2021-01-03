@@ -8,6 +8,7 @@ const find = (cmp, attr) => cmp.find(`[test="${attr}"]`);
 
 describe('NotFound: ', () => {
   let cmp;
+
   beforeEach(() => {
     cmp = get();
   });

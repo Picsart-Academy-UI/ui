@@ -17,7 +17,7 @@ const Profile = () => {
 
   return (
     <>
-      <Card>
+      <Card test="card-wrapper">
         <CardContent>
           <Box alignItems="center" display="flex" flexDirection="column">
             <Button
@@ -31,9 +31,14 @@ const Profile = () => {
                 src={
                   'https://play-lh.googleusercontent.com/YFpMBVjnTFQ9D7ln9jOPDxCwTf_AUPgNU0Tz8uskVP-0Esj_5jqBDpqcPm0LwDpcLA'
                 }
+                test="avatar"
               />
             </Button>
-            <Typography color="textPrimary" variant="h3">
+            <Typography
+              color="textPrimary"
+              variant="h3"
+              test="typog-name-surname"
+            >
               {'John Picsartian' /* user.name + user.surname */}
             </Typography>
             <Typography
@@ -41,6 +46,7 @@ const Profile = () => {
               gutterBottom
               variant="h3"
               className={classesLocal.emailField}
+              test="typog-email"
             >
               {'john@picsart.com' /* user.email */}
             </Typography>
@@ -50,7 +56,10 @@ const Profile = () => {
 
       <Grid container direction="column" justify="center" alignItems="center">
         <Typography className={classesLocal.positionHeader}>Team:</Typography>
-        <FormControl className={classesLocal.formControl}>
+        <FormControl
+          className={classesLocal.formControl}
+          test="form-cntrl-team"
+        >
           <Select native id="grouped-native-select">
             <optgroup label="Image Processing" disabled>
               <option value={1}>Team 1</option>
@@ -64,16 +73,19 @@ const Profile = () => {
             </optgroup>
           </Select>
         </FormControl>
-        <Typography className={classesLocal.positionHeader}>
+        <Typography className={classesLocal.positionHeader} test="typog-pos">
           Position:
         </Typography>
         <TextField
           className={classesLocal.positionField}
           value="Software Engineer 9 3/4"
           disabled
+          test="tf-pos"
         />
         {/* user.position */}
-        <Button className={classesLocal.sbmtButton}>Submit Change</Button>
+        <Button className={classesLocal.sbmtButton} test="smb-btn">
+          Submit Change
+        </Button>
       </Grid>
     </>
   );
