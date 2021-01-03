@@ -18,12 +18,10 @@ const UsersCreate = () => {
   const [dateType, setDateType] = useState('text');
 
   const onDateTypeFocus = () => {
-    console.log(dateType);
     setDateType('date');
   };
 
   const onDateTypeBlur = () => {
-    console.log(dateType);
     setDateType('text');
   };
 
@@ -61,10 +59,7 @@ const UsersCreate = () => {
     try {
       const res = await makeRequest(url, options);
 
-      console.log(res);
       if (res.success) {
-        console.log(res.msg);
-
         adminRef.current.checked = false;
         emailRef.current.value = '';
         teamRef.current.value = '';
