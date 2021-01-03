@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import useFetch from '../../hooks/useFetch';
-import addTeamRequest from '../../services/teams/addTeamRequest';
+import getTeamCreateRequestData from '../../services/teams/getTeamCreateRequestData';
 import useStylesLocal from './style';
 
 const TeamsCreate = () => {
@@ -24,7 +24,7 @@ const TeamsCreate = () => {
       name: nameRef.current.value,
     };
 
-    const { url, options } = addTeamRequest({ token, body });
+    const { url, options } = getTeamCreateRequestData({ token, body });
 
     try {
       const res = await makeRequest(url, options);
