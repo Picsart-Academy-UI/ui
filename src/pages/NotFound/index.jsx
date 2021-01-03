@@ -12,11 +12,22 @@ const NotFound = () => {
       alignItems="center"
       justify="center"
       className={classesLocal.grid}
+      test="grid-wrapper"
     >
-      <Typography component="h5" variant="h5" className={classesLocal.h404}>
+      <Typography
+        component="h5"
+        variant="h5"
+        className={classesLocal.h404}
+        test="fof-msg"
+      >
         404
       </Typography>
-      <Typography component="h5" variant="h5" className={classesLocal.ht}>
+      <Typography
+        component="h5"
+        variant="h5"
+        className={classesLocal.ht}
+        test="expl-msg"
+      >
         This page could not be found.
       </Typography>
     </Grid>
