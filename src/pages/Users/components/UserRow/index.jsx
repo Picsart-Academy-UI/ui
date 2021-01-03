@@ -33,11 +33,11 @@ const UserRow = ({ row, name }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.first_name}
         </TableCell>
-        <TableCell align="center">{row.surName}</TableCell>
-        <TableCell align="center">{row.team}</TableCell>
-        <TableCell align="center">{row.gmail}</TableCell>
+        <TableCell align="center">{row.last_name}</TableCell>
+        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.email}</TableCell>
         <TableCell align="right">
           <GoToProfile />
           <BookaSeat />
@@ -64,9 +64,9 @@ const UserRow = ({ row, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      "row.additionalInfo.date"
+                      row.birthdate
                     </TableCell>
-                    <TableCell align="center">Postition</TableCell>
+                    <TableCell align="center">{row.position}</TableCell>
                     <TableCell align="center">Phone</TableCell>
                   </TableRow>
                 </TableBody>

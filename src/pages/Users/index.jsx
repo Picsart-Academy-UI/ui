@@ -10,19 +10,15 @@ import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
 
 const Users = () => {
+  // const [limit, setLimit] = useState(5);
+  // const [page, setPage] = useState(1);
   const limit = 5;
-  const page = 2;
+  const page = 1;
   const token = useSelector((state) => state.signin.token);
-  console.log(token);
   const makeRequest = useFetch();
   const { url, options } = getLimitedUsersData(token, limit, page);
 
   const dispatch = useDispatch();
-
-  // console.log("users",makeRequest(url, options));
-
-  // const res = await makeRequest(url, options);
-  // console.log("res",res)
 
   useEffect(async () => {
     const res = await makeRequest(url, options);
@@ -30,9 +26,6 @@ const Users = () => {
   }, []);
 
   const usersList = useSelector((state) => state.users);
-
-  console.log('reRendering');
-  console.log('usersList', usersList);
 
   return (
     <>
