@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
-import getLimitedUsersData from '../../services/users/getLimitedUsersData';
+import { getLimitedUsersData } from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import DropDown from './components/DropDown';
 import UsersTable from './components/UsersTable';

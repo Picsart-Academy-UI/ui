@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import useFetch from '../../hooks/useFetch';
-import getTeamCreateRequestData from '../../services/teams/getTeamCreateRequestData';
+import { getTeamCreateRequestData } from '../../services/teams';
 import useStylesLocal from './style';
 
 const TeamsCreate = () => {
