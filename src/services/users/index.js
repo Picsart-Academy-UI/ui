@@ -1,6 +1,7 @@
 import { MAIN_ROUTE } from '../../constants';
 
-const getUserInvitationRequestData = ({ token, body }) => ({
+// eslint-disable-next-line
+export const getUserInvitationRequestData = ({ token, body }) => ({
   url: `${MAIN_ROUTE}auth/invite`,
   options: {
     method: 'POST',
@@ -11,5 +12,3 @@ const getUserInvitationRequestData = ({ token, body }) => ({
     body,
   },
 });
-
-export default getUserInvitationRequestData;

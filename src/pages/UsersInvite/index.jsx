@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import useFetch from '../../hooks/useFetch';
-import getUserInvitationRequestData from '../../services/users/getUserInvitationRequestData';
+import { getUserInvitationRequestData } from '../../services/users';
 import Input from './components/Input';
 import InputDate from './components/InputDate';
 import SelectTeam from './components/SelectTeam';
