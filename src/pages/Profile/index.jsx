@@ -10,13 +10,23 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotMe } from '../../store/slices/profileSlice';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
 const Profile = (props) => {
   const classesLocal = useStylesLocal();
+  console.log(props);
+  const { curUser } = useSelector((state) => state.signin);
+  const state1 = useSelector((state) => state);
+  console.log(state1);
 
-  const { user } = props;
+  const { id } = props.match.params;
+
+  id && useDispatch(setNotMe(props.location.user));
+
+  const user = useSelector((state) => state.profile.notme) || curUser;
 
   return (
     <>

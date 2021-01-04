@@ -24,7 +24,7 @@ function TeamList(props) {
   return (
     Array.isArray(teams) &&
     teams.map((el, i) => (
-      <option value={i} selected={el._id === curUserTeam}>
+      <option value={i} selected={el._id === curUserTeam} key={i}>
         {el.name}
       </option>
     ))

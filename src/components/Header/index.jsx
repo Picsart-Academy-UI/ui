@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,6 +27,8 @@ const Header = () => {
 
   const history = useHistory();
   const location = useLocation();
+
+  const { curUser } = useSelector((state) => state.signin);
 
   const [
     mobileMenuRightProfileMenuAnchorEl,
@@ -233,12 +235,14 @@ const Header = () => {
       open={isMobileMenuRightProfileMenuOpen}
       onClose={handleMobileMenuRightProfileMenuClose}
     >
-      <MenuItem
-        onClick={handleMobileMenuRightProfileMenuRoute}
-        data-route="/profile"
+      <Link
+        to={{ pathname: '/profile/:id', user: curUser }}
+        style={{ textDecoration: 'none' }}
       >
-        Profile
-      </MenuItem>
+        <MenuItem onClick={handleMobileMenuRightProfileMenuRoute}>
+          Profile
+        </MenuItem>
+      </Link>
       <MenuItem
         onClick={(e) => handleMobileMenuRightProfileMenuRoute(e, true)}
         data-route="/signin"
