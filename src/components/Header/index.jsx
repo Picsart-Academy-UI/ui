@@ -236,7 +236,7 @@ const Header = () => {
       onClose={handleMobileMenuRightProfileMenuClose}
     >
       <Link
-        to={{ pathname: '/profile/:id', user: curUser }}
+        to={{ pathname: '/profile/me', user: curUser }}
         style={{ textDecoration: 'none' }}
       >
         <MenuItem onClick={handleMobileMenuRightProfileMenuRoute}>

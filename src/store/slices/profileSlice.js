@@ -7,7 +7,7 @@ export const profileSlice = createSlice({
   },
   reducers: {
     setNotMe: (state, action) => {
-      state.notMe = action.payload.user;
+      state.notme = action.payload;
     },
   },
 });

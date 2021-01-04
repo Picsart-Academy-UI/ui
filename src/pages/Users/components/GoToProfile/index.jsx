@@ -7,7 +7,7 @@ const GoToProfile = (props) => {
 
   return (
     <Button title="Profile" color="primary">
-      <Link to={{ pathname: '/profile/5feb754f79d311ded90796cf', user }}>
+      <Link to={{ pathname: `/profile/${user._id}`, user }}>
         <AccountCircleOutlinedIcon />
       </Link>
     </Button>

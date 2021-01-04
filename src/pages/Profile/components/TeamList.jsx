@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useFetch from '../../../hooks/useFetch';
-import getAllTeams from '../../../services/profile/getAllTeams';
+import { getTeamsAllRequestData } from '../../../services/teams';
 
-function TeamList(props) {
+function TeamList() {
   const makeRequest = useFetch();
 
-  const { curUserTeam } = props;
+  // const { curUserTeam } = props;
   const token = useSelector((state) => state.signin.token);
 
   const [teams, setTeams] = useState(null);
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const { url, options } = getAllTeams(token);
+      const { url, options } = getTeamsAllRequestData(token);
       const data = await makeRequest(url, options);
-      console.log(data.teams);
       setTeams(data.teams);
     };
     fetchTeams();
-  }, []);
+  }, [makeRequest, token]);
 
   return (
     Array.isArray(teams) &&
     teams.map((el, i) => (
-      <option value={i} selected={el._id === curUserTeam} key={i}>
+      <option value={i} key={i}>
         {el.name}
       </option>
     ))

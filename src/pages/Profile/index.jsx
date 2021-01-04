@@ -17,14 +17,15 @@ import useStylesLocal from './style';
 
 const Profile = (props) => {
   const classesLocal = useStylesLocal();
-  console.log(props);
+  const dispatch = useDispatch();
+
   const { curUser } = useSelector((state) => state.signin);
-  const state1 = useSelector((state) => state);
-  console.log(state1);
 
   const { id } = props.match.params;
 
-  id && useDispatch(setNotMe(props.location.user));
+  if (id && props.location.user) {
+    dispatch(setNotMe(props.location.user));
+  }
 
   const user = useSelector((state) => state.profile.notme) || curUser;
 
