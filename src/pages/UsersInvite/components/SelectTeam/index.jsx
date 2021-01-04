@@ -48,7 +48,7 @@ const SelectTeam = ({
     try {
       const res = await makeRequest(url, options);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.teams) {
         setTeamsAll(res.teams);
@@ -79,7 +79,6 @@ const SelectTeam = ({
       className={classesLocal.formControl}
       margin="normal"
       required
-      fullWidth
     >
       <InputLabel id="demo-simple-select-outlined-label">Team</InputLabel>
       <Select

@@ -67,7 +67,7 @@ const UsersInvite = () => {
     try {
       const res = await makeRequest(url, options);
 
-      console.log(res);
+      // console.log(res);
 
       if (
         res.user ||
@@ -83,47 +83,53 @@ const UsersInvite = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main">
       <form noValidate={false} onSubmit={onSendInvitationSubmit}>
-        <Input id="email" label="Email Address" inputRef={emailRef} autoFocus />
-        <Input id="name" label="Name" inputRef={nameRef} />
-        <Input id="surname" label="Surname" inputRef={surnameRef} />
-        <InputDate
-          type={dateType}
-          inputRef={birthDayRef}
-          setDateType={setDateType}
-        />
-        <SelectTeam
-          selectTeamId={selectTeamId}
-          shouldBeReseted={teamShouldBeReseted}
-          setTeamShouldBeReseted={setTeamShouldBeReseted}
-        />
-        <Input id="position" label="Position" inputRef={positionRef} />
-        <Input
-          required={false}
-          id="phoneNumber"
-          label="Phone Number"
-          inputRef={phoneNumberRef}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={checkedB}
-              onChange={onAdminModeChange}
-              color="primary"
-              inputRef={adminRef}
-            />
-          }
-          label="Admin"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classesLocal.sbmtButton}
-        >
-          Send Invitation
-        </Button>
+        <div className={classesLocal.inputsWrapper}>
+          <Input
+            id="email"
+            label="Email Address"
+            inputRef={emailRef}
+            autoFocus
+          />
+          <Input id="name" label="Name" inputRef={nameRef} />
+          <Input id="surname" label="Surname" inputRef={surnameRef} />
+          <InputDate
+            type={dateType}
+            inputRef={birthDayRef}
+            setDateType={setDateType}
+          />
+          <SelectTeam
+            selectTeamId={selectTeamId}
+            shouldBeReseted={teamShouldBeReseted}
+            setTeamShouldBeReseted={setTeamShouldBeReseted}
+          />
+          <Input id="position" label="Position" inputRef={positionRef} />
+          <Input
+            required={false}
+            id="phoneNumber"
+            label="Phone Number"
+            inputRef={phoneNumberRef}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checkedB}
+                onChange={onAdminModeChange}
+                color="primary"
+                inputRef={adminRef}
+              />
+            }
+            label="Admin"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            className={classesLocal.sbmtButton}
+          >
+            Send Invitation
+          </Button>
+        </div>
       </form>
     </Container>
   );

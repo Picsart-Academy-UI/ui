@@ -1,7 +1,18 @@
 import TextField from '@material-ui/core/TextField';
+import useStylesLocal from './style';
 
-const Input = (props) => (
-  <TextField variant="outlined" margin="normal" fullWidth required {...props} />
-);
+const Input = (props) => {
+  const classesLocal = useStylesLocal();
+
+  return (
+    <TextField
+      variant="outlined"
+      margin="normal"
+      required
+      {...props}
+      className={classesLocal.width}
+    />
+  );
+};
 
 export default Input;
