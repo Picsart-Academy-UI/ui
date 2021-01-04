@@ -14,6 +14,9 @@ import useStylesLocal from './style';
 const UsersInvite = () => {
   const [dateType, setDateType] = useState('text');
   const [checkedB, setCheckedB] = useState(false);
+  const [teamId, setTeamId] = useState();
+  const [teamShouldBeReseted, setTeamShouldBeReseted] = useState(false);
+
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const classesLocal = useStylesLocal();
@@ -22,7 +25,7 @@ const UsersInvite = () => {
   const nameRef = useRef();
   const surnameRef = useRef();
   const birthDayRef = useRef();
-  const teamRef = useRef();
+  // const teamRef = useRef();
   const positionRef = useRef();
   const phoneNumberRef = useRef();
   const adminRef = useRef();
@@ -30,7 +33,8 @@ const UsersInvite = () => {
   const resetForm = () => {
     adminRef.current.checked = false;
     emailRef.current.value = '';
-    teamRef.current.value = '';
+    // teamRef.current.value = '';
+    setTeamShouldBeReseted(true);
     positionRef.current.value = '';
     nameRef.current.value = '';
     surnameRef.current.value = '';
@@ -39,7 +43,9 @@ const UsersInvite = () => {
     phoneNumberRef.current.value = '';
   };
 
-  const handleChange = (event) => setCheckedB(event.target.checked);
+  const selectTeamId = (value) => setTeamId(value);
+
+  const onAdminModeChange = (event) => setCheckedB(event.target.checked);
 
   const onSendInvitationSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +53,8 @@ const UsersInvite = () => {
     const body = {
       is_admin: adminRef.current.checked,
       email: emailRef.current.value,
-      team_id: teamRef.current.value,
+      // team_id: teamRef.current.value,
+      team_id: teamId,
       position: positionRef.current.value,
       first_name: nameRef.current.value,
       last_name: surnameRef.current.value,
@@ -60,9 +67,12 @@ const UsersInvite = () => {
     try {
       const res = await makeRequest(url, options);
 
-      // console.log(res);
+      console.log(res);
 
-      if (res.success) {
+      if (
+        res.user ||
+        res.msg === 'The invitation has successfully been resend'
+      ) {
         resetForm();
         return true;
       }
@@ -83,7 +93,11 @@ const UsersInvite = () => {
           inputRef={birthDayRef}
           setDateType={setDateType}
         />
-        <SelectTeam />
+        <SelectTeam
+          selectTeamId={selectTeamId}
+          shouldBeReseted={teamShouldBeReseted}
+          setTeamShouldBeReseted={setTeamShouldBeReseted}
+        />
         <Input id="position" label="Position" inputRef={positionRef} />
         <Input
           required={false}
@@ -95,7 +109,7 @@ const UsersInvite = () => {
           control={
             <Checkbox
               checked={checkedB}
-              onChange={handleChange}
+              onChange={onAdminModeChange}
               color="primary"
               inputRef={adminRef}
             />

@@ -21,9 +21,13 @@ const MenuProps = {
   },
 };
 
-const SimpleSelect = () => {
+const SelectTeam = ({
+  selectTeamId,
+  shouldBeReseted,
+  setTeamShouldBeReseted,
+}) => {
   const [teamsAll, setTeamsAll] = useState([]);
-  const [personName, setPersonName] = useState('');
+  const [team, setTeam] = useState('');
 
   const token = useSelector((state) => state.signin.token);
 
@@ -33,7 +37,10 @@ const SimpleSelect = () => {
   const theme = useTheme();
 
   const handleChange = (event) => {
-    setPersonName(event.target.value);
+    const teamItem = teamsAll.find(({ name }) => name === event.target.value);
+    const { _id } = teamItem;
+    setTeam(event.target.value);
+    selectTeamId(_id);
   };
 
   const getTeamsAllAuto = useCallback(async () => {
@@ -59,6 +66,13 @@ const SimpleSelect = () => {
     }
   }, [teamsAll, getTeamsAllAuto]);
 
+  useEffect(() => {
+    if (shouldBeReseted) {
+      setTeam('');
+      setTeamShouldBeReseted(false);
+    }
+  }, [shouldBeReseted]);
+
   return (
     <FormControl
       variant="outlined"
@@ -71,7 +85,7 @@ const SimpleSelect = () => {
       <Select
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
-        value={personName}
+        value={team}
         onChange={handleChange}
         label="Team"
         MenuProps={MenuProps}
@@ -80,7 +94,7 @@ const SimpleSelect = () => {
           <MenuItem
             key={_id + name}
             value={name}
-            style={getStyleMenuItem(name, personName, theme)}
+            style={getStyleMenuItem(name, team, theme)}
           >
             {name}
           </MenuItem>
@@ -90,4 +104,4 @@ const SimpleSelect = () => {
   );
 };
 
-export default SimpleSelect;
+export default SelectTeam;
