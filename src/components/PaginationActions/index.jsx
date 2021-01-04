@@ -7,6 +7,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import useStylesLocal from './style';
 
 const PaginationActions = (props) => {
+  console.log('PaginationActions render');
+
   const classes = useStylesLocal();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -16,10 +18,12 @@ const PaginationActions = (props) => {
   };
 
   const handleBackButtonClick = () => {
+    console.log('handleBackButtonClick');
     onChangePage(page - 1);
   };
 
   const handleNextButtonClick = () => {
+    console.log('handleNextButtonClick');
     onChangePage(page + 1);
   };
 

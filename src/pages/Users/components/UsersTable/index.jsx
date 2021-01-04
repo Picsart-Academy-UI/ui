@@ -16,18 +16,15 @@ const UsersTable = ({
   onChangePage,
   onChangeRowsPerPage,
 }) => {
+  console.log('UsersTable render');
+
   const { users, count } = rows.usersList;
-  // const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (newPage) => {
-    // setPage(newPage);
     onChangePage(newPage);
   };
 
   const handleChangeRowsPerPage = (value) => {
-    // setRowsPerPage(value);
-    // setPage(0);
     onChangeRowsPerPage(value);
   };
 
