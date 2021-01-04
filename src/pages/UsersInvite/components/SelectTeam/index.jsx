@@ -76,9 +76,9 @@ const SimpleSelect = () => {
         label="Team"
         MenuProps={MenuProps}
       >
-        {teamsAll.map(({ name }) => (
+        {teamsAll.map(({ _id, name }) => (
           <MenuItem
-            key={name}
+            key={_id + name}
             value={name}
             style={getStyleMenuItem(name, personName, theme)}
           >
