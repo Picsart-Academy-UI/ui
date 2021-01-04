@@ -8,6 +8,7 @@ import useFetch from '../../hooks/useFetch';
 import getUserInvitationRequestData from '../../services/users/getUserInvitationRequestData';
 import Input from './components/Input';
 import InputDate from './components/InputDate';
+import SelectTeam from './components/SelectTeam';
 import useStylesLocal from './style';
 
 const UsersInvite = () => {
@@ -82,13 +83,7 @@ const UsersInvite = () => {
           inputRef={birthDayRef}
           setDateType={setDateType}
         />
-        <Input
-          id="team"
-          label="Team"
-          defaultValue="5fe23d54a710eb52a9fe0835"
-          disabled
-          inputRef={teamRef}
-        />
+        <SelectTeam />
         <Input id="position" label="Position" inputRef={positionRef} />
         <Input
           required={false}
