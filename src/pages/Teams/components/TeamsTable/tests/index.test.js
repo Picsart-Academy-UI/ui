@@ -13,7 +13,13 @@ describe('Teams Table: ', () => {
     cmp = get();
   });
 
-  test('should ', () => {
-    expect(1).toBe(1);
+  test('should render properly', () => {
+    expect(find(cmp, 'table-cntnr').length).toEqual(1);
   });
+
+  test('should have a pagination', () => {
+    expect(find(cmp, 'pgn').length).toEqual(1);
+  });
+
+  //TODO: track if the state changes correctly
 });
