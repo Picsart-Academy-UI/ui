@@ -1,6 +1,5 @@
 import { MAIN_ROUTE } from '../../constants';
 
-// eslint-disable-next-line
 export const getTeamCreateRequestData = ({ token, body }) => ({
   url: `${MAIN_ROUTE}teams`,
   options: {
@@ -10,5 +9,14 @@ export const getTeamCreateRequestData = ({ token, body }) => ({
       Authorization: `Bearer ${token}`,
     },
     body,
+  },
+});
+
+export const getTeamsAllRequestData = (token) => ({
+  url: `${MAIN_ROUTE}teams`,
+  options: {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   },
 });
