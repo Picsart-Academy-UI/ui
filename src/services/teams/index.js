@@ -1,6 +1,7 @@
 import { MAIN_ROUTE } from '../../constants';
 
-const getTeamCreateRequestData = ({ token, body }) => ({
+// eslint-disable-next-line
+export const getTeamCreateRequestData = ({ token, body }) => ({
   url: `${MAIN_ROUTE}teams`,
   options: {
     method: 'POST',
@@ -11,5 +12,3 @@ const getTeamCreateRequestData = ({ token, body }) => ({
     body,
   },
 });
-
-export default getTeamCreateRequestData;
