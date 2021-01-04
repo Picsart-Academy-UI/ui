@@ -7,7 +7,7 @@ import { Avatar, Button } from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
-import getGoogleRequestData from '../../services/signin/getGoogleRequestData';
+import getGoogleRequestData from '../../services/signin';
 import useStylesLocal from './style';
 
 const SignIn = () => {
