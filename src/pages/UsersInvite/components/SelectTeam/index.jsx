@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { getTeamsAllRequestData } from '../../../../services/teams';
+import useFetch from '../../../../hooks/useFetch';
 import useStylesLocal, { getStyleMenuItem } from './style';
 
 const ITEM_HEIGHT = 48;
@@ -18,23 +21,44 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'team 1',
-  'team 2',
-  'team 3',
-  'team 4',
-  'team 5',
-  'team 6',
-  'team 7',
-];
-
 const SimpleSelect = () => {
+  const [teamsAll, setTeamsAll] = useState([]);
+  const [personName, setPersonName] = useState('');
+
+  const token = useSelector((state) => state.signin.token);
+
+  const makeRequest = useFetch();
+
   const classesLocal = useStylesLocal();
   const theme = useTheme();
-  const [personName, setPersonName] = useState('');
+
   const handleChange = (event) => {
     setPersonName(event.target.value);
   };
+
+  const getTeamsAllAuto = useCallback(async () => {
+    const { url, options } = getTeamsAllRequestData(token);
+    try {
+      const res = await makeRequest(url, options);
+
+      console.log(res);
+
+      if (res.teams) {
+        setTeamsAll(res.teams);
+        return true;
+      }
+      return false;
+    } catch (err) {
+      return new Error(err.message);
+    }
+  }, [makeRequest, token]);
+
+  useEffect(() => {
+    if (!teamsAll.length) {
+      getTeamsAllAuto();
+    }
+  }, [teamsAll, getTeamsAllAuto]);
+
   return (
     <FormControl
       variant="outlined"
@@ -52,7 +76,7 @@ const SimpleSelect = () => {
         label="Team"
         MenuProps={MenuProps}
       >
-        {names.map((name) => (
+        {teamsAll.map(({ name }) => (
           <MenuItem
             key={name}
             value={name}
