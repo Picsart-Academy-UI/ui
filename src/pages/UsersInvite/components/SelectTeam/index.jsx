@@ -71,7 +71,7 @@ const SelectTeam = ({
       setTeam('');
       setTeamShouldBeReseted(false);
     }
-  }, [shouldBeReseted]);
+  }, [shouldBeReseted, setTeamShouldBeReseted]);
 
   return (
     <FormControl
