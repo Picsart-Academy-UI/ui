@@ -16,12 +16,16 @@ import useStylesMain from '../hooks/style/useStylesMain';
 const Router = () => {
   const classesMain = useStylesMain();
 
-  const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
+  const { isLoggedIn, curUser } = useSelector((state) => state.signin);
 
   return (
     <div className={classesMain.paperPadding}>
       <Switch>
-        <Route exact path="/profile" component={Profile} />
+        <Route
+          exact
+          path="/profile"
+          render={() => <Profile user={curUser} />}
+        />
         <Route exact path="/reservations" component={Reservations} />
         <Route
           exact
