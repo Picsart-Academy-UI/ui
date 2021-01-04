@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
@@ -11,14 +11,23 @@ import AddUser from './components/AddUser';
 
 const Users = () => {
   // const [limit, setLimit] = useState(5);
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const limit = 5;
-  const page = 1;
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const { url, options } = getLimitedUsersData(token, limit, page);
 
   const dispatch = useDispatch();
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (value) => {
+    setRowsPerPage(value);
+    setPage(0);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +39,6 @@ const Users = () => {
 
   const usersData = useSelector((state) => state.users);
 
-  console.log('usersData', usersData);
-
   return (
     <>
       <Box display="flex" justifyContent="center">
@@ -39,7 +46,13 @@ const Users = () => {
         <DropDown />
       </Box>
       <AddUser />
-      <UsersTable rows={usersData} />
+      <UsersTable
+        rows={usersData}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </>
   );
 };
