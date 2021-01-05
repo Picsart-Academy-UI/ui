@@ -13,6 +13,7 @@ import UsersEdit from '../pages/UsersEdit';
 import Reservations from '../pages/Reservations';
 import ReservationsCreate from '../pages/ReservationsCreate';
 import ReservationsEdit from '../pages/ReservationsEdit';
+import Requests from '../pages/Requests';
 
 import useStylesMain from '../hooks/style/useStylesMain';
 
@@ -38,6 +39,7 @@ const Router = () => {
         <Route exact path="/users" component={Users} />
         <Route exact path="/users/create" component={UsersCreate} />
         <Route exact path="/users/edit" component={UsersEdit} />
+        <Route exact path="/requests" component={Requests} />
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}
         {isLoggedIn && <Redirect exact from="/signin" to="/reservations" />}
