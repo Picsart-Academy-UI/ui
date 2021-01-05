@@ -10,13 +10,22 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotMe } from '../../store/slices/profileSlice';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
 const Profile = (props) => {
   const classesLocal = useStylesLocal();
+  const dispatch = useDispatch();
 
-  const { user } = props;
+  const { curUser } = useSelector((state) => state.signin);
+
+  const { id } = props.match.params;
+
+  id && props.location.user && dispatch(setNotMe(props.location.user));
+
+  const user = useSelector((state) => state.profile.notme) || curUser;
 
   return (
     <>
@@ -68,7 +77,6 @@ const Profile = (props) => {
           value={user.position}
           disabled
         />
-        {/* user.position */}
         <Button className={classesLocal.sbmtButton}>Submit Change</Button>
       </Grid>
     </>
