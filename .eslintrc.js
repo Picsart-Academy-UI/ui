@@ -11,7 +11,6 @@ module.exports = {
     "quotes": ["warn", "single"],
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
-    "react-hooks/rules-of-hooks": "off",
     "no-unused-expressions": "off",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
