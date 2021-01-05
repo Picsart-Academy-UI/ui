@@ -77,7 +77,6 @@ const Profile = (props) => {
           value={user.position}
           disabled
         />
-        {/* user.position */}
         <Button className={classesLocal.sbmtButton}>Submit Change</Button>
       </Grid>
     </>
