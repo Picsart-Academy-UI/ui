@@ -23,9 +23,7 @@ const Profile = (props) => {
 
   const { id } = props.match.params;
 
-  if (id && props.location.user) {
-    dispatch(setNotMe(props.location.user));
-  }
+  id && props.location.user && dispatch(setNotMe(props.location.user));
 
   const user = useSelector((state) => state.profile.notme) || curUser;
 
