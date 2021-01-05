@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,22 +9,21 @@ import Box from '@material-ui/core/Box';
 import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
 
-const UsersTable = ({ rows }) => {
-  console.log('rows', rows);
-  // const {count} = rows.users;
+const UsersTable = ({
+  rows,
+  page,
+  rowsPerPage,
+  onChangePage,
+  onChangeRowsPerPage,
+}) => {
   const { users, count } = rows.usersList;
-  console.log('users', users);
-  console.log('count', count);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (newPage) => {
-    setPage(newPage);
+    onChangePage(newPage);
   };
 
   const handleChangeRowsPerPage = (value) => {
-    setRowsPerPage(value);
-    setPage(0);
+    onChangeRowsPerPage(value);
   };
 
   const emptyRows =
@@ -50,15 +48,8 @@ const UsersTable = ({ rows }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? users.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : users
-            ).map((row) => (
-              <UserRow key={row.name} row={row} />
-            ))}
+            {rowsPerPage > 0 &&
+              users.map((row) => <UserRow key={row._id} row={row} />)}
 
             {emptyRows > 0 && (
               <TableRow>

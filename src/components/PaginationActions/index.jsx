@@ -16,10 +16,12 @@ const PaginationActions = (props) => {
   };
 
   const handleBackButtonClick = () => {
+    console.log(page - 1, 'handlebackbtn');
     onChangePage(page - 1);
   };
 
   const handleNextButtonClick = () => {
+    console.log(page + 1, 'handlenextbtn');
     onChangePage(page + 1);
   };
 
