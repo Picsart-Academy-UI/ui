@@ -29,6 +29,10 @@ const useStyles = makeStyles({
   table: {
     minWidth: 255,
   },
+  tableCellCount: {
+    color: '#4caf50',
+    fontWeight: 'bold',
+  },
 });
 
 const tableCellStyles = makeStyles({
@@ -48,30 +52,6 @@ const rows = [
   createData('20 Dec', 35, 7),
   createData('30 Dec', 20, 16),
   createData('17 Dec', 70, 6),
-  createData('18 Dec', 14, 9),
-  createData('19 Dec', 59, 16),
-  createData('20 Dec', 35, 7),
-  createData('30 Dec', 20, 16),
-  createData('17 Dec', 70, 6),
-  createData('18 Dec', 14, 9),
-  createData('19 Dec', 59, 16),
-  createData('20 Dec', 35, 7),
-  createData('30 Dec', 20, 16),
-  createData('17 Dec', 70, 6),
-  createData('18 Dec', 14, 9),
-  createData('19 Dec', 59, 16),
-  createData('20 Dec', 35, 7),
-  createData('30 Dec', 20, 16),
-  createData('17 Dec', 70, 6),
-  createData('18 Dec', 14, 9),
-  createData('19 Dec', 59, 16),
-  createData('20 Dec', 35, 7),
-  createData('30 Dec', 20, 16),
-  createData('17 Dec', 70, 6),
-  createData('18 Dec', 14, 9),
-  createData('19 Dec', 59, 16),
-  createData('20 Dec', 35, 7),
-  createData('30 Dec', 20, 16),
 ];
 
 export default function Loads() {
@@ -91,7 +71,11 @@ export default function Loads() {
                 <TableCell align="right" classes={tableCell}>
                   <LinearProgressWithLabel value={row.load} />
                 </TableCell>
-                <TableCell align="right" classes={tableCell}>
+                <TableCell
+                  align="right"
+                  classes={tableCell}
+                  className={classes.tableCellCount}
+                >
                   {row.count}
                 </TableCell>
               </TableRow>

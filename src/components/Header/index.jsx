@@ -14,6 +14,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
+import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { setIsLoggedOut } from '../../store/slices/signinSlice';
@@ -134,6 +135,14 @@ const Header = () => {
         </IconButton>
         <p>Users</p>
       </MenuItem>
+      <MenuItem data-route="/requests" onClick={handleMobileMenuLeftRoute}>
+        <IconButton>
+          <Badge color="secondary">
+            <DirectionsWalkIcon />
+          </Badge>
+        </IconButton>
+        <p>Requests</p>
+      </MenuItem>
     </Menu>
   );
 
@@ -153,6 +162,7 @@ const Header = () => {
         />
         <Tab label="Teams" value="/teams" className={classes.linkTab} />
         <Tab label="Users" value="/users" className={classes.linkTab} />
+        <Tab label="Requests" value="/requests" className={classes.linkTab} />
       </Tabs>
     </div>
   );
