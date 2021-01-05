@@ -10,7 +10,7 @@ import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
 
 const Users = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
@@ -28,8 +28,14 @@ const Users = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { url, options } = getLimitedUsersData(token, rowsPerPage, page);
+      console.log(page, 'useEffect page');
+      const { url, options } = getLimitedUsersData(
+        token,
+        rowsPerPage,
+        page + 1
+      );
       const res = await makeRequest(url, options);
+      console.log(res);
       dispatch(fetchedUsersList(res));
     };
     fetchData();
@@ -37,8 +43,7 @@ const Users = () => {
 
   const usersData = useSelector((state) => state.users);
 
-  console.log('Users render');
-
+  console.log(page, 'users/back clicked');
   return (
     <>
       <Box display="flex" justifyContent="center">

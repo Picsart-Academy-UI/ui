@@ -16,8 +16,6 @@ const UsersTable = ({
   onChangePage,
   onChangeRowsPerPage,
 }) => {
-  console.log('UsersTable render');
-
   const { users, count } = rows.usersList;
 
   const handleChangePage = (newPage) => {
@@ -50,15 +48,8 @@ const UsersTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? users.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : users
-            ).map((row) => (
-              <UserRow key={row.name} row={row} />
-            ))}
+            {rowsPerPage > 0 &&
+              users.map((row) => <UserRow key={row._id} row={row} />)}
 
             {emptyRows > 0 && (
               <TableRow>

@@ -2,8 +2,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import PaginationActions from '../PaginationActions';
 
 const Pagination = (props) => {
-  console.log('Pagination render');
-
   const { rows, page, rowsPerPage, onChangePage, onChangeRowsPerPage } = props;
 
   const handleChangePage = (newPage) => {
