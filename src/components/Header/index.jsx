@@ -16,11 +16,9 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
 import { setIsLoggedOut } from '../../store/slices/signinSlice';
-
 import { setPath } from './desktopMenuLeftUtils';
-import useStylesLocal from './styles';
+import useStylesLocal from './style';
 
 const Header = () => {
   const dispatch = useDispatch();

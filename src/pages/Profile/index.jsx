@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardContent,
-  Divider,
   Typography,
   Grid,
   TextField,
@@ -11,11 +10,13 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
+import TeamList from './components/TeamList';
+import useStylesLocal from './style';
 
-import useStylesLocal from './useStylesLocal';
-
-const Profile = () => {
+const Profile = (props) => {
   const classesLocal = useStylesLocal();
+
+  const { user } = props;
 
   return (
     <>
@@ -36,7 +37,7 @@ const Profile = () => {
               />
             </Button>
             <Typography color="textPrimary" variant="h3">
-              {'John Picsartian' /* user.name + user.surname */}
+              {`${user.first_name} ${user.last_name}`}
             </Typography>
             <Typography
               color="textPrimary"
@@ -44,26 +45,18 @@ const Profile = () => {
               variant="h3"
               className={classesLocal.emailField}
             >
-              {'john@picsart.com' /* user.email */}
+              {user.email}
             </Typography>
           </Box>
         </CardContent>
-        <Divider />
       </Card>
 
       <Grid container direction="column" justify="center" alignItems="center">
         <Typography className={classesLocal.positionHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <Select native id="grouped-native-select">
-            <optgroup label="Image Processing" disabled>
-              <option value={1}>Team 1</option>
-              <option value={2}>Team 2</option>
-            </optgroup>
-            <optgroup label="Website" disabled>
-              <option value={3} selected>
-                Team 1
-              </option>
-              <option value={4}>Team 2</option>
+            <optgroup disabled>
+              <TeamList curUserTeam={user.team_id} />
             </optgroup>
           </Select>
         </FormControl>
@@ -72,7 +65,7 @@ const Profile = () => {
         </Typography>
         <TextField
           className={classesLocal.positionField}
-          value="Software Engineer 9 3/4"
+          value={user.position}
           disabled
         />
         {/* user.position */}

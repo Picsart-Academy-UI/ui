@@ -1,14 +1,12 @@
-import React from 'react';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Box from '@material-ui/core/Box';
-
 import CustomTable from './components/CustomTable';
-import useStyle from './style';
+import useStylesLocal from './style';
 
 const Reservations = () => {
-  const styles = useStyle();
+  const styles = useStylesLocal();
 
   // needs to be used before the api is ready
   const createRes = (status) => {
@@ -23,18 +21,18 @@ const Reservations = () => {
 
   const activeRes = [
     createRes('pending'),
+    createRes('approved'),
     createRes('pending'),
+    createRes('rejected'),
     createRes('pending'),
-    createRes('pending'),
-    createRes('pending'),
-    createRes('pending'),
+    createRes('approved'),
   ];
 
   const history = [
     createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
-    createRes('rejected'),
-    createRes('rejected'),
+    createRes('approved'),
     createRes('rejected'),
   ];
 

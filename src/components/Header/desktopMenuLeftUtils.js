@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 export const setPath = (path) => {
   const pathArr = path.split('/');
   if (!pathArr.join('')) return '/reservations';
