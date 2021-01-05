@@ -1,6 +1,6 @@
 import { MAIN_ROUTE } from '../../constants';
 
-const getTeamCreateRequestData = ({ token, body }) => ({
+export const getTeamCreateRequestData = ({ token, body }) => ({
   url: `${MAIN_ROUTE}teams`,
   options: {
     method: 'POST',
@@ -12,4 +12,11 @@ const getTeamCreateRequestData = ({ token, body }) => ({
   },
 });
 
-export default getTeamCreateRequestData;
+export const getTeamsAllRequestData = (token) => ({
+  url: `${MAIN_ROUTE}teams`,
+  options: {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  },
+});

@@ -1,4 +1,4 @@
-import Input from './Input';
+import Input from '../Input';
 
 const InputDate = ({ setDateType, ...props }) => {
   const onDateTypeFocus = () => setDateType('date');

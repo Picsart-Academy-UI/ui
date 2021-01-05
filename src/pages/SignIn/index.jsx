@@ -7,7 +7,7 @@ import { Avatar, Button } from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/style/useStylesMain';
-import getGoogleRequestData from '../../services/signin/getGoogleRequestData';
+import getGoogleRequestData from '../../services/signin';
 import useStylesLocal from './style';
 
 const SignIn = () => {
@@ -23,8 +23,8 @@ const SignIn = () => {
       const { url, options } = getGoogleRequestData(response);
       const res = await makeRequest(url, options);
 
-      if (res.token) {
-        dispatch(setIsLoggedIn(res.token));
+      if (res.token && res.user) {
+        dispatch(setIsLoggedIn(res));
       }
 
       return true;

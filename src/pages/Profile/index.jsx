@@ -10,10 +10,22 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotMe } from '../../store/slices/profileSlice';
+import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
-const Profile = () => {
+const Profile = (props) => {
   const classesLocal = useStylesLocal();
+  const dispatch = useDispatch();
+
+  const { curUser } = useSelector((state) => state.signin);
+
+  const { id } = props.match.params;
+
+  id && props.location.user && dispatch(setNotMe(props.location.user));
+
+  const user = useSelector((state) => state.profile.notme) || curUser;
 
   return (
     <>
@@ -34,7 +46,7 @@ const Profile = () => {
               />
             </Button>
             <Typography color="textPrimary" variant="h3">
-              {'John Picsartian' /* user.name + user.surname */}
+              {`${user.first_name} ${user.last_name}`}
             </Typography>
             <Typography
               color="textPrimary"
@@ -42,7 +54,7 @@ const Profile = () => {
               variant="h3"
               className={classesLocal.emailField}
             >
-              {'john@picsart.com' /* user.email */}
+              {user.email}
             </Typography>
           </Box>
         </CardContent>
@@ -52,15 +64,8 @@ const Profile = () => {
         <Typography className={classesLocal.positionHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <Select native id="grouped-native-select">
-            <optgroup label="Image Processing" disabled>
-              <option value={1}>Team 1</option>
-              <option value={2}>Team 2</option>
-            </optgroup>
-            <optgroup label="Website" disabled>
-              <option value={3} selected>
-                Team 1
-              </option>
-              <option value={4}>Team 2</option>
+            <optgroup disabled>
+              <TeamList curUserTeam={user.team_id} />
             </optgroup>
           </Select>
         </FormControl>
@@ -69,10 +74,9 @@ const Profile = () => {
         </Typography>
         <TextField
           className={classesLocal.positionField}
-          value="Software Engineer 9 3/4"
+          value={user.position}
           disabled
         />
-        {/* user.position */}
         <Button className={classesLocal.sbmtButton}>Submit Change</Button>
       </Grid>
     </>

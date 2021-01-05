@@ -39,7 +39,7 @@ const UserRow = ({ row, name }) => {
         <TableCell align="center"></TableCell>
         <TableCell align="center">{row.email}</TableCell>
         <TableCell align="right">
-          <GoToProfile />
+          <GoToProfile user={row} />
           <BookaSeat />
           <EditRow />
           <DeleteRow />
