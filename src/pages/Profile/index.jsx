@@ -1,13 +1,15 @@
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  FormControl,
+  Select,
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotMe } from '../../store/slices/profileSlice';
 import TeamList from './components/TeamList';

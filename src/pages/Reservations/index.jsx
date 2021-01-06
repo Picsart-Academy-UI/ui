@@ -1,7 +1,5 @@
-import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
+import { Container, IconButton, Box } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Box from '@material-ui/core/Box';
 import CustomTable from './components/CustomTable';
 import useStylesLocal from './style';
 
