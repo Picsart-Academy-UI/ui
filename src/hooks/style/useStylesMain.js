@@ -10,7 +10,7 @@ const useStylesMain = makeStyles((theme) => ({
     height: '100vh',
   },
   paperPadding: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(10),
   },
 }));
 
