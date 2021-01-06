@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import LinearProgressWithLabel from '../LinearProgressWithLabel';
 
 const useStyles = makeStyles({

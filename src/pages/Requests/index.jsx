@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
