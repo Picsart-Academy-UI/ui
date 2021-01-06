@@ -5,7 +5,7 @@ import useFetch from '../../../../hooks/useFetch';
 import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 
-const DeleteRow = ({ id }) => {
+const Delete = ({ id }) => {
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
 
@@ -16,7 +16,7 @@ const DeleteRow = ({ id }) => {
     try {
       const res = await makeRequest(url, options);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.msg === 'User has successfully deleted') {
         dispatch(deleteUser(id));
@@ -35,4 +35,4 @@ const DeleteRow = ({ id }) => {
   );
 };
 
-export default DeleteRow;
+export default Delete;
