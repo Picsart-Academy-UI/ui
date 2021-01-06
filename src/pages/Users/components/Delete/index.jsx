@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import useFetch from '../../../../hooks/useFetch';
 import { getUserDeleteRequestData } from '../../../../services/users';

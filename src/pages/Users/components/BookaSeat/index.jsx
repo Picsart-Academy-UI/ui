@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import WeekendOutlinedIcon from '@material-ui/icons/WeekendOutlined';
 
 const BookaSeat = () => (
