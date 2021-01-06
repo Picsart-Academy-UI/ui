@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Box from '@material-ui/core/Box';
+import { Box } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
 import { getLimitedUsersData } from '../../services/users';

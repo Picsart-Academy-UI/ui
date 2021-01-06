@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  Button,
+  Container,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { getUserInvitationRequestData } from '../../services/users';
 import Input from './components/Input';
