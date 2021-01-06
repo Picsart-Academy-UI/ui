@@ -42,7 +42,7 @@ const UserRow = ({ row, name }) => {
           <GoToProfile user={row} />
           <BookaSeat />
           <EditRow />
-          <DeleteRow />
+          <DeleteRow id={row._id} />
         </TableCell>
       </TableRow>
 
