@@ -6,7 +6,6 @@ import { getTeamsAllRequestData } from '../../../services/teams';
 function TeamList() {
   const makeRequest = useFetch();
 
-  // const { curUserTeam } = props;
   const token = useSelector((state) => state.signin.token);
 
   const [teams, setTeams] = useState(null);
@@ -23,7 +22,7 @@ function TeamList() {
   return (
     Array.isArray(teams) &&
     teams.map((el, i) => (
-      <option value={i} key={i}>
+      <option value={i} key={i} id={el._id}>
         {el.name}
       </option>
     ))

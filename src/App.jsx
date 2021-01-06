@@ -6,13 +6,13 @@ import Router from './routes';
 import SignIn from './pages/SignIn';
 
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
+  const token = useSelector((state) => state.signin.token);
 
   return (
     <>
       <CssBaseline />
       <BrowserRouter>
-        {isLoggedIn ? (
+        {token ? (
           <>
             <Header />
             <Router />

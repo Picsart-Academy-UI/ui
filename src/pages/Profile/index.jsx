@@ -9,23 +9,62 @@ import {
   Button,
   FormControl,
   Select,
+  Hidden,
 } from '@material-ui/core';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotMe } from '../../store/slices/profileSlice';
+import setChangeCurUser from '../../store/slices/signinSlice';
+import findTeam from './helpers/findTeam';
+import updateUserHook from './helpers/updateUser';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
 const Profile = (props) => {
   const classesLocal = useStylesLocal();
+
   const dispatch = useDispatch();
 
   const { curUser } = useSelector((state) => state.signin);
+
+  const refs = {
+    name: useRef(),
+    last_name: useRef(),
+    email: useRef(),
+    team: useRef(),
+    position: useRef(),
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const { is_admin: isAdmin } = curUser;
 
   const { id } = props.match.params;
 
   id && props.location.user && dispatch(setNotMe(props.location.user));
 
   const user = useSelector((state) => state.profile.notme) || curUser;
+
+  const [edited, setEdited] = useState(user);
+
+  const updateUser = updateUserHook();
+
+  const startUpdateUser = () => {
+    const teamId = findTeam(refs.team.current.children);
+    edited.team_id = teamId;
+    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
+    updateUser(edited);
+  };
+
+  const handleUserEdit = (field, ref) => {
+    const editedUser = { ...edited, [field]: ref.current.value };
+    setEdited(editedUser);
+  };
+
+  const handleEnterEditAndSubmit = () =>
+    !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
+  const handleCancel = () =>
+    (isEditing && setIsEditing(false)) || setEdited(user);
 
   return (
     <>
@@ -45,39 +84,68 @@ const Profile = (props) => {
                 }
               />
             </Button>
-            <Typography color="textPrimary" variant="h3">
-              {`${user.first_name} ${user.last_name}`}
-            </Typography>
-            <Typography
-              color="textPrimary"
-              gutterBottom
-              variant="h3"
-              className={classesLocal.emailField}
-            >
-              {user.email}
-            </Typography>
           </Box>
         </CardContent>
       </Card>
 
       <Grid container direction="column" justify="center" alignItems="center">
-        <Typography className={classesLocal.positionHeader}>Team:</Typography>
+        <Typography className={classesLocal.textHeader}>Name:</Typography>
+        <TextField
+          className={classesLocal.textField}
+          disabled={!isEditing}
+          value={edited.first_name}
+          inputRef={refs.name}
+          onChange={() => handleUserEdit('first_name', refs.name)}
+        />
+        <Typography className={classesLocal.textHeader}>Surname:</Typography>
+        <TextField
+          className={classesLocal.textField}
+          value={edited.last_name}
+          disabled={!isEditing}
+          inputRef={refs.last_name}
+          onChange={() => handleUserEdit('last_name', refs.last_name)}
+        />
+        <Typography className={classesLocal.textHeader}>Email:</Typography>
+        <TextField
+          className={classesLocal.textField}
+          value={edited.email}
+          disabled={!isEditing}
+          inputRef={refs.email}
+          onChange={() => handleUserEdit('email', refs.email)}
+        />
+        <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <Select native id="grouped-native-select">
-            <optgroup disabled>
+            <optgroup disabled={!isEditing} ref={refs.team}>
               <TeamList curUserTeam={user.team_id} />
             </optgroup>
           </Select>
         </FormControl>
-        <Typography className={classesLocal.positionHeader}>
-          Position:
-        </Typography>
+        <Typography className={classesLocal.textHeader}>Position:</Typography>
         <TextField
-          className={classesLocal.positionField}
-          value={user.position}
-          disabled
+          className={classesLocal.textField}
+          value={edited.position}
+          disabled={!isEditing}
+          inputRef={refs.position}
+          onChange={() => handleUserEdit('position', refs.position)}
         />
-        <Button className={classesLocal.sbmtButton}>Submit Change</Button>
+        <Hidden xsUp={!isAdmin}>
+          <Button
+            className={classesLocal.sbmtButton}
+            onClick={handleEnterEditAndSubmit}
+          >
+            {isEditing ? 'Submit Change' : 'Edit'}
+          </Button>
+        </Hidden>
+        <Hidden xsUp={!isEditing}>
+          <Button
+            className={classesLocal.sbmtButton}
+            onClick={handleCancel}
+            hidden={!isEditing}
+          >
+            {isEditing ? 'Cancel' : 'Test'}
+          </Button>
+        </Hidden>
       </Grid>
     </>
   );

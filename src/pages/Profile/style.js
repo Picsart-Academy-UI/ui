@@ -12,11 +12,11 @@ const useStylesLocal = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 250,
   },
-  positionHeader: {
+  textHeader: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
   },
-  positionField: {
+  textField: {
     minWidth: 250,
   },
   sbmtButton: {
