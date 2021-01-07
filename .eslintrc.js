@@ -15,6 +15,16 @@ module.exports = {
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
       "newlines-between": "never",
+    }],
+    // "no-restricted-imports": ["error", {
+    //   "paths": ["@material-ui/core"],
+    // }],
+    "no-restricted-imports": ["error", {
+      "paths": ["@material-ui/icons"],
+    }],
+    "no-restricted-imports": ["error", {
+      "paths": ["@material-ui"],
+      "patterns": ["@material-ui/core/**/*", "!@material-ui/core/styles" ]
     }]
   },
   overrides: [
