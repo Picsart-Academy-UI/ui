@@ -14,7 +14,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
-import DeleteRow from '../DeleteRow';
+import Delete from '../Delete';
 import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
@@ -44,7 +44,7 @@ const UserRow = ({ row, name }) => {
           <GoToProfile user={row} />
           <BookaSeat />
           <EditRow />
-          <DeleteRow />
+          <Delete id={row._id} />
         </TableCell>
       </TableRow>
 
