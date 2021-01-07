@@ -22,7 +22,7 @@ function TeamList() {
   return (
     Array.isArray(teams) &&
     teams.map((el, i) => (
-      <option value={i} key={i} id={el._id}>
+      <option key={i} id={el._id}>
         {el.name}
       </option>
     ))

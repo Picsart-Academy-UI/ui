@@ -50,10 +50,10 @@ const Profile = (props) => {
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    const teamId = findTeam(refs.team.current.children);
-    edited.team_id = teamId;
-    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
-    updateUser(edited);
+    const teamId = findTeam(refs.team.current.children[0]);
+    const final = { ...edited, team_id: teamId };
+    id ? dispatch(setNotMe(final)) : dispatch(setChangeCurUser(final));
+    updateUser(final);
   };
 
   const handleUserEdit = (field, ref) => {
@@ -115,10 +115,14 @@ const Profile = (props) => {
         />
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
-          <Select native id="grouped-native-select">
-            <optgroup disabled={!isEditing} ref={refs.team}>
-              <TeamList curUserTeam={user.team_id} />
-            </optgroup>
+          <Select
+            native
+            disabled={!isEditing}
+            ref={refs.team}
+            defaultValue={10}
+          >
+            <option></option>
+            <TeamList userTeam={user.team_id} />
           </Select>
         </FormControl>
         <Typography className={classesLocal.textHeader}>Position:</Typography>
