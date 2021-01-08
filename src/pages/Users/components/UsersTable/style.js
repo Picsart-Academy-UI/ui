@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles(() => ({
   container: {
-    maxHeight: 480,
+    maxHeight: 440,
   },
 }));
 

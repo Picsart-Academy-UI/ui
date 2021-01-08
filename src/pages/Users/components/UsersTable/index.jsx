@@ -39,7 +39,7 @@ const UsersTable = ({
   return users && users.length ? (
     <Paper>
       <TableContainer className={classes.container}>
-        <Table aria-label="sticky table">
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell />
@@ -63,14 +63,14 @@ const UsersTable = ({
             )}
           </TableBody>
         </Table>
-        <Pagination
-          rows={count}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </TableContainer>
+      <Pagination
+        rows={count}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Paper>
   ) : (
     <>
