@@ -267,7 +267,7 @@ const Header = () => {
   return (
     <div className={classes.grow}>
       {mobileMenuLeft}
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           {mobileMenuLeftIcon}
           {desktopMenuLeft}

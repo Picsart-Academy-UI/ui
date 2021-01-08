@@ -13,7 +13,7 @@ const DropDown = () => {
   const handleSelectChange = () => {};
 
   return (
-    <Box ml={8} mb={1}>
+    <Box>
       <FormControl className={classes.formControl}>
         <NativeSelect
           onChange={handleSelectChange}

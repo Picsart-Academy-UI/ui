@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
+import useStylesLocal from './style';
 
 const UsersTable = ({
   rows,
@@ -18,6 +19,8 @@ const UsersTable = ({
   onChangePage,
   onChangeRowsPerPage,
 }) => {
+  const classes = useStylesLocal();
+
   const { users, count } = rows.usersList;
 
   const handleChangePage = (newPage) => {
@@ -35,8 +38,8 @@ const UsersTable = ({
 
   return users && users.length ? (
     <Paper>
-      <TableContainer>
-        <Table aria-label="collapsible table">
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell />
@@ -60,14 +63,14 @@ const UsersTable = ({
             )}
           </TableBody>
         </Table>
-        <Pagination
-          rows={count}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </TableContainer>
+      <Pagination
+        rows={count}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Paper>
   ) : (
     <>
