@@ -28,14 +28,14 @@ const Users = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(page, 'useEffect page');
+      // console.log(page, 'useEffect page');
       const { url, options } = getLimitedUsersData(
         token,
         rowsPerPage,
         page + 1
       );
       const res = await makeRequest(url, options);
-      console.log(res);
+      // console.log(res);
       dispatch(fetchedUsersList(res));
     };
     fetchData();
@@ -43,7 +43,7 @@ const Users = () => {
 
   const usersData = useSelector((state) => state.users);
 
-  console.log(page, 'users/back clicked');
+  // console.log(page, 'users/back clicked');
   return (
     <>
       <Box display="flex" justifyContent="center">
