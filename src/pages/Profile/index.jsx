@@ -23,6 +23,7 @@ const Profile = (props) => {
 
   const { id } = props.match.params;
 
+  // eslint-disable-next-line
   id && props.location.user && dispatch(setNotMe(props.location.user));
 
   const user = useSelector((state) => state.profile.notme) || curUser;
