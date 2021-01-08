@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
 import { getLimitedUsersData } from '../../services/users';
