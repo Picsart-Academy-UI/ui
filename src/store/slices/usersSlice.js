@@ -19,10 +19,17 @@ export const usersSlice = createSlice({
     fetchedUsersList: (state, action) => {
       state.usersList = action.payload;
     },
+    deleteUser: (state, action) => {
+      const userId = action.payload;
+      const index = state.usersList.users.findIndex(
+        ({ _id }) => userId === _id
+      );
+      state.usersList.users.splice(index, 1);
+    },
   },
 });
 
-export const { fetchedUsersList } = usersSlice.actions;
+export const { fetchedUsersList, deleteUser } = usersSlice.actions;
 
 export const getUsers = ({ users }) => users;
 

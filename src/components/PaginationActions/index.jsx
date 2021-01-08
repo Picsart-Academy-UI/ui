@@ -1,5 +1,5 @@
 import { useTheme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton } from '@material-ui/core';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -16,10 +16,12 @@ const PaginationActions = (props) => {
   };
 
   const handleBackButtonClick = () => {
+    console.log(page - 1, 'handlebackbtn');
     onChangePage(page - 1);
   };
 
   const handleNextButtonClick = () => {
+    console.log(page + 1, 'handlenextbtn');
     onChangePage(page + 1);
   };
 

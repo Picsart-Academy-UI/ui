@@ -1,10 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { getTeamsAllRequestData } from '../../../../services/teams';
 import useFetch from '../../../../hooks/useFetch';
 import useStylesLocal, { getStyleMenuItem } from './style';

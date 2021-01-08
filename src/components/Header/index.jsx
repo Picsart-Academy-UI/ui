@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  MenuItem,
+  Menu,
+  Tabs,
+  Tab,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -15,8 +19,6 @@ import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import { setIsLoggedOut } from '../../store/slices/signinSlice';
 import { setPath } from './desktopMenuLeftUtils';
 import useStylesLocal from './style';
@@ -28,6 +30,8 @@ const Header = () => {
 
   const history = useHistory();
   const location = useLocation();
+
+  const { curUser } = useSelector((state) => state.signin);
 
   const [
     mobileMenuRightProfileMenuAnchorEl,
@@ -243,12 +247,14 @@ const Header = () => {
       open={isMobileMenuRightProfileMenuOpen}
       onClose={handleMobileMenuRightProfileMenuClose}
     >
-      <MenuItem
-        onClick={handleMobileMenuRightProfileMenuRoute}
-        data-route="/profile"
+      <Link
+        to={{ pathname: '/profile/me', user: curUser }}
+        style={{ textDecoration: 'none' }}
       >
-        Profile
-      </MenuItem>
+        <MenuItem onClick={handleMobileMenuRightProfileMenuRoute}>
+          Profile
+        </MenuItem>
+      </Link>
       <MenuItem
         onClick={(e) => handleMobileMenuRightProfileMenuRoute(e, true)}
         data-route="/signin"
