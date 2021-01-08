@@ -1,10 +1,10 @@
 import { useTheme } from '@material-ui/core/styles';
-import useStylesLocal from './style';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import useStylesLocal from './style';
 
 const TablePaginationActions = (props) => {
   const classes = useStylesLocal();
