@@ -1,4 +1,4 @@
-import TablePagination from '@material-ui/core/TablePagination';
+import { TablePagination } from '@material-ui/core';
 import PaginationActions from '../PaginationActions';
 
 const Pagination = (props) => {

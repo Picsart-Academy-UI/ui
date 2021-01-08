@@ -1,5 +1,4 @@
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
+import { Box, TextField } from '@material-ui/core';
 
 const SearchBox = () => {
   const handleInputChange = () => {};

@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const DeleteRow = () => {

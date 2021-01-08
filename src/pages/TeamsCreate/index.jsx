@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
+import { Button, TextField, Container } from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
 import useStylesLocal from './style';

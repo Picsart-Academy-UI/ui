@@ -1,4 +1,4 @@
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 import useStylesLocal from './style';
 
 const Input = (props) => {

@@ -1,5 +1,4 @@
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import { TableRow, TableCell } from '@material-ui/core';
 import DeleteRow from '../DeleteRow';
 import EditRow from '../EditRow';
 
