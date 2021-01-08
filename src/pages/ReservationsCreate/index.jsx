@@ -1,13 +1,15 @@
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  Container,
+  TextField,
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Button,
+} from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import Button from '@material-ui/core/Button';
 import Canvas from './components/Canvas/Canvas';
 import useStyles from './styles';
 

@@ -15,7 +15,6 @@ export const getTeamCreateRequestData = ({ token, body }) => ({
 export const getTeamsAllRequestData = (token) => ({
   url: `${MAIN_ROUTE}teams`,
   options: {
-    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -25,7 +24,6 @@ export const getTeamsAllRequestData = (token) => ({
 export const getTeambyIDRequestData = ({ token, id }) => ({
   url: `${MAIN_ROUTE}teams/${id}`,
   options: {
-    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -37,6 +35,7 @@ export const getTeamUpdateRequestData = ({ token, body }) => ({
   options: {
     method: 'PUT',
     headers: {
+      'Content-Type': 'application/json;charset=utf-8',
       Authorization: `Bearer ${token}`,
     },
     body,
