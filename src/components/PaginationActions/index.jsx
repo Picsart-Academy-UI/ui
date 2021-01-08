@@ -1,33 +1,31 @@
 import { useTheme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton } from '@material-ui/core';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import useStylesLocal from './style';
 
-const TablePaginationActions = (props) => {
+const PaginationActions = (props) => {
   const classes = useStylesLocal();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
   const handleFirstPageButtonClick = () => {
-    console.log('handleFirstPageButtonClick', page);
     onChangePage(0);
   };
 
   const handleBackButtonClick = () => {
-    console.log('handleBackButtonClick', page - 1);
+    console.log(page - 1, 'handlebackbtn');
     onChangePage(page - 1);
   };
 
   const handleNextButtonClick = () => {
-    console.log('handleNextButtonClick', page + 1);
+    console.log(page + 1, 'handlenextbtn');
     onChangePage(page + 1);
   };
 
   const handleLastPageButtonClick = () => {
-    console.log('handleLastPageButtonClick');
     onChangePage(Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
@@ -73,4 +71,4 @@ const TablePaginationActions = (props) => {
   );
 };
 
-export default TablePaginationActions;
+export default PaginationActions;

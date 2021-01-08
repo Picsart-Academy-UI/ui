@@ -1,27 +1,26 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Box,
+  Collapse,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Button from '@material-ui/core/Button';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import BookaSeat from '../BookaSeat';
+import GoToProfile from '../GoToProfile';
+import Delete from '../Delete';
+import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
 const UserRow = ({ row, name }) => {
   const [open, setOpen] = useState(false);
   const classes = useStylesLocal();
-
-  const handleEditClick = () => {};
-
-  const handleDeleteClick = () => {};
 
   return (
     <>
@@ -36,44 +35,41 @@ const UserRow = ({ row, name }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.first_name}
         </TableCell>
-        <TableCell align="center">{row.surName}</TableCell>
-        <TableCell align="center">{row.team}</TableCell>
-        <TableCell align="center">{row.gmail}</TableCell>
+        <TableCell align="center">{row.last_name}</TableCell>
+        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.email}</TableCell>
         <TableCell align="right">
-          <Button variant="contained" color="primary">
-            Book a seat
-          </Button>
-          <Button title="Edit" onClick={handleEditClick} color="primary">
-            <EditOutlinedIcon />
-          </Button>
-          <Button title="Delete" onClick={handleDeleteClick} color="secondary">
-            <DeleteOutlineIcon />
-          </Button>
+          <GoToProfile user={row} />
+          <BookaSeat />
+          <EditRow />
+          <Delete id={row._id} />
         </TableCell>
       </TableRow>
 
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
+            <Box margin={1} ml={4}>
               <Typography variant="h6" gutterBottom component="div">
                 Additional Info
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Birthdate</TableCell>
-                    <TableCell>Position</TableCell>
+                    <TableCell align="center">Birthdate</TableCell>
+                    <TableCell align="center">Position</TableCell>
+                    <TableCell align="center">PhoneNumber</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow key={name}>
-                    <TableCell component="th" scope="row">
-                      {row.additionalInfo.date}
+                    <TableCell align="center" component="th" scope="row">
+                      row.birthdate
                     </TableCell>
-                    <TableCell>{row.additionalInfo.position}</TableCell>
+                    <TableCell align="center">{row.position}</TableCell>
+                    <TableCell align="center">Phone</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

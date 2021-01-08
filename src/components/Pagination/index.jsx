@@ -1,5 +1,5 @@
-import TablePagination from '@material-ui/core/TablePagination';
-import TablePaginationActions from '../TablePaginationActions';
+import { TablePagination } from '@material-ui/core';
+import PaginationActions from '../PaginationActions';
 
 const Pagination = (props) => {
   const { rows, page, rowsPerPage, onChangePage, onChangeRowsPerPage } = props;
@@ -17,7 +17,7 @@ const Pagination = (props) => {
       rowsPerPageOptions={[5, 10, 25, 50]}
       component="div"
       colSpan={3}
-      count={rows.length}
+      count={rows}
       page={page}
       rowsPerPage={rowsPerPage}
       SelectProps={{
@@ -26,7 +26,7 @@ const Pagination = (props) => {
       }}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e)}
-      ActionsComponent={TablePaginationActions}
+      ActionsComponent={PaginationActions}
     />
   );
 };

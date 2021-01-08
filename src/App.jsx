@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline } from '@material-ui/core';
 import Header from './components/Header';
 import Router from './routes';
 import SignIn from './pages/SignIn';
