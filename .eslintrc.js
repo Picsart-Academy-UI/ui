@@ -11,6 +11,7 @@ module.exports = {
     "quotes": ["warn", "single"],
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
       "newlines-between": "never",

@@ -13,11 +13,13 @@ import storage from 'redux-persist/lib/storage/session';
 import testReducer from './slices/TestSlice';
 import signinReducer from './slices/signinSlice'; // aa
 import usersReducer from './slices/usersSlice';
+import teamsReducer from './slices/teamsSlice';
 
 const reducers = combineReducers({
   test: testReducer,
   signin: signinReducer,
   users: usersReducer,
+  teams: teamsReducer,
 });
 
 const persistConfig = {
