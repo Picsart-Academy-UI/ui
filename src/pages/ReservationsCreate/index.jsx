@@ -8,16 +8,33 @@ import Receipt from './components/Receipt';
 import useStyles from './style';
 
 const ReservationsCreate = () => {
-  const [isSubmited, setIsSubmited] = useState(false);
   const styles = useStyles();
+
+  // default value
+  const defaultValue = new Date();
+  defaultValue.setDate(defaultValue.getDate() + 1);
+
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [dateRange, setDateRange] = useState([defaultValue]);
 
   // ref data
   const refFrom = useRef();
   const refTo = useRef();
 
-  // default value
-  const defaultValue = new Date();
-  defaultValue.setDate(defaultValue.getDate() + 1);
+  const createRange = (start, stop) => {
+    const range = [];
+    const currentDate = new Date(start);
+    const stopDate = new Date(stop).getDate();
+    while (currentDate.getDate() <= stopDate) {
+      range.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return range;
+  };
+
+  const handleEvent = () => {
+    setDateRange(createRange(refFrom.current.value, refTo.current.value));
+  };
 
   // Mock Data
   const selectedChair = '2/4';
@@ -54,26 +71,33 @@ const ReservationsCreate = () => {
         <Box className={styles.text}>Select date:</Box>
         <TextField
           className={styles.datePicker}
-          id="datetime-from"
+          variant="outlined"
+          id="from"
           label="From"
           type="datetime-local"
           defaultValue={defaultValue.toISOString().slice(0, 16)}
           inputRef={refFrom}
+          onChange={handleEvent}
         />
         <TextField
           className={styles.datePicker}
-          id="datetime-to"
+          variant="outlined"
+          id="to"
           label="To"
           type="datetime-local"
           defaultValue={defaultValue.toISOString().slice(0, 16)}
           inputRef={refTo}
+          onChange={handleEvent}
         />
       </Container>
       <Container className={styles.tableCont}>
         {isSubmited ? (
           <Receipt data={data} />
         ) : (
-          <TableOfTables dateRefs={[defaultValue]} />
+          <TableOfTables
+            dateRange={dateRange}
+            dateRefs={[defaultValue, defaultValue]}
+          />
         )}
       </Container>
       <Button

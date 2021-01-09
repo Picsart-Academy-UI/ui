@@ -8,18 +8,19 @@ import useStyles from './style';
 
 const TableOfTables = ({
   dateRefs,
-  data = [{ name: '2/4', dates: ['free'] }],
+  data = [{ name: '2/4', dates: ['free', 'free'] }],
 }) => {
   const styles = useStyles();
-  console.log(dateRefs);
-  const Dates = dateRefs.map((item) => new Date(item));
-  console.log(Dates);
+  // console.log(dateRefs);
+  // const Dates = dateRefs.map((item) => new Date(item));
+  // console.log(Dates);
   return (
     <TableContainer>
       <Table>
         <TableHead className={styles.name}>
           <TableRow>
             <TableCell>Chair</TableCell>
+            {/* {console.log(dateRefs[0].current)} */}
             {dateRefs.map((item) => (
               <TableCell>{item.getDate()}</TableCell>
             ))}
