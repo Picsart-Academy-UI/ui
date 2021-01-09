@@ -6,6 +6,7 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     alignItems: 'center',
     height: '5rem',
+    justifyContent: 'space-around',
   },
   text: {
     fontSize: '1rem',
@@ -23,27 +24,14 @@ const useStyles = makeStyles({
   selectedDate: {
     border: '0.125rem solid #000000',
   },
-  table: {
-    margin: '2rem auto',
-  },
-  isFreeBox: {
+  tableCont: {
     display: 'flex',
-    alignItems: 'center',
-    fontSize: '1rem',
+    justifyContent: 'space-around',
   },
-  check: {
-    marginLeft: '1rem',
-    color: '#193F32',
-  },
-  cross: {
-    marginLeft: '1rem',
-    color: '#f50057',
-  },
-  checkBtn: {
+  submitBtn: {
     position: 'fixed',
-    right: '0',
-    bottom: '0',
-    padding: '1rem 2rem',
+    bottom: '1rem',
+    right: '1rem',
   },
 });
 
