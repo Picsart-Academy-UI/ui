@@ -7,8 +7,7 @@ const useUpdateUserHook = () => {
   const token = useSelector((state) => state.signin.token);
   const update = async (edited) => {
     const { url, options } = updateUser(token, edited._id, edited);
-    const test = await makeRequest(url, options);
-    console.log(test);
+    await makeRequest(url, options);
   };
   return update;
 };

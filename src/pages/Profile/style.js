@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
   avatar: {
-    height: 200,
-    width: 200,
+    height: 100,
+    width: 100,
   },
   emailField: {
     fontSize: '1rem',
@@ -22,7 +22,7 @@ const useStylesLocal = makeStyles((theme) => ({
   sbmtButton: {
     background:
       '-webkit-linear-gradient(100deg, rgba(219,68,218,1) 0%, rgba(89,192,246,1) 78%, rgba(58,231,255,1) 100%)',
-    marginTop: theme.spacing(9),
+    marginTop: theme.spacing(1),
     fontWeight: 500,
   },
   chngAvtr: {

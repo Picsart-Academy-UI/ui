@@ -8,14 +8,12 @@ import {
   TextField,
   Button,
   FormControl,
-  Select,
   Hidden,
 } from '@material-ui/core';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotMe } from '../../store/slices/profileSlice';
 import setChangeCurUser from '../../store/slices/signinSlice';
-import findTeam from './helpers/findTeam';
 import updateUserHook from './helpers/updateUser';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
@@ -26,14 +24,6 @@ const Profile = (props) => {
   const dispatch = useDispatch();
 
   const { curUser } = useSelector((state) => state.signin);
-
-  const refs = {
-    name: useRef(),
-    last_name: useRef(),
-    email: useRef(),
-    team: useRef(),
-    position: useRef(),
-  };
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -50,21 +40,19 @@ const Profile = (props) => {
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    const teamId = findTeam(refs.team.current.children[0]);
-    const final = { ...edited, team_id: teamId };
-    id ? dispatch(setNotMe(final)) : dispatch(setChangeCurUser(final));
-    updateUser(final);
+    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
+    updateUser(edited);
   };
 
-  const handleUserEdit = (field, ref) => {
-    const editedUser = { ...edited, [field]: ref.current.value };
+  const handleUserEdit = (field, value) => {
+    const editedUser = { ...edited, [field]: value };
     setEdited(editedUser);
   };
 
   const handleEnterEditAndSubmit = () =>
     !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
   const handleCancel = () =>
-    (isEditing && setIsEditing(false)) || setEdited(user);
+    (isEditing && setIsEditing(false)) || setEdited({ ...user });
 
   return (
     <>
@@ -93,45 +81,55 @@ const Profile = (props) => {
         <TextField
           className={classesLocal.textField}
           disabled={!isEditing}
-          value={edited.first_name}
-          inputRef={refs.name}
-          onChange={() => handleUserEdit('first_name', refs.name)}
+          value={edited.first_name || ''}
+          onChange={(e) => handleUserEdit('first_name', e.target.value)}
         />
         <Typography className={classesLocal.textHeader}>Surname:</Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.last_name}
+          value={edited.last_name || ''}
           disabled={!isEditing}
-          inputRef={refs.last_name}
-          onChange={() => handleUserEdit('last_name', refs.last_name)}
+          onChange={(e) => handleUserEdit('last_name', e.target.value)}
         />
         <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.email}
+          value={edited.email || ''}
           disabled={!isEditing}
-          inputRef={refs.email}
-          onChange={() => handleUserEdit('email', refs.email)}
+          onChange={(e) => handleUserEdit('email', e.target.value)}
         />
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
-          <Select
-            native
-            disabled={!isEditing}
-            ref={refs.team}
-            defaultValue={10}
-          >
-            <option></option>
-            <TeamList userTeam={user.team_id} />
-          </Select>
+          <TeamList
+            userTeam={user.team_id}
+            changeCallback={(newValue) =>
+              handleUserEdit('team_id', newValue.id)
+            }
+            isEditing={isEditing}
+          />
         </FormControl>
         <Typography className={classesLocal.textHeader}>Position:</Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.position}
+          value={edited.position || ''}
           disabled={!isEditing}
-          inputRef={refs.position}
-          onChange={() => handleUserEdit('position', refs.position)}
+          onChange={(e) => handleUserEdit('position', e.target.value)}
+        />
+        <Typography className={classesLocal.textHeader}>
+          Phone Number:
+        </Typography>
+        <TextField
+          className={classesLocal.textField}
+          value={edited.phoneNumber || ''}
+          disabled={!isEditing}
+          onChange={(e) => handleUserEdit('phone_number', e.target.value)}
+        />
+        <Typography className={classesLocal.textHeader}>Birthdate:</Typography>
+        <TextField
+          className={classesLocal.textField}
+          value={edited.birthdate || ''}
+          disabled={!isEditing}
+          onChange={(e) => handleUserEdit('birthdate', e.target.value)}
         />
         <Hidden xsUp={!isAdmin}>
           <Button
