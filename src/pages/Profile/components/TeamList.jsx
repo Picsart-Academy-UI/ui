@@ -26,7 +26,7 @@ function TeamList(props) {
   const options =
     teams &&
     teams.map((el) => {
-      el._id === userTeam && (defaultTeam = { title: el.name, id: el._id });
+      el._id === userTeam && (defaultTeam = { title: el.name, id: el._id }); //eslint-disable-line
       return { title: el.name, id: el._id };
     });
 

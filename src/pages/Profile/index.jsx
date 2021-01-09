@@ -41,7 +41,7 @@ const Profile = (props) => {
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
+    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited)); //eslint-disable-line
     updateUser(edited);
   };
 
