@@ -42,8 +42,8 @@ const Users = () => {
   }, [page, rowsPerPage]);
 
   const usersData = useSelector((state) => state.users);
+  console.log('usersData', usersData);
 
-  // console.log(page, 'users/back clicked');
   return (
     <>
       <Grid container spacing={3}>

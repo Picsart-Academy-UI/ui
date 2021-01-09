@@ -33,7 +33,6 @@ const Profile = (props) => {
 
   if (id && props.location.user) dispatch(setNotMe(props.location.user));
 
-
   const user = useSelector((state) => state.profile.notme) || curUser;
 
   const [edited, setEdited] = useState(user);
