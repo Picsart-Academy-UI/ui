@@ -11,7 +11,10 @@ export const signinSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = true;
       state.token = action.payload.token;
-      state.curUser = action.payload.user;
+      state.curUser = action.payload.data;
+    },
+    setChangeCurUser: (state, action) => {
+      state.curUser = action.payload;
     },
     setIsLoggedOut: (state) => {
       state.isLoggedIn = false;
