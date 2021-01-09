@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { setTeams } from '../../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../../services/teams';
 import useFetch from '../../../../hooks/useFetch';
 import useStylesLocal, { getStyleMenuItem } from './style';
@@ -23,10 +24,13 @@ const SelectTeam = ({
   shouldBeReseted,
   setTeamShouldBeReseted,
 }) => {
-  const [teamsAll, setTeamsAll] = useState([]);
+  const dispatch = useDispatch();
   const [team, setTeam] = useState('');
 
-  const token = useSelector((state) => state.signin.token);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
 
   const makeRequest = useFetch();
 
@@ -34,7 +38,7 @@ const SelectTeam = ({
   const theme = useTheme();
 
   const handleChange = (event) => {
-    const teamItem = teamsAll.find(({ name }) => name === event.target.value);
+    const teamItem = teams.find(({ name }) => name === event.target.value);
     const { _id } = teamItem;
     setTeam(event.target.value);
     selectTeamId(_id);
@@ -48,7 +52,7 @@ const SelectTeam = ({
       // console.log(res);
 
       if (res.teams) {
-        setTeamsAll(res.teams);
+        dispatch(setTeams(res.teams));
         return true;
       }
       return false;
@@ -58,10 +62,10 @@ const SelectTeam = ({
   }, [makeRequest, token]);
 
   useEffect(() => {
-    if (!teamsAll.length) {
+    if (!teams.length) {
       getTeamsAllAuto();
     }
-  }, [teamsAll, getTeamsAllAuto]);
+  }, [teams, getTeamsAllAuto]);
 
   useEffect(() => {
     if (shouldBeReseted) {
@@ -86,7 +90,7 @@ const SelectTeam = ({
         label="Team"
         MenuProps={MenuProps}
       >
-        {teamsAll.map(({ _id, name }) => (
+        {teams.map(({ _id, name }) => (
           <MenuItem
             key={_id + name}
             value={name}
