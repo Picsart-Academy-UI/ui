@@ -31,8 +31,8 @@ const Profile = (props) => {
 
   const { id } = props.match.params;
 
-  // eslint-disable-next-line
-  id && props.location.user && dispatch(setNotMe(props.location.user));
+  if (id && props.location.user) dispatch(setNotMe(props.location.user));
+
 
   const user = useSelector((state) => state.profile.notme) || curUser;
 
@@ -41,7 +41,8 @@ const Profile = (props) => {
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
+    if (id) dispatch(setNotMe(edited));
+    else dispatch(setChangeCurUser(edited));
     updateUser(edited);
   };
 
