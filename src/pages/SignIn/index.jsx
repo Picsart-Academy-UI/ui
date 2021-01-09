@@ -19,8 +19,7 @@ const SignIn = () => {
     try {
       const { url, options } = getGoogleRequestData(response);
       const res = await makeRequest(url, options);
-
-      if (res.token && res.user) {
+      if (res.token && res.data) {
         dispatch(setIsLoggedIn(res));
       }
 
