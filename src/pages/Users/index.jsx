@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
 import { getLimitedUsersData } from '../../services/users';
@@ -28,14 +28,14 @@ const Users = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(page, 'useEffect page');
+      // console.log(page, 'useEffect page');
       const { url, options } = getLimitedUsersData(
         token,
         rowsPerPage,
         page + 1
       );
       const res = await makeRequest(url, options);
-      console.log(res);
+      // console.log(res);
       dispatch(fetchedUsersList(res));
     };
     fetchData();
@@ -43,14 +43,20 @@ const Users = () => {
 
   const usersData = useSelector((state) => state.users);
 
-  console.log(page, 'users/back clicked');
+  // console.log(page, 'users/back clicked');
   return (
     <>
-      <Box display="flex" justifyContent="center">
-        <SearchBox />
-        <DropDown />
-      </Box>
-      <AddUser />
+      <Grid container spacing={3}>
+        <Grid item xs>
+          <SearchBox />
+        </Grid>
+        <Grid item xs>
+          <DropDown />
+        </Grid>
+        <Grid item xs>
+          <AddUser />
+        </Grid>
+      </Grid>
       <UsersTable
         rows={usersData}
         page={page}

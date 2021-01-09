@@ -4,7 +4,7 @@ const SearchBox = () => {
   const handleInputChange = () => {};
 
   return (
-    <Box mt={3}>
+    <Box mt={2}>
       <TextField
         onChange={handleInputChange}
         name="searchTeam"
