@@ -1,6 +1,6 @@
 import { MAIN_ROUTE } from '../../constants';
 
-const getAllTeams = (token, id, body) => ({
+const updateUser = (token, id, body) => ({
   url: `${MAIN_ROUTE}users/${id}`,
   options: {
     body,
@@ -12,4 +12,4 @@ const getAllTeams = (token, id, body) => ({
   },
 });
 
-export default getAllTeams;
+export default updateUser;
