@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  Button,
-  Container,
-  FormControlLabel,
-  Checkbox,
-} from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import Input from '../Input';
 import InputDate from '../InputDate';
 import SelectTeam from '../SelectTeam';
@@ -23,7 +18,7 @@ const Form = ({ submitForm }) => {
   );
 
   return (
-    <Container component="main">
+    <div className={classesLocal.formWrapper}>
       <form onSubmit={handleSubmit}>
         <div className={classesLocal.inputsWrapper}>
           <Input
@@ -63,6 +58,15 @@ const Form = ({ submitForm }) => {
             helperText={errors.birthdate}
             setDateType={setDateType}
           />
+          <Input
+            id="phonenumber"
+            label="Phone Number"
+            name="phonenumber"
+            value={values.phonenumber}
+            onChange={handleChange}
+            error={Boolean(errors.phonenumber)}
+            helperText={errors.phonenumber}
+          />
           <SelectTeam
             id="team_id"
             team_id="team_id"
@@ -80,16 +84,8 @@ const Form = ({ submitForm }) => {
             error={Boolean(errors.position_id)}
             helperText={errors.position_id}
           />
-          <Input
-            id="phonenumber"
-            label="Phone Number"
-            name="phonenumber"
-            value={values.phonenumber}
-            onChange={handleChange}
-            error={Boolean(errors.phonenumber)}
-            helperText={errors.phonenumber}
-          />
           <FormControlLabel
+            className={classesLocal.checkbox}
             control={
               <Checkbox
                 id="is_admin"
@@ -110,7 +106,7 @@ const Form = ({ submitForm }) => {
           </Button>
         </div>
       </form>
-    </Container>
+    </div>
   );
 };
 

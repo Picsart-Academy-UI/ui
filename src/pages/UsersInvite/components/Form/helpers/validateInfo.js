@@ -4,12 +4,12 @@ const validateInfo = (values) => {
   const errors = {};
 
   if (!values.email) {
-    errors.email = 'Email required';
+    errors.email = 'Email address required';
   } else if (
     !EMAIL_REGEXP.test(values.email) ||
     !GMAIL_REGEXP.test(values.email)
   ) {
-    errors.email = 'Email address is invalid';
+    errors.email = 'invalid email address';
   }
 
   if (!values.first_name.trim()) {
@@ -35,7 +35,7 @@ const validateInfo = (values) => {
   }
 
   if (!values.position_id.trim()) {
-    errors.position = 'Position required';
+    errors.position_id = 'Position required';
   }
 
   // if (!values.phonenumber.trim()) {
