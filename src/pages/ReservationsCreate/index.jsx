@@ -15,6 +15,7 @@ const ReservationsCreate = () => {
   defaultValue.setDate(defaultValue.getDate() + 1);
 
   const [isSubmited, setIsSubmited] = useState(false);
+  const [reservations, setReservations] = useState([]);
   const [dateRange, setDateRange] = useState([defaultValue]);
 
   // ref data
@@ -35,38 +36,35 @@ const ReservationsCreate = () => {
   const handleEvent = () => {
     setDateRange(createRange(refFrom.current.value, refTo.current.value));
   };
-
-  // Mock Data
-  const selectedChair = '2/4';
-  const data = [
-    {
-      date: defaultValue,
-      isFree: true,
-      chair: selectedChair,
-      id: Math.floor(Math.random() * 10000),
-    },
-    {
-      date: defaultValue,
-      isFree: false,
-      chair: selectedChair,
-      id: Math.floor(Math.random() * 10000),
-    },
-    {
-      date: defaultValue,
-      isFree: false,
-      chair: selectedChair,
-      id: Math.floor(Math.random() * 10000),
-    },
-    {
-      date: defaultValue,
-      isFree: true,
-      chair: selectedChair,
-      id: Math.floor(Math.random() * 10000),
-    },
-  ];
+  const choseChair = (chair) => {
+    const newReservations = [...reservations];
+    const reservationSameDate = newReservations.find(
+      ({ date }) => date === chair.date
+    );
+    const indexOfDate = newReservations.indexOf(reservationSameDate);
+    if (reservationSameDate && reservationSameDate.chair === chair.chair) {
+      newReservations.splice(indexOfDate, 1);
+    } else if (reservationSameDate === undefined) {
+      newReservations.push(chair);
+    } else {
+      newReservations[indexOfDate] = chair;
+    }
+    setReservations(newReservations);
+  };
+  const choseRow = (row) => {
+    const newReservations = row.dates.map((item) => ({
+      ...item,
+      chair: row.name,
+      id: row.id,
+    }));
+    setReservations(newReservations);
+  };
+  const chooseAnotherSeat = () => {
+    setIsSubmited(false);
+  };
 
   return (
-    <>
+    <Container className={styles.contWrapper}>
       <Container className={styles.topCont}>
         <Box className={styles.text}>Select date:</Box>
         <TextField
@@ -92,26 +90,35 @@ const ReservationsCreate = () => {
       </Container>
       <Container className={styles.tableCont}>
         {isSubmited ? (
-          <Receipt data={data} />
+          <Receipt
+            reservs={reservations}
+            chooseAnotherSeat={chooseAnotherSeat}
+          />
         ) : (
           <TableOfTables
             dateRange={dateRange}
-            dateRefs={[defaultValue, defaultValue]}
+            choseChair={choseChair}
+            reservations={reservations}
+            choseRow={choseRow}
           />
         )}
       </Container>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          setIsSubmited(!isSubmited);
-        }}
-        className={styles.submitBtn}
-      >
-        {' '}
-        Submit{' '}
-      </Button>
-    </>
+      {!isSubmited ? (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setIsSubmited(!isSubmited);
+          }}
+          className={styles.submitBtn}
+        >
+          {' '}
+          Submit{' '}
+        </Button>
+      ) : (
+        ''
+      )}
+    </Container>
   );
 };
 

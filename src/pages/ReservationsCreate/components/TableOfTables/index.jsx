@@ -6,37 +6,82 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import useStyles from './style';
 
-const TableOfTables = ({
-  dateRefs,
-  data = [{ name: '2/4', dates: ['free', 'free'] }],
-}) => {
+const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
   const styles = useStyles();
-  // console.log(dateRefs);
-  // const Dates = dateRefs.map((item) => new Date(item));
-  // console.log(Dates);
+  const dates = [];
+  dateRange.map((item) => {
+    if (item.getDate() % 2) {
+      dates.push({ date: item, isFree: true });
+    } else {
+      dates.push({ date: item, isFree: false });
+    }
+    return '';
+  });
+  const data = [
+    { name: '1/12', dates, id: '1' },
+    { name: '2/12', dates, id: '11' },
+    { name: '3/12', dates, id: '111' },
+    { name: '4/12', dates, id: '1111' },
+    { name: '5/12', dates, id: '11111' },
+    { name: '6/12', dates, id: '111111' },
+    { name: '7/12', dates, id: '1111111' },
+    { name: '8/12', dates, id: '11111111' },
+    { name: '9/12', dates, id: '111111111' },
+    { name: '10/12', dates, id: '1111111111' },
+    { name: '11/12', dates, id: '11111111111' },
+    { name: '12/12', dates, id: '111111111111' },
+  ];
+
   return (
-    <TableContainer>
-      <Table>
-        <TableHead className={styles.name}>
-          <TableRow>
-            <TableCell>Chair</TableCell>
-            {/* {console.log(dateRefs[0].current)} */}
-            {dateRefs.map((item) => (
-              <TableCell>{item.getDate()}</TableCell>
+    <TableContainer className={styles.container}>
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow className={styles.dateRow}>
+            <TableCell className={styles.stickyHeaderCell}>Chair</TableCell>
+            {dateRange.map((item) => (
+              <TableCell className={styles.headerCell} key={item.getDate()}>
+                {item.toLocaleString('default', {
+                  month: 'short',
+                  year: 'numeric',
+                  day: 'numeric',
+                })}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            {data.map((item) => (
-              <>
-                <TableCell>{item.name}</TableCell>
-                {item.dates.map((status) => (
-                  <TableCell>{status}</TableCell>
-                ))}
-              </>
-            ))}
-          </TableRow>
+          {data.map((item) => (
+            <TableRow
+              key={item.id}
+              classes={{ root: styles.tableRow, selected: styles.selectedRow }}
+            >
+              <TableCell
+                className={styles.tableCell}
+                onClick={() => choseRow(item)}
+              >
+                {item.name}
+              </TableCell>
+              {item.dates.map((date) => {
+                const reservOnSameDate = reservations.find(
+                  (reservation) => reservation.date === date.date
+                );
+                const isSelected =
+                  reservOnSameDate && reservOnSameDate.chair === item.name;
+                return (
+                  <TableCell
+                    onClick={() =>
+                      choseChair({ ...date, chair: item.name, id: item.id })
+                    }
+                    className={`${
+                      date.isFree ? styles.freeChair : styles.reservedChair
+                    } ${isSelected ? styles.selected : ''}`}
+                  >
+                    {date.isFree ? 'free' : 'reserved'}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

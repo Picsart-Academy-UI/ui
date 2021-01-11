@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+  contWrapper: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    width: '100%',
+    height: '85vh',
+  },
   topCont: {
     display: 'flex',
     flexDirection: 'row',
@@ -18,15 +24,15 @@ const useStyles = makeStyles({
   datePicker: {
     marginRight: '2rem',
   },
-  canvasCont: {
-    marginTop: '2rem',
-  },
   selectedDate: {
     border: '0.125rem solid #000000',
   },
   tableCont: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: '1 1 auto',
+    overflow: 'hidden',
   },
   submitBtn: {
     position: 'fixed',

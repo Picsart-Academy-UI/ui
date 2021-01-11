@@ -1,8 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  table: {
-    margin: '2rem auto',
+  container: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    alignItems: 'center',
+  },
+  tableContainer: {
+    maxHeight: '35rem',
+    maxWidth: '100%',
   },
   isFreeBox: {
     display: 'flex',
@@ -21,6 +27,10 @@ const useStyles = makeStyles({
     position: 'fixed',
     right: '0',
     bottom: '0',
+    padding: '1rem 2rem',
+  },
+  submitBtn: {
+    margin: '2rem',
     padding: '1rem 2rem',
   },
 });
