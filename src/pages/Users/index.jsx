@@ -42,7 +42,7 @@ const Users = () => {
   }, [page, rowsPerPage, dispatch, makeRequest, token]);
 
   const usersData = useSelector((state) => state.users);
-  console.log('usersData', usersData);
+  // console.log('usersData', usersData);
 
   return (
     <>

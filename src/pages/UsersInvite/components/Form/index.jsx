@@ -59,13 +59,13 @@ const Form = ({ submitForm }) => {
             setDateType={setDateType}
           />
           <Input
-            id="phonenumber"
-            label="Phone Number"
-            name="phonenumber"
-            value={values.phonenumber}
+            id="phone"
+            label="Phone"
+            name="phone"
+            value={values.phone}
             onChange={handleChange}
-            error={Boolean(errors.phonenumber)}
-            helperText={errors.phonenumber}
+            error={Boolean(errors.phone)}
+            helperText={errors.phone}
           />
           <SelectTeam
             id="team_id"

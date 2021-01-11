@@ -6,9 +6,9 @@ const useForm = (callback, validate) => {
     first_name: '',
     last_name: '',
     birthdate: '',
+    phone: '',
     team_id: '',
     position_id: '',
-    phonenumber: '',
     is_admin: false,
   });
   const [errors, setErrors] = useState({});
@@ -23,7 +23,7 @@ const useForm = (callback, validate) => {
         [name]: checked,
       });
     }
-    if (name === 'phonenumber') {
+    if (name === 'phone') {
       // eslint-disable-next-line
       if (!isNaN(value)) {
         setValues({
@@ -31,7 +31,7 @@ const useForm = (callback, validate) => {
           [name]: value,
         });
       }
-    } else {
+    } else if (name !== 'is_admin') {
       setValues({
         ...values,
         [name]: value,
@@ -52,9 +52,9 @@ const useForm = (callback, validate) => {
       first_name: '',
       last_name: '',
       birthdate: '',
+      phone: '',
       team_id: '',
       position_id: '',
-      phonenumber: '',
       is_admin: false,
     });
 

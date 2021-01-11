@@ -38,8 +38,8 @@ const validateInfo = (values) => {
     errors.position_id = 'Position required';
   }
 
-  // if (!values.phonenumber.trim()) {
-  //   errors.phonenumber = 'Invalid phone number';
+  // if (!values.phone.trim()) {
+  //   errors.phone = 'Invalid phone number';
   // }
 
   return errors;

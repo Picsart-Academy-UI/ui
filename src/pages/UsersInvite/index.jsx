@@ -30,7 +30,7 @@ const UserInvite = () => {
 
       const res = await makeRequest(url, options);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.data) {
         resetValues();
@@ -54,7 +54,7 @@ const UserInvite = () => {
     [makeRequest, teams, token]
   );
 
-  console.log(isSubmitted, message);
+  // console.log(isSubmitted, message);
 
   return (
     <>
