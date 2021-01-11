@@ -20,7 +20,7 @@ const UserInvite = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const submitForm = useCallback(
-    async (values) => {
+    async (values, resetValues) => {
       const body = { ...values };
       const teamItem = teams.find(({ name }) => name === values.team_id);
       body.team_id = teamItem._id;
@@ -33,6 +33,7 @@ const UserInvite = () => {
       console.log(res);
 
       if (res.data) {
+        resetValues();
         setIsSubmitted((prevState) => {
           if (!prevState) {
             setMessage({ msg: 'Success.', severity: 'success' });
@@ -41,6 +42,7 @@ const UserInvite = () => {
         });
       }
       if (res.error) {
+        resetValues();
         setIsSubmitted((prevState) => {
           if (!prevState) {
             setMessage({ msg: res.error, severity: 'error' });

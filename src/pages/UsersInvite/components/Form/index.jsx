@@ -40,7 +40,7 @@ const Form = ({ submitForm }) => {
             id="first_name"
             label="Name"
             name="first_name"
-            value={values.name}
+            value={values.first_name}
             onChange={handleChange}
             error={Boolean(errors.first_name)}
             helperText={errors.first_name}
@@ -49,7 +49,7 @@ const Form = ({ submitForm }) => {
             id="last_name"
             label="Surname"
             name="last_name"
-            value={values.surName}
+            value={values.last_name}
             onChange={handleChange}
             error={Boolean(errors.last_name)}
             helperText={errors.last_name}
@@ -75,10 +75,10 @@ const Form = ({ submitForm }) => {
             id="position_id"
             label="Position"
             name="position_id"
-            value={values.position}
+            value={values.position_id}
             onChange={handleChange}
-            error={Boolean(errors.position)}
-            helperText={errors.position}
+            error={Boolean(errors.position_id)}
+            helperText={errors.position_id}
           />
           <Input
             id="phonenumber"

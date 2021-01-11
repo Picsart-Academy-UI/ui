@@ -46,14 +46,26 @@ const useForm = (callback, validate) => {
     setIsSubmitting(true);
   };
 
+  const resetValues = () =>
+    setValues({
+      email: '',
+      first_name: '',
+      last_name: '',
+      birthdate: '',
+      team_id: '',
+      position_id: '',
+      phonenumber: '',
+      is_admin: false,
+    });
+
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
-      callback(values);
+      callback(values, resetValues);
       setIsSubmitting(false);
     }
   }, [errors, values, callback, isSubmitting]);
 
-  return { handleChange, handleSubmit, values, errors };
+  return { handleChange, handleSubmit, resetValues, values, errors };
 };
 
 export default useForm;
