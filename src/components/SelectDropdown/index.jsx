@@ -10,6 +10,7 @@ const SelectDropdown = ({
   ...props
 }) => {
   const isControlled = 'value' in props;
+  const { isDisabled, style, variant = 'outlined' } = props;
   const [localValue, setLocalValue] = useState(defaultValue);
   const currentValue = isControlled ? props.value : localValue;
 
@@ -21,22 +22,22 @@ const SelectDropdown = ({
   };
 
   return (
-    <div>
-      <Autocomplete
-        id={label}
-        options={options}
-        autoHighlight
-        blurOnSelect
-        value={currentValue}
-        onChange={onSelectChange}
-        disableClearable
-        getOptionLabel={(option) => option.title}
-        style={{ width: 300 }}
-        renderInput={(params) => (
-          <TextField {...params} label={label} variant="outlined" />
-        )}
-      />
-    </div>
+    <Autocomplete
+      id={label}
+      options={options}
+      autoHighlight
+      blurOnSelect
+      value={currentValue}
+      onChange={onSelectChange}
+      disableClearable
+      getOptionLabel={(option) => option.title}
+      getOptionSelected={(option) => option.title}
+      style={style}
+      disabled={isDisabled}
+      renderInput={(params) => (
+        <TextField {...params} label={label} variant={variant} />
+      )}
+    />
   );
 };
 

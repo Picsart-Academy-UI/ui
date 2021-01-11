@@ -13,7 +13,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const usersSlice = createSlice({
   name: 'usersData',
   initialState: {
-    usersList: [],
+    usersList: {},
   },
   reducers: {
     fetchedUsersList: (state, action) => {
