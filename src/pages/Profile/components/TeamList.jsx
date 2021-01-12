@@ -17,7 +17,7 @@ function TeamList(props) {
     const fetchTeams = async () => {
       const { url, options } = getTeamsAllRequestData(token);
       const data = await makeRequest(url, options);
-      setTeams(data.teams);
+      setTeams(data.data);
     };
     fetchTeams();
   }, [makeRequest, token]);
