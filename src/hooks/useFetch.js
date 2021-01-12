@@ -13,7 +13,7 @@ const useRequest = () => {
 
       return result;
     } catch (err) {
-      return new Error(err.message);
+      console.log(err.message);
     }
   }, []);
   return makeRequest;

@@ -66,6 +66,7 @@ const Form = ({ submitForm }) => {
             onChange={handleChange}
             error={Boolean(errors.phone)}
             helperText={errors.phone}
+            type="number"
           />
           <SelectTeam
             id="team_id"

@@ -42,7 +42,6 @@ const UserInvite = () => {
         });
       }
       if (res.error) {
-        resetValues();
         setIsSubmitted((prevState) => {
           if (!prevState) {
             setMessage({ msg: res.error, severity: 'error' });

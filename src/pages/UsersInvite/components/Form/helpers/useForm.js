@@ -12,38 +12,24 @@ const useForm = (callback, validate) => {
     is_admin: false,
   });
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submited, setSubmited] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'is_admin') {
-      const { checked } = e.target;
-      setValues({
-        ...values,
-        [name]: checked,
-      });
-    }
-    if (name === 'phone') {
-      // eslint-disable-next-line
-      if (!isNaN(value)) {
-        setValues({
-          ...values,
-          [name]: value,
-        });
-      }
-    } else if (name !== 'is_admin') {
-      setValues({
-        ...values,
-        [name]: value,
-      });
-    }
+
+    const vals = {
+      ...values,
+      [name]: name !== 'is_admin' ? value : e.target.checked,
+    };
+
+    setValues(vals);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setErrors(validate(values));
-    setIsSubmitting(true);
+    setSubmited(true);
   };
 
   const resetValues = () =>
@@ -59,11 +45,12 @@ const useForm = (callback, validate) => {
     });
 
   useEffect(() => {
-    if (Object.keys(errors).length === 0 && isSubmitting) {
+    // console.log(errors)
+    if (Object.keys(errors).length === 0 && submited) {
       callback(values, resetValues);
-      setIsSubmitting(false);
+      setSubmited(false);
     }
-  }, [errors, values, callback, isSubmitting]);
+  }, [errors, values, callback, submited]);
 
   return { handleChange, handleSubmit, resetValues, values, errors };
 };
