@@ -39,10 +39,10 @@ const Users = () => {
       dispatch(fetchedUsersList(res));
     };
     fetchData();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, dispatch, makeRequest, token]);
 
   const usersData = useSelector((state) => state.users);
-  console.log('usersData', usersData);
+  // console.log('usersData', usersData);
 
   return (
     <>
