@@ -1,15 +1,15 @@
 import { MAIN_ROUTE } from '../../constants';
 
-const getUserInvitationRequestData = ({ token, body }) => ({
-  url: `${MAIN_ROUTE}auth/invite`,
+const updateUser = (token, id, body) => ({
+  url: `${MAIN_ROUTE}users/${id}`,
   options: {
-    method: 'POST',
+    body,
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       Authorization: `Bearer ${token}`,
     },
-    body,
   },
 });
 
-export default getUserInvitationRequestData;
+export default updateUser;

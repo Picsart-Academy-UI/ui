@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Box,
+  Collapse,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
-import DeleteRow from '../DeleteRow';
+import Delete from '../Delete';
 import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
@@ -33,16 +35,16 @@ const UserRow = ({ row, name }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.first_name}
         </TableCell>
-        <TableCell align="center">{row.surName}</TableCell>
-        <TableCell align="center">{row.team}</TableCell>
-        <TableCell align="center">{row.gmail}</TableCell>
+        <TableCell align="center">{row.last_name}</TableCell>
+        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.email}</TableCell>
         <TableCell align="right">
-          <GoToProfile />
+          <GoToProfile user={row} />
           <BookaSeat />
           <EditRow />
-          <DeleteRow />
+          <Delete id={row._id} />
         </TableCell>
       </TableRow>
 
@@ -64,14 +66,10 @@ const UserRow = ({ row, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      {row.additionalInfo.date}
+                      row.birthdate
                     </TableCell>
-                    <TableCell align="center">
-                      {row.additionalInfo.position}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.additionalInfo.phoneNumber}
-                    </TableCell>
+                    <TableCell align="center">{row.position}</TableCell>
+                    <TableCell align="center">Phone</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

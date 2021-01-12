@@ -1,5 +1,4 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import { Box, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 const AddTeam = () => {
@@ -18,7 +17,7 @@ const AddTeam = () => {
           variant="contained"
           test="add-btn"
         >
-          Add Team
+          Add a Team
         </Button>
       </Box>
     </Box>

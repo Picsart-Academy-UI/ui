@@ -1,12 +1,14 @@
-import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Container, IconButton, Box } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Box from '@material-ui/core/Box';
 import CustomTable from './components/CustomTable';
 import useStylesLocal from './style';
 
 const Reservations = () => {
   const styles = useStylesLocal();
+
+  const history = useHistory();
 
   // needs to be used before the api is ready
   const createRes = (status) => {
@@ -16,31 +18,40 @@ const Reservations = () => {
       date: `${date.getDay()} ${date.getMonth() + 1} ${date.getFullYear()}`,
       place: '0/0',
       status,
+      id: Math.floor(Math.random() * 10000),
     };
   };
 
-  const activeRes = [
+  const [activeRes, setActiveRes] = useState([
     createRes('pending'),
     createRes('approved'),
     createRes('pending'),
     createRes('rejected'),
     createRes('pending'),
+    createRes('pending'),
+    createRes('pending'),
+    createRes('pending'),
+  ]);
+
+  const historyRes = [
+    createRes('rejected'),
     createRes('approved'),
+    createRes('rejected'),
+    createRes('approved'),
+    createRes('rejected'),
   ];
 
-  const history = [
-    createRes('rejected'),
-    createRes('approved'),
-    createRes('rejected'),
-    createRes('approved'),
-    createRes('rejected'),
-  ];
+  const edit = () => {
+    history.push('/Reservations/edit');
+  };
 
-  const edit = () => {};
+  const cancel = () => {
+    setActiveRes([]);
+  };
 
-  const cancel = () => {};
-
-  const add = () => {};
+  const add = () => {
+    history.push('/Reservations/create');
+  };
 
   return (
     <>
@@ -73,7 +84,7 @@ const Reservations = () => {
           <Box> History </Box>
         </Box>
         <CustomTable
-          data={history}
+          data={historyRes}
           isHistory={true}
           edit={edit}
           cancel={cancel}

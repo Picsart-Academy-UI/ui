@@ -1,11 +1,10 @@
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
+import { Box, TextField } from '@material-ui/core';
 
 const SearchBox = () => {
   const handleInputChange = () => {};
 
   return (
-    <Box mt={3}>
+    <Box mt={2}>
       <TextField
         onChange={handleInputChange}
         name="searchTeam"

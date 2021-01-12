@@ -1,162 +1,50 @@
-import { useState } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+} from '@material-ui/core';
 import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
+import useStylesLocal from './style';
 
-const createData = (
-  name,
-  surName,
-  team,
-  gmail,
-  position,
-  birthDay,
-  phoneNumber
-) => ({
-  name,
-  surName,
-  team,
-  gmail,
-  additionalInfo: {
-    date: birthDay,
-    position,
-    phoneNumber,
-  },
-});
+const UsersTable = ({
+  rows,
+  page,
+  rowsPerPage,
+  onChangePage,
+  onChangeRowsPerPage,
+}) => {
+  const classes = useStylesLocal();
 
-const rows = [
-  createData(
-    'User 1',
-    'Dalakyan',
-    'Team 2',
-    'us231.dalakyan@gmail.com',
-    'Junior 1',
-    '12.10.1999',
-    '+374 96785463'
-  ),
-  createData(
-    'User 2',
-    'Mkrtchyan',
-    'Team 5',
-    'us432.mkrtchyan@gmail.com',
-    'Senior 3',
-    '14.02.1993',
-    '+374 91345463'
-  ),
-  createData(
-    'User 3',
-    'Ayvazyan',
-    'Team 1',
-    'us121.ayvazyan@gmail.com',
-    'Midlle 2',
-    '29.10.1997',
-    '+374 99756763'
-  ),
-  createData(
-    'User 4',
-    'Gevorgyan',
-    'Team 3',
-    'us674.gevorgyan@gmail.com',
-    'Junior 3',
-    '14.05.1998',
-    '+374 96785463'
-  ),
-  createData(
-    'User 5',
-    'Ananyan',
-    'Team 4',
-    'us456.ananyan@gmail.com',
-    'Middle 1',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 6',
-    'Ananyan',
-    'Team 6',
-    'yu456.ananyan@gmail.com',
-    'Middle 3',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 7',
-    'Ananyan',
-    'Team 7',
-    'kf478.ananyan@gmail.com',
-    'Middle 1',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 8',
-    'Ananyan',
-    'Team 8',
-    'io478.ananyan@gmail.com',
-    'Middle 1',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 9',
-    'Ananyan',
-    'Team 9',
-    'po478.ananyan@gmail.com',
-    'Middle 1',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 10',
-    'Ananyan',
-    'Team 10',
-    'lm478.ananyan@gmail.com',
-    'Middle 1',
-    '17.06.1997',
-    '+374 96785463'
-  ),
-  createData(
-    'User 11',
-    'Dalakyan',
-    'Team 11',
-    'us231.dalakyan@gmail.com',
-    'Junior 1',
-    '12.10.1999',
-    '+374 96785463'
-  ),
-];
-
-const UsersTable = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { users, count } = rows.usersList;
 
   const handleChangePage = (newPage) => {
-    setPage(newPage);
+    onChangePage(newPage);
   };
 
   const handleChangeRowsPerPage = (value) => {
-    setRowsPerPage(value);
-    setPage(0);
+    onChangeRowsPerPage(value);
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    users && users.length
+      ? rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
+      : 0;
 
-  return (
+  return users && users.length ? (
     <Paper>
-      <TableContainer>
-        <Table aria-label="collapsible table">
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell>Name</TableCell>
-              <TableCell align="center">SurName</TableCell>
+              <TableCell align="center">Surname</TableCell>
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
               <TableCell align="right">
@@ -165,12 +53,8 @@ const UsersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <UserRow key={row.name} row={row} />
-            ))}
+            {rowsPerPage > 0 &&
+              users.map((row) => <UserRow key={row._id} row={row} />)}
 
             {emptyRows > 0 && (
               <TableRow>
@@ -179,15 +63,19 @@ const UsersTable = () => {
             )}
           </TableBody>
         </Table>
-        <Pagination
-          rows={rows}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </TableContainer>
+      <Pagination
+        rows={count}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Paper>
+  ) : (
+    <>
+      <h1>Loading</h1>
+    </>
   );
 };
 
