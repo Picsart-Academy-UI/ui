@@ -30,3 +30,12 @@ export const getUserDeleteRequestData = ({ token, id }) => ({
     },
   },
 });
+
+export const getUsersBySearch = ({ token, limit, page, value }) => ({
+  url: `${MAIN_ROUTE}users/search?search_by=first_name&value=${value}&limit=${limit}&page=${page}`, // eslint-disable-line
+  options: {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  },
+});

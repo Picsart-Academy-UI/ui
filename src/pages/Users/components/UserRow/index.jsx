@@ -23,6 +23,8 @@ const UserRow = ({ user, name }) => {
   const [teamObj, setTeamObj] = useState({});
   const classes = useStylesLocal();
 
+  console.log('user', user);
+
   const teams = useSelector((state) => state.teams.teams);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const UserRow = ({ user, name }) => {
                       user.birthdate
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
-                    <TableCell align="center">Phone</TableCell>
+                    <TableCell align="center">{user.phone}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
