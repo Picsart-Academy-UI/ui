@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { PICSART_LOGO } from '../../constants';
 import { setNotMe } from '../../store/slices/profileSlice';
 import setChangeCurUser from '../../store/slices/signinSlice';
 import updateUserHook from './helpers/updateUser';
@@ -66,12 +67,7 @@ const Profile = (props) => {
               className={classesLocal.chngAvtr}
             >
               <input type="file" hidden />
-              <Avatar
-                className={classesLocal.avatar}
-                src={
-                  'https://play-lh.googleusercontent.com/YFpMBVjnTFQ9D7ln9jOPDxCwTf_AUPgNU0Tz8uskVP-0Esj_5jqBDpqcPm0LwDpcLA'
-                }
-              />
+              <Avatar className={classesLocal.avatar} src={PICSART_LOGO} />
             </Button>
           </Box>
         </CardContent>

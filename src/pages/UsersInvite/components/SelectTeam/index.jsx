@@ -39,6 +39,7 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
   const theme = useTheme();
 
   const getTeams = useCallback(async () => {
+    // eslint-disable-line
     const { url, options } = getTeamsAllRequestData(token);
     try {
       const res = await makeRequest(url, options);
@@ -47,11 +48,9 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
 
       if (res.data) {
         dispatch(setTeams(res.data));
-        return true;
       }
-      return false;
     } catch (err) {
-      return new Error(err.message);
+      console.log(err.message);
     }
   }, [dispatch, makeRequest, token]);
 

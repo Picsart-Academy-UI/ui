@@ -13,6 +13,7 @@ const useForm = (callback, validate) => {
   });
   const [errors, setErrors] = useState({});
   const [submited, setSubmited] = useState(false);
+  const [isValidateSeparately, setIsValidateSeparately] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +24,16 @@ const useForm = (callback, validate) => {
     };
 
     setValues(vals);
+
+    if (submited) {
+      const errs = validate(vals);
+
+      setErrors(errs);
+
+      if (Object.keys(errs).length === 0) {
+        setIsValidateSeparately(false);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -30,6 +41,7 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setSubmited(true);
+    setIsValidateSeparately(true);
   };
 
   const resetValues = () =>
@@ -45,12 +57,11 @@ const useForm = (callback, validate) => {
     });
 
   useEffect(() => {
-    // console.log(errors)
-    if (Object.keys(errors).length === 0 && submited) {
+    if (Object.keys(errors).length === 0 && submited && isValidateSeparately) {
       callback(values, resetValues);
       setSubmited(false);
     }
-  }, [errors, values, callback, submited]);
+  }, [errors, values, callback, submited, isValidateSeparately]);
 
   return { handleChange, handleSubmit, resetValues, values, errors };
 };
