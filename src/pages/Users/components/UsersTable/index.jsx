@@ -23,7 +23,7 @@ const UsersTable = ({
 
   const { data, count } = rows.usersList;
 
-  console.log('data', data);
+  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);

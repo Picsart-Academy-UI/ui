@@ -24,19 +24,12 @@ const UserRow = ({ user, name }) => {
   const classes = useStylesLocal();
 
   const teams = useSelector((state) => state.teams.teams);
-  console.log('teams in UserRow', teams);
 
-  console.log('teamId', user.team_id);
   useEffect(() => {
     if (teams.length) {
-      console.log(
-        'find',
-        teams.find((team) => team.id === user.team_id)
-      );
       setTeamObj(teams.find((team) => team.id === user.team_id));
     }
   }, [teams]);
-  console.log('obj', teamObj);
 
   return (
     <>
@@ -54,7 +47,7 @@ const UserRow = ({ user, name }) => {
           {user.first_name}
         </TableCell>
         <TableCell align="center">{user.last_name}</TableCell>
-        <TableCell align="center"></TableCell>
+        <TableCell align="center">{teamObj.name}</TableCell>
         <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
           <GoToProfile user={user} />

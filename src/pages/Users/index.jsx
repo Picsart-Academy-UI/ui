@@ -51,7 +51,7 @@ const Users = () => {
       const { url, options } = getTeamsAllRequestData(token);
       try {
         const getTeams = await makeRequest(url, options);
-        console.log('getTeams', getTeams);
+        // console.log('getTeams', getTeams);
         if (getTeams.data) {
           dispatch(setTeams(getTeams.data));
         }
@@ -60,7 +60,6 @@ const Users = () => {
       }
     };
     if (!teams.length) {
-      console.log('if');
       fetchTeams();
     }
   }, [teams]);
