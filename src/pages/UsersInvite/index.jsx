@@ -24,7 +24,8 @@ const UserInvite = () => {
       const body = { ...values };
       const teamItem = teams.find(({ name }) => name === values.team_id);
       body.team_id = teamItem._id;
-      body.position_id = '5fe23d54a710eb52a9fe0835';
+      // body.position_id = '5fe23d54a710eb52a9fe0835';
+      body.position = '5fe23d54a710eb52a9fe0835';
 
       const { url, options } = getUserInvitationRequestData({ token, body });
 

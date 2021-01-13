@@ -16,7 +16,7 @@ const Delete = ({ id }) => {
     try {
       const res = await makeRequest(url, options);
       console.log('after Delete');
-      if (res.msg === 'User has successfully deleted') {
+      if (res.message === 'User has successfully deleted') {
         dispatch(deleteUser(id));
         return true;
       }

@@ -23,6 +23,8 @@ const UsersTable = ({
 
   const { data, count } = rows.usersList;
 
+  // console.log('data', data);
+
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
   };
@@ -54,7 +56,7 @@ const UsersTable = ({
           </TableHead>
           <TableBody>
             {rowsPerPage > 0 &&
-              data.map((row) => <UserRow key={row._id} row={row} />)}
+              data.map((user) => <UserRow key={user._id} user={user} />)}
 
             {emptyRows > 0 && (
               <TableRow>

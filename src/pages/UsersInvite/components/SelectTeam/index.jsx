@@ -33,6 +33,8 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
     teams: state.teams.teams,
   }));
 
+  // console.log("teams", teams);
+
   const makeRequest = useFetch();
 
   const classesLocal = useStylesLocal();
