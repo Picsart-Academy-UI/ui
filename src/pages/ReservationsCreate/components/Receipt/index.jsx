@@ -7,11 +7,9 @@ import {
   TableRow,
   Box,
   Button,
-} from '@material-ui/core/';
-import {
-  CheckCircleOutlineOutlinedIcon,
-  CancelOutlinedIcon,
-} from '@material-ui/icons/';
+} from '@material-ui/core';
+import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import useStyles from './style';
 
 const Receipt = ({ reservs, chooseAnotherSeat }) => {

@@ -1,4 +1,4 @@
-import { Container, TextField, Box } from '@material-ui/core/';
+import { Container, TextField, Box } from '@material-ui/core';
 import useStyles from './style';
 
 const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
