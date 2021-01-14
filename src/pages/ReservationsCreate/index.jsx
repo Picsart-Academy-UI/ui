@@ -58,12 +58,16 @@ const ReservationsCreate = () => {
       ({ date }) => date === chair.date
     );
     const indexOfDate = newReservations.indexOf(reservationSameDate);
-    if (reservationSameDate || shouldRemove) {
+    if (shouldRemove && indexOfDate > -1) {
       newReservations.splice(indexOfDate, 1);
-    } else if (reservationSameDate === undefined) {
-      newReservations.push(chair);
-    } else {
-      newReservations[indexOfDate] = chair;
+    } else if (!shouldRemove) {
+      if (reservationSameDate) {
+        newReservations.splice(indexOfDate, 1);
+      } else if (reservationSameDate === undefined) {
+        newReservations.push(chair);
+      } else {
+        newReservations[indexOfDate] = chair;
+      }
     }
     setReservations(newReservations);
   };
