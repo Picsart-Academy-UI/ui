@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 
 const useRequest = () => {
+  // eslint-disable-next-line
   const makeRequest = useCallback(async (url, { body, headers, method }) => {
-    // eslint-disable-line
     try {
       const res = await fetch(url, {
         body: JSON.stringify(body) || undefined,
