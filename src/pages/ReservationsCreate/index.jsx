@@ -36,13 +36,13 @@ const ReservationsCreate = () => {
   const handleEvent = () => {
     setDateRange(createRange(refFrom.current.value, refTo.current.value));
   };
-  const choseChair = (chair) => {
+  const choseChair = (chair, shouldRemove) => {
     const newReservations = [...reservations];
     const reservationSameDate = newReservations.find(
       ({ date }) => date === chair.date
     );
     const indexOfDate = newReservations.indexOf(reservationSameDate);
-    if (reservationSameDate && reservationSameDate.chair === chair.chair) {
+    if (reservationSameDate || shouldRemove) {
       newReservations.splice(indexOfDate, 1);
     } else if (reservationSameDate === undefined) {
       newReservations.push(chair);
@@ -52,11 +52,16 @@ const ReservationsCreate = () => {
     setReservations(newReservations);
   };
   const choseRow = (row) => {
-    const newReservations = row.dates.map((item) => ({
-      ...item,
-      chair: row.name,
-      id: row.id,
-    }));
+    const newReservations = row.dates.reduce((accumilator, item) => {
+      if (item.date.getDay() !== 0 && item.date.getDay() !== 6) {
+        accumilator.push({
+          ...item,
+          chair: row.name,
+          id: row.id,
+        });
+      }
+      return accumilator;
+    }, []);
     setReservations(newReservations);
   };
   const chooseAnotherSeat = () => {
@@ -65,29 +70,32 @@ const ReservationsCreate = () => {
 
   return (
     <Container className={styles.contWrapper}>
-      <Container className={styles.topCont}>
-        <Box className={styles.text}>Select date:</Box>
-        <TextField
-          className={styles.datePicker}
-          variant="outlined"
-          id="from"
-          label="From"
-          type="datetime-local"
-          defaultValue={defaultValue.toISOString().slice(0, 16)}
-          inputRef={refFrom}
-          onChange={handleEvent}
-        />
-        <TextField
-          className={styles.datePicker}
-          variant="outlined"
-          id="to"
-          label="To"
-          type="datetime-local"
-          defaultValue={defaultValue.toISOString().slice(0, 16)}
-          inputRef={refTo}
-          onChange={handleEvent}
-        />
-      </Container>
+      {!isSubmited ? (
+        <Container className={styles.topCont}>
+          <Box className={styles.text}>Select date:</Box>
+          <TextField
+            className={styles.datePicker}
+            variant="outlined"
+            id="from"
+            label="From"
+            type="datetime-local"
+            defaultValue={defaultValue.toISOString().slice(0, 16)}
+            inputRef={refFrom}
+            onChange={handleEvent}
+          />
+          <TextField
+            className={styles.datePicker}
+            variant="outlined"
+            id="to"
+            label="To"
+            type="datetime-local"
+            defaultValue={defaultValue.toISOString().slice(0, 16)}
+            inputRef={refTo}
+            onChange={handleEvent}
+          />
+        </Container>
+      ) : null}
+
       <Container className={styles.tableCont}>
         {isSubmited ? (
           <Receipt

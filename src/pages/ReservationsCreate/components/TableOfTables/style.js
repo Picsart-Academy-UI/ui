@@ -1,14 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  freeChair: {
-    minWidth: '6rem',
-    maxWidth: '6rem',
-    textAlign: 'center',
-    backgroundColor: '#2e7d32',
-    color: '#ffffff',
-    borderBottom: 'none',
-  },
   reservedChair: {
     minWidth: '6rem',
     maxWidth: '6rem',
@@ -16,14 +8,33 @@ const useStyles = makeStyles({
     backgroundColor: '#b71c1c',
     color: '#ffffff',
     borderBottom: 'none',
+    cursor: 'not-allowed',
+  },
+  freeChair: {
+    minWidth: '6rem',
+    maxWidth: '6rem',
+    textAlign: 'center',
+    backgroundColor: '#2e7d32',
+    color: '#ffffff',
+    borderBottom: 'none',
+    cursor: 'pointer',
+  },
+  weekend: {
+    minWidth: '6rem',
+    maxWidth: '6rem',
+    textAlign: 'center',
+    backgroundColor: '#686b73',
+    color: '#ffffff',
+    borderBottom: 'none',
+    cursor: 'not-allowed',
   },
   tableRow: {
-    cursor: 'pointer',
     position: 'relative',
   },
   selected: {
     borderBottom: '0.125rem solid #000000',
     borderTop: '0.125rem solid #000000',
+    cursor: 'pointer',
   },
   dateRow: {
     paddingLeft: '7rem',
@@ -39,6 +50,7 @@ const useStyles = makeStyles({
     position: 'sticky',
     left: 0,
     zIndex: 1,
+    cursor: 'pointer',
   },
   stickyHeaderCell: {
     top: 0,

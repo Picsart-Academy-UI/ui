@@ -67,16 +67,38 @@ const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
                 );
                 const isSelected =
                   reservOnSameDate && reservOnSameDate.chair === item.name;
+                const isNotWeekendDay =
+                  date.date.getDay() !== 0 && date.date.getDay() !== 6;
+                let text = '';
+                if (isNotWeekendDay) {
+                  if (date.isFree) {
+                    text = 'free';
+                  } else {
+                    text = 'reserved';
+                  }
+                }
                 return (
                   <TableCell
-                    onClick={() =>
-                      choseChair({ ...date, chair: item.name, id: item.id })
-                    }
-                    className={`${
+                    onClick={() => {
+                      if (isNotWeekendDay) {
+                        if (date.isFree) {
+                          choseChair(
+                            { ...date, chair: item.name, id: item.id },
+                            false
+                          );
+                        } else if (!date.isFree) {
+                          choseChair(
+                            { ...date, chair: item.name, id: item.id },
+                            true
+                          );
+                        }
+                      }
+                    }}
+                    className={`${isNotWeekendDay ? '' : styles.weekend} ${
                       date.isFree ? styles.freeChair : styles.reservedChair
-                    } ${isSelected ? styles.selected : ''}`}
+                    } ${isSelected ? styles.selected : ''} `}
                   >
-                    {date.isFree ? 'free' : 'reserved'}
+                    {text}
                   </TableCell>
                 );
               })}
