@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
+import Pickers from './components/Pickers';
 import useStyles from './style';
 
 const ReservationsCreate = () => {
@@ -17,6 +16,7 @@ const ReservationsCreate = () => {
   const [isSubmited, setIsSubmited] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [dateRange, setDateRange] = useState([defaultValue]);
+  const [error, setError] = useState('none');
 
   // ref data
   const refFrom = useRef();
@@ -24,17 +24,34 @@ const ReservationsCreate = () => {
 
   const createRange = (start, stop) => {
     const range = [];
-    const currentDate = new Date(start);
-    const stopDate = new Date(stop).getDate();
-    while (currentDate.getDate() <= stopDate) {
+    const currentDate = start;
+    while (currentDate <= stop) {
       range.push(new Date(currentDate));
       currentDate.setDate(currentDate.getDate() + 1);
     }
     return range;
   };
+  const calculateDiffInDays = (start, stop) => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    return Math.round((start - stop) / oneDay);
+  };
 
   const handleEvent = () => {
-    setDateRange(createRange(refFrom.current.value, refTo.current.value));
+    const start = new Date(refFrom.current.value);
+    const stop = new Date(refTo.current.value);
+    const diffFromToday = calculateDiffInDays(start, new Date());
+    const diffFromTo = calculateDiffInDays(start, stop);
+    if (diffFromToday < 0 && (start > stop || diffFromTo > 6)) {
+      setError('both');
+    } else if (diffFromToday < 0) {
+      setError('from');
+    } else if (start > stop || diffFromTo < -6) {
+      setError('to');
+    } else {
+      setError('none');
+    }
+    setReservations([]);
+    setDateRange(createRange(start, stop));
   };
   const choseChair = (chair, shouldRemove) => {
     const newReservations = [...reservations];
@@ -71,29 +88,13 @@ const ReservationsCreate = () => {
   return (
     <Container className={styles.contWrapper}>
       {!isSubmited ? (
-        <Container className={styles.topCont}>
-          <Box className={styles.text}>Select date:</Box>
-          <TextField
-            className={styles.datePicker}
-            variant="outlined"
-            id="from"
-            label="From"
-            type="datetime-local"
-            defaultValue={defaultValue.toISOString().slice(0, 16)}
-            inputRef={refFrom}
-            onChange={handleEvent}
-          />
-          <TextField
-            className={styles.datePicker}
-            variant="outlined"
-            id="to"
-            label="To"
-            type="datetime-local"
-            defaultValue={defaultValue.toISOString().slice(0, 16)}
-            inputRef={refTo}
-            onChange={handleEvent}
-          />
-        </Container>
+        <Pickers
+          refTo={refTo}
+          refFrom={refFrom}
+          handleEvent={handleEvent}
+          defaultValue={defaultValue}
+          error={error}
+        />
       ) : null}
 
       <Container className={styles.tableCont}>
@@ -119,6 +120,7 @@ const ReservationsCreate = () => {
             setIsSubmited(!isSubmited);
           }}
           className={styles.submitBtn}
+          disabled={reservations.length === 0 || error !== 'none'}
         >
           {' '}
           Submit{' '}
