@@ -41,7 +41,7 @@
     ]
   },
   "engines": {
-    "node": "14.1"
+    "node": "14.x"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.13.3",
