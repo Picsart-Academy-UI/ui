@@ -1,13 +1,17 @@
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableContainer from '@material-ui/core/TableContainer';
-import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import Button from '@material-ui/core/Button';
+import {
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Box,
+  Button,
+} from '@material-ui/core/';
+import {
+  CheckCircleOutlineOutlinedIcon,
+  CancelOutlinedIcon,
+} from '@material-ui/icons/';
 import useStyles from './style';
 
 const Receipt = ({ reservs, chooseAnotherSeat }) => {

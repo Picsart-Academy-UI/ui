@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import { Container, Button } from '@material-ui/core';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
 import Pickers from './components/Pickers';
