@@ -38,7 +38,11 @@ const UsersTable = ({
       ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
       : 0;
 
-  return data && data.length ? (
+  if (data && !data.length) {
+    return <h1>Nothing Found</h1>;
+  }
+
+  return data ? (
     <Paper>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">

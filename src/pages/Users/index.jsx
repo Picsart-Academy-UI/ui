@@ -50,7 +50,6 @@ const Users = () => {
     };
 
     const fetchBySearch = async () => {
-      console.log('searchValue', searchValue);
       const { url, options } = getUsersBySearch(
         token,
         rowsPerPage,
@@ -58,12 +57,14 @@ const Users = () => {
         searchValue
       );
       const searchedUsers = await makeRequest(url, options);
-      console.log('searchedUsers', searchedUsers);
+      // console.log('searchedUsers', searchedUsers);
       dispatch(fetchedUsersList(searchedUsers));
     };
     if (!searchValue) {
       fetchUsers();
     } else {
+      // console.log('searchValue', searchValue);
+      // console.log("page", page + 1);
       fetchBySearch();
     }
   }, [page, rowsPerPage, searchValue, dispatch, makeRequest, token]);
@@ -86,15 +87,6 @@ const Users = () => {
     }
   }, [teams]);
 
-  // useEffect(() => {
-  //   const fetchBySearch = async () => {
-  //     const {url, options} = getUsersBySearch(token, rowsPerPage,page + 1, searchValue);
-  //   }
-  //   if(searchValue){
-
-  //   }
-  // }, [searchValue]);
-
   const usersData = useSelector((state) => state.users);
   // console.log('usersData', usersData);
 
@@ -102,7 +94,11 @@ const Users = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs>
-          <SearchBox value={searchValue} onChange={handleInputChange} />
+          <SearchBox
+            value={searchValue}
+            onChange={handleInputChange}
+            onPageChange={handleChangePage}
+          />
         </Grid>
         <Grid item xs>
           <DropDown />

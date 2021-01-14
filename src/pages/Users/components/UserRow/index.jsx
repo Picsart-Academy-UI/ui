@@ -23,7 +23,7 @@ const UserRow = ({ user, name }) => {
   const [teamObj, setTeamObj] = useState({});
   const classes = useStylesLocal();
 
-  console.log('user', user);
+  // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
 
