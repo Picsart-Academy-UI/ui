@@ -11,12 +11,7 @@ const AddTeam = () => {
   return (
     <Box display="flex" justifyContent="flex-end" test="box-wrapper">
       <Box mr={3} m={1}>
-        <Button
-          onClick={handleAddClick}
-          color="primary"
-          variant="contained"
-          test="add-btn"
-        >
+        <Button onClick={handleAddClick} color="primary" variant="contained">
           Add a Team
         </Button>
       </Box>

@@ -21,7 +21,9 @@ const UsersTable = ({
 }) => {
   const classes = useStylesLocal();
 
-  const { users, count } = rows.usersList;
+  const { data, count } = rows.usersList;
+
+  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -32,11 +34,11 @@ const UsersTable = ({
   };
 
   const emptyRows =
-    users && users.length
-      ? rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
+    data && data.length
+      ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
       : 0;
 
-  return users && users.length ? (
+  return data && data.length ? (
     <Paper>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -48,13 +50,13 @@ const UsersTable = ({
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
               <TableCell align="right">
-                <Box mr={13}>Actions</Box>
+                <Box mr={9}>Actions</Box>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rowsPerPage > 0 &&
-              users.map((row) => <UserRow key={row._id} row={row} />)}
+              data.map((user) => <UserRow key={user._id} user={user} />)}
 
             {emptyRows > 0 && (
               <TableRow>

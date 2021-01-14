@@ -1,24 +1,12 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import useStylesLocal from './style';
 
 const NotFound = () => {
   const classesLocal = useStylesLocal();
 
   return (
-    <Grid
-      container
-      wrap="nowrap"
-      alignItems="center"
-      justify="center"
-      className={classesLocal.grid}
-      test="grid-wrapper"
-    >
-      <Typography
-        component="h5"
-        variant="h5"
-        className={classesLocal.h404}
-        test="fof-msg"
-      >
+    <div className={classesLocal.center}>
+      <Typography component="h5" variant="h5" className={classesLocal.h404}>
         404
       </Typography>
       <Typography
@@ -29,7 +17,7 @@ const NotFound = () => {
       >
         This page could not be found.
       </Typography>
-    </Grid>
+    </div>
   );
 };
 

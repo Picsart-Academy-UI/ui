@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -12,15 +12,24 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { useSelector } from 'react-redux';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
 import Delete from '../Delete';
-import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
-const UserRow = ({ row, name }) => {
+const UserRow = ({ user, name }) => {
   const [open, setOpen] = useState(false);
+  const [teamObj, setTeamObj] = useState({});
   const classes = useStylesLocal();
+
+  const teams = useSelector((state) => state.teams.teams);
+
+  useEffect(() => {
+    if (teams.length) {
+      setTeamObj(teams.find((team) => team.id === user.team_id));
+    }
+  }, [teams]);
 
   return (
     <>
@@ -35,16 +44,15 @@ const UserRow = ({ row, name }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.first_name}
+          {user.first_name}
         </TableCell>
-        <TableCell align="center">{row.last_name}</TableCell>
-        <TableCell align="center"></TableCell>
-        <TableCell align="center">{row.email}</TableCell>
+        <TableCell align="center">{user.last_name}</TableCell>
+        <TableCell align="center">{teamObj.name}</TableCell>
+        <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
-          <GoToProfile user={row} />
+          <GoToProfile user={user} />
           <BookaSeat />
-          <EditRow />
-          <Delete id={row._id} />
+          <Delete id={user._id} />
         </TableCell>
       </TableRow>
 
@@ -66,9 +74,9 @@ const UserRow = ({ row, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      row.birthdate
+                      user.birthdate
                     </TableCell>
-                    <TableCell align="center">{row.position}</TableCell>
+                    <TableCell align="center">{user.position}</TableCell>
                     <TableCell align="center">Phone</TableCell>
                   </TableRow>
                 </TableBody>

@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 const useRequest = () => {
   const makeRequest = useCallback(async (url, { body, headers, method }) => {
+    // eslint-disable-line
     try {
       const res = await fetch(url, {
         body: JSON.stringify(body) || undefined,
@@ -13,7 +14,7 @@ const useRequest = () => {
 
       return result;
     } catch (err) {
-      return new Error(err.message);
+      console.log(err.message);
     }
   }, []);
   return makeRequest;

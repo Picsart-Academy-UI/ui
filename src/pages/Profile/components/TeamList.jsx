@@ -17,7 +17,7 @@ function TeamList(props) {
     const fetchTeams = async () => {
       const { url, options } = getTeamsAllRequestData(token);
       const data = await makeRequest(url, options);
-      setTeams(data.teams);
+      setTeams(data.data);
     };
     fetchTeams();
   }, [makeRequest, token]);
@@ -26,8 +26,7 @@ function TeamList(props) {
   const options =
     teams &&
     teams.map((el) => {
-      // eslint-disable-next-line
-      el._id === userTeam && (defaultTeam = { title: el.name, id: el._id });
+      if (el._id === userTeam) defaultTeam = { title: el.name, id: el._id };
       return { title: el.name, id: el._id };
     });
 

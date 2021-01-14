@@ -57,17 +57,5 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "react-app-rewired": "^2.1.8"
-  },
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/index.js"
-    ],
-    "coverageReporters": [
-      "text"
-    ]
   }
 }

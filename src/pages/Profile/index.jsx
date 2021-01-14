@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { PICSART_LOGO } from '../../constants';
 import { setNotMe } from '../../store/slices/profileSlice';
 import setChangeCurUser from '../../store/slices/signinSlice';
 import updateUserHook from './helpers/updateUser';
@@ -27,22 +28,21 @@ const Profile = (props) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const isAdmin = (curUser && curUser.is_admin) || true;
+  const { is_admin: isAdmin } = curUser;
 
-  const { id } = (props.match && props.match.params) || 1;
+  const { id } = props.match.params;
 
-  // eslint-disable-next-line
-  id && props.location.user && dispatch(setNotMe(props.location.user));
+  if (id && props.location.user) dispatch(setNotMe(props.location.user));
 
   const user = useSelector((state) => state.profile.notme) || curUser;
 
-  const [edited, setEdited] = useState(user || {});
+  const [edited, setEdited] = useState(user);
 
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    // eslint-disable-next-line
-    id ? dispatch(setNotMe(edited)) : dispatch(setChangeCurUser(edited));
+    if (id) dispatch(setNotMe(edited));
+    else dispatch(setChangeCurUser(edited));
     updateUser(edited);
   };
 
@@ -67,13 +67,7 @@ const Profile = (props) => {
               className={classesLocal.chngAvtr}
             >
               <input type="file" hidden />
-              <Avatar
-                className={classesLocal.avatar}
-                src={
-                  'https://play-lh.googleusercontent.com/YFpMBVjnTFQ9D7ln9jOPDxCwTf_AUPgNU0Tz8uskVP-0Esj_5jqBDpqcPm0LwDpcLA'
-                }
-                test="avatar"
-              />
+              <Avatar className={classesLocal.avatar} src={PICSART_LOGO} />
             </Button>
           </Box>
         </CardContent>
@@ -86,7 +80,6 @@ const Profile = (props) => {
           disabled={!isEditing}
           value={edited.first_name || ''}
           onChange={(e) => handleUserEdit('first_name', e.target.value)}
-          test="tf-name"
         />
         <Typography className={classesLocal.textHeader}>Surname:</Typography>
         <TextField
@@ -94,23 +87,16 @@ const Profile = (props) => {
           value={edited.last_name || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('last_name', e.target.value)}
-          test="tf-surname"
         />
-        <Typography className={classesLocal.textHeader} test="typog-email">
-          Email:
-        </Typography>
+        <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
           className={classesLocal.textField}
           value={edited.email || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('email', e.target.value)}
-          test="tf-email"
         />
         <Typography className={classesLocal.textHeader}>Team:</Typography>
-        <FormControl
-          className={classesLocal.formControl}
-          test="form-cntrl-team"
-        >
+        <FormControl className={classesLocal.formControl}>
           <TeamList
             userTeam={user.team_id}
             changeCallback={(newValue) =>
@@ -119,15 +105,12 @@ const Profile = (props) => {
             isEditing={isEditing}
           />
         </FormControl>
-        <Typography className={classesLocal.textHeader} test="typog-pos">
-          Position:
-        </Typography>
+        <Typography className={classesLocal.textHeader}>Position:</Typography>
         <TextField
           className={classesLocal.textField}
           value={edited.position || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('position', e.target.value)}
-          test="tf-pos"
         />
         <Typography className={classesLocal.textHeader}>
           Phone Number:
@@ -145,7 +128,7 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('birthdate', e.target.value)}
         />
-        <Hidden xsUp={!isAdmin} test="smb-btn">
+        <Hidden xsUp={!isAdmin}>
           <Button
             className={classesLocal.sbmtButton}
             onClick={handleEnterEditAndSubmit}
@@ -153,9 +136,13 @@ const Profile = (props) => {
             {isEditing ? 'Submit Change' : 'Edit'}
           </Button>
         </Hidden>
-        <Hidden xsUp={!isEditing} test="cncl-btn">
-          <Button className={classesLocal.sbmtButton} onClick={handleCancel}>
-            {isEditing ? 'Cancel' : ''}
+        <Hidden xsUp={!isEditing}>
+          <Button
+            className={classesLocal.sbmtButton}
+            onClick={handleCancel}
+            hidden={!isEditing}
+          >
+            {isEditing ? 'Cancel' : 'Test'}
           </Button>
         </Hidden>
       </Grid>

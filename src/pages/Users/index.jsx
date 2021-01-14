@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { setTeams } from '../../store/slices/teamsSlice';
+import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
 import { getLimitedUsersData } from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
@@ -12,7 +14,11 @@ import AddUser from './components/AddUser';
 const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const token = useSelector((state) => state.signin.token);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
+
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
@@ -27,8 +33,7 @@ const Users = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // console.log(page, 'useEffect page');
+    const fetchUsers = async () => {
       const { url, options } = getLimitedUsersData(
         token,
         rowsPerPage,
@@ -38,12 +43,30 @@ const Users = () => {
       // console.log(res);
       dispatch(fetchedUsersList(res));
     };
-    fetchData();
-  }, [page, rowsPerPage]);
+    fetchUsers();
+  }, [page, rowsPerPage, dispatch, makeRequest, token]);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const { url, options } = getTeamsAllRequestData(token);
+      try {
+        const getTeams = await makeRequest(url, options);
+        // console.log('getTeams', getTeams);
+        if (getTeams.data) {
+          dispatch(setTeams(getTeams.data));
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    if (!teams.length) {
+      fetchTeams();
+    }
+  }, [teams]);
 
   const usersData = useSelector((state) => state.users);
+  // console.log('usersData', usersData);
 
-  // console.log(page, 'users/back clicked');
   return (
     <>
       <Grid container spacing={3}>
