@@ -51,7 +51,6 @@ const SignIn = () => {
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
-            test="g-btn"
           />
         </Box>
       </Container>
