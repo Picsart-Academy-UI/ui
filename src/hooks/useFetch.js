@@ -16,6 +16,7 @@ const useRequest = () => {
     } catch (err) {
       console.log(err.message);
     }
+    return 0;
   }, []);
   return makeRequest;
 };

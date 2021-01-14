@@ -1,10 +1,11 @@
+import { Box, Button } from '@material-ui/core';
 import { shallow } from 'enzyme';
 
 import AddTeam from '../index';
 
 const get = (props = {}) => shallow(<AddTeam {...props} />);
 
-const find = (cmp, attr) => cmp.find(`[test="${attr}"]`);
+const find = (cmp, attr) => cmp.find(attr);
 
 const mockHistoryPush = jest.fn();
 
@@ -23,15 +24,15 @@ describe('Add Team Button: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(cmp, 'box-wrapper').length).toEqual(1);
+    expect(find(cmp, Box).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have an add button', () => {
-    expect(find(cmp, 'add-btn').length).toEqual(1);
+    expect(find(cmp, Button).length).toEqual(1);
   });
 
   test('should redirect to teams/create', () => {
-    const addBtn = find(cmp, 'add-btn');
+    const addBtn = find(cmp, Button);
     addBtn.simulate('click');
     expect(mockHistoryPush).toHaveBeenCalledWith('/teams/create');
   });

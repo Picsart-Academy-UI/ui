@@ -20,10 +20,6 @@ describe('SignIn: ', () => {
     cmp = get();
   });
 
-  test('should render properly', () => {
-    expect(find(cmp, `[test="div-wrapper"]`).length).toBeGreaterThanOrEqual(1);
-  });
-
   test('should have a google login component from react-google-login lib', () => {
     expect(find(cmp, GoogleLogin).length).toBeGreaterThanOrEqual(1);
   });

@@ -3,55 +3,70 @@ import { Provider } from 'react-redux';
 
 import Profile from '../index';
 import mockstore from '../../../__mocks__/index';
+import {
+  Avatar,
+  Button,
+  Card,
+  FormControl,
+  Typography,
+} from '@material-ui/core';
 
-const get = () =>
+const get = (props) =>
   mount(
     <Provider store={mockstore}>
-      <Profile />
+      <Profile {...props} />
     </Provider>
   );
 
-const find = (cmp, attr) => cmp.find(`[test="${attr}"]`);
+const find = (cmp, attr) => cmp.find(attr);
+
+const props = {
+  match: {
+    params: {
+      id: 1,
+    },
+  },
+  location: {
+    user: {
+      _id: '5ff9abbad15b18a330bb578a',
+      is_admin: true,
+      created_at: '2021-01-09T13:01:13.313Z',
+      updated_at: '2021-01-09T13:01:13.313Z',
+      email: 'roman.balayan@picsart.com',
+      team_id: '5fe23d54a710eb52a9fe0835',
+      first_name: 'Roma',
+      last_name: 'Balayan',
+      __v: 0,
+      accepted: true,
+      profile_picture: null,
+      updatedAt: '2021-01-09T15:06:58.831Z',
+    },
+  },
+};
 
 describe('Profile: ', () => {
   let cmp;
   beforeEach(() => {
-    cmp = get();
+    cmp = get(props);
   });
 
   test('should render properly', () => {
-    expect(find(cmp, 'card-wrapper').length).toBeGreaterThan(1);
+    expect(find(cmp, Card).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have an avatar', () => {
-    expect(find(cmp, 'avatar').length).toBeGreaterThan(1);
+    expect(find(cmp, Avatar).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have a name surname typography', () => {
-    expect(find(cmp, 'tf-name').length).toBeGreaterThan(1);
-  });
-
-  test('should have a name surname typography', () => {
-    expect(find(cmp, 'tf-surname').length).toBeGreaterThan(1);
-  });
-
-  test('should have an email typography', () => {
-    expect(find(cmp, 'tf-email').length).toBeGreaterThan(1);
+    expect(find(cmp, Typography).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have an dropdown to select team', () => {
-    expect(find(cmp, 'form-cntrl-team').length).toBeGreaterThan(1);
-  });
-
-  test('should have a position input field', () => {
-    expect(find(cmp, 'tf-pos').length).toBeGreaterThan(1);
+    expect(find(cmp, FormControl).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have a submit button', () => {
-    expect(find(cmp, 'smb-btn').length).toBeGreaterThan(1);
+    expect(find(cmp, Button).length).toBeGreaterThanOrEqual(1);
   });
-
-  // test('should have a cancel button when editing', () => {
-  //   expect(find(cmp, 'cncl-btn').prop('')).toEqual(1);
-  // })
 });

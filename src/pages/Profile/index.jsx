@@ -58,7 +58,7 @@ const Profile = (props) => {
 
   return (
     <>
-      <Card test="card-wrapper">
+      <Card>
         <CardContent>
           <Box alignItems="center" display="flex" flexDirection="column">
             <Button
