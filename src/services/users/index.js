@@ -1,41 +1,36 @@
-import { MAIN_ROUTE } from '../../constants';
+import { MAIN_URL } from '../../constants';
 
-export const getUserInvitationRequestData = ({ token, body }) => ({
-  url: `${MAIN_ROUTE}auth/invite`,
-  options: {
+export const getUserInvitationRequestData = ({ token, body }) =>
+  new Request(`${MAIN_URL}auth/invite`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       Authorization: `Bearer ${token}`,
     },
-    body,
-  },
-});
+    body: JSON.stringify(body),
+  });
 
-export const getLimitedUsersData = (token, limit, page) => ({
-  url: `${MAIN_ROUTE}users/all?limit=${limit}&page=${page}`,
-  options: {
+export const getLimitedUsersRequestData = (token, limit, page) =>
+  new Request(`${MAIN_URL}users/all?limit=${limit}&page=${page}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  },
-});
+  });
 
-export const getUserDeleteRequestData = ({ token, id }) => ({
-  url: `${MAIN_ROUTE}users/${id}`,
-  options: {
+export const getUserDeleteRequestData = ({ token, id }) =>
+  new Request(`${MAIN_URL}users/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  },
-});
+  });
 
-export const getUsersBySearch = (token, limit, page, value) => ({
-  url: `${MAIN_ROUTE}users/search?search_by=first_name&value=${value}&limit=${limit}&page=${page}`, // eslint-disable-line
-  options: {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  },
-});
+export const getUsersSearchRequestData = (token, limit, page, value) =>
+  new Request(
+    `${MAIN_URL}users/search?search_by=first_name&value=${value}&limit=${limit}&page=${page}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

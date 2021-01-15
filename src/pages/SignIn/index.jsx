@@ -16,17 +16,10 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   const responseGoogle = async (response) => {
-    try {
-      const { url, options } = getGoogleRequestData(response);
-      const res = await makeRequest(url, options);
-
-      if (res.token && res.data) {
-        dispatch(setIsLoggedIn(res));
-      }
-
-      return true;
-    } catch (err) {
-      return new Error(err.message);
+    const request = getGoogleRequestData(response);
+    const res = await makeRequest(request);
+    if (res.token && res.data) {
+      dispatch(setIsLoggedIn(res));
     }
   };
 

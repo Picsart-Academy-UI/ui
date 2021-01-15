@@ -33,26 +33,16 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
     teams: state.teams.teams,
   }));
 
-  // console.log("teams", teams);
-
   const makeRequest = useFetch();
 
   const classesLocal = useStylesLocal();
   const theme = useTheme();
 
   const getTeams = useCallback(async () => {
-    // eslint-disable-line
-    const { url, options } = getTeamsAllRequestData(token);
-    try {
-      const res = await makeRequest(url, options);
+    const res = await makeRequest(getTeamsAllRequestData(token));
 
-      // console.log(res);
-
-      if (res.data) {
-        dispatch(setTeams(res.data));
-      }
-    } catch (err) {
-      console.log(err.message);
+    if (res.data) {
+      dispatch(setTeams(res.data));
     }
   }, [dispatch, makeRequest, token]);
 
@@ -79,13 +69,13 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
         label="Team"
         MenuProps={MenuProps}
       >
-        {teams.map(({ _id, name }) => (
+        {teams.map(({ _id, team_name }) => (
           <MenuItem
-            key={_id + name}
-            value={name}
-            style={getStyleMenuItem(name, value, theme)}
+            key={_id + team_name}
+            value={team_name}
+            style={getStyleMenuItem(team_name, value, theme)}
           >
-            {name}
+            {team_name}
           </MenuItem>
         ))}
       </Select>

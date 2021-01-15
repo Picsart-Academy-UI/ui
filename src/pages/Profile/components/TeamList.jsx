@@ -15,8 +15,7 @@ function TeamList(props) {
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const { url, options } = getTeamsAllRequestData(token);
-      const data = await makeRequest(url, options);
+      const data = await makeRequest(getTeamsAllRequestData(token));
       setTeams(data.data);
     };
     fetchTeams();
@@ -26,8 +25,9 @@ function TeamList(props) {
   const options =
     teams &&
     teams.map((el) => {
-      if (el._id === userTeam) defaultTeam = { title: el.name, id: el._id };
-      return { title: el.name, id: el._id };
+      if (el._id === userTeam)
+        defaultTeam = { title: el.team_name, id: el._id };
+      return { title: el.team_name, id: el._id };
     });
 
   return (

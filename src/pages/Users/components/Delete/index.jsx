@@ -6,23 +6,14 @@ import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 
 const Delete = ({ id }) => {
-  const token = useSelector((state) => state.signin.token);
-  const makeRequest = useFetch();
-
   const dispatch = useDispatch();
+  const makeRequest = useFetch();
+  const token = useSelector((state) => state.signin.token);
 
   const handleDeleteClick = async () => {
-    const { url, options } = getUserDeleteRequestData({ token, id });
-    try {
-      const res = await makeRequest(url, options);
-      console.log('after Delete');
-      if (res.message === 'User has successfully deleted') {
-        dispatch(deleteUser(id));
-        return true;
-      }
-      return false;
-    } catch (err) {
-      return new Error(err.msg);
+    const res = await makeRequest(getUserDeleteRequestData({ token, id }));
+    if (res.message) {
+      dispatch(deleteUser(id));
     }
   };
 

@@ -29,10 +29,9 @@ const UserRow = ({ user, name }) => {
 
   useEffect(() => {
     if (teams.length) {
-      setTeamObj(teams.find((team) => team.id === user.team_id));
+      setTeamObj(teams.find((team) => team._id === user.team_id));
     }
-    // eslint-disable-next-line
-  }, [teams]);
+  }, [teams, user]);
 
   return (
     <>

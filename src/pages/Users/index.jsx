@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
-import { getLimitedUsersData, getUsersBySearch } from '../../services/users';
+import {
+  getLimitedUsersRequestData,
+  getUsersSearchRequestData,
+} from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import DropDown from './components/DropDown';
 import UsersTable from './components/UsersTable';
@@ -39,24 +42,23 @@ const Users = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { url, options } = getLimitedUsersData(
+      const requestData = getLimitedUsersRequestData(
         token,
         rowsPerPage,
         page + 1
       );
-      const res = await makeRequest(url, options);
-      // console.log(res);
+      const res = await makeRequest(requestData);
       dispatch(fetchedUsersList(res));
     };
 
     const fetchBySearch = async () => {
-      const { url, options } = getUsersBySearch(
+      const requestData = getUsersSearchRequestData(
         token,
         rowsPerPage,
         page + 1,
         searchValue
       );
-      const searchedUsers = await makeRequest(url, options);
+      const searchedUsers = await makeRequest(requestData);
       // console.log('searchedUsers', searchedUsers);
       dispatch(fetchedUsersList(searchedUsers));
     };
@@ -71,22 +73,17 @@ const Users = () => {
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const { url, options } = getTeamsAllRequestData(token);
-      try {
-        const getTeams = await makeRequest(url, options);
-        // console.log('getTeams', getTeams);
-        if (getTeams.data) {
-          dispatch(setTeams(getTeams.data));
-        }
-      } catch (err) {
-        console.log(err.message);
+      const requestData = getTeamsAllRequestData(token);
+      const getTeams = await makeRequest(requestData);
+      // console.log('getTeams', getTeams);
+      if (getTeams.data) {
+        dispatch(setTeams(getTeams.data));
       }
     };
     if (!teams.length) {
       fetchTeams();
     }
-    // eslint-disable-next-line
-  }, [teams]);
+  }, [teams, dispatch, makeRequest, token]);
 
   const usersData = useSelector((state) => state.users);
   // console.log('usersData', usersData);
