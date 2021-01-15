@@ -9,7 +9,6 @@ const useForm = (callback, validate) => {
     phone: '',
     team_id: '',
     position: '',
-    // position_id: '',
     is_admin: false,
   });
   const [errors, setErrors] = useState({});
@@ -53,7 +52,7 @@ const useForm = (callback, validate) => {
       birthdate: '',
       phone: '',
       team_id: '',
-      position_id: '',
+      position: '',
       is_admin: false,
     });
 
