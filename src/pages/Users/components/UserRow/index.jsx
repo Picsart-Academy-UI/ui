@@ -31,6 +31,7 @@ const UserRow = ({ user, name }) => {
     if (teams.length) {
       setTeamObj(teams.find((team) => team.id === user.team_id));
     }
+    // eslint-disable-next-line
   }, [teams]);
 
   return (

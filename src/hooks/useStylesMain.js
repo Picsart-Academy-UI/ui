@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CHAIR } from '../../constants';
+import { CHAIR } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {

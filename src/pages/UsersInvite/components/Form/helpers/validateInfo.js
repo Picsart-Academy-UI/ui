@@ -34,8 +34,8 @@ const validateInfo = (values) => {
     errors.team_id = 'Team required';
   }
 
-  if (!values.position_id.trim()) {
-    errors.position_id = 'Position required';
+  if (!values.position.trim()) {
+    errors.position = 'Position required';
   }
 
   // if (!values.phone.trim()) {
