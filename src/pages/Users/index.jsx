@@ -85,6 +85,7 @@ const Users = () => {
     if (!teams.length) {
       fetchTeams();
     }
+    // eslint-disable-next-line
   }, [teams]);
 
   const usersData = useSelector((state) => state.users);

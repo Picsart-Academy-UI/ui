@@ -3,7 +3,7 @@ import GoogleLogin from 'react-google-login';
 import { Box, Typography, Container, Avatar, Button } from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
-import useStylesMain from '../../hooks/style/useStylesMain';
+import useStylesMain from '../../hooks/useStylesMain';
 import getGoogleRequestData from '../../services/signin';
 import useStylesLocal from './style';
 
