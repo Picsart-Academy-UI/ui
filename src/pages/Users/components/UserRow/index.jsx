@@ -26,7 +26,6 @@ const UserRow = ({ user, name }) => {
   // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
-
   useEffect(() => {
     if (teams.length) {
       setTeamObj(teams.find((team) => team._id === user.team_id));
@@ -49,7 +48,7 @@ const UserRow = ({ user, name }) => {
           {user.first_name}
         </TableCell>
         <TableCell align="center">{user.last_name}</TableCell>
-        <TableCell align="center">{teamObj.name}</TableCell>
+        <TableCell align="center">{teamObj.team_name}</TableCell>
         <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
           <GoToProfile user={user} />
