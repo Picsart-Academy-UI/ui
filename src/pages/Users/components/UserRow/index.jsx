@@ -53,7 +53,10 @@ const UserRow = ({ user, name }) => {
         <TableCell align="right">
           <GoToProfile user={user} />
           <BookaSeat />
-          <Delete id={user._id} />
+          <Delete
+            id={user._id}
+            userFullName={`${user.first_name} ${user.last_name}`}
+          />
         </TableCell>
       </TableRow>
 
