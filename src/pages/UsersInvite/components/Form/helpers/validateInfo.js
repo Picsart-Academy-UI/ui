@@ -10,9 +10,9 @@ const validateInfo = (values) => {
   if (!values.email) {
     errors.email = 'Email address required';
   } else if (
-    !EMAIL_REGEXP.test(values.email) ||
-    !GMAIL_REGEXP.test(values.email) ||
-    !PICSART_MAIL_REGEXP.test(values.email)
+    !EMAIL_REGEXP.test(values.email) &&
+    (!GMAIL_REGEXP.test(values.email) ||
+      !PICSART_MAIL_REGEXP.test(values.email))
   ) {
     errors.email = 'invalid email address';
   }
