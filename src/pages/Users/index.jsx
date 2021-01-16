@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDebounce } from 'use-debounce';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
@@ -18,6 +19,7 @@ const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
+  const [debouncedSearchValue] = useDebounce(searchValue, 500);
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
     teams: state.teams.teams,
@@ -56,20 +58,20 @@ const Users = () => {
         token,
         rowsPerPage,
         page + 1,
-        searchValue
+        debouncedSearchValue
       );
       const searchedUsers = await makeRequest(requestData);
       // console.log('searchedUsers', searchedUsers);
       dispatch(fetchedUsersList(searchedUsers));
     };
-    if (!searchValue) {
+    if (!debouncedSearchValue) {
       fetchUsers();
     } else {
       // console.log('searchValue', searchValue);
       // console.log("page", page + 1);
       fetchBySearch();
     }
-  }, [page, rowsPerPage, searchValue, dispatch, makeRequest, token]);
+  }, [page, rowsPerPage, debouncedSearchValue, dispatch, makeRequest, token]);
 
   useEffect(() => {
     const fetchTeams = async () => {
