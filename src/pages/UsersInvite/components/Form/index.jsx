@@ -51,11 +51,11 @@ const Form = ({ submitForm }) => {
           />
           <InputDate
             type={dateType}
-            name="birthdate"
-            value={values.birthdate}
+            name="birthday"
+            value={values.birthday}
             onChange={handleChange}
-            error={Boolean(errors.birthdate)}
-            helperText={errors.birthdate}
+            error={Boolean(errors.birthday)}
+            helperText={errors.birthday}
             setDateType={setDateType}
           />
           <Input

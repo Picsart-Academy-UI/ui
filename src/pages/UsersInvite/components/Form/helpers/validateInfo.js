@@ -25,13 +25,13 @@ const validateInfo = (values) => {
     errors.last_name = 'Surname required';
   }
 
-  if (values.birthdate) {
+  if (values.birthday) {
     const nowYear = new Date().getFullYear();
-    const birthYear = Number(values.birthdate.split('-')[0]);
+    const birthYear = Number(values.birthday.split('-')[0]);
     const isOlder100 = nowYear - birthYear > 100;
-    const isFromFuture = new Date(values.birthdate) > new Date();
+    const isFromFuture = new Date(values.birthday) > new Date();
     if (isFromFuture || isOlder100) {
-      errors.birthdate = 'Invalid date';
+      errors.birthday = 'Invalid date';
     }
   }
 

@@ -26,6 +26,7 @@ const UserInvite = () => {
         ({ team_name }) => team_name === values.team_id
       );
       body.team_id = teamItem._id;
+      body.birthday = new Date(values.birthday);
 
       const res = await makeRequest(
         getUserInvitationRequestData({ token, body })
