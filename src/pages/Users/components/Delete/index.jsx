@@ -29,7 +29,11 @@ const Delete = ({ id, userFullName }) => {
     }
   };
 
-  const titleText = `Delete ${userFullName} Account?`;
+  const titleText = (
+    <span>
+      Delete&nbsp;&nbsp;<span>{userFullName}</span>&nbsp;&nbsp;account?
+    </span>
+  );
 
   return (
     <>
