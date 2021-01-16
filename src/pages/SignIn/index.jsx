@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { Box, Typography, Container, Avatar, Button } from '@material-ui/core';
+import { GOOGLE_LOGO } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/useStylesMain';
@@ -34,11 +35,12 @@ const SignIn = () => {
             clientId="885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
-                className={classesLocal.buttonPicsart}
+                className={classesLocal.buttonGoogle}
                 onClick={renderProps.onClick}
+                variant="outlined"
               >
-                <Avatar src="images/glogo.png" className={classesLocal.glogo} />
-                Sign In With Google
+                <Avatar src={GOOGLE_LOGO} className={classesLocal.google} />
+                Sign in with Google
               </Button>
             )}
             buttonText="Login"
