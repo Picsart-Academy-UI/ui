@@ -70,7 +70,7 @@ const UserRow = ({ user, name }) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Birthdate</TableCell>
+                    <TableCell align="center">Birthday</TableCell>
                     <TableCell align="center">Position</TableCell>
                     <TableCell align="center">PhoneNumber</TableCell>
                   </TableRow>
@@ -78,7 +78,7 @@ const UserRow = ({ user, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      user.birthdate
+                      user.birthday
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
                     <TableCell align="center">{user.phone}</TableCell>
