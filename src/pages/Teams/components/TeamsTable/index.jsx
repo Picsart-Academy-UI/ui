@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -10,7 +9,6 @@ import {
   Box,
 } from '@material-ui/core';
 import TeamRow from '../TeamRow';
-import Pagination from '../../../../components/Pagination';
 import useStylesLocal from './style';
 
 const createData = (name, membersCount, tablesCount) => ({
@@ -33,21 +31,6 @@ const rows = [
 const TeamsTable = () => {
   const classes = useStylesLocal();
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (value) => {
-    setRowsPerPage(value);
-    setPage(0);
-  };
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -62,31 +45,15 @@ const TeamsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
+          {rows.map((row) => (
             <TeamRow
               name={row.name}
               membersCount={row.membersCount}
               tablesCount={row.tablesCount}
             />
           ))}
-
-          {emptyRows > 0 && (
-            <TableRow>
-              <TableCell />
-            </TableRow>
-          )}
         </TableBody>
       </Table>
-      <Pagination
-        rows={rows}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
     </TableContainer>
   );
 };
