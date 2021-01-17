@@ -3,19 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 export const teams = createSlice({
   name: 'teamsData',
   initialState: {
-    teamsList: [],
+    teams: [],
   },
   reducers: {
     setTeams: (state, action) => {
-      state.teamsList = action.payload.data;
+      state.teams = action.payload.data;
     },
     addTeam: (state, action) => {
-      state.teamList = [action.payload.data, ...state.teamList];
+      state.teams = [action.payload.data, ...state.teams];
     },
     deleteTeam: (state, action) => {
-      state.teamsList = state.teamsList.filter(
-        (team) => team.id !== action.payload.id
-      );
+      state.teams = state.teams.filter((team) => team.id !== action.payload.id);
     },
   },
 });

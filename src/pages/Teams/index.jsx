@@ -12,7 +12,7 @@ const Teams = () => {
   const makeRequest = useFetch();
   const dispatch = useDispatch();
 
-  const teamsData = useSelector((state) => state.teams.teamsList);
+  const teamsData = useSelector((state) => state.teams.teams);
   useEffect(() => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
