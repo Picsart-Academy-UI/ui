@@ -1,8 +1,7 @@
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-
 import mockstore from '../../../__mocks__/index';
-import { Grid, TablePagination } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Users from '../index';
 import UsersTable from '../components/UsersTable';
 import Pagination from '../../../components/Pagination';
@@ -42,7 +41,6 @@ const propsTable = {
   onChangePage: jest.fn(),
   onChangeRowsPerPage: jest.fn(),
 };
-const propsPagination = propsTable;
 
 describe('Users: ', () => {
   let users;

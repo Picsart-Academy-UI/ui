@@ -1,17 +1,9 @@
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import React from 'react';
-
-import mockstore from '../../../../../__mocks__/index';
 import { Snackbar } from '@material-ui/core';
 import PositionedSnackbar from '..';
 
-const get = (props) =>
-  mount(
-    <Provider store={mockstore}>
-      <PositionedSnackbar {...props} />
-    </Provider>
-  );
+const get = (props) => mount(<PositionedSnackbar {...props} />);
 
 const find = (cmp, attr) => cmp.find(attr);
 

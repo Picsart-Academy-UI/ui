@@ -15,6 +15,7 @@ const SelectDropdown = ({
   const currentValue = isControlled ? props.value : localValue;
 
   const onSelectChange = (event, newValue) => {
+    console.log('hello');
     if (!isControlled) {
       setLocalValue(newValue);
     }
