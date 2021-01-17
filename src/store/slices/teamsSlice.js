@@ -1,17 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const teams = createSlice({
-  name: 'teams',
+  name: 'teamsData',
   initialState: {
-    teams: [],
+    teamsList: [],
   },
   reducers: {
     setTeams: (state, action) => {
-      state.teams = action.payload;
+      state.teamsList = action.payload.data;
+    },
+    addTeam: (state, action) => {
+      state.teamList = [action.payload.data, ...state.teamList];
+    },
+    deleteTeam: (state, action) => {
+      state.teamsList = state.teamsList.filter(
+        (team) => team.id !== action.payload.id
+      );
     },
   },
 });
 
-export const { setTeams } = teams.actions;
+export const { setTeams, addTeam, deleteTeam } = teams.actions;
 
 export default teams.reducer;
