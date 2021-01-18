@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { API_URL_PART } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { getUserInvitationRequestData } from '../../services/users';
 import Form from './components/Form';
@@ -29,7 +30,11 @@ const UserInvite = () => {
       body.birthday = new Date(values.birthday);
 
       const res = await makeRequest(
-        getUserInvitationRequestData({ token, body })
+        getUserInvitationRequestData({
+          token,
+          body,
+          route: API_URL_PART.authIvite,
+        })
       );
 
       // console.log(res);

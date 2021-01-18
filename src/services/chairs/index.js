@@ -1,43 +1,22 @@
-import { MAIN_URL } from '../../constants';
+import {
+  getPOSTRequestObject,
+  getPUTRequestObject,
+  getGETRequestObject,
+  getGETOneRequestObject,
+  getDELETERequestObject,
+} from '../utils';
 
-export const getChairCreateRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}chairs`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+export const getChairCreateRequestData = ({ token, body, route }) =>
+  getPOSTRequestObject({ token, body, route });
 
-export const getChairsAllRequestData = (token) =>
-  new Request(`${MAIN_URL}chairs`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getChairsAllRequestData = ({ token, route }) =>
+  getGETRequestObject({ token, route });
 
-export const getChairIdRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}chairs/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getChairIdRequestData = ({ token, id, route }) =>
+  getGETOneRequestObject({ token, id, route });
 
-export const getChairUpdateRequestData = ({ token, id, body }) =>
-  new Request(`${MAIN_URL}chairs/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+export const getChairUpdateRequestData = ({ token, id, body, route }) =>
+  getPUTRequestObject({ token, id, body, route });
 
-export const getChairDeleteRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}chairs/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getChairDeleteRequestData = ({ token, id, route }) =>
+  getDELETERequestObject({ token, id, route });

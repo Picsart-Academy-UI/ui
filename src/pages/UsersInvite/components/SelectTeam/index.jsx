@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Select,
 } from '@material-ui/core';
+import { API_URL_PART } from '../../../../constants';
 import { setTeams } from '../../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../../services/teams';
 import useFetch from '../../../../hooks/useFetch';
@@ -39,7 +40,9 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
   const theme = useTheme();
 
   const getTeams = useCallback(async () => {
-    const res = await makeRequest(getTeamsAllRequestData(token));
+    const res = await makeRequest(
+      getTeamsAllRequestData({ token, route: API_URL_PART.teams })
+    );
 
     if (res.data) {
       dispatch(setTeams(res.data));

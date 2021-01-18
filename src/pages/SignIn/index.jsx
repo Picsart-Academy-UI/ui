@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { Box, Typography, Container, Avatar, Button } from '@material-ui/core';
-import { GOOGLE_LOGO } from '../../constants';
+import { API_URL_PART, GOOGLE_LOGO } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 import useStylesMain from '../../hooks/useStylesMain';
@@ -17,7 +17,10 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   const responseGoogle = async (response) => {
-    const request = getGoogleRequestData(response);
+    const request = getGoogleRequestData({
+      body: response,
+      route: API_URL_PART.authSignIn,
+    });
     const res = await makeRequest(request);
     if (res.token && res.data) {
       dispatch(setIsLoggedIn(res));

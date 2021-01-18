@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { API_URL_PART } from '../../../../constants';
 import useFetch from '../../../../hooks/useFetch';
 import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
@@ -22,7 +23,9 @@ const Delete = ({ id, userFullName }) => {
   };
 
   const handleDeleteClick = async () => {
-    const res = await makeRequest(getUserDeleteRequestData({ token, id }));
+    const res = await makeRequest(
+      getUserDeleteRequestData({ token, id, route: API_URL_PART.users })
+    );
     if (res.message) {
       dispatch(deleteUser(id));
       handleClose();

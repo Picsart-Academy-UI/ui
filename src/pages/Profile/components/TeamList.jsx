@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { API_URL_PART } from '../../../constants';
 import SelectDropdown from '../../../components/SelectDropdown';
 import useFetch from '../../../hooks/useFetch';
 import { getTeamsAllRequestData } from '../../../services/teams';
@@ -15,7 +16,9 @@ function TeamList(props) {
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const data = await makeRequest(getTeamsAllRequestData(token));
+      const data = await makeRequest(
+        getTeamsAllRequestData({ token, route: API_URL_PART.teams })
+      );
       setTeams(data.data);
     };
     fetchTeams();

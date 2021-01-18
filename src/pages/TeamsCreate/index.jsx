@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
+import { API_URL_PART } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
 import useStylesLocal from './style';
@@ -21,7 +22,9 @@ const TeamsCreate = () => {
       team_name: nameRef.current.value,
     };
 
-    const res = await makeRequest(getTeamCreateRequestData({ token, body }));
+    const res = await makeRequest(
+      getTeamCreateRequestData({ token, body, route: API_URL_PART.teams })
+    );
 
     if (res.data) {
       nameRef.current.value = '';

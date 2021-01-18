@@ -1,13 +1,13 @@
 import { MAIN_URL } from '../../constants';
 
-const getGoogleRequestData = (response) =>
-  new Request(`${MAIN_URL}auth/signin/`, {
+const getGoogleRequestData = ({ body, route }) =>
+  new Request(`${MAIN_URL}${route}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      token: response.tokenId,
+      token: body.tokenId,
     }),
   });
 

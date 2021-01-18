@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { API_URL_PART } from '../../constants';
 import { setTeams } from '../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
@@ -72,7 +73,10 @@ const Users = () => {
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
+      const requestData = getTeamsAllRequestData({
+        token,
+        route: API_URL_PART.teams,
+      });
       const getTeams = await makeRequest(requestData);
       if (getTeams.data) {
         dispatch(setTeams(getTeams.data));

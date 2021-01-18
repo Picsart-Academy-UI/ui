@@ -1,14 +1,15 @@
 import { MAIN_URL } from '../../constants';
+import {
+  getPOSTRequestObject,
+  getPUTRequestObject,
+  getDELETERequestObject,
+} from '../utils';
 
-export const getUserInvitationRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}auth/invite`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+export const getUserInvitationRequestData = ({ token, body, route }) =>
+  getPOSTRequestObject({ token, body, route });
+
+export const getUsersUpdateRequestData = ({ token, id, body, route }) =>
+  getPUTRequestObject({ token, id, body, route });
 
 export const getLimitedUsersRequestData = (token, limit, page) =>
   new Request(`${MAIN_URL}users/all?limit=${limit}&page=${page}`, {
@@ -17,13 +18,8 @@ export const getLimitedUsersRequestData = (token, limit, page) =>
     },
   });
 
-export const getUserDeleteRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}users/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getUserDeleteRequestData = ({ token, id, route }) =>
+  getDELETERequestObject({ token, id, route });
 
 export const getUsersSearchRequestData = (token, limit, page, value) =>
   new Request(

@@ -1,43 +1,22 @@
-import { MAIN_URL } from '../../constants';
+import {
+  getPOSTRequestObject,
+  getPUTRequestObject,
+  getGETRequestObject,
+  getGETOneRequestObject,
+  getDELETERequestObject,
+} from '../utils';
 
-export const getTeamCreateRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}teams`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+export const getTeamCreateRequestData = ({ token, body, route }) =>
+  getPOSTRequestObject({ token, body, route });
 
-export const getTeamsAllRequestData = (token) =>
-  new Request(`${MAIN_URL}teams`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getTeamUpdateRequestData = ({ token, id, body, route }) =>
+  getPUTRequestObject({ token, id, body, route });
 
-export const getTeambyIDRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}teams/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getTeamsAllRequestData = ({ token, route }) =>
+  getGETRequestObject({ token, route });
 
-export const getTeamUpdateRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}teams/${body.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+export const getTeambyIDRequestData = ({ token, id, route }) =>
+  getGETOneRequestObject({ token, id, route });
 
-export const getTeamDeleteRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}teams/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getTeamDeleteRequestData = ({ token, id, route }) =>
+  getDELETERequestObject({ token, id, route });
