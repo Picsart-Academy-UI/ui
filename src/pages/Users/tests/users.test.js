@@ -1,10 +1,10 @@
 import { mount } from 'enzyme';
+import React from 'react';
 import { Provider } from 'react-redux';
 import mockstore from '../../../__mocks__/index';
 import { Grid } from '@material-ui/core';
 import Users from '../index';
 import UsersTable from '../components/UsersTable';
-import Pagination from '../../../components/Pagination';
 
 const get = (Cmp, props) =>
   mount(
@@ -16,42 +16,21 @@ const get = (Cmp, props) =>
 const find = (cmp, attr) => cmp.find(attr);
 
 const propsUsers = {};
-const propsTable = {
-  rows: {
-    usersList: [
-      {
-        _id: '5ffed7798655a133f07d1a78',
-        accepted: false,
-        is_admin: false,
-        push_subscriptions: [],
-        email: 'mock@gmail.com',
-        team_id: '5ff1e9fa757f0d03b08bac5a',
-        position_id: '5fe23d54a710eb52a9fe0835',
-        first_name: 'Mock',
-        last_name: 'Mock',
-        phone: null,
-        createdAt: '2021-01-13T11:20:25.075Z',
-        updatedAt: '2021-01-13T23:56:53.679Z',
-        __v: 0,
-      },
-    ],
-  },
-  page: 1,
-  rowsPerPage: 5,
-  onChangePage: jest.fn(),
-  onChangeRowsPerPage: jest.fn(),
-};
+
+const useState = React.useState;
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+}));
 
 describe('Users: ', () => {
   let users;
-  let pagination;
-  let userstable;
 
+  const setState = jest.fn();
   beforeEach(() => {
+    useState.mockImplementation((init) => [init, setState]);
     users = get(Users, propsUsers);
-    userstable = get(UsersTable, propsTable);
-    pagination = get(Pagination, userstable.props().children.props);
-    pagination.handleChangePage = jest.fn(() => console.log('test'));
   });
 
   test('should render properly', () => {
@@ -59,9 +38,19 @@ describe('Users: ', () => {
     expect(find(users, UsersTable).length).toBeGreaterThanOrEqual(1);
   });
 
-  // test('should test', () => {
-  //   const tablePagination = find(pagination, TablePagination);
-  //   tablePagination.simulate('change');
-  //   expect(pagination.handleChangePage).toHaveBeenCalledTimes(1);
-  // });
+  test('should change the dynamic value during input', () => {
+    const grid = find(users, Grid);
+    grid.at(1).props().children.props.onChange('val');
+    grid.at(1).props().children.props.onPageChange(101);
+    expect(setState).toHaveBeenCalledWith('val');
+    expect(setState).toHaveBeenCalledWith(101);
+  });
+
+  test('should correctly manipulate the pagination', () => {
+    const userstable = find(users, UsersTable);
+    userstable.props().onChangePage('val');
+    userstable.props().onChangeRowsPerPage(101);
+    expect(setState).toHaveBeenCalledWith('val');
+    expect(setState).toHaveBeenCalledWith(101);
+  });
 });
