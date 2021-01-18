@@ -6,6 +6,7 @@ const useStylesMain = makeStyles((theme) => ({
     backgroundImage: `url(${CHAIR})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
+    backgroundSize: '100% 100%',
     width: '100vw',
     height: '100vh',
   },

@@ -121,12 +121,12 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('phone_number', e.target.value)}
         />
-        <Typography className={classesLocal.textHeader}>Birthdate:</Typography>
+        <Typography className={classesLocal.textHeader}>Birthday:</Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.birthdate || ''}
+          value={edited.birthday || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('birthdate', e.target.value)}
+          onChange={(e) => handleUserEdit('birthday', e.target.value)}
         />
         <Hidden xsUp={!isAdmin}>
           <Button
