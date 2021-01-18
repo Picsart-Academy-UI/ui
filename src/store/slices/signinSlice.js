@@ -20,9 +20,17 @@ export const signinSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
     },
+    addPushSubscription: (state, action) => {
+      state.curUser.push_subscriptions.push(action.payload);
+    },
   },
 });
 
-export const { setIsLoggedIn, setIsLoggedOut } = signinSlice.actions;
+export const {
+  setIsLoggedIn,
+  setIsLoggedOut,
+  setChangeCurUser,
+  addPushSubscription,
+} = signinSlice.actions;
 
 export default signinSlice.reducer;
