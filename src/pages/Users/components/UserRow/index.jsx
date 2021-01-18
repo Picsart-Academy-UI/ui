@@ -26,11 +26,15 @@ const UserRow = ({ user, name }) => {
   // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
+  // console.log("teams", teams);
+
   useEffect(() => {
     if (teams.length) {
       setTeamObj(teams.find((team) => team._id === user.team_id));
     }
   }, [teams, user]);
+
+  // console.log("teamObj", teamObj);
 
   return (
     <>
@@ -78,7 +82,7 @@ const UserRow = ({ user, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      user.birthdate
+                      user.birthday
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
                     <TableCell align="center">{user.phone}</TableCell>
