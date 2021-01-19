@@ -34,3 +34,15 @@ export const getUsersSearchRequestData = (token, limit, page, value) =>
       },
     }
   );
+
+// http://localhost:6789/api/v1/users/all?team_id=600496e14c53f52488b4c898&limit=2&page=0
+
+export const getUsersSelectTeamRequestData = (token, limit, page, teamId) =>
+  new Request(
+    `${MAIN_URL}users/all?team_id=${teamId}&limit=${limit}&page=${page}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

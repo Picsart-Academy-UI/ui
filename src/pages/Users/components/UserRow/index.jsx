@@ -20,13 +20,13 @@ import useStylesLocal from './style';
 
 const UserRow = ({ user, name }) => {
   const [open, setOpen] = useState(false);
-  const [teamObj, setTeamObj] = useState({});
+  const [teamObj, setTeamObj] = useState({}); // eslint-disable-line
   const classes = useStylesLocal();
 
   // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
-  // console.log("teams", teams);
+  console.log('teams', teams);
 
   useEffect(() => {
     if (teams.length) {

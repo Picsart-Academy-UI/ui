@@ -8,9 +8,10 @@ import useFetch from '../../hooks/useFetch';
 import {
   getLimitedUsersRequestData,
   getUsersSearchRequestData,
+  getUsersSelectTeamRequestData,
 } from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
-import DropDown from './components/DropDown';
+import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
 import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
@@ -19,11 +20,14 @@ const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
+  const [selectedTeamName, setSelectedTeamName] = useState('All');
   const [debouncedSearchValue] = useDebounce(searchValue, 100);
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
     teams: state.teams.teams,
   }));
+
+  console.log('Users Page render');
 
   const makeRequest = useFetch();
 
@@ -41,6 +45,24 @@ const Users = () => {
   const handleInputChange = (value) => {
     setSearchValue(value);
   };
+
+  const handleSelectedTeamChange = (value) => {
+    console.log('selectedTeam', value);
+    setSelectedTeamName(value);
+  };
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const requestData = getTeamsAllRequestData(token);
+      const getTeams = await makeRequest(requestData);
+      if (getTeams.data) {
+        dispatch(setTeams(getTeams.data));
+      }
+    };
+    if (!teams.length) {
+      fetchTeams();
+    }
+  }, [teams, dispatch, makeRequest, token]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -63,25 +85,40 @@ const Users = () => {
       const searchedUsers = await makeRequest(requestData);
       dispatch(fetchedUsersList(searchedUsers));
     };
-    if (!debouncedSearchValue) {
+
+    const fetchBySelectedTeam = async () => {
+      let teamObj;
+      if (teams.length) {
+        teamObj = teams.find((team) => team.team_name === selectedTeamName);
+      }
+      const requestData = getUsersSelectTeamRequestData(
+        token,
+        rowsPerPage,
+        page + 1,
+        teamObj.id // petqa lini teamId
+      );
+      const selectedUsers = await makeRequest(requestData);
+      dispatch(fetchedUsersList(selectedUsers));
+    };
+
+    if (!debouncedSearchValue && selectedTeamName === 'All') {
       fetchUsers();
+    } else if (!debouncedSearchValue && selectedTeamName !== 'All') {
+      console.log('fetch by Select');
+      fetchBySelectedTeam();
     } else {
+      console.log('fetch by Search');
       fetchBySearch();
     }
-  }, [page, rowsPerPage, debouncedSearchValue, dispatch, makeRequest, token]);
-
-  useEffect(() => {
-    const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const getTeams = await makeRequest(requestData);
-      if (getTeams.data) {
-        dispatch(setTeams(getTeams.data));
-      }
-    };
-    if (!teams.length) {
-      fetchTeams();
-    }
-  }, [teams, dispatch, makeRequest, token]);
+  }, [
+    page,
+    rowsPerPage,
+    debouncedSearchValue,
+    selectedTeamName,
+    dispatch,
+    makeRequest,
+    token,
+  ]);
 
   const usersData = useSelector((state) => state.users);
   // console.log('usersData', usersData);
@@ -97,7 +134,10 @@ const Users = () => {
           />
         </Grid>
         <Grid item xs>
-          <DropDown teams={teams} />
+          <TeamsDropDown
+            teams={teams}
+            onSelectChange={handleSelectedTeamChange}
+          />
         </Grid>
         <Grid item xs>
           <AddUser />

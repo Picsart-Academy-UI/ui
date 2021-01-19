@@ -6,17 +6,19 @@ import {
 } from '@material-ui/core';
 import useStylesLocal from './style';
 
-const DropDown = ({ teams }) => {
+const TeamsDropDown = ({ teams, onSelectChange }) => {
   // console.log("dropDownteams", teams)
   const classes = useStylesLocal();
 
-  const handleSelectChange = () => {};
+  const handleSelectChange = (event) => {
+    onSelectChange(event.target.value);
+  };
 
   return (
     <Box ml={40}>
       <FormControl className={classes.formControl}>
         <NativeSelect
-          onChange={handleSelectChange}
+          onChange={(e) => handleSelectChange(e)}
           name="Teams"
           className={classes.selectEmpty}
           inputProps={{ 'aria-label': 'Teams' }}
@@ -36,4 +38,4 @@ const DropDown = ({ teams }) => {
   );
 };
 
-export default DropDown;
+export default TeamsDropDown;
