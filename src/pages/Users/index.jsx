@@ -74,8 +74,8 @@ const Users = () => {
     const fetchTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
       const getTeams = await makeRequest(requestData);
-      if (getTeams.data) {
-        dispatch(setTeams(getTeams.data));
+      if (getTeams) {
+        dispatch(setTeams(getTeams));
       }
     };
     if (!teams.length) {

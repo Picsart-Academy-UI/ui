@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import SelectDropdown from '../../../components/SelectDropdown';
 import useFetch from '../../../hooks/useFetch';
+import { setTeams } from '../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../services/teams';
 
 function TeamList(props) {
   const makeRequest = useFetch();
+  const dispatch = useDispatch();
 
   const token = useSelector((state) => state.signin.token);
 
-  const [teams, setTeams] = useState(null);
+  // const [teams, setTeams] = useState(null);
 
   const { changeCallback, isEditing, userTeam } = props;
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const data = await makeRequest(getTeamsAllRequestData(token));
-      setTeams(data.data);
+      const requestData = getTeamsAllRequestData(token);
+      const res = await makeRequest(requestData);
+      if (res) {
+        dispatch(setTeams(res));
+      }
     };
     fetchTeams();
-  }, [makeRequest, token]);
+  }, [dispatch, makeRequest, token]);
+
+  const teams = useSelector((state) => state.teams.teams);
 
   let defaultTeam;
   const options =

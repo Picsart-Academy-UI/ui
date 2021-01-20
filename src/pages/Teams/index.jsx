@@ -15,6 +15,7 @@ const Teams = () => {
   const classesLocal = useStylesLocal();
 
   const teamsData = useSelector((state) => state.teams.teams);
+
   useEffect(() => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
