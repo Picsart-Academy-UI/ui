@@ -7,8 +7,7 @@ import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
 import {
   getLimitedUsersRequestData,
-  getUsersSearchRequestData,
-  getUsersSelectTeamRequestData,
+  getFilteredUsersRequestData,
 } from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import TeamsDropDown from './components/TeamsDropDown';
@@ -26,8 +25,6 @@ const Users = () => {
     token: state.signin.token,
     teams: state.teams.teams,
   }));
-
-  console.log('Users Page render');
 
   const makeRequest = useFetch();
 
@@ -52,57 +49,43 @@ const Users = () => {
   };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const getTeams = await makeRequest(requestData);
-      if (getTeams.data) {
-        dispatch(setTeams(getTeams.data));
-      }
-    };
     if (!teams.length) {
+      const fetchTeams = async () => {
+        const requestData = getTeamsAllRequestData(token);
+        const getTeams = await makeRequest(requestData);
+        if (getTeams.data) {
+          dispatch(setTeams(getTeams.data));
+        }
+      };
       fetchTeams();
     }
   }, [teams, dispatch, makeRequest, token]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const requestData = getLimitedUsersRequestData(
-        token,
-        rowsPerPage,
-        page + 1
-      );
-      const users = await makeRequest(requestData);
-      dispatch(fetchedUsersList(users));
-    };
-
-    const fetchBySearch = async () => {
-      const requestData = getUsersSearchRequestData(
-        token,
-        rowsPerPage,
-        page + 1,
-        debouncedSearchValue
-      );
-      const searchedUsers = await makeRequest(requestData);
-      dispatch(fetchedUsersList(searchedUsers));
-    };
-
-    const fetchBySelectedTeam = async () => {
-      const requestData = getUsersSelectTeamRequestData(
-        token,
-        rowsPerPage,
-        page + 1,
-        selectedTeamId
-      );
-      const selectedUsers = await makeRequest(requestData);
-      dispatch(fetchedUsersList(selectedUsers));
-    };
-
     if (!debouncedSearchValue && selectedTeamId === '') {
+      const fetchUsers = async () => {
+        const requestData = getLimitedUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1
+        );
+        const users = await makeRequest(requestData);
+        dispatch(fetchedUsersList(users));
+      };
       fetchUsers();
-    } else if (!debouncedSearchValue && selectedTeamId !== '') {
+    } else if (debouncedSearchValue || selectedTeamId !== '') {
+      const fetchBySelectedTeam = async () => {
+        const requestData = getFilteredUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1,
+          selectedTeamId,
+          debouncedSearchValue
+        );
+        const selectedUsers = await makeRequest(requestData);
+        dispatch(fetchedUsersList(selectedUsers));
+      };
       fetchBySelectedTeam();
-    } else {
-      fetchBySearch();
     }
   }, [
     page,
