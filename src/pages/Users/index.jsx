@@ -20,7 +20,7 @@ const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
-  const [selectedTeamName, setSelectedTeamName] = useState('All');
+  const [selectedTeamId, setSelectedTeamId] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 100);
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
@@ -46,9 +46,9 @@ const Users = () => {
     setSearchValue(value);
   };
 
-  const handleSelectedTeamChange = (value) => {
-    console.log('selectedTeam', value);
-    setSelectedTeamName(value);
+  const handleSelectedTeamChange = (teamId) => {
+    // console.log('selectedTeamId', teamId);
+    setSelectedTeamId(teamId);
   };
 
   useEffect(() => {
@@ -87,34 +87,28 @@ const Users = () => {
     };
 
     const fetchBySelectedTeam = async () => {
-      let teamObj;
-      if (teams.length) {
-        teamObj = teams.find((team) => team.team_name === selectedTeamName);
-      }
       const requestData = getUsersSelectTeamRequestData(
         token,
         rowsPerPage,
         page + 1,
-        teamObj.id // petqa lini teamId
+        selectedTeamId
       );
       const selectedUsers = await makeRequest(requestData);
       dispatch(fetchedUsersList(selectedUsers));
     };
 
-    if (!debouncedSearchValue && selectedTeamName === 'All') {
+    if (!debouncedSearchValue && selectedTeamId === '') {
       fetchUsers();
-    } else if (!debouncedSearchValue && selectedTeamName !== 'All') {
-      console.log('fetch by Select');
+    } else if (!debouncedSearchValue && selectedTeamId !== '') {
       fetchBySelectedTeam();
     } else {
-      console.log('fetch by Search');
       fetchBySearch();
     }
   }, [
     page,
     rowsPerPage,
     debouncedSearchValue,
-    selectedTeamName,
+    selectedTeamId,
     dispatch,
     makeRequest,
     token,

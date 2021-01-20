@@ -26,7 +26,7 @@ const UserRow = ({ user, name }) => {
   // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
-  console.log('teams', teams);
+  // console.log('teams', teams);
 
   useEffect(() => {
     if (teams.length) {

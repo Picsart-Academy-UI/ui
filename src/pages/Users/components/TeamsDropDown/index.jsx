@@ -11,7 +11,13 @@ const TeamsDropDown = ({ teams, onSelectChange }) => {
   const classes = useStylesLocal();
 
   const handleSelectChange = (event) => {
-    onSelectChange(event.target.value);
+    const { value } = event.target;
+    if (value === 'All') {
+      onSelectChange('');
+      return;
+    }
+    const { _id } = teams.find((team) => team.team_name === value);
+    onSelectChange(_id);
   };
 
   return (
