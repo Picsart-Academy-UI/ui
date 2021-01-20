@@ -34,13 +34,13 @@ export const usersSlice = createSlice({
     fetchedUsersList: (state, action) => {
       state.usersList = action.payload;
     },
-    deleteUser: (state, action) => {
+    deleteUser: jest.fn((state, action) => {
       const userId = action.payload;
       const index = state.usersList.users.findIndex(
         ({ _id }) => userId === _id
       );
       state.usersList.users.splice(index, 1);
-    },
+    }),
   },
 });
 
