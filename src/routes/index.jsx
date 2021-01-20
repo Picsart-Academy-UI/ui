@@ -12,7 +12,7 @@ import Reservations from '../pages/Reservations';
 import ReservationsCreate from '../pages/ReservationsCreate';
 import ReservationsEdit from '../pages/ReservationsEdit';
 import Requests from '../pages/Requests';
-import useStylesMain from '../hooks/style/useStylesMain';
+import useStylesMain from '../hooks/useStylesMain';
 
 const Router = () => {
   const classesMain = useStylesMain();

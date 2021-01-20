@@ -20,18 +20,20 @@ import useStylesLocal from './style';
 
 const UserRow = ({ user, name }) => {
   const [open, setOpen] = useState(false);
-  const [teamObj, setTeamObj] = useState({});
+  const [teamName, setTeamName] = useState('');
   const classes = useStylesLocal();
 
   // console.log('user', user);
 
   const teams = useSelector((state) => state.teams.teams);
+  // console.log('teams', teams);
 
   useEffect(() => {
     if (teams.length) {
-      setTeamObj(teams.find((team) => team.id === user.team_id));
+      const { team_name } = teams.find((team) => team._id === user.team_id);
+      setTeamName(team_name);
     }
-  }, [teams]);
+  }, [teams, user]);
 
   return (
     <>
@@ -49,12 +51,15 @@ const UserRow = ({ user, name }) => {
           {user.first_name}
         </TableCell>
         <TableCell align="center">{user.last_name}</TableCell>
-        <TableCell align="center">{teamObj.name}</TableCell>
+        <TableCell align="center">{teamName}</TableCell>
         <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
           <GoToProfile user={user} />
           <BookaSeat />
-          <Delete id={user._id} />
+          <Delete
+            id={user._id}
+            userFullName={`${user.first_name} ${user.last_name}`}
+          />
         </TableCell>
       </TableRow>
 
@@ -68,7 +73,7 @@ const UserRow = ({ user, name }) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Birthdate</TableCell>
+                    <TableCell align="center">Birthday</TableCell>
                     <TableCell align="center">Position</TableCell>
                     <TableCell align="center">PhoneNumber</TableCell>
                   </TableRow>
@@ -76,7 +81,7 @@ const UserRow = ({ user, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      user.birthdate
+                      user.birthday
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
                     <TableCell align="center">{user.phone}</TableCell>

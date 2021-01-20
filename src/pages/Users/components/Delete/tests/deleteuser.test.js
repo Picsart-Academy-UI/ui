@@ -6,6 +6,7 @@ import * as useRequest from '../../../../../hooks/useFetch';
 import mockstore from '../../../../../__mocks__/index';
 import Delete from '..';
 import { Button } from '@material-ui/core';
+import AlertDialog from '../../../../../components/AlertDialog';
 
 const get = (props) =>
   mount(
@@ -38,8 +39,8 @@ describe('Delete User Button: ', () => {
   });
 
   test('should handle user deletion on button click', async () => {
-    const delBtn = find(cmp, Button);
-    await delBtn.props().onClick();
+    const delBtn = find(cmp, AlertDialog);
+    await delBtn.props().handleDeleteClick();
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
 });

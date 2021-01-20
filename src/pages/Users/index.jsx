@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useDebounce } from 'use-debounce';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
-import { getLimitedUsersData, getUsersBySearch } from '../../services/users';
+import {
+  getLimitedUsersRequestData,
+  getFilteredUsersRequestData,
+} from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
-import DropDown from './components/DropDown';
+import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
 import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
@@ -15,6 +19,8 @@ const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
+  const [selectedTeamId, setSelectedTeamId] = useState('');
+  const [debouncedSearchValue] = useDebounce(searchValue, 100);
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
     teams: state.teams.teams,
@@ -37,55 +43,59 @@ const Users = () => {
     setSearchValue(value);
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { url, options } = getLimitedUsersData(
-        token,
-        rowsPerPage,
-        page + 1
-      );
-      const res = await makeRequest(url, options);
-      // console.log(res);
-      dispatch(fetchedUsersList(res));
-    };
-
-    const fetchBySearch = async () => {
-      const { url, options } = getUsersBySearch(
-        token,
-        rowsPerPage,
-        page + 1,
-        searchValue
-      );
-      const searchedUsers = await makeRequest(url, options);
-      // console.log('searchedUsers', searchedUsers);
-      dispatch(fetchedUsersList(searchedUsers));
-    };
-    if (!searchValue) {
-      fetchUsers();
-    } else {
-      // console.log('searchValue', searchValue);
-      // console.log("page", page + 1);
-      fetchBySearch();
-    }
-  }, [page, rowsPerPage, searchValue, dispatch, makeRequest, token]);
+  const handleSelectedTeamChange = (teamId) => {
+    // console.log('selectedTeamId', teamId);
+    setSelectedTeamId(teamId);
+  };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const { url, options } = getTeamsAllRequestData(token);
-      try {
-        const getTeams = await makeRequest(url, options);
-        // console.log('getTeams', getTeams);
+    if (!teams.length) {
+      const fetchTeams = async () => {
+        const requestData = getTeamsAllRequestData(token);
+        const getTeams = await makeRequest(requestData);
         if (getTeams.data) {
           dispatch(setTeams(getTeams.data));
         }
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    if (!teams.length) {
+      };
       fetchTeams();
     }
-  }, [teams]);
+  }, [teams, dispatch, makeRequest, token]);
+
+  useEffect(() => {
+    if (!debouncedSearchValue && selectedTeamId === '') {
+      const fetchUsers = async () => {
+        const requestData = getLimitedUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1
+        );
+        const users = await makeRequest(requestData);
+        dispatch(fetchedUsersList(users));
+      };
+      fetchUsers();
+    } else if (debouncedSearchValue || selectedTeamId !== '') {
+      const fetchBySelectedTeam = async () => {
+        const requestData = getFilteredUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1,
+          selectedTeamId,
+          debouncedSearchValue
+        );
+        const selectedUsers = await makeRequest(requestData);
+        dispatch(fetchedUsersList(selectedUsers));
+      };
+      fetchBySelectedTeam();
+    }
+  }, [
+    page,
+    rowsPerPage,
+    debouncedSearchValue,
+    selectedTeamId,
+    dispatch,
+    makeRequest,
+    token,
+  ]);
 
   const usersData = useSelector((state) => state.users);
   // console.log('usersData', usersData);
@@ -101,7 +111,10 @@ const Users = () => {
           />
         </Grid>
         <Grid item xs>
-          <DropDown />
+          <TeamsDropDown
+            teams={teams}
+            onSelectChange={handleSelectedTeamChange}
+          />
         </Grid>
         <Grid item xs>
           <AddUser />

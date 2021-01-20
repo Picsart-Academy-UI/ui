@@ -5,11 +5,10 @@ const useForm = (callback, validate) => {
     email: '',
     first_name: '',
     last_name: '',
-    birthdate: '',
+    birthday: '',
     phone: '',
     team_id: '',
     position: '',
-    // position_id: '',
     is_admin: false,
   });
   const [errors, setErrors] = useState({});
@@ -50,10 +49,10 @@ const useForm = (callback, validate) => {
       email: '',
       first_name: '',
       last_name: '',
-      birthdate: '',
+      birthday: '',
       phone: '',
       team_id: '',
-      position_id: '',
+      position: '',
       is_admin: false,
     });
 

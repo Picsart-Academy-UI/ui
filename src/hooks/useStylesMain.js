@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CHAIR } from '../../constants';
+import { CHAIR } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
     backgroundImage: `url(${CHAIR})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
+    backgroundSize: '100% 100%',
     width: '100vw',
     height: '100vh',
   },

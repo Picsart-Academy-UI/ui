@@ -1,15 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// export const getUsers = createAsyncThunk(
-//     'users/fetchUsers',
-//     async (token, limit, page) => {
-//         const { url, options } = getLimitedUsersData(token, limit, page);
-//         const result = await makeRequest(url, options);
-//         console.log("users",result)
-//         return result;
-//     }
-// )
-
 export const usersSlice = createSlice({
   name: 'usersData',
   initialState: {

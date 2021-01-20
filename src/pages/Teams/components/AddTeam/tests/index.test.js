@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { shallow } from 'enzyme';
 
 import AddTeam from '../index';
@@ -24,7 +24,7 @@ describe('Add Team Button: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(cmp, Box).length).toBeGreaterThanOrEqual(1);
+    expect(find(cmp, Grid).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have an add button', () => {

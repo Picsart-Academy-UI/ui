@@ -38,10 +38,6 @@ const UsersTable = ({
       ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
       : 0;
 
-  if (data && !data.length) {
-    return <h1>Nothing Found</h1>;
-  }
-
   return data ? (
     <Paper>
       <TableContainer className={classes.container}>
@@ -58,16 +54,22 @@ const UsersTable = ({
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rowsPerPage > 0 &&
-              data.map((user) => <UserRow key={user._id} user={user} />)}
+          {data && !data.length ? (
+            <TableBody>
+              <TableRow>Nothing Found</TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {rowsPerPage > 0 &&
+                data.map((user) => <UserRow key={user._id} user={user} />)}
 
-            {emptyRows > 0 && (
-              <TableRow>
-                <TableCell />
-              </TableRow>
-            )}
-          </TableBody>
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 17 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       <Pagination

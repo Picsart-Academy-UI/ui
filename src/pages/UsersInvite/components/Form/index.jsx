@@ -51,11 +51,11 @@ const Form = ({ submitForm }) => {
           />
           <InputDate
             type={dateType}
-            name="birthdate"
-            value={values.birthdate}
+            name="birthday"
+            value={values.birthday}
             onChange={handleChange}
-            error={Boolean(errors.birthdate)}
-            helperText={errors.birthdate}
+            error={Boolean(errors.birthday)}
+            helperText={errors.birthday}
             setDateType={setDateType}
           />
           <Input
@@ -77,13 +77,13 @@ const Form = ({ submitForm }) => {
             helperText={errors.team_id}
           />
           <Input
-            id="position_id"
+            id="position"
             label="Position"
-            name="position_id"
-            value={values.position_id}
+            name="position"
+            value={values.position}
             onChange={handleChange}
-            error={Boolean(errors.position_id)}
-            helperText={errors.position_id}
+            error={Boolean(errors.position)}
+            helperText={errors.position}
           />
           <FormControlLabel
             className={classesLocal.checkbox}

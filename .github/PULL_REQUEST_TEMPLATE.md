@@ -14,5 +14,5 @@
 - [ ] Optimization (non-breaking change which optimizes existing code)
 - [ ] Refactoring (non-breaking change which refactors code)
 - [ ] Styling (non-breaking change which restyles design)
-- [ ] Other
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
+- [ ] Other

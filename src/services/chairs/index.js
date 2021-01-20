@@ -1,7 +1,7 @@
 import { MAIN_URL } from '../../constants';
 
-export const getTeamCreateRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}teams`, {
+export const getChairCreateRequestData = ({ token, body }) =>
+  new Request(`${MAIN_URL}chairs`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -10,22 +10,22 @@ export const getTeamCreateRequestData = ({ token, body }) =>
     body: JSON.stringify(body),
   });
 
-export const getTeamsAllRequestData = (token) =>
-  new Request(`${MAIN_URL}teams`, {
+export const getChairsAllRequestData = (token) =>
+  new Request(`${MAIN_URL}chairs`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-export const getTeambyIDRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}teams/${id}`, {
+export const getChairIdRequestData = ({ token, id }) =>
+  new Request(`${MAIN_URL}chairs/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-export const getTeamUpdateRequestData = ({ token, body }) =>
-  new Request(`${MAIN_URL}teams/${body.id}`, {
+export const getChairUpdateRequestData = ({ token, id, body }) =>
+  new Request(`${MAIN_URL}chairs/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -34,8 +34,8 @@ export const getTeamUpdateRequestData = ({ token, body }) =>
     body: JSON.stringify(body),
   });
 
-export const getTeamDeleteRequestData = ({ token, id }) =>
-  new Request(`${MAIN_URL}teams/${id}`, {
+export const getChairDeleteRequestData = ({ token, id }) =>
+  new Request(`${MAIN_URL}chairs/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,

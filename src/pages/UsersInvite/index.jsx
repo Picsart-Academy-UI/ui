@@ -22,14 +22,15 @@ const UserInvite = () => {
   const submitForm = useCallback(
     async (values, resetValues) => {
       const body = { ...values };
-      const teamItem = teams.find(({ name }) => name === values.team_id);
+      const teamItem = teams.find(
+        ({ team_name }) => team_name === values.team_id
+      );
       body.team_id = teamItem._id;
-      // body.position_id = '5fe23d54a710eb52a9fe0835';
-      body.position = '5fe23d54a710eb52a9fe0835';
+      body.birthday = new Date(values.birthday);
 
-      const { url, options } = getUserInvitationRequestData({ token, body });
-
-      const res = await makeRequest(url, options);
+      const res = await makeRequest(
+        getUserInvitationRequestData({ token, body })
+      );
 
       // console.log(res);
 
