@@ -24,7 +24,7 @@ const TeamsDropDown = ({ teams, onSelectChange }) => {
     <Box ml={40}>
       <FormControl className={classes.formControl}>
         <NativeSelect
-          onChange={(e) => handleSelectChange(e)}
+          onChange={handleSelectChange}
           name="Teams"
           className={classes.selectEmpty}
           inputProps={{ 'aria-label': 'Teams' }}

@@ -20,7 +20,7 @@ import useStylesLocal from './style';
 
 const UserRow = ({ user, name }) => {
   const [open, setOpen] = useState(false);
-  const [teamObj, setTeamObj] = useState({}); // eslint-disable-line
+  const [teamName, setTeamName] = useState('');
   const classes = useStylesLocal();
 
   // console.log('user', user);
@@ -30,11 +30,10 @@ const UserRow = ({ user, name }) => {
 
   useEffect(() => {
     if (teams.length) {
-      setTeamObj(teams.find((team) => team._id === user.team_id));
+      const { team_name } = teams.find((team) => team._id === user.team_id);
+      setTeamName(team_name);
     }
   }, [teams, user]);
-
-  // console.log("teamObj", teamObj);
 
   return (
     <>
@@ -52,7 +51,7 @@ const UserRow = ({ user, name }) => {
           {user.first_name}
         </TableCell>
         <TableCell align="center">{user.last_name}</TableCell>
-        <TableCell align="center">{teamObj.team_name}</TableCell>
+        <TableCell align="center">{teamName}</TableCell>
         <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
           <GoToProfile user={user} />
