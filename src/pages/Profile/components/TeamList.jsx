@@ -11,8 +11,6 @@ function TeamList(props) {
 
   const token = useSelector((state) => state.signin.token);
 
-  // const [teams, setTeams] = useState(null);
-
   const { changeCallback, isEditing, userTeam } = props;
 
   useEffect(() => {
