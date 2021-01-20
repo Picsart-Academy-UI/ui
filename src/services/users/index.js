@@ -25,9 +25,17 @@ export const getUserDeleteRequestData = ({ token, id }) =>
     },
   });
 
-export const getUsersSearchRequestData = (token, limit, page, value) =>
+export const getFilteredUsersRequestData = (
+  token,
+  limit,
+  page,
+  teamId,
+  value
+) =>
   new Request(
-    `${MAIN_URL}users/search?search_by=first_name&value=${value}&limit=${limit}&page=${page}`,
+    `${MAIN_URL}users/all?${
+      teamId ? `team_id=${teamId}` : ''
+    }&first_name=${value}&limit=${limit}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
