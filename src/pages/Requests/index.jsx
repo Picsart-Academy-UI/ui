@@ -23,7 +23,7 @@ const Requests = () => {
       <Box className={classes.filterContainer}>
         <SelectDropdown
           label="Select Team"
-          options={teams.slice(1)}
+          options={teams}
           property="team_name"
           className={classes.selectDropdown}
           // eslint-disable-next-line
