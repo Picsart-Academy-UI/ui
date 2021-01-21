@@ -12,22 +12,28 @@ const Requests = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.signin.token);
-  const teams = useSelector((state) => state.teams.teamsList);
+  const teams = useSelector((state) => state.teams.teams);
 
   useEffect(() => {
     dispatch(fetchTeams(token));
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <div className="requests">
       <Box className={classes.filterContainer}>
         <SelectDropdown
           label="Select Team"
-          options={teams}
-          property="name"
+          options={teams.slice(1)}
+          property="team_name"
+          className={classes.selectDropdown}
+          // eslint-disable-next-line
           onChange={console.log}
         />
-        <Filter className={classes.filter} onChange={console.log} />
+        <Filter
+          className={classes.filter}
+          // eslint-disable-next-line
+          onChange={console.log}
+        />
       </Box>
 
       <Box fontSize="h4.fontSize" my={3}>

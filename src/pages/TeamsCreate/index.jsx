@@ -18,22 +18,14 @@ const TeamsCreate = () => {
     e.preventDefault();
 
     const body = {
-      name: nameRef.current.value,
+      team_name: nameRef.current.value,
     };
 
-    const { url, options } = getTeamCreateRequestData({ token, body });
+    const res = await makeRequest(getTeamCreateRequestData({ token, body }));
 
-    try {
-      const res = await makeRequest(url, options);
+    if (res.data) {
+      nameRef.current.value = '';
       history.push('/teams');
-
-      if (res.success) {
-        nameRef.current.value = '';
-        return true;
-      }
-      return false;
-    } catch (err) {
-      return new Error(err.message);
     }
   };
 

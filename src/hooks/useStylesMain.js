@@ -1,15 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { LONLEY_CHAIR } from '../../constants';
+import { CHAIR } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
-    backgroundImage: `url(${LONLEY_CHAIR})`,
+    backgroundImage: `url(${CHAIR})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
+    backgroundSize: '100% 100%',
     width: '100vw',
     height: '100vh',
   },
   paperPadding: {
+    marginTop: theme.spacing(6),
     padding: theme.spacing(4),
   },
 }));

@@ -7,7 +7,6 @@ const InputDate = ({ setDateType, ...props }) => {
 
   return (
     <Input
-      required={false}
       id="birthday"
       label="Birthday"
       onFocus={onDateTypeFocus}

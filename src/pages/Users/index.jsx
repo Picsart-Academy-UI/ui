@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Box } from '@material-ui/core';
+import { useDebounce } from 'use-debounce';
+import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { setTeams } from '../../store/slices/teamsSlice';
+import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
-import { getLimitedUsersData } from '../../services/users';
+import {
+  getLimitedUsersRequestData,
+  getUsersSearchRequestData,
+} from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import DropDown from './components/DropDown';
 import UsersTable from './components/UsersTable';
@@ -12,7 +18,13 @@ import AddUser from './components/AddUser';
 const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const token = useSelector((state) => state.signin.token);
+  const [searchValue, setSearchValue] = useState('');
+  const [debouncedSearchValue] = useDebounce(searchValue, 100);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
+
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
@@ -26,31 +38,71 @@ const Users = () => {
     setPage(0);
   };
 
+  const handleInputChange = (value) => {
+    setSearchValue(value);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(page, 'useEffect page');
-      const { url, options } = getLimitedUsersData(
+    const fetchUsers = async () => {
+      const requestData = getLimitedUsersRequestData(
         token,
         rowsPerPage,
         page + 1
       );
-      const res = await makeRequest(url, options);
-      console.log(res);
-      dispatch(fetchedUsersList(res));
+      const users = await makeRequest(requestData);
+      dispatch(fetchedUsersList(users));
     };
-    fetchData();
-  }, [page, rowsPerPage]);
+
+    const fetchBySearch = async () => {
+      const requestData = getUsersSearchRequestData(
+        token,
+        rowsPerPage,
+        page + 1,
+        debouncedSearchValue
+      );
+      const searchedUsers = await makeRequest(requestData);
+      dispatch(fetchedUsersList(searchedUsers));
+    };
+    if (!debouncedSearchValue) {
+      fetchUsers();
+    } else {
+      fetchBySearch();
+    }
+  }, [page, rowsPerPage, debouncedSearchValue, dispatch, makeRequest, token]);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const requestData = getTeamsAllRequestData(token);
+      const getTeams = await makeRequest(requestData);
+      if (getTeams.data) {
+        dispatch(setTeams(getTeams.data));
+      }
+    };
+    if (!teams.length) {
+      fetchTeams();
+    }
+  }, [teams, dispatch, makeRequest, token]);
 
   const usersData = useSelector((state) => state.users);
+  // console.log('usersData', usersData);
 
-  console.log(page, 'users/back clicked');
   return (
     <>
-      <Box display="flex" justifyContent="center">
-        <SearchBox />
-        <DropDown />
-      </Box>
-      <AddUser />
+      <Grid container spacing={3}>
+        <Grid item xs>
+          <SearchBox
+            value={searchValue}
+            onChange={handleInputChange}
+            onPageChange={handleChangePage}
+          />
+        </Grid>
+        <Grid item xs>
+          <DropDown teams={teams} />
+        </Grid>
+        <Grid item xs>
+          <AddUser />
+        </Grid>
+      </Grid>
       <UsersTable
         rows={usersData}
         page={page}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -12,15 +12,29 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { useSelector } from 'react-redux';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
 import Delete from '../Delete';
-import EditRow from '../EditRow';
 import useStylesLocal from './style';
 
-const UserRow = ({ row, name }) => {
+const UserRow = ({ user, name }) => {
   const [open, setOpen] = useState(false);
+  const [teamObj, setTeamObj] = useState({});
   const classes = useStylesLocal();
+
+  // console.log('user', user);
+
+  const teams = useSelector((state) => state.teams.teams);
+  // console.log("teams", teams);
+
+  useEffect(() => {
+    if (teams.length) {
+      setTeamObj(teams.find((team) => team._id === user.team_id));
+    }
+  }, [teams, user]);
+
+  // console.log("teamObj", teamObj);
 
   return (
     <>
@@ -35,16 +49,18 @@ const UserRow = ({ row, name }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.first_name}
+          {user.first_name}
         </TableCell>
-        <TableCell align="center">{row.last_name}</TableCell>
-        <TableCell align="center"></TableCell>
-        <TableCell align="center">{row.email}</TableCell>
+        <TableCell align="center">{user.last_name}</TableCell>
+        <TableCell align="center">{teamObj.team_name}</TableCell>
+        <TableCell align="center">{user.email}</TableCell>
         <TableCell align="right">
-          <GoToProfile user={row} />
+          <GoToProfile user={user} />
           <BookaSeat />
-          <EditRow />
-          <Delete id={row._id} />
+          <Delete
+            id={user._id}
+            userFullName={`${user.first_name} ${user.last_name}`}
+          />
         </TableCell>
       </TableRow>
 
@@ -58,7 +74,7 @@ const UserRow = ({ row, name }) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Birthdate</TableCell>
+                    <TableCell align="center">Birthday</TableCell>
                     <TableCell align="center">Position</TableCell>
                     <TableCell align="center">PhoneNumber</TableCell>
                   </TableRow>
@@ -66,10 +82,10 @@ const UserRow = ({ row, name }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      row.birthdate
+                      user.birthday
                     </TableCell>
-                    <TableCell align="center">{row.position}</TableCell>
-                    <TableCell align="center">Phone</TableCell>
+                    <TableCell align="center">{user.position}</TableCell>
+                    <TableCell align="center">{user.phone}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

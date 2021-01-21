@@ -1,8 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
-  grid: {
-    height: '100vh',
+  center: {
+    height: 'calc(100vh - 112px)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   h404: {
     fontSize: theme.spacing(3),

@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
+import useStylesLocal from './style';
 
 const UsersTable = ({
   rows,
@@ -18,7 +19,11 @@ const UsersTable = ({
   onChangePage,
   onChangeRowsPerPage,
 }) => {
-  const { users, count } = rows.usersList;
+  const classes = useStylesLocal();
+
+  const { data, count } = rows.usersList;
+
+  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -29,14 +34,14 @@ const UsersTable = ({
   };
 
   const emptyRows =
-    users && users.length
-      ? rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
+    data && data.length
+      ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
       : 0;
 
-  return users && users.length ? (
+  return data ? (
     <Paper>
-      <TableContainer>
-        <Table aria-label="collapsible table">
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell />
@@ -45,29 +50,35 @@ const UsersTable = ({
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
               <TableCell align="right">
-                <Box mr={13}>Actions</Box>
+                <Box mr={9}>Actions</Box>
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rowsPerPage > 0 &&
-              users.map((row) => <UserRow key={row._id} row={row} />)}
+          {data && !data.length ? (
+            <TableBody>
+              <TableRow>Nothing Found</TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {rowsPerPage > 0 &&
+                data.map((user) => <UserRow key={user._id} user={user} />)}
 
-            {emptyRows > 0 && (
-              <TableRow>
-                <TableCell />
-              </TableRow>
-            )}
-          </TableBody>
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 17 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          )}
         </Table>
-        <Pagination
-          rows={count}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </TableContainer>
+      <Pagination
+        rows={count}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Paper>
   ) : (
     <>

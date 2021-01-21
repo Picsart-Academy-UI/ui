@@ -17,6 +17,10 @@ const useStyles = makeStyles({
   },
   filter: {
     marginBottom: 40,
+    width: '100%',
+  },
+  selectDropdown: {
+    marginRight: 0,
   },
   filterContainer: {
     display: 'flex',
@@ -25,11 +29,16 @@ const useStyles = makeStyles({
   '@media (min-width: 676px)': {
     filterContainer: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       flexDirection: 'row',
     },
     filter: {
       marginBottom: 0,
+      width: 240,
+    },
+    selectDropdown: {
+      marginRight: 20,
+      width: 240,
     },
   },
 });

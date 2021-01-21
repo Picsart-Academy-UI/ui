@@ -6,14 +6,14 @@ import {
 } from '@material-ui/core';
 import useStylesLocal from './style';
 
-const DropDown = () => {
-  // in future collect value from props
+const DropDown = ({ teams }) => {
+  // console.log("dropDownteams", teams)
   const classes = useStylesLocal();
 
   const handleSelectChange = () => {};
 
   return (
-    <Box ml={8} mb={1}>
+    <Box ml={40}>
       <FormControl className={classes.formControl}>
         <NativeSelect
           onChange={handleSelectChange}
@@ -22,11 +22,13 @@ const DropDown = () => {
           inputProps={{ 'aria-label': 'Teams' }}
         >
           <option>All</option>
-          <option>Team 1</option>
-          <option>Team 2</option>
-          <option>Team 3</option>
-          <option>Team 4</option>
-          <option>Team 5</option>
+          {teams && teams.length ? (
+            teams.map((team) => (
+              <option key={team._id}>{team.team_name}</option>
+            ))
+          ) : (
+            <option>Loading...</option>
+          )}
         </NativeSelect>
         <FormHelperText>Teams</FormHelperText>
       </FormControl>

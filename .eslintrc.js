@@ -13,6 +13,8 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-unused-expressions": "off",
     "import/prefer-default-export": "off",
+    "camelcase": "off",
+    "no-console": "off",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
       "newlines-between": "never",

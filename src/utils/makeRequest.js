@@ -1,8 +1,8 @@
-import { MAIN_ROUTE } from '../constants';
+import { MAIN_URL } from '../constants';
 
 const makeRequest = async (url, { body, headers, method }) => {
   try {
-    const res = await fetch(`${MAIN_ROUTE}${url}`, {
+    const res = await fetch(`${MAIN_URL}${url}`, {
       body: JSON.stringify(body) || undefined,
       headers: headers || {},
       method: method || 'GET',

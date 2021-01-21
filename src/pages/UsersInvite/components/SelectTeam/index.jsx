@@ -1,7 +1,14 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
-import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import {
+  InputLabel,
+  MenuItem,
+  FormControl,
+  FormHelperText,
+  Select,
+} from '@material-ui/core';
+import { setTeams } from '../../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../../services/teams';
 import useFetch from '../../../../hooks/useFetch';
 import useStylesLocal, { getStyleMenuItem } from './style';
@@ -18,84 +25,61 @@ const MenuProps = {
   },
 };
 
-const SelectTeam = ({
-  selectTeamId,
-  shouldBeReseted,
-  setTeamShouldBeReseted,
-}) => {
-  const [teamsAll, setTeamsAll] = useState([]);
-  const [team, setTeam] = useState('');
+const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
+  const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.signin.token);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
 
   const makeRequest = useFetch();
 
   const classesLocal = useStylesLocal();
   const theme = useTheme();
 
-  const handleChange = (event) => {
-    const teamItem = teamsAll.find(({ name }) => name === event.target.value);
-    const { _id } = teamItem;
-    setTeam(event.target.value);
-    selectTeamId(_id);
-  };
+  const getTeams = useCallback(async () => {
+    const res = await makeRequest(getTeamsAllRequestData(token));
 
-  const getTeamsAllAuto = useCallback(async () => {
-    const { url, options } = getTeamsAllRequestData(token);
-    try {
-      const res = await makeRequest(url, options);
-
-      // console.log(res);
-
-      if (res.teams) {
-        setTeamsAll(res.teams);
-        return true;
-      }
-      return false;
-    } catch (err) {
-      return new Error(err.message);
+    if (res.data) {
+      dispatch(setTeams(res.data));
     }
-  }, [makeRequest, token]);
+  }, [dispatch, makeRequest, token]);
 
   useEffect(() => {
-    if (!teamsAll.length) {
-      getTeamsAllAuto();
+    if (!teams.length) {
+      getTeams();
     }
-  }, [teamsAll, getTeamsAllAuto]);
-
-  useEffect(() => {
-    if (shouldBeReseted) {
-      setTeam('');
-      setTeamShouldBeReseted(false);
-    }
-  }, [shouldBeReseted, setTeamShouldBeReseted]);
+  }, [teams, getTeams]);
 
   return (
     <FormControl
       variant="outlined"
       className={classesLocal.formControl}
       margin="normal"
-      required
+      error={error}
     >
       <InputLabel id="demo-simple-select-outlined-label">Team</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
-        value={team}
-        onChange={handleChange}
+        name={team_id}
+        value={value}
+        onChange={onChange}
         label="Team"
         MenuProps={MenuProps}
       >
-        {teamsAll.map(({ _id, name }) => (
+        {teams.map(({ _id, team_name }) => (
           <MenuItem
-            key={_id + name}
-            value={name}
-            style={getStyleMenuItem(name, team, theme)}
+            key={_id + team_name}
+            value={team_name}
+            style={getStyleMenuItem(team_name, value, theme)}
           >
-            {name}
+            {team_name}
           </MenuItem>
         ))}
       </Select>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormControl>
   );
 };

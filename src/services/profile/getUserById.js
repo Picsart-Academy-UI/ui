@@ -1,13 +1,10 @@
-import { MAIN_ROUTE } from '../../constants';
+import { MAIN_URL } from '../../constants';
 
-const getAllTeams = (token, id) => ({
-  url: `${MAIN_ROUTE}users/${id}`,
-  options: {
+const getAllTeams = (token, id) =>
+  new Request(`${MAIN_URL}users/${id}`, {
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
       Authorization: `Bearer ${token}`,
     },
-  },
-});
+  });
 
 export default getAllTeams;
