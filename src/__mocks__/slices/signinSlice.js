@@ -4,8 +4,7 @@ export const signinSlice = createSlice({
   name: 'signin',
   initialState: {
     isLoggedIn: true,
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY5YWJiYWQxNWIxOGEzMzBiYjU3OGEiLCJlbWFpbCI6InJvbWFuLmJhbGF5YW5AcGljc2FydC5jb20iLCJ0ZWFtX2lkIjoiNWZlMjNkNTRhNzEwZWI1MmE5ZmUwODM1IiwiaXNfYWRtaW4iOnRydWUsImlhdCI6MTYxMDE5ODM3Mn0.yKoYaQRwuCDjn2kSsJ-nbd2t76spzoaw3kscLsYCi-c',
+    token: 'aw3kscLsYCi-c',
     curUser: {
       _id: '5ff9abbad15b18a330bb578a',
       is_admin: true,
