@@ -49,7 +49,7 @@ const TeamsTable = () => {
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <TableContainer component={Paper} test="table-cntnr">
+    <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -87,7 +87,6 @@ const TeamsTable = () => {
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
-        test="pgn"
       />
     </TableContainer>
   );
