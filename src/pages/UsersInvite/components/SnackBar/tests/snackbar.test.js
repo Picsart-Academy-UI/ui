@@ -36,6 +36,6 @@ describe('Snackbar: ', () => {
   test('should close the snackbar on close event', () => {
     const sb = find(cmp, Snackbar);
     sb.prop('onClose')();
-    expect(setState).toHaveBeenNthCalledWith(3, false);
+    expect(setState).toHaveBeenNthCalledWith(1, false);
   });
 });
