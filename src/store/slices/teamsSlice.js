@@ -21,7 +21,7 @@ export const fetchTeams = (token) => async (dispatch, getState) => {
     return;
   }
   const res = await getTeams(token);
-  dispatch(setTeams(res.data));
+  dispatch(setTeams(res.data || []));
 };
 
 export default teamsSlice.reducer;
