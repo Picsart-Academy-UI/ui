@@ -7,16 +7,22 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
+  Zoom,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Loads from '../Loads';
+
+const Transition = React.forwardRef((props, ref) => (
+  <Zoom direction="bottom" ref={ref} {...props} />
+));
 
 const useStyles = makeStyles({
   dialogTitle: {
     padding: '8px 24px',
   },
   typography1: {
-    lineHeight: 0.5,
+    lineHeight: 1,
+    fontSize: 14,
   },
 });
 
@@ -52,17 +58,28 @@ export default function ScrollDialog() {
       >
         See Load
       </Button>
-      <Dialog open={open} onClose={handleClose} scroll="paper">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll="paper"
+        TransitionComponent={Transition}
+      >
         <DialogTitle id="scroll-dialog-title" className={classes.dialogTitle}>
-          <div>Load for Monetization</div>
+          <div>Monetization</div>
           <Typography
             className={classes.typography1}
             variant="subtitle1"
             component="div"
+            color="textSecondary"
           >
             User name
           </Typography>
-          <Typography variant="subtitle2" component="div">
+          <Typography
+            className={classes.typography1}
+            variant="subtitle1"
+            color="textSecondary"
+            component="div"
+          >
             17 Dec - 30 Dec
           </Typography>
         </DialogTitle>
