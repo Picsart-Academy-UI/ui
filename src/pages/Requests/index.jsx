@@ -5,6 +5,7 @@ import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
 import { fetchTeams } from '../../store/slices/teamsSlice';
 import RequestsTable from './RequestsTable';
+import { fetchPendingReservations } from '../../store/slices/reservationsSlice';
 import useStyles from './style';
 
 const Requests = () => {
@@ -13,11 +14,14 @@ const Requests = () => {
 
   const token = useSelector((state) => state.signin.token);
   const teams = useSelector((state) => state.teams.teams);
-
+  const pendingReservations = useSelector(
+    (state) => state.reservations.pendingReservations
+  );
   useEffect(() => {
     dispatch(fetchTeams(token));
+    dispatch(fetchPendingReservations(token));
   }, [dispatch, token]);
-
+  console.log(pendingReservations, 'pendingReservations ___');
   return (
     <div className="requests">
       <Box className={classes.filterContainer}>

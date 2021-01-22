@@ -14,12 +14,14 @@ import signinReducer from './slices/signinSlice';
 import usersReducer from './slices/usersSlice';
 import profileReducer from './slices/profileSlice';
 import teamsReducer from './slices/teamsSlice';
+import reservationsReducer from './slices/reservationsSlice';
 
 const reducers = combineReducers({
   signin: signinReducer,
   users: usersReducer,
   profile: profileReducer,
   teams: teamsReducer,
+  reservations: reservationsReducer,
 });
 
 const persistConfig = {
