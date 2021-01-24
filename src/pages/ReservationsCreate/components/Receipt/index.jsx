@@ -9,10 +9,9 @@ import {
   Button,
 } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import useStyles from './style';
 
-const Receipt = ({ reservs, chooseAnotherSeat }) => {
+const Receipt = ({ reservs }) => {
   const styles = useStyles();
   return (
     <Container className={styles.container}>
@@ -21,51 +20,32 @@ const Receipt = ({ reservs, chooseAnotherSeat }) => {
           <TableBody>
             {reservs.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>
-                  {item.date.toLocaleString('default', {
+                <TableCell align="left">
+                  {item.startDate.toLocaleString('default', {
+                    month: 'short',
+                    year: 'numeric',
+                    day: 'numeric',
+                  })}{' '}
+                  -{' '}
+                  {item.endDate.toLocaleString('default', {
                     month: 'short',
                     year: 'numeric',
                     day: 'numeric',
                   })}
                 </TableCell>
                 <TableCell align="center">
-                  {item.isFree ? (
-                    <Box className={styles.isFreeBox}>
-                      free{' '}
-                      <CheckCircleOutlineOutlinedIcon
-                        className={styles.check}
-                      />
-                    </Box>
-                  ) : (
-                    <Box className={styles.isFreeBox}>
-                      busy <CancelOutlinedIcon className={styles.cross} />
-                    </Box>
-                  )}
+                  <Box className={styles.isFreeBox}>
+                    free{' '}
+                    <CheckCircleOutlineOutlinedIcon className={styles.check} />
+                  </Box>
                 </TableCell>
-                <TableCell align="right">
-                  {item.isFree ? (
-                    item.chair
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={chooseAnotherSeat}
-                    >
-                      Choose Another Seat
-                    </Button>
-                  )}
-                </TableCell>
+                <TableCell align="right"> {item.chair} </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        className={styles.submitBtn}
-        onClick={chooseAnotherSeat}
-      >
+      <Button variant="contained" color="primary" className={styles.submitBtn}>
         CheckOut
       </Button>
     </Container>

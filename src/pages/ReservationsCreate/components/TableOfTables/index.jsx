@@ -12,11 +12,12 @@ const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
   const styles = useStyles();
   const dates = [];
   dateRange.map((item) => {
-    if (item.getDate() % 2) {
-      dates.push({ date: item, isFree: true });
-    } else {
-      dates.push({ date: item, isFree: false });
-    }
+    // if (item.getDate() % 2) {
+    //   dates.push({ date: item, isFree: true });
+    // } else {
+    //   dates.push({ date: item, isFree: false });
+    // }
+    dates.push({ date: item, isFree: true });
     return '';
   });
   const data = [
@@ -65,10 +66,11 @@ const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
               </TableCell>
               {item.dates.map((date) => {
                 const reservOnSameDate = reservations.find(
-                  (reservation) => reservation.date === date.date
+                  ({ startDate, endDate }) =>
+                    date.date >= startDate && date.date <= endDate
                 );
                 const isSelected =
-                  reservOnSameDate && reservOnSameDate.chair === item.name;
+                  reservOnSameDate && reservOnSameDate.chairName === item.name;
                 const isNotWeekendDay =
                   date.date.getDay() !== 0 && date.date.getDay() !== 6;
                 let text = '';
@@ -82,18 +84,13 @@ const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
                 return (
                   <TableCell
                     onClick={() => {
-                      if (isNotWeekendDay) {
-                        if (date.isFree) {
-                          choseChair(
-                            { ...date, chair: item.name, id: item.id },
-                            false
-                          );
-                        } else if (!date.isFree) {
-                          choseChair(
-                            { ...date, chair: item.name, id: item.id },
-                            true
-                          );
-                        }
+                      // eslint-disable-next-line
+                      if (isNotWeekendDay && date.isFree) {
+                        choseChair({
+                          ...date,
+                          chairName: item.name,
+                          id: item.id,
+                        });
                       }
                     }}
                     className={`${isNotWeekendDay ? '' : styles.weekend} ${

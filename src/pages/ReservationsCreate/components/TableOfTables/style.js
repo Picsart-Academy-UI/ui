@@ -32,8 +32,7 @@ const useStyles = makeStyles({
     position: 'relative',
   },
   selected: {
-    borderBottom: '0.125rem solid #000000',
-    borderTop: '0.125rem solid #000000',
+    backgroundColor: '#fca311',
     cursor: 'pointer',
   },
   dateRow: {
