@@ -7,10 +7,10 @@ import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
 import {
   getLimitedUsersRequestData,
-  getUsersSearchRequestData,
+  getFilteredUsersRequestData,
 } from '../../services/users';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
-import DropDown from './components/DropDown';
+import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
 import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
@@ -19,6 +19,7 @@ const Users = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
+  const [selectedTeamId, setSelectedTeamId] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 100);
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
@@ -42,46 +43,59 @@ const Users = () => {
     setSearchValue(value);
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const requestData = getLimitedUsersRequestData(
-        token,
-        rowsPerPage,
-        page + 1
-      );
-      const users = await makeRequest(requestData);
-      dispatch(fetchedUsersList(users));
-    };
-
-    const fetchBySearch = async () => {
-      const requestData = getUsersSearchRequestData(
-        token,
-        rowsPerPage,
-        page + 1,
-        debouncedSearchValue
-      );
-      const searchedUsers = await makeRequest(requestData);
-      dispatch(fetchedUsersList(searchedUsers));
-    };
-    if (!debouncedSearchValue) {
-      fetchUsers();
-    } else {
-      fetchBySearch();
-    }
-  }, [page, rowsPerPage, debouncedSearchValue, dispatch, makeRequest, token]);
+  const handleSelectedTeamChange = (teamId) => {
+    // console.log('selectedTeamId', teamId);
+    setSelectedTeamId(teamId);
+  };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const getTeams = await makeRequest(requestData);
-      if (getTeams) {
-        dispatch(setTeams(getTeams));
-      }
-    };
     if (!teams.length) {
+      const fetchTeams = async () => {
+        const requestData = getTeamsAllRequestData(token);
+        const getTeams = await makeRequest(requestData);
+        if (getTeams.data) {
+          dispatch(setTeams(getTeams.data));
+        }
+      };
       fetchTeams();
     }
   }, [teams, dispatch, makeRequest, token]);
+
+  useEffect(() => {
+    if (!debouncedSearchValue && selectedTeamId === '') {
+      const fetchUsers = async () => {
+        const requestData = getLimitedUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1
+        );
+        const users = await makeRequest(requestData);
+        dispatch(fetchedUsersList(users));
+      };
+      fetchUsers();
+    } else if (debouncedSearchValue || selectedTeamId !== '') {
+      const fetchBySelectedTeam = async () => {
+        const requestData = getFilteredUsersRequestData(
+          token,
+          rowsPerPage,
+          page + 1,
+          selectedTeamId,
+          debouncedSearchValue
+        );
+        const selectedUsers = await makeRequest(requestData);
+        dispatch(fetchedUsersList(selectedUsers));
+      };
+      fetchBySelectedTeam();
+    }
+  }, [
+    page,
+    rowsPerPage,
+    debouncedSearchValue,
+    selectedTeamId,
+    dispatch,
+    makeRequest,
+    token,
+  ]);
 
   const usersData = useSelector((state) => state.users);
   // console.log('usersData', usersData);
@@ -97,7 +111,10 @@ const Users = () => {
           />
         </Grid>
         <Grid item xs>
-          <DropDown teams={teams} />
+          <TeamsDropDown
+            teams={teams}
+            onSelectChange={handleSelectedTeamChange}
+          />
         </Grid>
         <Grid item xs>
           <AddUser />

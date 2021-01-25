@@ -12,6 +12,7 @@ const useRequest = () => {
       console.log(err.message);
       return err;
     }
+    return 0;
   }, []);
   return makeRequest;
 };

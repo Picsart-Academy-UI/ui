@@ -25,7 +25,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className={classesMain.paperContainer}>
+    <div className={classesMain.paperContainer} test="div-wrapper">
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         We Make Office Space Management Awesome
       </Typography>
