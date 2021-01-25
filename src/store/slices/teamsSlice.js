@@ -13,7 +13,9 @@ export const teams = createSlice({
       state.teams = [action.payload.data, ...state.teams];
     },
     deleteTeam: (state, action) => {
-      state.teams = state.teams.filter((team) => team.id !== action.payload.id);
+      state.teams = state.teams.filter(
+        (team) => team._id !== action.payload.id
+      );
     },
   },
 });

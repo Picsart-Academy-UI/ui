@@ -1,42 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectDropdown from '../../../components/SelectDropdown';
 import useFetch from '../../../hooks/useFetch';
 import { setTeams } from '../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../services/teams';
 
-function TeamList(props) {
+function TeamList({ changeCallback, isEditing, userTeam }) {
   const makeRequest = useFetch();
   const dispatch = useDispatch();
+  const [defaultTeam, setDefaultTeam] = useState();
+  const [options, setOptions] = useState([]);
 
-  const token = useSelector((state) => state.signin.token);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
 
-  const { changeCallback, isEditing, userTeam } = props;
+  const fetchTeams = useCallback(async () => {
+    const res = await makeRequest(getTeamsAllRequestData(token));
+    if (res.data) {
+      dispatch(setTeams(res));
+    }
+  }, [token, makeRequest, dispatch]);
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const res = await makeRequest(requestData);
-      if (res) {
-        dispatch(setTeams(res));
-      }
-    };
-    fetchTeams();
-  }, [dispatch, makeRequest, token]);
+    if (!teams.length) {
+      fetchTeams();
+    }
+  }, [teams, fetchTeams]);
 
-  const teams = useSelector((state) => state.teams.teams);
-
-  let defaultTeam;
-  const options =
-    teams &&
-    teams.map((el) => {
-      if (el._id === userTeam)
-        defaultTeam = { title: el.team_name, id: el._id };
-      return { title: el.team_name, id: el._id };
-    });
+  const leng = teams.length;
+  useEffect(() => {
+    if (leng) {
+      const teamItem = teams.find((t) => t._id === userTeam);
+      const optionsArr = teams.map((t) => ({ title: t.team_name, id: t._id }));
+      setDefaultTeam({ title: teamItem.team_name, id: teamItem._id });
+      setOptions(optionsArr);
+    }
+  }, [leng, userTeam]);
 
   return (
-    Array.isArray(teams) && (
+    teams && (
       <SelectDropdown
         label={''}
         options={options}
