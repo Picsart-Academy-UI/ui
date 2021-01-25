@@ -325,7 +325,6 @@ const ReservationsCreate = () => {
           chair.date > reservationSameDate.startDate &&
           chair.date < reservationSameDate.endDate
         ) {
-          console.log('e');
           newReservations.push({ ...reservationSameDate, startDate: nextDay });
           newReservations[indexOfDate].endDate = prevDay;
         } else if (chair.date === reservationSameDate.startDate) {
