@@ -142,7 +142,7 @@ const Profile = (props) => {
             onClick={handleCancel}
             hidden={!isEditing}
           >
-            {isEditing ? 'Cancel' : 'Test'}
+            {isEditing ? 'Cancel' : ''}
           </Button>
         </Hidden>
       </Grid>
