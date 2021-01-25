@@ -18,7 +18,7 @@ const TeamsCreate = () => {
 
   const nameRef = useRef();
 
-  const onChangeTeam = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const body = {
@@ -27,7 +27,6 @@ const TeamsCreate = () => {
     };
 
     const res = await makeRequest(getTeamUpdateRequestData({ token, body }));
-    console.log(res);
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');
@@ -39,7 +38,7 @@ const TeamsCreate = () => {
     <div>
       <BackButton />
       <Container component="main" maxWidth="xs">
-        <form noValidate={false} onSubmit={onChangeTeam}>
+        <form noValidate={false} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
