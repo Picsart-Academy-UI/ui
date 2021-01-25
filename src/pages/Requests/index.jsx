@@ -15,6 +15,7 @@ const Requests = () => {
   const dispatch = useBatchDispatch();
 
   const { token, teams } = useMemoSelector((state) => teamTokenSelector(state));
+  console.log(teams, 'qqqqqqqqqqqqqq');
   useEffect(() => {
     dispatch(fetchTeams(token), fetchPendingReservations(token));
   }, [dispatch, token]);

@@ -41,8 +41,8 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
   const getTeams = useCallback(async () => {
     const res = await makeRequest(getTeamsAllRequestData(token));
 
-    if (res.data) {
-      dispatch(setTeams(res.data));
+    if (res) {
+      dispatch(setTeams(res));
     }
   }, [dispatch, makeRequest, token]);
 

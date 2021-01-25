@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
+import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesLocal from './style';
 
 const TeamsCreate = () => {
@@ -22,10 +23,11 @@ const TeamsCreate = () => {
     };
 
     const res = await makeRequest(getTeamCreateRequestData({ token, body }));
-
+    console.log(res);
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');
+      addTeam(res.data);
     }
   };
 
