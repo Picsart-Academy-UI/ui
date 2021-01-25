@@ -54,7 +54,7 @@ const Users = () => {
         const requestData = getTeamsAllRequestData(token);
         const getTeams = await makeRequest(requestData);
         if (getTeams.data) {
-          dispatch(setTeams(getTeams.data));
+          dispatch(setTeams(getTeams));
         }
       };
       fetchTeams();
