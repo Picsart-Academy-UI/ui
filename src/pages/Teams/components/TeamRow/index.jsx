@@ -1,5 +1,5 @@
 import { TableRow, TableCell } from '@material-ui/core';
-import DeleteRow from '../DeleteRow';
+import DeleteRow from '../Delete';
 import EditRow from '../EditRow';
 
 const TeamRow = ({ name, membersCount, tablesCount, id }) => (
@@ -11,7 +11,7 @@ const TeamRow = ({ name, membersCount, tablesCount, id }) => (
     <TableCell align="center">{tablesCount}</TableCell>
     <TableCell align="right">
       <EditRow id={id} />
-      <DeleteRow id={id} name={name} />
+      <DeleteRow id={id} name={name} membersCount={membersCount} />
     </TableCell>
   </TableRow>
 );
