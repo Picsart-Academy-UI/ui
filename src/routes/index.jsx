@@ -32,7 +32,7 @@ const Router = () => {
         <Route exact path="/reservations/edit" component={ReservationsEdit} />
         <Route exact path="/teams" component={Teams} />
         <Route exact path="/teams/create" component={TeamsCreate} />
-        <Route exact path="/teams/edit" component={TeamsEdit} />
+        <Route exact path="/teams/edit/:id" component={TeamsEdit} />
         <Route exact path="/users" component={Users} />
         <Route exact path="/users/invite" component={UsersInvite} />
         <Route exact path="/users/edit" component={UsersEdit} />

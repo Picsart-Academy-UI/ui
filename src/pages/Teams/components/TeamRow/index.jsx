@@ -10,7 +10,7 @@ const TeamRow = ({ name, membersCount, tablesCount, id }) => (
     <TableCell align="center">{membersCount}</TableCell>
     <TableCell align="center">{tablesCount}</TableCell>
     <TableCell align="right">
-      <EditRow id={id} />
+      <EditRow id={id} name={name} />
       <DeleteRow id={id} name={name} />
     </TableCell>
   </TableRow>
