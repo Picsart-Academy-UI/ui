@@ -28,7 +28,7 @@ const Teams = () => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
       const res = await makeRequest(requestData);
-      if (res) {
+      if (res.data) {
         dispatch(setTeams(res));
       }
     };

@@ -29,15 +29,13 @@ const TeamsTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row, i) => (
+          {teams.map((team) => (
             <TeamRow
-              name={row.name}
-              membersCount={row.membersCount}
-              tablesCount={row.tablesCount}
-              key={i}
+              name={team.team_name}
+              membersCount={team.members_count}
+              tablesCount={team.tables.length}
+              key={team._id}
+              id={team._id}
             />
           ))}
         </TableBody>
