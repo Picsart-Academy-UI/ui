@@ -1,30 +1,49 @@
+import { useState } from 'react';
 import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useSelector, useDispatch } from 'react-redux';
 import useFetch from '../../../../hooks/useFetch';
 import { getTeamDeleteRequestData } from '../../../../services/teams';
 import { deleteTeam } from '../../../../store/slices/teamsSlice';
+import AlertDialog from '../../../../components/AlertDialog';
 
-const DeleteRow = ({ id }) => {
+const DeleteRow = ({ id, name }) => {
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
-  const handleDeleteClick = async (e) => {
-    e.preventDefault();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    try {
-      await makeRequest(getTeamDeleteRequestData({ token, id }));
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteClick = async () => {
+    const res = await makeRequest(getTeamDeleteRequestData({ token, id }));
+    if (res.message) {
       dispatch(deleteTeam({ id }));
-    } catch (error) {
-      console.log('An error occured while deleting the team', error);
+      handleClose();
     }
   };
 
+  const titleText = <span>Do you want to delete {name}?</span>;
+
   return (
-    <Button title="Delete" onClick={handleDeleteClick} color="secondary">
-      <DeleteOutlineIcon />
-    </Button>
+    <>
+      <Button title="Delete" onClick={handleClickOpen} color="secondary">
+        <DeleteOutlineIcon />
+      </Button>
+      <AlertDialog
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+        handleDeleteClick={handleDeleteClick}
+        titleText={titleText}
+      />
+    </>
   );
 };
 
