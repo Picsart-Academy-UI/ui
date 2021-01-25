@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { Container, Button } from '@material-ui/core';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
@@ -24,146 +24,152 @@ const ReservationsCreate = () => {
   const refFrom = useRef();
   const refTo = useRef();
 
-  const reservationsAlreadyInForce = [
-    {
-      table_id: 'table0',
-      chair_id: 'chair0',
-      team_id: 'team0',
-      user_id: 'user0',
-      status: 'approved',
-      start_date: '2021-01-27',
-      end_date: '2021-01-27',
-    },
-    {
-      table_id: 'table1',
-      chair_id: 'chair1',
-      team_id: 'team1',
-      user_id: 'user1',
-      status: 'approved',
-      start_date: '2021-01-27',
-      end_date: '2021-01-27',
-    },
-    {
-      table_id: 'table2',
-      chair_id: 'chair2',
-      team_id: 'team2',
-      user_id: 'user2',
-      status: 'approved',
-      start_date: '2021-01-27',
-      end_date: '2021-01-27',
-    },
-    {
-      table_id: 'table3',
-      chair_id: 'chair3',
-      team_id: 'team3',
-      user_id: 'user3',
-      status: 'approved',
-      start_date: '2021-01-27',
-      end_date: '2021-01-27',
-    },
-    {
-      table_id: 'table4',
-      chair_id: 'chair4',
-      team_id: 'team4',
-      user_id: 'user4',
-      status: 'approved',
-      start_date: '2021-01-27',
-      end_date: '2021-02-15',
-    },
-  ];
-  const chairsOfTheTeam = [
-    {
-      table_name: 'A',
-      team_id: 'team0',
-      chair_name: 'B',
-      table_id: 'table0',
-      _id: 'chair0',
-    },
-    {
-      table_name: 'B',
-      team_id: 'team1',
-      chair_name: 'C',
-      table_id: 'table1',
-      _id: 'chair1',
-    },
-    {
-      table_name: 'C',
-      team_id: 'team2',
-      chair_name: 'D',
-      table_id: 'table2',
-      _id: 'chair2',
-    },
-    {
-      table_name: 'D',
-      team_id: 'team3',
-      chair_name: 'E',
-      table_id: 'table3',
-      _id: 'chair3',
-    },
-    {
-      table_name: 'E',
-      team_id: 'team4',
-      chair_name: 'F',
-      table_id: 'table4',
-      _id: 'chair4',
-    },
-    {
-      table_name: 'F',
-      team_id: 'team4',
-      chair_name: 'J',
-      table_id: 'table5',
-      _id: 'chair5',
-    },
-    {
-      table_name: 'J',
-      team_id: 'team4',
-      chair_name: 'H',
-      table_id: 'table6',
-      _id: 'chair6',
-    },
-    {
-      table_name: 'H',
-      team_id: 'team4',
-      chair_name: 'I',
-      table_id: 'table7',
-      _id: 'chair7',
-    },
-    {
-      table_name: 'I',
-      team_id: 'team4',
-      chair_name: 'J',
-      table_id: 'table8',
-      _id: 'chair8',
-    },
-    {
-      table_name: 'J',
-      team_id: 'team4',
-      chair_name: 'K',
-      table_id: 'table9',
-      _id: 'chair9',
-    },
-    {
-      table_name: 'K',
-      team_id: 'team4',
-      chair_name: 'L',
-      table_id: 'table10',
-      _id: 'chair10',
-    },
-    {
-      table_name: 'L',
-      team_id: 'team4',
-      chair_name: 'M',
-      table_id: 'table11',
-      _id: 'chair11',
-    },
-    {
-      table_name: 'M',
-      team_id: 'team4',
-      chair_name: 'N',
-      table_id: 'table12',
-      _id: 'chair12',
-    },
-  ];
+  const reservationsAlreadyInForce = useMemo(
+    () => [
+      {
+        table_id: 'table0',
+        chair_id: 'chair0',
+        team_id: 'team0',
+        user_id: 'user0',
+        status: 'approved',
+        start_date: '2021-01-27',
+        end_date: '2021-01-27',
+      },
+      {
+        table_id: 'table1',
+        chair_id: 'chair1',
+        team_id: 'team1',
+        user_id: 'user1',
+        status: 'approved',
+        start_date: '2021-01-27',
+        end_date: '2021-01-27',
+      },
+      {
+        table_id: 'table2',
+        chair_id: 'chair2',
+        team_id: 'team2',
+        user_id: 'user2',
+        status: 'approved',
+        start_date: '2021-01-27',
+        end_date: '2021-01-27',
+      },
+      {
+        table_id: 'table3',
+        chair_id: 'chair3',
+        team_id: 'team3',
+        user_id: 'user3',
+        status: 'approved',
+        start_date: '2021-01-27',
+        end_date: '2021-01-27',
+      },
+      {
+        table_id: 'table4',
+        chair_id: 'chair4',
+        team_id: 'team4',
+        user_id: 'user4',
+        status: 'approved',
+        start_date: '2021-01-27',
+        end_date: '2021-02-15',
+      },
+    ],
+    []
+  );
+  const chairsOfTheTeam = useMemo(
+    () => [
+      {
+        table_name: 'A',
+        team_id: 'team0',
+        chair_name: 'B',
+        table_id: 'table0',
+        _id: 'chair0',
+      },
+      {
+        table_name: 'B',
+        team_id: 'team1',
+        chair_name: 'C',
+        table_id: 'table1',
+        _id: 'chair1',
+      },
+      {
+        table_name: 'C',
+        team_id: 'team2',
+        chair_name: 'D',
+        table_id: 'table2',
+        _id: 'chair2',
+      },
+      {
+        table_name: 'D',
+        team_id: 'team3',
+        chair_name: 'E',
+        table_id: 'table3',
+        _id: 'chair3',
+      },
+      {
+        table_name: 'E',
+        team_id: 'team4',
+        chair_name: 'F',
+        table_id: 'table4',
+        _id: 'chair4',
+      },
+      {
+        table_name: 'F',
+        team_id: 'team4',
+        chair_name: 'J',
+        table_id: 'table5',
+        _id: 'chair5',
+      },
+      {
+        table_name: 'J',
+        team_id: 'team4',
+        chair_name: 'H',
+        table_id: 'table6',
+        _id: 'chair6',
+      },
+      {
+        table_name: 'H',
+        team_id: 'team4',
+        chair_name: 'I',
+        table_id: 'table7',
+        _id: 'chair7',
+      },
+      {
+        table_name: 'I',
+        team_id: 'team4',
+        chair_name: 'J',
+        table_id: 'table8',
+        _id: 'chair8',
+      },
+      {
+        table_name: 'J',
+        team_id: 'team4',
+        chair_name: 'K',
+        table_id: 'table9',
+        _id: 'chair9',
+      },
+      {
+        table_name: 'K',
+        team_id: 'team4',
+        chair_name: 'L',
+        table_id: 'table10',
+        _id: 'chair10',
+      },
+      {
+        table_name: 'L',
+        team_id: 'team4',
+        chair_name: 'M',
+        table_id: 'table11',
+        _id: 'chair11',
+      },
+      {
+        table_name: 'M',
+        team_id: 'team4',
+        chair_name: 'N',
+        table_id: 'table12',
+        _id: 'chair12',
+      },
+    ],
+    []
+  );
 
   // creates an Array of dates
   const createRange = (start, stop) => {
@@ -437,7 +443,6 @@ const ReservationsCreate = () => {
       }
       return accumilator;
     }, []);
-    console.log(newReservations);
     setReservations(newReservations);
   };
 
@@ -447,7 +452,7 @@ const ReservationsCreate = () => {
       createTableData(chairsOfTheTeam, reservationsAlreadyInForce, dateRange)
     );
     setIsLoading(false);
-  }, []);
+  }, [chairsOfTheTeam, reservationsAlreadyInForce, dateRange]);
 
   return (
     <Container className={styles.contWrapper}>
