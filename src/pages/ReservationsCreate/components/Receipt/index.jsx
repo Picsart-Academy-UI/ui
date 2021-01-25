@@ -39,7 +39,7 @@ const Receipt = ({ reservs }) => {
                     <CheckCircleOutlineOutlinedIcon className={styles.check} />
                   </Box>
                 </TableCell>
-                <TableCell align="right"> {item.chair} </TableCell>
+                <TableCell align="right"> {item.chairName} </TableCell>
               </TableRow>
             ))}
           </TableBody>

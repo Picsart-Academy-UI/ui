@@ -27,7 +27,7 @@ const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
         defaultValue={defaultValue.toISOString().slice(0, 10)}
         inputRef={refTo}
         onChange={handleEvent}
-        helperText="Max: 7 days later Min: same day"
+        helperText="Max: 30 days later Min: same day"
       />
     </Container>
   );

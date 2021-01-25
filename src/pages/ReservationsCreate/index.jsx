@@ -14,44 +14,178 @@ const ReservationsCreate = () => {
 
   const [isSubmited, setIsSubmited] = useState(false);
   const [reservations, setReservations] = useState([]);
+  const [data, setData] = useState(null);
   const [dateRange, setDateRange] = useState([defaultValue]);
   const [error, setError] = useState('none');
+  const [isLoading, setIsLoading] = useState(true);
 
   // ref data
   const refFrom = useRef();
   const refTo = useRef();
 
+  const reservationsAlreadyInForce = [
+    {
+      table_id: 'table0',
+      chair_id: 'chair0',
+      team_id: 'team0',
+      user_id: 'user0',
+      status: 'approved',
+      start_date: '2021-01-27',
+      end_date: '2021-01-27',
+    },
+    {
+      table_id: 'table1',
+      chair_id: 'chair1',
+      team_id: 'team1',
+      user_id: 'user1',
+      status: 'approved',
+      start_date: '2021-01-27',
+      end_date: '2021-01-27',
+    },
+    {
+      table_id: 'table2',
+      chair_id: 'chair2',
+      team_id: 'team2',
+      user_id: 'user2',
+      status: 'approved',
+      start_date: '2021-01-27',
+      end_date: '2021-01-27',
+    },
+    {
+      table_id: 'table3',
+      chair_id: 'chair3',
+      team_id: 'team3',
+      user_id: 'user3',
+      status: 'approved',
+      start_date: '2021-01-27',
+      end_date: '2021-01-27',
+    },
+    {
+      table_id: 'table4',
+      chair_id: 'chair4',
+      team_id: 'team4',
+      user_id: 'user4',
+      status: 'approved',
+      start_date: '2021-01-27',
+      end_date: '2021-01-27',
+    },
+  ];
+  const chairsOfTheTeam = [
+    {
+      table_name: 'A',
+      team_id: 'team0',
+      chair_name: 'B',
+      table_id: 'table0',
+      _id: 'chair0',
+    },
+    {
+      table_name: 'A',
+      team_id: 'team1',
+      chair_name: 'B',
+      table_id: 'table1',
+      _id: 'chair1',
+    },
+    {
+      table_name: 'A',
+      team_id: 'team2',
+      chair_name: 'B',
+      table_id: 'table2',
+      _id: 'chair2',
+    },
+    {
+      table_name: 'A',
+      team_id: 'team3',
+      chair_name: 'B',
+      table_id: 'table3',
+      _id: 'chair3',
+    },
+    {
+      table_name: 'A',
+      team_id: 'team4',
+      chair_name: 'B',
+      table_id: 'table4',
+      _id: 'chair4',
+    },
+  ];
+
+  // creates an Array of dates
   const createRange = (start, stop) => {
     const range = [];
-    const currentDate = start;
+    const currentDate = new Date(start);
     while (currentDate <= stop) {
       range.push(new Date(currentDate));
       currentDate.setDate(currentDate.getDate() + 1);
     }
     return range;
   };
+
+  // gets next and previous dates of the given date
+  const getNextPrevDays = (date) => {
+    const nextDay = new Date(date);
+    const prevDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    prevDay.setDate(prevDay.getDate() - 1);
+    return { nextDay, prevDay };
+  };
+
+  // calculates the differance between two days
   const calculateDiffInDays = (start, stop) => {
     const oneDay = 24 * 60 * 60 * 1000;
     return Math.round((start - stop) / oneDay);
   };
-
+  // handles the event of changing the date in date picker
   const handleEvent = () => {
+    setIsLoading(true);
+
     const start = new Date(refFrom.current.value);
     const stop = new Date(refTo.current.value);
     const diffFromToday = calculateDiffInDays(start, new Date());
     const diffFromTo = calculateDiffInDays(start, stop);
-    if (diffFromToday < 0 && (start > stop || diffFromTo < -6)) {
+    if (diffFromToday < 0 && (start > stop || diffFromTo < -29)) {
       setError('both');
     } else if (diffFromToday < 0) {
       setError('from');
-    } else if (start > stop || diffFromTo < -6) {
+    } else if (start > stop || diffFromTo < -29) {
       setError('to');
     } else {
       setError('none');
     }
+    const range = createRange(start, stop);
+
+    // should send request to get the requests that have status pending or active and are in range of the two dates
+    // should send a request to get the chair
+    console.log(data);
+    const dataForTable = chairsOfTheTeam.map((chair) => {
+      // eslint-disable-next-line
+      const reservationsSatisfied = reservationsAlreadyInForce.filter(
+        (res) =>
+          res.chair_id === chair._id &&
+          new Date(res.start_date) >= start &&
+          new Date(res.end_date) <= stop
+      );
+      const dates = range.map((date) => {
+        const reservOnSameDate = reservationsSatisfied.find(
+          (res) =>
+            date >= new Date(res.start_date) && date <= new Date(res.end_date)
+        );
+        const isFree = reservOnSameDate === undefined;
+        return { date, isFree };
+      });
+      // eslint-disable-next-line
+      const obj = {
+        name: `${chair.chair_name}/${chair.table_name}`,
+        dates: dates,
+        id: chair._id,
+      };
+      return obj;
+    });
+    console.log(dataForTable);
+    setData(dataForTable);
     setReservations([]);
-    setDateRange(createRange(start, stop));
+    setDateRange(range);
   };
+
+  // selects the chair
   const choseChair = (chair) => {
     const newReservations = [...reservations];
     const reservationSameDate = newReservations.find(
@@ -61,10 +195,7 @@ const ReservationsCreate = () => {
 
     const reservationAvailableForMerging = newReservations.find(
       ({ startDate, endDate, chairName }) => {
-        const nextDay = new Date(chair.date);
-        const prevDay = new Date(chair.date);
-        nextDay.setDate(nextDay.getDate() + 1);
-        prevDay.setDate(prevDay.getDate() - 1);
+        const { nextDay, prevDay } = getNextPrevDays(chair.date);
         return (
           (nextDay.getDate() === startDate.getDate() &&
             chairName === chair.chairName) ||
@@ -77,22 +208,20 @@ const ReservationsCreate = () => {
     const indexOfAvailable = newReservations.indexOf(
       reservationAvailableForMerging
     );
-    const nextDay = new Date(chair.date);
-    const prevDay = new Date(chair.date);
-    nextDay.setDate(nextDay.getDate() + 1);
-    prevDay.setDate(prevDay.getDate() - 1);
+    const { nextDay, prevDay } = getNextPrevDays(chair.date);
     // case when the chair was on a day that was already reserved by another chair
     // eslint-disable-next-line
     if (
       reservationSameDate &&
       reservationSameDate.chairName !== chair.chairName
     ) {
+      // case when the chosen chair has an option of merging with already selected chair
       if (reservationAvailableForMerging) {
-        console.log('a');
+        // case when the previously selected chair was just one day i.e it should be delted
         if (reservationSameDate.startDate === reservationSameDate.endDate) {
           newReservations.splice(indexOfDate, 1);
-          console.log('b');
         } else {
+          // case when the previously selected chair was stretching for a minimum of 2 days
           newReservations[indexOfDate] = {
             ...reservationSameDate,
             startDate:
@@ -104,7 +233,6 @@ const ReservationsCreate = () => {
                 ? prevDay
                 : reservationSameDate.endDate,
           };
-          console.log('c');
         }
 
         newReservations[indexOfAvailable] = {
@@ -146,20 +274,24 @@ const ReservationsCreate = () => {
         chair.date > reservationSameDate.startDate &&
         chair.date < reservationSameDate.endDate
       ) {
+        // case when the one reservation should be split in half
         newReservations.push({ ...reservationSameDate, startDate: nextDay });
         newReservations[indexOfDate].endDate = prevDay;
       } else if (
         chair.date.getDate() === reservationSameDate.startDate.getDate() &&
         chair.date.getDate() === reservationSameDate.endDate.getDate()
       ) {
+        // case when the prev selected chair is just for one day
         newReservations.splice(indexOfDate, 1);
       } else if (
         chair.date.getDate() === reservationSameDate.startDate.getDate()
       ) {
+        // case when the one reservation should change its start date
         newReservations[indexOfDate].startDate = nextDay;
       } else if (
         chair.date.getDate() === reservationSameDate.endDate.getDate()
       ) {
+        // case when the one reservation should change its end date
         newReservations[indexOfDate].endDate = prevDay;
       }
     } else {
@@ -187,17 +319,49 @@ const ReservationsCreate = () => {
         });
       }
     }
-    console.log(newReservations);
     setReservations(newReservations);
   };
+
+  // selects the row
   const choseRow = (row) => {
     const newReservations = row.dates.reduce((accumilator, item) => {
-      if (item.date.getDay() !== 0 && item.date.getDay() !== 6) {
-        accumilator.push({
-          ...item,
-          chair: row.name,
-          id: row.id,
-        });
+      if (item.date.getDay() !== 0 && item.date.getDay() !== 6 && item.isFree) {
+        const reservationAvailableForMerging = accumilator.find(
+          ({ startDate, endDate, chairName }) => {
+            const { nextDay, prevDay } = getNextPrevDays(item.date);
+            return (
+              (nextDay.getDate() === startDate.getDate() &&
+                chairName === row.name) ||
+              (prevDay.getDate() === endDate.getDate() &&
+                chairName === row.name)
+            );
+          }
+        );
+
+        if (reservationAvailableForMerging) {
+          const indexOfMerge = accumilator.indexOf(
+            reservationAvailableForMerging
+          );
+          accumilator[indexOfMerge] = {
+            ...reservationAvailableForMerging,
+            startDate:
+              reservationAvailableForMerging.startDate < item.date
+                ? reservationAvailableForMerging.startDate
+                : item.date,
+            endDate:
+              reservationAvailableForMerging.endDate > item.date
+                ? reservationAvailableForMerging.endDate
+                : item.date,
+          };
+        } else {
+          accumilator.push({
+            isFree: item.isFree,
+            endDate: item.date,
+            startDate: item.date,
+            chairName: row.name,
+            id: row.id,
+          });
+        }
       }
       return accumilator;
     }, []);
@@ -226,6 +390,7 @@ const ReservationsCreate = () => {
             choseChair={choseChair}
             reservations={reservations}
             choseRow={choseRow}
+            isLoading={isLoading}
           />
         )}
       </Container>
