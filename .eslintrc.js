@@ -15,6 +15,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "camelcase": "off",
     "no-console": "off",
+    "no-plusplus": "off",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
       "newlines-between": "never",

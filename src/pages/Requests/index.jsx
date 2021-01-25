@@ -1,27 +1,37 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@material-ui/core';
 import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
+import useMemoSelector from '../../hooks/useMemoSelector';
+import useBatchDispatch from '../../hooks/useBatchDispatch';
 import { fetchTeams } from '../../store/slices/teamsSlice';
-import RequestsTable from './RequestsTable';
 import { fetchPendingReservations } from '../../store/slices/reservationsSlice';
+import { teamTokenSelector } from '../../store/selectors';
+import RequestsTable from './RequestsTable';
 import useStyles from './style';
 
 const Requests = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useBatchDispatch();
 
-  const token = useSelector((state) => state.signin.token);
-  const teams = useSelector((state) => state.teams.teams);
-  const pendingReservations = useSelector(
-    (state) => state.reservations.pendingReservations
-  );
+  const { token, teams } = useMemoSelector((state) => teamTokenSelector(state));
   useEffect(() => {
-    dispatch(fetchTeams(token));
-    dispatch(fetchPendingReservations(token));
+    dispatch(fetchTeams(token), fetchPendingReservations(token));
   }, [dispatch, token]);
-  console.log(pendingReservations, 'pendingReservations ___');
+
+  // useEffect(() => {
+  //   if(pendingReservations?.length) {
+  //     console.log('fetch users || fetch teams || fetch chair || fetch table');
+  //     const users = unique(pendingReservations.map(pr => pr.user_id));
+  //     const promises = [];
+  //     for (let i = users.length - 1; i >= 0; i--) {
+  //       promises.push(getSingleUser(token, users[i]));
+  //     }
+  //     Promise.all(promises)
+  //       .then(users1 => console.log(users1, '====='))
+  //   }
+  // }, [pendingReservations, token])
+
   return (
     <div className="requests">
       <Box className={classes.filterContainer}>
