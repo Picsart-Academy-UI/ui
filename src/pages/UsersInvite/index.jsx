@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch';
 import { getUserInvitationRequestData } from '../../services/users';
+import BackButton from '../../components/BackButton';
 import Form from './components/Form';
 import PositionedSnackbar from './components/SnackBar';
 
@@ -59,6 +60,7 @@ const UserInvite = () => {
 
   return (
     <>
+      <BackButton />
       <Form submitForm={submitForm} />
       {isSubmitted && (
         <PositionedSnackbar

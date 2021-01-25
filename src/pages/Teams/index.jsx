@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
@@ -10,11 +10,19 @@ import useStylesLocal from './style';
 
 const Teams = () => {
   const token = useSelector((state) => state.signin.token);
+  const teams = useSelector((state) => state.teams.teams);
+  const [filterTeam, setFilterTeam] = useState([]);
   const makeRequest = useFetch();
   const dispatch = useDispatch();
   const classesLocal = useStylesLocal();
 
-  const teamsData = useSelector((state) => state.teams.teams);
+  const handleChange = (e) => {
+    setFilterTeam(() =>
+      teams.filter((item) =>
+        item.team_name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
 
   useEffect(() => {
     const getTeams = async () => {
@@ -28,13 +36,17 @@ const Teams = () => {
     getTeams();
   }, [dispatch, makeRequest, token]);
 
+  useEffect(() => {
+    setFilterTeam(teams);
+  }, [teams]);
+
   return (
     <>
       <div className={classesLocal.wrapper}>
-        <Search />
+        <Search handleChange={handleChange} />
         <AddTeam />
       </div>
-      <TeamsTable teams={teamsData} />
+      <TeamsTable teams={filterTeam} />
     </>
   );
 };

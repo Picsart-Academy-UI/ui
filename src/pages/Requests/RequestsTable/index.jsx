@@ -12,8 +12,8 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
-import Loads from '../Loads';
 import UserInfo from '../UserInfo';
+import ScrollDialog from '../LoadsDialog';
 
 const useStyles = makeStyles({
   table: {
@@ -27,14 +27,6 @@ const useStyles = makeStyles({
   },
   dateYear: {
     marginRight: 30,
-  },
-  loadsContainer: {
-    height: 52,
-    overflow: 'hidden',
-    '&:hover': {
-      position: 'relative',
-      overflow: 'visible',
-    },
   },
 });
 
@@ -135,9 +127,7 @@ function RequestsTable() {
               </TableCell>
               <TableCell align="right">{row.seat}</TableCell>
               <TableCell align="right">
-                <Box className={classes.loadsContainer}>
-                  <Loads loads={row.load} />
-                </Box>
+                <ScrollDialog />
               </TableCell>
               <TableCell align="right">
                 <Button
