@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTeams } from '../../services/teamsService';
 
-export const teamsSlice = createSlice({
+export const teams = createSlice({
   name: 'teamsData',
   initialState: {
     teams: [],
@@ -13,6 +13,9 @@ export const teamsSlice = createSlice({
     addTeam: (state, action) => {
       state.teams = [action.payload.data, ...state.teams];
     },
+    updateTeam: (state, action) => {
+      state.teams.push(action.payload);
+    },
     deleteTeam: (state, action) => {
       state.teams = state.teams.filter(
         (team) => team._id !== action.payload.id
@@ -21,7 +24,7 @@ export const teamsSlice = createSlice({
   },
 });
 
-export const { setTeams, addTeam, deleteTeam } = teamsSlice.actions;
+export const { setTeams, addTeam, updateTeam, deleteTeam } = teams.actions;
 
 export const fetchTeams = (token) => async (dispatch, getState) => {
   const state = getState();
@@ -32,4 +35,4 @@ export const fetchTeams = (token) => async (dispatch, getState) => {
   dispatch(setTeams(res || []));
 };
 
-export default teamsSlice.reducer;
+export default teams.reducer;

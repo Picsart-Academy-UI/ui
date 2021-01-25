@@ -7,19 +7,15 @@ import { getTeamDeleteRequestData } from '../../../../services/teams';
 import { deleteTeam } from '../../../../store/slices/teamsSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 
-const DeleteRow = ({ id, name }) => {
+const Delete = ({ id, name, membersCount }) => {
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => setOpen(true);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   const handleDeleteClick = async () => {
     const res = await makeRequest(getTeamDeleteRequestData({ token, id }));
@@ -29,13 +25,17 @@ const DeleteRow = ({ id, name }) => {
     }
   };
 
-  const titleText = <span>Do you want to delete {name}?</span>;
+  const titleText = <span>Delete {name}?</span>;
 
   return (
     <>
-      <Button title="Delete" onClick={handleClickOpen} color="secondary">
-        <DeleteOutlineIcon />
-      </Button>
+      <Button
+        title="Delete"
+        onClick={handleClickOpen}
+        color="secondary"
+        disabled={!!membersCount}
+        startIcon={<DeleteOutlineIcon />}
+      ></Button>
       <AlertDialog
         open={open}
         handleClickOpen={handleClickOpen}
@@ -47,4 +47,4 @@ const DeleteRow = ({ id, name }) => {
   );
 };
 
-export default DeleteRow;
+export default Delete;

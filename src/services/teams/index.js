@@ -31,7 +31,7 @@ export const getTeamUpdateRequestData = ({ token, body }) =>
       'Content-Type': 'application/json;charset=utf-8',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ team_name: body.team_name }),
   });
 
 export const getTeamDeleteRequestData = ({ token, id }) =>
