@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
+import BackButton from '../../components/BackButton';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
 import { addTeam } from '../../store/slices/teamsSlice';
@@ -33,6 +34,7 @@ const TeamsCreate = () => {
 
   return (
     <div>
+      <BackButton />
       <Container component="main" maxWidth="xs">
         <form noValidate={false} onSubmit={onAddTeam}>
           <TextField
