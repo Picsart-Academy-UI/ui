@@ -16,6 +16,7 @@ const UsersTable = ({
   rows,
   page,
   rowsPerPage,
+  isAdmin,
   onChangePage,
   onChangeRowsPerPage,
 }) => {
@@ -23,7 +24,7 @@ const UsersTable = ({
 
   const { data, count } = rows.usersList;
 
-  // console.log('data', data);
+  console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -49,9 +50,11 @@ const UsersTable = ({
               <TableCell align="center">Surname</TableCell>
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
-              <TableCell align="right">
-                <Box mr={9}>Actions</Box>
-              </TableCell>
+              {isAdmin && (
+                <TableCell align="right">
+                  <Box mr={9}>Actions</Box>
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
           {data && !data.length ? (
@@ -61,7 +64,9 @@ const UsersTable = ({
           ) : (
             <TableBody>
               {rowsPerPage > 0 &&
-                data.map((user) => <UserRow key={user._id} user={user} />)}
+                data.map((user) => (
+                  <UserRow key={user._id} user={user} isAdmin={isAdmin} />
+                ))}
 
               {emptyRows > 0 && (
                 <TableRow style={{ height: 17 * emptyRows }}>
@@ -72,13 +77,15 @@ const UsersTable = ({
           )}
         </Table>
       </TableContainer>
-      <Pagination
-        rows={count}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {isAdmin && (
+        <Pagination
+          rows={count}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   ) : (
     <>

@@ -21,10 +21,13 @@ const Users = () => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 100);
-  const { token, teams } = useSelector((state) => ({
+  const { token, isAdmin, teams } = useSelector((state) => ({
     token: state.signin.token,
+    isAdmin: state.signin.curUser.is_admin,
     teams: state.teams.teams,
   }));
+
+  console.log('isAdmin', isAdmin);
 
   const makeRequest = useFetch();
 
@@ -67,7 +70,8 @@ const Users = () => {
         const requestData = getLimitedUsersRequestData(
           token,
           rowsPerPage,
-          page + 1
+          page + 1,
+          isAdmin
         );
         const users = await makeRequest(requestData);
         dispatch(fetchedUsersList(users));
@@ -110,20 +114,25 @@ const Users = () => {
             onPageChange={handleChangePage}
           />
         </Grid>
-        <Grid item xs>
-          <TeamsDropDown
-            teams={teams}
-            onSelectChange={handleSelectedTeamChange}
-          />
-        </Grid>
-        <Grid item xs>
-          <AddUser />
-        </Grid>
+        {isAdmin && (
+          <>
+            <Grid item xs>
+              <TeamsDropDown
+                teams={teams}
+                onSelectChange={handleSelectedTeamChange}
+              />
+            </Grid>
+            <Grid item xs>
+              <AddUser />
+            </Grid>
+          </>
+        )}
       </Grid>
       <UsersTable
         rows={usersData}
         page={page}
         rowsPerPage={rowsPerPage}
+        isAdmin={isAdmin}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
