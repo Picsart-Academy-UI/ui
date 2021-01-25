@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Box from '@material-ui/core/Box';
+import { Container, Box, Button } from '@material-ui/core';
 import CustomTable from './components/CustomTable';
 import useStylesLocal from './style';
 
@@ -51,7 +48,7 @@ const Reservations = () => {
     setActiveRes([]);
   };
 
-  const add = () => {
+  const onAddReservationClick = () => {
     history.push('/Reservations/create');
   };
 
@@ -64,10 +61,13 @@ const Reservations = () => {
           className={styles.boxHeader}
         >
           <Box> Active reservations </Box>
-          <IconButton onClick={add}>
-            {' '}
-            <AddCircleIcon className={styles.icon} />{' '}
-          </IconButton>
+          <Button
+            onClick={onAddReservationClick}
+            color="primary"
+            variant="contained"
+          >
+            Add Reservation
+          </Button>
         </Box>
         <CustomTable
           data={activeRes}

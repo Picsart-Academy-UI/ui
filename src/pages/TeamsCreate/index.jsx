@@ -1,28 +1,61 @@
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
+import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Button, TextField, Container } from '@material-ui/core';
+import useFetch from '../../hooks/useFetch';
+import { getTeamCreateRequestData } from '../../services/teams';
+import { addTeam } from '../../store/slices/teamsSlice';
+import useStylesLocal from './style';
 
-function handleAddTeam() {}
-function handleNameChange() {}
+const TeamsCreate = () => {
+  const token = useSelector((state) => state.signin.token);
+  const makeRequest = useFetch();
+  const classesLocal = useStylesLocal();
+  const history = useHistory();
 
-const TeamsCreate = () => (
-  <form noValidate autoComplete="off">
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <Box mr={3} m={1}>
-        <TextField
-          onChange={handleNameChange}
-          id="standard-basic"
-          label="Team Name"
-        />
-      </Box>
-      <Box mr={3} m={1}>
-        <TextField id="standard-basic" label="Invite members" />
-      </Box>
-      <Button variant="contained" color="primary" onClick={handleAddTeam}>
-        Add
-      </Button>
-    </Box>
-  </form>
-);
+  const nameRef = useRef();
+
+  const onAddTeam = async (e) => {
+    e.preventDefault();
+
+    const body = {
+      team_name: nameRef.current.value,
+    };
+
+    const res = await makeRequest(getTeamCreateRequestData({ token, body }));
+    console.log(res);
+    if (res.data) {
+      nameRef.current.value = '';
+      history.push('/teams');
+      addTeam(res.data);
+    }
+  };
+
+  return (
+    <div>
+      <Container component="main" maxWidth="xs">
+        <form noValidate={false} onSubmit={onAddTeam}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            inputRef={nameRef}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            className={classesLocal.sbmtButton}
+          >
+            Add
+          </Button>
+        </form>
+      </Container>
+    </div>
+  );
+};
 
 export default TeamsCreate;

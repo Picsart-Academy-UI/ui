@@ -4,13 +4,21 @@ export const signinSlice = createSlice({
   name: 'signin',
   initialState: {
     isLoggedIn: false,
+    token: '',
+    curUser: null,
   },
   reducers: {
-    setIsLoggedIn: (state) => {
+    setIsLoggedIn: (state, action) => {
       state.isLoggedIn = true;
+      state.token = action.payload.token;
+      state.curUser = action.payload.data;
+    },
+    setChangeCurUser: (state, action) => {
+      state.curUser = action.payload;
     },
     setIsLoggedOut: (state) => {
       state.isLoggedIn = false;
+      state.token = null;
     },
   },
 });
