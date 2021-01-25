@@ -4,10 +4,10 @@ import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
 import Pickers from './components/Pickers';
 import Loader from './components/Loader';
-import useStyles from './style';
+import useStylesLocal from './style';
 
 const ReservationsCreate = () => {
-  const styles = useStyles();
+  const classesLocal = useStylesLocal();
 
   // default value
   const defaultValue = new Date();
@@ -455,7 +455,7 @@ const ReservationsCreate = () => {
   }, [chairsOfTheTeam, reservationsAlreadyInForce, dateRange]);
 
   return (
-    <Container className={styles.contWrapper}>
+    <Container className={classesLocal.contWrapper}>
       {!isSubmited ? (
         <Pickers
           refTo={refTo}
@@ -466,7 +466,7 @@ const ReservationsCreate = () => {
         />
       ) : null}
 
-      <Container className={styles.tableCont}>
+      <Container className={classesLocal.tableCont}>
         {isSubmited ? (
           <Receipt reservs={reservations} />
         ) : (
@@ -492,7 +492,7 @@ const ReservationsCreate = () => {
           onClick={() => {
             setIsSubmited(!isSubmited);
           }}
-          className={styles.submitBtn}
+          className={classesLocal.submitBtn}
           disabled={reservations.length === 0 || error !== 'none'}
         >
           {' '}

@@ -4,12 +4,12 @@ import { Box, Typography, Container, Avatar, Button } from '@material-ui/core';
 import { GOOGLE_LOGO } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
-import useStylesMain from '../../hooks/useStylesMain';
+// import useStylesMain from '../../hooks/useStylesMain';
 import getGoogleRequestData from '../../services/signin';
 import useStylesLocal from './style';
 
 const SignIn = () => {
-  const classesMain = useStylesMain();
+  // const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
   const makeRequest = useFetch();
@@ -25,7 +25,10 @@ const SignIn = () => {
   };
 
   return (
-    <div className={classesMain.paperContainer} test="div-wrapper">
+    <div
+      // className={classesMain.paperContainer}
+      test="div-wrapper"
+    >
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         We Make Office Space Management Awesome
       </Typography>
