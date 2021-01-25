@@ -11,11 +11,10 @@ const useStyles = makeStyles({
     border: '0.125rem solid #000000',
   },
   tableCont: {
+    flex: '1 1 auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: '1 1 auto',
-    overflow: 'hidden',
   },
   submitBtn: {
     position: 'fixed',

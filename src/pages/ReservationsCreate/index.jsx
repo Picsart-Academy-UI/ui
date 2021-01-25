@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Container, Button } from '@material-ui/core';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
 import Pickers from './components/Pickers';
+import Loader from './components/Loader';
 import useStyles from './style';
 
 const ReservationsCreate = () => {
@@ -67,7 +68,7 @@ const ReservationsCreate = () => {
       user_id: 'user4',
       status: 'approved',
       start_date: '2021-01-27',
-      end_date: '2021-01-27',
+      end_date: '2021-02-15',
     },
   ];
   const chairsOfTheTeam = [
@@ -79,32 +80,88 @@ const ReservationsCreate = () => {
       _id: 'chair0',
     },
     {
-      table_name: 'A',
+      table_name: 'B',
       team_id: 'team1',
-      chair_name: 'B',
+      chair_name: 'C',
       table_id: 'table1',
       _id: 'chair1',
     },
     {
-      table_name: 'A',
+      table_name: 'C',
       team_id: 'team2',
-      chair_name: 'B',
+      chair_name: 'D',
       table_id: 'table2',
       _id: 'chair2',
     },
     {
-      table_name: 'A',
+      table_name: 'D',
       team_id: 'team3',
-      chair_name: 'B',
+      chair_name: 'E',
       table_id: 'table3',
       _id: 'chair3',
     },
     {
-      table_name: 'A',
+      table_name: 'E',
       team_id: 'team4',
-      chair_name: 'B',
+      chair_name: 'F',
       table_id: 'table4',
       _id: 'chair4',
+    },
+    {
+      table_name: 'F',
+      team_id: 'team4',
+      chair_name: 'J',
+      table_id: 'table5',
+      _id: 'chair5',
+    },
+    {
+      table_name: 'J',
+      team_id: 'team4',
+      chair_name: 'H',
+      table_id: 'table6',
+      _id: 'chair6',
+    },
+    {
+      table_name: 'H',
+      team_id: 'team4',
+      chair_name: 'I',
+      table_id: 'table7',
+      _id: 'chair7',
+    },
+    {
+      table_name: 'I',
+      team_id: 'team4',
+      chair_name: 'J',
+      table_id: 'table8',
+      _id: 'chair8',
+    },
+    {
+      table_name: 'J',
+      team_id: 'team4',
+      chair_name: 'K',
+      table_id: 'table9',
+      _id: 'chair9',
+    },
+    {
+      table_name: 'K',
+      team_id: 'team4',
+      chair_name: 'L',
+      table_id: 'table10',
+      _id: 'chair10',
+    },
+    {
+      table_name: 'L',
+      team_id: 'team4',
+      chair_name: 'M',
+      table_id: 'table11',
+      _id: 'chair11',
+    },
+    {
+      table_name: 'M',
+      team_id: 'team4',
+      chair_name: 'N',
+      table_id: 'table12',
+      _id: 'chair12',
     },
   ];
 
@@ -118,6 +175,33 @@ const ReservationsCreate = () => {
     }
     return range;
   };
+
+  // creates the data for the table
+  const createTableData = (chairs, reservsApprPend, range) =>
+    chairs.map((chair) => {
+      // eslint-disable-next-line
+      const reservationsSatisfied = reservsApprPend.filter(
+        (res) =>
+          // eslint-disable-next-line
+          res.chair_id === chair._id && new Date(res.start_date) >= range[0]
+      );
+      const dates = range.map((date) => {
+        const reservOnSameDate = reservationsSatisfied.find(
+          (res) =>
+            date >= new Date(res.start_date) && date <= new Date(res.end_date)
+        );
+        const isFree = reservOnSameDate === undefined;
+        return { date, isFree };
+      });
+
+      return {
+        // eslint-disable-next-line
+        name: `${chair.chair_name}/${chair.table_name}`,
+        dates,
+        // eslint-disable-next-line
+        id: chair._id,
+      };
+    });
 
   // gets next and previous dates of the given date
   const getNextPrevDays = (date) => {
@@ -136,17 +220,22 @@ const ReservationsCreate = () => {
   // handles the event of changing the date in date picker
   const handleEvent = () => {
     setIsLoading(true);
-
     const start = new Date(refFrom.current.value);
     const stop = new Date(refTo.current.value);
     const diffFromToday = calculateDiffInDays(start, new Date());
     const diffFromTo = calculateDiffInDays(start, stop);
     if (diffFromToday < 0 && (start > stop || diffFromTo < -29)) {
       setError('both');
+      return;
+      // eslint-disable-next-line
     } else if (diffFromToday < 0) {
       setError('from');
+      return;
+      // eslint-disable-next-line
     } else if (start > stop || diffFromTo < -29) {
       setError('to');
+      return;
+      // eslint-disable-next-line
     } else {
       setError('none');
     }
@@ -154,34 +243,16 @@ const ReservationsCreate = () => {
 
     // should send request to get the requests that have status pending or active and are in range of the two dates
     // should send a request to get the chair
-    console.log(data);
-    const dataForTable = chairsOfTheTeam.map((chair) => {
-      // eslint-disable-next-line
-      const reservationsSatisfied = reservationsAlreadyInForce.filter(
-        (res) =>
-          res.chair_id === chair._id &&
-          new Date(res.start_date) >= start &&
-          new Date(res.end_date) <= stop
-      );
-      const dates = range.map((date) => {
-        const reservOnSameDate = reservationsSatisfied.find(
-          (res) =>
-            date >= new Date(res.start_date) && date <= new Date(res.end_date)
-        );
-        const isFree = reservOnSameDate === undefined;
-        return { date, isFree };
-      });
-      // eslint-disable-next-line
-      const obj = {
-        name: `${chair.chair_name}/${chair.table_name}`,
-        dates: dates,
-        id: chair._id,
-      };
-      return obj;
-    });
-    console.log(dataForTable);
+    const dataForTable = createTableData(
+      chairsOfTheTeam,
+      reservationsAlreadyInForce,
+      range,
+      start,
+      stop
+    );
     setData(dataForTable);
-    setReservations([]);
+    setIsLoading(false);
+    // setReservations([]);
     setDateRange(range);
   };
 
@@ -248,7 +319,9 @@ const ReservationsCreate = () => {
         };
       } else if (reservationAvailableForMerging === undefined) {
         // eslint-disable-next-line
-        if (
+        if (reservationSameDate.startDate === reservationSameDate.endDate) {
+          newReservations.splice(indexOfDate, 1);
+        } else if (
           chair.date > reservationSameDate.startDate &&
           chair.date < reservationSameDate.endDate
         ) {
@@ -369,6 +442,14 @@ const ReservationsCreate = () => {
     setReservations(newReservations);
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    setData(
+      createTableData(chairsOfTheTeam, reservationsAlreadyInForce, dateRange)
+    );
+    setIsLoading(false);
+  }, []);
+
   return (
     <Container className={styles.contWrapper}>
       {!isSubmited ? (
@@ -385,13 +466,19 @@ const ReservationsCreate = () => {
         {isSubmited ? (
           <Receipt reservs={reservations} />
         ) : (
-          <TableOfTables
-            dateRange={dateRange}
-            choseChair={choseChair}
-            reservations={reservations}
-            choseRow={choseRow}
-            isLoading={isLoading}
-          />
+          <>
+            {!isLoading ? (
+              <TableOfTables
+                dateRange={dateRange}
+                choseChair={choseChair}
+                reservations={reservations}
+                choseRow={choseRow}
+                data={data}
+              />
+            ) : (
+              <Loader />
+            )}
+          </>
         )}
       </Container>
       {!isSubmited ? (

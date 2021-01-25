@@ -6,7 +6,6 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     alignItems: 'center',
     height: '5rem',
-    justifyContent: 'space-around',
   },
   text: {
     fontSize: '1rem',

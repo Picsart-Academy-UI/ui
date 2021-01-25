@@ -8,32 +8,14 @@ import {
 } from '@material-ui/core';
 import useStyles from './style';
 
-const TableOfTables = ({ dateRange, reservations, choseRow, choseChair }) => {
+const TableOfTables = ({
+  dateRange,
+  reservations,
+  choseRow,
+  choseChair,
+  data,
+}) => {
   const styles = useStyles();
-  const dates = [];
-  dateRange.map((item) => {
-    // if (item.getDate() % 2) {
-    //   dates.push({ date: item, isFree: true });
-    // } else {
-    //   dates.push({ date: item, isFree: false });
-    // }
-    dates.push({ date: item, isFree: true });
-    return '';
-  });
-  const data = [
-    { name: '1/12', dates, id: '1' },
-    { name: '2/12', dates, id: '11' },
-    { name: '3/12', dates, id: '111' },
-    { name: '4/12', dates, id: '1111' },
-    { name: '5/12', dates, id: '11111' },
-    { name: '6/12', dates, id: '111111' },
-    { name: '7/12', dates, id: '1111111' },
-    { name: '8/12', dates, id: '11111111' },
-    { name: '9/12', dates, id: '111111111' },
-    { name: '10/12', dates, id: '1111111111' },
-    { name: '11/12', dates, id: '11111111111' },
-    { name: '12/12', dates, id: '111111111111' },
-  ];
 
   return (
     <TableContainer className={styles.container}>
