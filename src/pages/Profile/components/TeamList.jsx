@@ -29,15 +29,14 @@ function TeamList({ changeCallback, isEditing, userTeam }) {
     }
   }, [teams, fetchTeams]);
 
-  const leng = teams.length;
   useEffect(() => {
-    if (leng) {
+    if (teams.length) {
       const teamItem = teams.find((t) => t._id === userTeam);
       const optionsArr = teams.map((t) => ({ title: t.team_name, id: t._id }));
       setDefaultTeam({ title: teamItem.team_name, id: teamItem._id });
       setOptions(optionsArr);
     }
-  }, [leng, userTeam]);
+  }, [teams, userTeam]);
 
   return (
     teams && (
