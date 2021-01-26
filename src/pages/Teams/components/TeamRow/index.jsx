@@ -1,8 +1,8 @@
 import { TableRow, TableCell } from '@material-ui/core';
-import DeleteRow from '../DeleteRow';
+import DeleteRow from '../Delete';
 import EditRow from '../EditRow';
 
-const TeamRow = ({ name, membersCount, tablesCount }) => (
+const TeamRow = ({ name, membersCount, tablesCount, id }) => (
   <TableRow key={name}>
     <TableCell component="th" scope="row">
       {name}
@@ -10,8 +10,8 @@ const TeamRow = ({ name, membersCount, tablesCount }) => (
     <TableCell align="center">{membersCount}</TableCell>
     <TableCell align="center">{tablesCount}</TableCell>
     <TableCell align="right">
-      <EditRow />
-      <DeleteRow />
+      <EditRow id={id} name={name} />
+      <DeleteRow id={id} name={name} membersCount={membersCount} />
     </TableCell>
   </TableRow>
 );
