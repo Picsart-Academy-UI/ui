@@ -14,6 +14,7 @@ import useStylesLocal from './style';
 
 const UsersTable = ({
   rows,
+  count,
   page,
   rowsPerPage,
   isAdmin,
@@ -22,9 +23,8 @@ const UsersTable = ({
 }) => {
   const classes = useStylesLocal();
 
-  const { data, count } = rows.usersList;
-
-  console.log('data', data);
+  const { data } = rows;
+  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -33,11 +33,6 @@ const UsersTable = ({
   const handleChangeRowsPerPage = (value) => {
     onChangeRowsPerPage(value);
   };
-
-  const emptyRows =
-    data && data.length
-      ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-      : 0;
 
   return data ? (
     <Paper>
@@ -59,7 +54,9 @@ const UsersTable = ({
           </TableHead>
           {data && !data.length ? (
             <TableBody>
-              <TableRow>Nothing Found</TableRow>
+              <TableRow>
+                <TableCell colSpan={6}>Nothing Found</TableCell>
+              </TableRow>
             </TableBody>
           ) : (
             <TableBody>
@@ -67,12 +64,6 @@ const UsersTable = ({
                 data.map((user) => (
                   <UserRow key={user._id} user={user} isAdmin={isAdmin} />
                 ))}
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 17 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           )}
         </Table>

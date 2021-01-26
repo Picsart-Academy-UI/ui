@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDebounce } from 'use-debounce';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
+import { fetchedUsersList } from '../../store/slices/usersSlice';
 import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,
 } from '../../services/users';
-import { fetchedUsersList } from '../../store/slices/usersSlice';
 import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
 import SearchBox from './components/SearchBox';
@@ -21,14 +21,27 @@ const Users = () => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 100);
-  const { token, isAdmin, teams } = useSelector((state) => ({
+  const [fetched, setFetched] = useState(false);
+  const { token, isAdmin, teams, usersData } = useSelector((state) => ({
     token: state.signin.token,
     isAdmin: state.signin.curUser.is_admin,
     teams: state.teams.teams,
+    usersData: state.users.usersList,
   }));
 
-  console.log('isAdmin', isAdmin);
+  // console.log('isAdmin', isAdmin);
+  // console.log('usersData', usersData);
 
+  const users = useMemo(
+    () => ({
+      data: (usersData.data || []).filter(({ first_name }) =>
+        first_name.toLowerCase().startsWith(searchValue.toLowerCase())
+      ),
+    }),
+    [usersData.data, searchValue]
+  );
+
+  const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
@@ -47,9 +60,14 @@ const Users = () => {
   };
 
   const handleSelectedTeamChange = (teamId) => {
-    // console.log('selectedTeamId', teamId);
     setSelectedTeamId(teamId);
   };
+
+  useEffect(() => {
+    if (!users.data?.length && page !== 0 && usersCount / rowsPerPage <= page) {
+      setPage(page - 1);
+    }
+  }, [users.data?.length, page, usersCount, rowsPerPage]);
 
   useEffect(() => {
     if (!teams.length) {
@@ -65,7 +83,7 @@ const Users = () => {
   }, [teams, dispatch, makeRequest, token]);
 
   useEffect(() => {
-    if (!debouncedSearchValue && selectedTeamId === '') {
+    if (!debouncedSearchValue && selectedTeamId === '' && !fetched) {
       const fetchUsers = async () => {
         const requestData = getLimitedUsersRequestData(
           token,
@@ -73,11 +91,16 @@ const Users = () => {
           page + 1,
           isAdmin
         );
-        const users = await makeRequest(requestData);
-        dispatch(fetchedUsersList(users));
+        const fetchedUsers = await makeRequest(requestData);
+        dispatch(fetchedUsersList(fetchedUsers));
       };
+
       fetchUsers();
-    } else if (debouncedSearchValue || selectedTeamId !== '') {
+
+      if (!isAdmin) {
+        setFetched(true);
+      }
+    } else if ((isAdmin && debouncedSearchValue) || selectedTeamId !== '') {
       const fetchBySelectedTeam = async () => {
         const requestData = getFilteredUsersRequestData(
           token,
@@ -101,8 +124,7 @@ const Users = () => {
     token,
   ]);
 
-  const usersData = useSelector((state) => state.users);
-  // console.log('usersData', usersData);
+  // console.log({ users, page, usersCount, rowsPerPage });
 
   return (
     <>
@@ -129,7 +151,8 @@ const Users = () => {
         )}
       </Grid>
       <UsersTable
-        rows={usersData}
+        rows={users}
+        count={usersCount}
         page={page}
         rowsPerPage={rowsPerPage}
         isAdmin={isAdmin}
