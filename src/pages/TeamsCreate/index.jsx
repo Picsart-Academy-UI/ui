@@ -24,7 +24,6 @@ const TeamsCreate = () => {
     };
 
     const res = await makeRequest(getTeamCreateRequestData({ token, body }));
-    console.log(res);
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');
