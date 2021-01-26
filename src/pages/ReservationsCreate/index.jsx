@@ -12,6 +12,7 @@ const ReservationsCreate = () => {
   // default value
   const defaultValue = new Date();
   defaultValue.setDate(defaultValue.getDate() + 1);
+  defaultValue.setHours(0, 0, 0, 0);
 
   const [isSubmited, setIsSubmited] = useState(false);
   const [reservations, setReservations] = useState([]);
@@ -181,20 +182,25 @@ const ReservationsCreate = () => {
     }
     return range;
   };
-
+  // returns the date without houts
+  const withoutHours = (date) => {
+    const newDate = new Date(date);
+    newDate.setHours(0, 0, 0);
+    return newDate;
+  };
   // creates the data for the table
   const createTableData = (chairs, reservsApprPend, range) =>
     chairs.map((chair) => {
-      // eslint-disable-next-line
       const reservationsSatisfied = reservsApprPend.filter(
         (res) =>
-          // eslint-disable-next-line
-          res.chair_id === chair._id && new Date(res.start_date) >= range[0]
+          res.chair_id === chair._id &&
+          withoutHours(res.start_date) >= withoutHours(range[0])
       );
       const dates = range.map((date) => {
         const reservOnSameDate = reservationsSatisfied.find(
           (res) =>
-            date >= new Date(res.start_date) && date <= new Date(res.end_date)
+            withoutHours(date) >= withoutHours(res.start_date) &&
+            withoutHours(date) <= withoutHours(res.end_date)
         );
         const isFree = reservOnSameDate === undefined;
         return { date, isFree };
