@@ -5,6 +5,7 @@ import Filter from '../../components/Filter';
 import useMemoSelector from '../../hooks/useMemoSelector';
 import useBatchDispatch from '../../hooks/useBatchDispatch';
 import { fetchTeams } from '../../store/slices/teamsSlice';
+import { fetchTables } from '../../store/slices/tablesSlice';
 import { fetchPendingReservations } from '../../store/slices/reservationsSlice';
 import { teamTokenSelector } from '../../store/selectors';
 import RequestsTable from './RequestsTable';
@@ -14,24 +15,20 @@ const Requests = () => {
   const classes = useStyles();
   const dispatch = useBatchDispatch();
 
-  const { token, teams } = useMemoSelector((state) => teamTokenSelector(state));
-  console.log(teams, 'qqqqqqqqqqqqqq');
+  const {
+    token,
+    teams,
+    pendingReservations,
+    tables,
+  } = useMemoSelector((state) => teamTokenSelector(state));
+  console.log(teams, 'qqqqqqqqqqqqqq', pendingReservations, tables);
   useEffect(() => {
-    dispatch(fetchTeams(token), fetchPendingReservations(token));
+    dispatch(
+      fetchTeams(token),
+      fetchPendingReservations(token),
+      fetchTables(token)
+    );
   }, [dispatch, token]);
-
-  // useEffect(() => {
-  //   if(pendingReservations?.length) {
-  //     console.log('fetch users || fetch teams || fetch chair || fetch table');
-  //     const users = unique(pendingReservations.map(pr => pr.user_id));
-  //     const promises = [];
-  //     for (let i = users.length - 1; i >= 0; i--) {
-  //       promises.push(getSingleUser(token, users[i]));
-  //     }
-  //     Promise.all(promises)
-  //       .then(users1 => console.log(users1, '====='))
-  //   }
-  // }, [pendingReservations, token])
 
   return (
     <div className="requests">
@@ -54,7 +51,11 @@ const Requests = () => {
       <Box fontSize="h4.fontSize" my={3}>
         Active Requests
       </Box>
-      <RequestsTable />
+      <RequestsTable
+        teams={teams}
+        pendingReservations={pendingReservations}
+        tables={tables}
+      />
     </div>
   );
 };

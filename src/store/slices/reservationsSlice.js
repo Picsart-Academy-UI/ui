@@ -5,6 +5,7 @@ export const reservationsSlice = createSlice({
   name: 'reservations',
   initialState: {
     reservations: [],
+    pendingReservations: [],
   },
   reducers: {
     setReservations: (state, action) => {
@@ -27,7 +28,10 @@ export const fetchReservations = (token) => async (dispatch) => {
 };
 
 export const fetchPendingReservations = (token) => async (dispatch) => {
-  const res = await getReservations(token, 'status=pending');
+  const res = await getReservations(
+    token,
+    'status=pending&include_usersAndChairs=true'
+  );
   dispatch(setPendingReservations(res.data || []));
 };
 export default reservationsSlice.reducer;
