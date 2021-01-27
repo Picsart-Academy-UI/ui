@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box } from '@material-ui/core';
 import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
@@ -11,9 +11,13 @@ import { teamTokenSelector } from '../../store/selectors';
 import RequestsTable from './RequestsTable';
 import useStyles from './style';
 
+const allTeams = { team_name: 'All', _id: 'all' };
+
 const Requests = () => {
   const classes = useStyles();
   const dispatch = useBatchDispatch();
+  const [teamValue, setTeamValue] = useState(allTeams);
+  const [usernameValue, setUsernameValue] = useState('');
 
   const {
     token,
@@ -21,7 +25,8 @@ const Requests = () => {
     pendingReservations,
     tables,
   } = useMemoSelector((state) => teamTokenSelector(state));
-  console.log(teams, 'qqqqqqqqqqqqqq', pendingReservations, tables);
+  const teamsList = useMemo(() => [allTeams, ...teams], [teams]);
+
   useEffect(() => {
     dispatch(
       fetchTeams(token),
@@ -30,21 +35,28 @@ const Requests = () => {
     );
   }, [dispatch, token]);
 
+  const handleTeamSelect = (val) => {
+    setTeamValue(val);
+  };
+  const handleUsernameChange = (val) => {
+    setUsernameValue(val);
+  };
+
   return (
     <div className="requests">
       <Box className={classes.filterContainer}>
         <SelectDropdown
           label="Select Team"
-          options={teams}
+          options={teamsList}
           property="team_name"
           className={classes.selectDropdown}
           // eslint-disable-next-line
-          onChange={console.log}
+          onChange={handleTeamSelect}
         />
         <Filter
           className={classes.filter}
           // eslint-disable-next-line
-          onChange={console.log}
+          onChange={handleUsernameChange}
         />
       </Box>
 
@@ -52,9 +64,11 @@ const Requests = () => {
         Active Requests
       </Box>
       <RequestsTable
-        teams={teams}
+        teams={teamsList}
         pendingReservations={pendingReservations}
         tables={tables}
+        teamFilterValue={teamValue}
+        usernameChangeValue={usernameValue}
       />
     </div>
   );

@@ -34,10 +34,25 @@ function createData(user, date, seat, load, actions) {
   return { user, date, seat, load, actions };
 }
 
-function RequestsTable({ teams, pendingReservations, tables }) {
+function RequestsTable({
+  teams,
+  pendingReservations,
+  tables,
+  teamFilterValue,
+  usernameChangeValue,
+}) {
   const classes = useStyles();
-  console.log(teams, tables, pendingReservations, 'how many times renders??');
   const [rows, setRows] = useState([]);
+
+  const filteredRows = rows
+    .filter((row) => {
+      if (teamFilterValue.team_name === 'All') return true;
+      return row.user.team === teamFilterValue.team_name;
+    })
+    .filter((row) =>
+      row.user.name.toLowerCase().includes(usernameChangeValue.toLowerCase())
+    );
+
   useEffect(() => {
     const r = pendingReservations.map((pr) => {
       const { start_date, end_date, table_id, chair_id, team_id, user_id } = pr;
@@ -66,7 +81,7 @@ function RequestsTable({ teams, pendingReservations, tables }) {
         49
       );
     });
-    setRows(r);
+    setRows(r.slice(2));
   }, [pendingReservations]);
 
   return (
@@ -82,7 +97,7 @@ function RequestsTable({ teams, pendingReservations, tables }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {filteredRows.map((row) => (
             <TableRow key={row.user.name}>
               <TableCell component="th" scope="row">
                 <UserInfo user={row.user} />
