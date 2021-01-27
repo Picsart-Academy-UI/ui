@@ -1,9 +1,4 @@
-import {
-  FormHelperText,
-  FormControl,
-  NativeSelect,
-  Box,
-} from '@material-ui/core';
+import { FormHelperText, FormControl, NativeSelect } from '@material-ui/core';
 import useStylesLocal from './style';
 
 const TeamsDropDown = ({ teams, onSelectChange }) => {
@@ -21,26 +16,22 @@ const TeamsDropDown = ({ teams, onSelectChange }) => {
   };
 
   return (
-    <Box ml={40}>
-      <FormControl className={classes.formControl}>
-        <NativeSelect
-          onChange={handleSelectChange}
-          name="Teams"
-          className={classes.selectEmpty}
-          inputProps={{ 'aria-label': 'Teams' }}
-        >
-          <option>All</option>
-          {teams && teams.length ? (
-            teams.map((team) => (
-              <option key={team._id}>{team.team_name}</option>
-            ))
-          ) : (
-            <option>Loading...</option>
-          )}
-        </NativeSelect>
-        <FormHelperText>Teams</FormHelperText>
-      </FormControl>
-    </Box>
+    <FormControl className={classes.formControl}>
+      <NativeSelect
+        onChange={handleSelectChange}
+        name="Teams"
+        className={classes.selectEmpty}
+        inputProps={{ 'aria-label': 'Teams' }}
+      >
+        <option>All</option>
+        {teams && teams.length ? (
+          teams.map((team) => <option key={team._id}>{team.team_name}</option>)
+        ) : (
+          <option>Loading...</option>
+        )}
+      </NativeSelect>
+      <FormHelperText>Teams</FormHelperText>
+    </FormControl>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Box, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 const SearchBox = ({ value, onChange, onPageChange }) => {
   const handleInputChange = (e) => {
@@ -7,16 +7,13 @@ const SearchBox = ({ value, onChange, onPageChange }) => {
   };
 
   return (
-    <Box mt={2} ml={30}>
-      <TextField
-        onChange={handleInputChange}
-        name="searchTeam"
-        value={value}
-        id="searchTeam"
-        placeholder="Search by name"
-        autoFocus
-      />
-    </Box>
+    <TextField
+      onChange={handleInputChange}
+      name="searchTeam"
+      value={value}
+      id="searchTeam"
+      placeholder="Search by name"
+    />
   );
 };
 

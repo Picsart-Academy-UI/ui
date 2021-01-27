@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { Container, Button } from '@material-ui/core';
+import useStylesMain from '../../hooks/useStylesMain';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
 import Pickers from './components/Pickers';
@@ -7,6 +8,7 @@ import Loader from './components/Loader';
 import useStylesLocal from './style';
 
 const ReservationsCreate = () => {
+  const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
   // default value
@@ -498,7 +500,7 @@ const ReservationsCreate = () => {
           onClick={() => {
             setIsSubmited(!isSubmited);
           }}
-          className={classesLocal.submitBtn}
+          className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
           disabled={reservations.length === 0 || error !== 'none'}
         >
           {' '}

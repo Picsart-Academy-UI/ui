@@ -29,10 +29,6 @@ const useStyles = makeStyles({
     bottom: '0',
     padding: '1rem 2rem',
   },
-  submitBtn: {
-    margin: '2rem',
-    padding: '1rem 2rem',
-  },
 });
 
 export default useStyles;

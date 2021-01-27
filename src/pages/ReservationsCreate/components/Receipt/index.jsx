@@ -9,9 +9,11 @@ import {
   Button,
 } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import useStyles from './style';
 
 const Receipt = ({ reservs }) => {
+  const classesMain = useStylesMain();
   const styles = useStyles();
   return (
     <Container className={styles.container}>
@@ -45,7 +47,11 @@ const Receipt = ({ reservs }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" className={styles.submitBtn}>
+      <Button
+        variant="contained"
+        color="primary"
+        className={classesMain.commonButton}
+      >
         CheckOut
       </Button>
     </Container>

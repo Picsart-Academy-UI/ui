@@ -8,9 +8,9 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
-import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
-import useStylesLocal from './style';
+import useStylesMain from '../../../../hooks/useStylesMain';
+import UserRow from '../UserRow';
 
 const UsersTable = ({
   rows,
@@ -21,7 +21,7 @@ const UsersTable = ({
   onChangePage,
   onChangeRowsPerPage,
 }) => {
-  const classes = useStylesLocal();
+  const classesMain = useStylesMain();
 
   const { data } = rows;
   // console.log('data', data);
@@ -36,7 +36,7 @@ const UsersTable = ({
 
   return data ? (
     <Paper>
-      <TableContainer className={classes.container}>
+      <TableContainer className={classesMain.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
