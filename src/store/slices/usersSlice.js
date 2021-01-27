@@ -13,11 +13,12 @@ export const usersSlice = createSlice({
       const userId = action.payload;
       const index = state.usersList.data.findIndex(({ _id }) => userId === _id);
       state.usersList.data.splice(index, 1);
+      state.usersList.count--; // eslint-disable-line
     },
   },
 });
 
-export const { fetchedUsersList, deleteUser } = usersSlice.actions;
+export const { fetchedUsersList, deleteUser, searchUser } = usersSlice.actions;
 
 export const getUsers = ({ users }) => users;
 
