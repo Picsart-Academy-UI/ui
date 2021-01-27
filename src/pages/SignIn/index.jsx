@@ -30,7 +30,7 @@ const SignIn = () => {
       test="div-wrapper"
     >
       <Typography component="h1" variant="h4" className={classesLocal.header}>
-        We Make Office Space Management Awesome
+        Test
       </Typography>
       <Container component="main" maxWidth="xs">
         <Box className={classesLocal.signInContainer}>
