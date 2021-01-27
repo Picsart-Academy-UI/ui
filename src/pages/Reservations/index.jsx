@@ -49,7 +49,7 @@ const Reservations = () => {
   };
 
   const onAddReservationClick = () => {
-    history.push('/Reservations/create');
+    history.push('/reservations/create');
   };
 
   return (

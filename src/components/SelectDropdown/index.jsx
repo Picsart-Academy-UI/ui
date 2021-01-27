@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -7,12 +7,17 @@ const SelectDropdown = ({
   options,
   onChange,
   defaultValue = options[0],
+  property = 'title',
   ...props
 }) => {
   const isControlled = 'value' in props;
-  const { isDisabled, style, variant = 'outlined' } = props;
+  const { className, isDisabled, style, variant = 'outlined' } = props;
   const [localValue, setLocalValue] = useState(defaultValue);
   const currentValue = isControlled ? props.value : localValue;
+
+  useEffect(() => {
+    setLocalValue(defaultValue);
+  }, [defaultValue]);
 
   const onSelectChange = (event, newValue) => {
     if (!isControlled) {
@@ -24,14 +29,15 @@ const SelectDropdown = ({
   return (
     <Autocomplete
       id={label}
+      className={className}
       options={options}
       autoHighlight
       blurOnSelect
-      value={currentValue}
+      value={currentValue || null}
       onChange={onSelectChange}
       disableClearable
-      getOptionLabel={(option) => option.title}
-      getOptionSelected={(option) => option.title}
+      getOptionLabel={(option) => option[property]}
+      getOptionSelected={(option) => option[property]}
       style={style}
       disabled={isDisabled}
       renderInput={(params) => (

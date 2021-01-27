@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
+  TableHead,
   TableBody,
   TableCell,
   TableContainer,
@@ -13,23 +14,10 @@ import LinearProgressWithLabel from '../LinearProgressWithLabel';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
-    maxHeight: 150,
-    overflow: 'auto',
-    border: '1px solid',
-    borderColor: 'transparent',
-    marginLeft: 'auto',
-
-    '&:hover': {
-      borderColor: '#D2D2D2',
-      borderRadius: 4,
-      zIndex: 10,
-      position: 'relative',
-      boxShadow: '1px 1px 3px 1px #D2D2D2',
-    },
+    maxWidth: 360,
   },
   table: {
-    minWidth: 255,
+    minWidth: 300,
   },
   tableCellCount: {
     color: '#4caf50',
@@ -54,6 +42,42 @@ const rows = [
   createData('20 Dec', 35, 7),
   createData('30 Dec', 20, 16),
   createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
+  createData('17 Dec', 70, 6),
+  createData('18 Dec', 14, 9),
+  createData('19 Dec', 59, 16),
+  createData('20 Dec', 35, 7),
+  createData('30 Dec', 20, 16),
+  createData('17 Dec', 70, 6),
 ];
 
 export default function Loads() {
@@ -64,6 +88,13 @@ export default function Loads() {
     <Box className={classes.root}>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell align="right">By team</TableCell>
+              <TableCell align="right">Approved</TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>

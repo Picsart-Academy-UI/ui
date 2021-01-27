@@ -21,24 +21,23 @@ const Filter = ({
   };
 
   return (
-    <div className={className}>
-      <TextField
-        value={currentValue}
-        onChange={onInputChange}
-        placeholder={placeholder}
-        id="outlined-search"
-        label="Search field"
-        type="search"
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </div>
+    <TextField
+      className={className}
+      value={currentValue}
+      onChange={onInputChange}
+      placeholder={placeholder}
+      id="outlined-search"
+      label="Search field"
+      type="search"
+      variant="outlined"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 

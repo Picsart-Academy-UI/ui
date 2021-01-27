@@ -10,12 +10,15 @@ export const getUserInvitationRequestData = ({ token, body }) =>
     body: JSON.stringify(body),
   });
 
-export const getLimitedUsersRequestData = (token, limit, page) =>
-  new Request(`${MAIN_URL}users/all?limit=${limit}&page=${page}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getLimitedUsersRequestData = (token, limit, page, isAdmin) =>
+  new Request(
+    `${MAIN_URL}users${isAdmin ? `/all?limit=${limit}&page=${page}` : ''}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
 export const getUserDeleteRequestData = ({ token, id }) =>
   new Request(`${MAIN_URL}users/${id}`, {

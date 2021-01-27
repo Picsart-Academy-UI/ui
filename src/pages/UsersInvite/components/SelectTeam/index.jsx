@@ -42,7 +42,7 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
     const res = await makeRequest(getTeamsAllRequestData(token));
 
     if (res.data) {
-      dispatch(setTeams(res.data));
+      dispatch(setTeams(res));
     }
   }, [dispatch, makeRequest, token]);
 

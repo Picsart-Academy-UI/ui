@@ -2,8 +2,10 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
+import BackButton from '../../components/BackButton';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
+import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesLocal from './style';
 
 const TeamsCreate = () => {
@@ -22,15 +24,16 @@ const TeamsCreate = () => {
     };
 
     const res = await makeRequest(getTeamCreateRequestData({ token, body }));
-
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');
+      addTeam(res.data);
     }
   };
 
   return (
     <div>
+      <BackButton />
       <Container component="main" maxWidth="xs">
         <form noValidate={false} onSubmit={onAddTeam}>
           <TextField
