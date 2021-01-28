@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import useReservation from '../../hooks/useReservation';
 import useStyles from './style';
 
 const TableOfTables = ({
@@ -16,6 +17,7 @@ const TableOfTables = ({
   data,
 }) => {
   const styles = useStyles();
+  const { getReservationOnSameDate } = useReservation();
 
   return (
     <TableContainer className={styles.container}>
@@ -47,9 +49,9 @@ const TableOfTables = ({
                 {item.name}
               </TableCell>
               {item.dates.map((date) => {
-                const reservOnSameDate = reservations.find(
-                  ({ startDate, endDate }) =>
-                    date.date >= startDate && date.date <= endDate
+                const reservOnSameDate = getReservationOnSameDate(
+                  reservations,
+                  date.date
                 );
                 const isSelected =
                   reservOnSameDate && reservOnSameDate.chairName === item.name;

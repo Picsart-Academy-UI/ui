@@ -33,6 +33,35 @@ const useStyles = makeStyles({
     margin: '2rem',
     padding: '1rem 2rem',
   },
+  modalCont: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    backgroundColor: '#ffffff',
+    maxWidth: '80%',
+    transform: 'translate(-50%,-50%)',
+    border: 'none',
+    outline: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    padding: '2rem 0',
+  },
+  joke: {
+    padding: '0 0 1rem',
+    color: '#000000',
+    fontSize: '1.5rem',
+  },
+  num: {
+    padding: '0 0 2rem',
+    color: '#000000',
+    fontSize: '1.5rem',
+    fontWeight: '800',
+  },
+  warning: {
+    color: '#f50057',
+  },
 });
 
 export default useStyles;
