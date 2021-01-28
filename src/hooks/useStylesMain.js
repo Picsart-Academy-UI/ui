@@ -11,7 +11,6 @@ const useStylesMain = makeStyles((theme) => ({
     height: '100vh',
   },
   paperPadding: {
-    width: '80%',
     minWidth: STYLES.appMinWidth,
     margin: 'auto',
     marginTop: theme.spacing(6),
