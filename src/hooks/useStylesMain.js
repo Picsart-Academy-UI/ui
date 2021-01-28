@@ -11,6 +11,7 @@ const useStylesMain = makeStyles((theme) => ({
     height: '100vh',
   },
   paperPadding: {
+    width: '80%',
     minWidth: STYLES.appMinWidth,
     margin: 'auto',
     marginTop: theme.spacing(6),
@@ -50,6 +51,9 @@ const useStylesMain = makeStyles((theme) => ({
   tableContainer: {
     maxHeight: STYLES.tableMaxHeight,
     minWidth: STYLES.tableMinWidth,
+  },
+  searchRes: {
+    fontSize: theme.spacing(3),
   },
 }));
 
