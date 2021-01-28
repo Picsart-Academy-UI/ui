@@ -16,6 +16,7 @@ import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlin
 import { postReservation } from '../../../../services/reservationsService';
 import { addReservation } from '../../../../store/slices/reservationsSlice';
 import useDate from '../../hooks/useDate';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import useStyles from './style';
 
 const Receipt = ({ reservs }) => {
@@ -25,6 +26,7 @@ const Receipt = ({ reservs }) => {
   const history = useHistory();
   const token = useSelector((state) => state.signin.token);
   const dispatch = useDispatch();
+  const classesMain = useStylesMain();
   const styles = useStyles();
 
   const handleCheckout = () => {

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
 import { fetchPendingApprovedReservations } from '../../store/slices/reservationsSlice';
+import useStylesMain from '../../hooks/useStylesMain';
 import useDate from './hooks/useDate';
 import useReservation from './hooks/useReservation';
 import TableOfTables from './components/TableOfTables';
@@ -11,6 +12,9 @@ import Loader from './components/Loader';
 import useStylesLocal from './style';
 
 const ReservationsCreate = () => {
+  const classesMain = useStylesMain();
+  const classesLocal = useStylesLocal();
+
   // default value
   const defaultValue = useMemo(() => {
     const value = new Date();
@@ -22,8 +26,6 @@ const ReservationsCreate = () => {
   const token = useSelector((state) => state.signin.token);
   const reservs = useSelector((state) => state.reservations.reservsApprPend);
   const dispatch = useDispatch();
-
-  const classesLocal = useStylesLocal();
 
   const [isSubmited, setIsSubmited] = useState(false);
   const [reservations, setReservations] = useState([]);
@@ -330,7 +332,7 @@ const ReservationsCreate = () => {
           onClick={() => {
             setIsSubmited(!isSubmited);
           }}
-          className={classesLocal.submitBtn}
+          className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
           disabled={reservations.length === 0 || error !== 'none'}
         >
           {' '}

@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Box, Button } from '@material-ui/core';
-import CustomTable from './components/CustomTable';
+import useStylesMain from '../../hooks/useStylesMain';
+import ResTable from './components/CustomTable';
 import useStylesLocal from './style';
 
 const Reservations = () => {
+  const classesMain = useStylesMain();
   const styles = useStylesLocal();
 
   const history = useHistory();
 
-  // needs to be used before the api is ready
   const createRes = (status) => {
     const date = new Date();
 
@@ -25,7 +26,6 @@ const Reservations = () => {
     createRes('pending'),
     createRes('approved'),
     createRes('pending'),
-    createRes('rejected'),
     createRes('pending'),
     createRes('pending'),
     createRes('pending'),
@@ -65,11 +65,12 @@ const Reservations = () => {
             onClick={onAddReservationClick}
             color="primary"
             variant="contained"
+            className={classesMain.commonButton}
           >
             Add Reservation
           </Button>
         </Box>
-        <CustomTable
+        <ResTable
           data={activeRes}
           isHistory={false}
           edit={edit}
@@ -85,7 +86,7 @@ const Reservations = () => {
         >
           <Box> History </Box>
         </Box>
-        <CustomTable
+        <ResTable
           data={historyRes}
           isHistory={true}
           edit={edit}
