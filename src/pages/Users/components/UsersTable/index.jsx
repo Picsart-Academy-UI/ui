@@ -22,7 +22,6 @@ const UsersTable = ({
   onChangeRowsPerPage,
 }) => {
   const classesMain = useStylesMain();
-
   const { data } = rows;
   // console.log('data', data);
 
@@ -55,7 +54,13 @@ const UsersTable = ({
           {data && !data.length ? (
             <TableBody>
               <TableRow>
-                <TableCell colSpan={6}>Nothing Found</TableCell>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={classesMain.searchRes}
+                >
+                  Nothing Found
+                </TableCell>
               </TableRow>
             </TableBody>
           ) : (

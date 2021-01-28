@@ -51,6 +51,9 @@ const useStylesMain = makeStyles((theme) => ({
     maxHeight: STYLES.tableMaxHeight,
     minWidth: STYLES.tableMinWidth,
   },
+  searchRes: {
+    fontSize: theme.spacing(3),
+  },
 }));
 
 export default useStylesMain;

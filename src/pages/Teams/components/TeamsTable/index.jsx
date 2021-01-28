@@ -11,10 +11,8 @@ import {
 import useStylesMain from '../../../../hooks/useStylesMain';
 import TeamRow from '../TeamRow';
 
-const TeamsTable = (props) => {
+const TeamsTable = ({ teams }) => {
   const classesMain = useStylesMain();
-  const { teams } = props;
-
   return (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
@@ -29,17 +27,31 @@ const TeamsTable = (props) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {teams.map((team) => (
-              <TeamRow
-                name={team.team_name}
-                membersCount={team.members_count}
-                tablesCount={team.tables.length}
-                key={team._id}
-                id={team._id}
-              />
-            ))}
-          </TableBody>
+          {!teams.length ? (
+            <TableBody>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={classesMain.searchRes}
+                >
+                  Nothing Found
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {teams.map((team) => (
+                <TeamRow
+                  name={team.team_name}
+                  membersCount={team.members_count}
+                  tablesCount={team.tables.length}
+                  key={team._id}
+                  id={team._id}
+                />
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
     </Paper>
