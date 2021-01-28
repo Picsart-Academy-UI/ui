@@ -2,28 +2,22 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import useMountedRef from '../../../../hooks/useMountedRef';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import useFetch from '../../../../hooks/useFetch';
 import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 
 const Delete = ({ id, userFullName }) => {
+  const classesMain = useStylesMain();
   const dispatch = useDispatch();
   const makeRequest = useFetch();
   const token = useSelector((state) => state.signin.token);
   const [open, setOpen] = useState(false);
-  const isMountedRef = useMountedRef();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => setOpen(true);
 
-  const handleClose = () => {
-    if (isMountedRef.current) {
-      setOpen(false);
-    }
-  };
+  const handleClose = () => setOpen(false);
 
   const handleDeleteClick = async () => {
     const res = await makeRequest(getUserDeleteRequestData({ token, id }));
@@ -42,7 +36,7 @@ const Delete = ({ id, userFullName }) => {
   return (
     <>
       <Button title="Delete" onClick={handleClickOpen} color="secondary">
-        <DeleteOutlineIcon />
+        <DeleteOutlineIcon className={classesMain.iconColorRed} />
       </Button>
       <AlertDialog
         open={open}

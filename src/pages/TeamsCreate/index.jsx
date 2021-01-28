@@ -6,12 +6,12 @@ import BackButton from '../../components/BackButton';
 import useFetch from '../../hooks/useFetch';
 import { getTeamCreateRequestData } from '../../services/teams';
 import { addTeam } from '../../store/slices/teamsSlice';
-import useStylesLocal from './style';
+import useStylesMain from '../../hooks/useStylesMain';
 
 const TeamsCreate = () => {
   const token = useSelector((state) => state.signin.token);
   const makeRequest = useFetch();
-  const classesLocal = useStylesLocal();
+  const classesMain = useStylesMain();
   const history = useHistory();
 
   const nameRef = useRef();
@@ -32,7 +32,7 @@ const TeamsCreate = () => {
   };
 
   return (
-    <div>
+    <>
       <BackButton />
       <Container component="main" maxWidth="xs">
         <form noValidate={false} onSubmit={onAddTeam}>
@@ -49,13 +49,13 @@ const TeamsCreate = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className={classesLocal.sbmtButton}
+            className={classesMain.picsartButton}
           >
             Add
           </Button>
         </form>
       </Container>
-    </div>
+    </>
   );
 };
 

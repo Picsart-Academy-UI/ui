@@ -6,12 +6,6 @@ const useStylesLocal = makeStyles({
     minHeight: '5rem',
     fontSize: '1.5rem',
   },
-  edit: {
-    color: '#3f51b5',
-  },
-  cancel: {
-    color: '#f50057',
-  },
   pending: {
     color: '#f9a825',
   },

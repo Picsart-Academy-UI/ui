@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   AppBar,
   Toolbar,
@@ -19,6 +19,7 @@ import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
+import { PICSART_LOGO_WHITE } from '../../constants';
 import { setIsLoggedOut } from '../../store/slices/signinSlice';
 import { setPath } from './desktopMenuLeftUtils';
 import useStylesLocal from './style';
@@ -26,12 +27,10 @@ import useStylesLocal from './style';
 const Header = () => {
   const dispatch = useDispatch();
 
-  const classes = useStylesLocal();
+  const classesLocal = useStylesLocal();
 
   const history = useHistory();
   const location = useLocation();
-
-  const { curUser } = useSelector((state) => state.signin);
 
   const [
     mobileMenuRightProfileMenuAnchorEl,
@@ -99,7 +98,7 @@ const Header = () => {
       aria-haspopup="true"
       onClick={handleMobileMenuLeftIconOpen}
       color="inherit"
-      className={classes.mobileMenuLeftIcon}
+      className={classesLocal.mobileMenuLeftIcon}
     >
       <MenuIcon />
     </IconButton>
@@ -151,7 +150,7 @@ const Header = () => {
   );
 
   const desktopMenuLeft = (
-    <div className={classes.desktopMenuLeft}>
+    <div className={classesLocal.desktopMenuLeft}>
       {/* value={setPath(location.pathname) ? setPath(location.pathname) : false} for not included paths in menu */}
       <Tabs
         value={setPath(location.pathname) ? setPath(location.pathname) : false}
@@ -161,25 +160,27 @@ const Header = () => {
         <Tab
           label="Reservations"
           value="/reservations"
-          className={classes.linkTab}
-          wrapped
+          className={classesLocal.linkTab}
         />
-        <Tab label="Teams" value="/teams" className={classes.linkTab} />
-        <Tab label="Users" value="/users" className={classes.linkTab} />
-        <Tab label="Requests" value="/requests" className={classes.linkTab} />
+        <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        <Tab label="Users" value="/users" className={classesLocal.linkTab} />
+        <Tab
+          label="Requests"
+          value="/requests"
+          className={classesLocal.linkTab}
+        />
       </Tabs>
     </div>
   );
 
   const desktopMenuRight = (
-    <div className={classes.desktopMenuRight}>
+    <div className={classesLocal.desktopMenuRight}>
       <IconButton aria-label="show 17 new notifications" color="inherit">
         <Badge badgeContent={17} color="secondary">
           <NotificationsIcon />
         </Badge>
       </IconButton>
       <IconButton
-        edge="end"
         aria-label="account of current user"
         aria-controls={menuId}
         aria-haspopup="true"
@@ -192,7 +193,7 @@ const Header = () => {
   );
 
   const mobileMenuRightIcon = (
-    <div className={classes.mobileMenuRightIcon}>
+    <div className={classesLocal.mobileMenuRightIcon}>
       <IconButton
         aria-label="show more"
         aria-controls={mobileMenuRightIconId}
@@ -247,14 +248,12 @@ const Header = () => {
       open={isMobileMenuRightProfileMenuOpen}
       onClose={handleMobileMenuRightProfileMenuClose}
     >
-      <Link
-        to={{ pathname: '/profile/me', user: curUser }}
-        style={{ textDecoration: 'none' }}
+      <MenuItem
+        onClick={handleMobileMenuRightProfileMenuRoute}
+        data-route="/profile/me"
       >
-        <MenuItem onClick={handleMobileMenuRightProfileMenuRoute}>
-          Profile
-        </MenuItem>
-      </Link>
+        Profile
+      </MenuItem>
       <MenuItem
         onClick={(e) => handleMobileMenuRightProfileMenuRoute(e, true)}
         data-route="/signin"
@@ -265,15 +264,22 @@ const Header = () => {
   );
 
   return (
-    <div className={classes.grow}>
+    <div className={classesLocal.grow}>
       {mobileMenuLeft}
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          {mobileMenuLeftIcon}
-          {desktopMenuLeft}
-          <div className={classes.grow} />
-          {desktopMenuRight}
-          {mobileMenuRightIcon}
+      <AppBar position="fixed" className={classesLocal.header}>
+        <Toolbar className={classesLocal.toolbar}>
+          <div>
+            <img src={PICSART_LOGO_WHITE} alt="Logo" />
+          </div>
+          <div>
+            {mobileMenuLeftIcon}
+            {desktopMenuLeft}
+          </div>
+          <div>
+            {/* <div className={classesLocal.grow} /> */}
+            {desktopMenuRight}
+            {mobileMenuRightIcon}
+          </div>
         </Toolbar>
       </AppBar>
       {mobileMenuRight}

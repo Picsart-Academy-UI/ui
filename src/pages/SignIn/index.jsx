@@ -26,13 +26,13 @@ const SignIn = () => {
 
   return (
     <div
-      // className={classesMain.paperContainer}
-      test="div-wrapper"
+    // className={classesMain.paperContainer}
+    // test="div-wrapper"
     >
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         We Make Office Space Management Awesome
       </Typography>
-      <Container component="main" maxWidth="xs">
+      <Container component="div">
         <Box className={classesLocal.signInContainer}>
           <GoogleLogin
             clientId="885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"

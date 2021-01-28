@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDebounce } from 'use-debounce';
-import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
@@ -12,10 +11,12 @@ import {
 } from '../../services/users';
 import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
-import SearchBox from './components/SearchBox';
+import SearchUsers from './components/SearchBox';
 import AddUser from './components/AddUser';
+import useStylesLocal from './style';
 
 const Users = () => {
+  const classesLocal = useStylesLocal();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
@@ -128,28 +129,22 @@ const Users = () => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs>
-          <SearchBox
+      <div className={classesLocal.wrapper}>
+        <div className={classesLocal.searchWrapper}>
+          <SearchUsers
             value={searchValue}
             onChange={handleInputChange}
             onPageChange={handleChangePage}
           />
-        </Grid>
-        {isAdmin && (
-          <>
-            <Grid item xs>
-              <TeamsDropDown
-                teams={teams}
-                onSelectChange={handleSelectedTeamChange}
-              />
-            </Grid>
-            <Grid item xs>
-              <AddUser />
-            </Grid>
-          </>
-        )}
-      </Grid>
+          {isAdmin && (
+            <TeamsDropDown
+              teams={teams}
+              onSelectChange={handleSelectedTeamChange}
+            />
+          )}
+        </div>
+        {isAdmin && <AddUser />}
+      </div>
       <UsersTable
         rows={users}
         count={usersCount}
