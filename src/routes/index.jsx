@@ -35,7 +35,7 @@ const Router = () => {
         <Route exact path="/reservations" component={Reservations} />
         <Route
           exact
-          path="/reservations/create"
+          path="/reservations/create/:id"
           component={ReservationsCreate}
         />
         <Route exact path="/reservations/edit" component={ReservationsEdit} />

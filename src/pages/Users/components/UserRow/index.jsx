@@ -59,7 +59,7 @@ const UserRow = ({ user, name, isAdmin }) => {
           <TableCell align="right">
             <div className={classesMain.cellActionsWrapper}>
               <GoToProfile user={user} />
-              <BookaSeat />
+              <BookaSeat id={user._id} />
               <Delete
                 id={user._id}
                 userFullName={`${user.first_name} ${user.last_name}`}
