@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { formatISO } from 'date-fns';
 import useFetch from '../../hooks/useFetch';
 import { getUserInvitationRequestData } from '../../services/users';
 import BackButton from '../../components/BackButton';
@@ -27,8 +28,9 @@ const UserInvite = () => {
         ({ team_name }) => team_name === values.team_id
       );
       body.team_id = teamItem._id;
-      body.birthday = new Date(values.birthday);
-
+      console.log(values.birthday);
+      body.birthday = formatISO(new Date(values.birthday));
+      console.log(body.birthday);
       const res = await makeRequest(
         getUserInvitationRequestData({ token, body })
       );
