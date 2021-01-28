@@ -36,7 +36,6 @@ const Receipt = ({ reservs }) => {
       const callTheHR = async () => {
         if (numOfReservations !== reservs.length) {
           const { id, start_date, end_date } = reservs[numOfReservations];
-          //
           const res = await postReservation(token, {
             start_date: transformDataISO(start_date),
             end_date: transformDataISO(end_date),
@@ -45,8 +44,11 @@ const Receipt = ({ reservs }) => {
             status: 'pending',
           });
           console.log(res);
+          const promise = new Promise((resolve) => {
+            setTimeout(() => resolve('a'), 2000);
+          });
+          await promise;
           dispatch(addReservation(res || []));
-          //
           setNumOfReservations((prev) => 1 + prev);
         } else {
           history.push('/');

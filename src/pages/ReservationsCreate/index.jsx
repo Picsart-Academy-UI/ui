@@ -1,5 +1,4 @@
-// always sends requests
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
 import { fetchPendingApprovedReservations } from '../../store/slices/reservationsSlice';
@@ -13,9 +12,12 @@ import useStylesLocal from './style';
 
 const ReservationsCreate = () => {
   // default value
-  const defaultValue = new Date();
-  defaultValue.setDate(defaultValue.getDate() + 1);
-  defaultValue.setHours(0, 0, 0, 0);
+  const defaultValue = useMemo(() => {
+    const value = new Date();
+    value.setDate(value.getDate() + 1);
+    value.setHours(0, 0, 0, 0);
+    return value;
+  }, []);
 
   const token = useSelector((state) => state.signin.token);
   const reservs = useSelector((state) => state.reservations.reservsApprPend);
@@ -288,7 +290,7 @@ const ReservationsCreate = () => {
   useEffect(() => {
     dispatch(fetchPendingApprovedReservations(token));
     setData(createTableData(chairsOfTheTeam, reservs, dateRange));
-  }, [chairsOfTheTeam, reservs, dateRange]);
+  }, [chairsOfTheTeam, dateRange]);
 
   return (
     <Container className={classesLocal.contWrapper}>
@@ -341,4 +343,4 @@ const ReservationsCreate = () => {
   );
 };
 
-export default ReservationsCreate;
+export default memo(ReservationsCreate);

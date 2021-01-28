@@ -52,15 +52,18 @@ const useStyles = makeStyles({
     padding: '0 0 1rem',
     color: '#000000',
     fontSize: '1.5rem',
+    textAlign: 'center',
   },
   num: {
     padding: '0 0 2rem',
     color: '#000000',
     fontSize: '1.5rem',
     fontWeight: '800',
+    textAlign: 'center',
   },
   warning: {
     color: '#f50057',
+    textAlign: 'center',
   },
 });
 

@@ -7,6 +7,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import useReservation from '../../hooks/useReservation';
+import useDate from '../../hooks/useDate';
 import useStyles from './style';
 
 const TableOfTables = ({
@@ -18,7 +19,7 @@ const TableOfTables = ({
 }) => {
   const styles = useStyles();
   const { getReservationOnSameDate } = useReservation();
-
+  const { transformDateLocale } = useDate();
   return (
     <TableContainer className={styles.container}>
       <Table stickyHeader>
@@ -26,12 +27,11 @@ const TableOfTables = ({
           <TableRow className={styles.dateRow}>
             <TableCell className={styles.stickyHeaderCell}>Chair</TableCell>
             {dateRange.map((item) => (
-              <TableCell className={styles.headerCell} key={item.getDate()}>
-                {item.toLocaleString('default', {
-                  month: 'short',
-                  year: 'numeric',
-                  day: 'numeric',
-                })}
+              <TableCell
+                className={styles.headerCell}
+                key={Math.floor(Math.random() * 10000)}
+              >
+                {transformDateLocale(item)}
               </TableCell>
             ))}
           </TableRow>
@@ -39,7 +39,7 @@ const TableOfTables = ({
         <TableBody>
           {data.map((item) => (
             <TableRow
-              key={item.id}
+              key={Math.floor(Math.round() * 10000000)}
               classes={{ root: styles.tableRow, selected: styles.selectedRow }}
             >
               <TableCell
