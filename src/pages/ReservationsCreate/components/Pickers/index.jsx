@@ -1,7 +1,9 @@
 import { Container, TextField, Box } from '@material-ui/core';
+import useDate from '../../hooks/useDate';
 import useStyles from './style';
 
 const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
+  const { transformDataISO } = useDate();
   const styles = useStyles();
 
   return (
@@ -13,7 +15,7 @@ const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
         variant="outlined"
         label="From"
         type="date"
-        defaultValue={defaultValue.toISOString().slice(0, 10)}
+        defaultValue={transformDataISO(defaultValue)}
         inputRef={refFrom}
         onChange={handleEvent}
         helperText="Should be later than today"
@@ -24,7 +26,7 @@ const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
         variant="outlined"
         label="To"
         type="date"
-        defaultValue={defaultValue.toISOString().slice(0, 10)}
+        defaultValue={transformDataISO(defaultValue)}
         inputRef={refTo}
         onChange={handleEvent}
         helperText="Max: 30 days later Min: same day"
