@@ -23,6 +23,10 @@ export const signinSlice = createSlice({
   },
 });
 
-export const { setIsLoggedIn, setIsLoggedOut } = signinSlice.actions;
+export const {
+  setIsLoggedIn,
+  setIsLoggedOut,
+  setChangeCurUser,
+} = signinSlice.actions;
 
 export default signinSlice.reducer;
