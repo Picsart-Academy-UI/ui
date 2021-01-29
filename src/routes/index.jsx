@@ -33,11 +33,7 @@ const Router = () => {
       <Switch>
         <Route exact path="/profile/:id" component={Profile} />
         <Route exact path="/reservations" component={Reservations} />
-        <Route
-          exact
-          path="/reservations/create/:id"
-          component={ReservationsCreate}
-        />
+        <Route path="/reservations/create" component={ReservationsCreate} />
         <Route exact path="/reservations/edit" component={ReservationsEdit} />
         <Route exact path="/teams" component={Teams} />
         <Route exact path="/teams/create" component={TeamsCreate} />
