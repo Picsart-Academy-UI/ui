@@ -10,12 +10,12 @@ import {
   FormControl,
   Hidden,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PICSART_LOGO } from '../../constants';
 import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
-import setChangeCurUser from '../../store/slices/signinSlice';
+import { setChangeCurUser } from '../../store/slices/signinSlice';
 import updateUserHook from './helpers/updateUser';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
@@ -34,17 +34,23 @@ const Profile = (props) => {
 
   const { id } = props.match.params;
 
-  if (id && props.location.user) dispatch(setNotMe(props.location.user));
+  const other = useSelector((state) => state.profile.notme);
 
-  const user = useSelector((state) => state.profile.notme) || curUser;
+  const user = (id !== 'me' && other) || curUser;
 
   const [edited, setEdited] = useState(user);
+
+  useEffect(() => setEdited(user), [user, id]);
+
+  useEffect(() => {
+    if (id && id !== 'me' && props.location.user)
+      dispatch(setNotMe(props.location.user));
+  }, [id]);
 
   const updateUser = updateUserHook();
 
   const startUpdateUser = () => {
-    if (id) dispatch(setNotMe(edited));
-    else dispatch(setChangeCurUser(edited));
+    dispatch(id !== 'me' ? setNotMe(edited) : setChangeCurUser(edited));
     updateUser(edited);
   };
 
@@ -57,6 +63,8 @@ const Profile = (props) => {
     !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
   const handleCancel = () =>
     (isEditing && setIsEditing(false)) || setEdited({ ...user });
+
+  console.log(edited);
 
   return (
     <>
