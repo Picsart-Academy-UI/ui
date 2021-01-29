@@ -1,5 +1,3 @@
-// @flow
-import * as React from 'react';
 import {
   Table,
   TableBody,
@@ -8,59 +6,60 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Paper,
+  Box,
 } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import CancelIcon from '@material-ui/icons/Cancel';
-import useStyles from '../style';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import useStylesMain from '../../../hooks/useStylesMain';
+import useStylesLocal from '../style';
 
-type Props = {
-  data: Array<{ date: String, place: String, status: String, id: number }>,
-  isHistory: boolean,
-  edit: Function,
-  cancel: Function,
-};
-
-const CustomTable = (props: Props): React.Node => {
-  const styles = useStyles();
+const ResTable = ({ isHistory, data, edit, cancel }) => {
+  const classesMain = useStylesMain();
+  const classesLocal = useStylesLocal();
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell align="center">Place</TableCell>
-            <TableCell align="right">Status</TableCell>
-            {props.isHistory ? null : (
-              <TableCell align="right">Actions</TableCell>
-            )}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.data.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.date}</TableCell>
-              <TableCell align="center">{item.place}</TableCell>
-              <TableCell align="right" className={styles[item.status]}>
-                {item.status}
+    <Paper>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Date
               </TableCell>
-              {props.isHistory ? null : (
+              <TableCell align="center">Place</TableCell>
+              <TableCell align="center">Status</TableCell>
+              {isHistory ? null : (
                 <TableCell align="right">
-                  <IconButton onClick={props.edit}>
-                    {' '}
-                    <EditIcon className={styles.edit} />{' '}
-                  </IconButton>
-                  <IconButton onClick={props.cancel}>
-                    {' '}
-                    <CancelIcon className={styles.cancel} />{' '}
-                  </IconButton>
+                  <Box mr={3}>Actions</Box>
                 </TableCell>
               )}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.date}</TableCell>
+                <TableCell align="center">{item.place}</TableCell>
+                <TableCell align="center" className={classesLocal[item.status]}>
+                  {item.status}
+                </TableCell>
+                {isHistory ? null : (
+                  <TableCell align="right">
+                    <IconButton onClick={edit} color="primary">
+                      <EditOutlinedIcon className={classesMain.iconColorBlue} />
+                    </IconButton>
+                    <IconButton onClick={cancel} color="secondary">
+                      <DeleteOutlineIcon className={classesMain.iconColorRed} />
+                    </IconButton>
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 
-export default CustomTable;
+export default ResTable;

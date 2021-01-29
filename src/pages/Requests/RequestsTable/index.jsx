@@ -12,6 +12,7 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
+import useStylesMain from '../../../hooks/useStylesMain';
 import UserInfo from '../UserInfo';
 import ScrollDialog from '../LoadsDialog';
 
@@ -88,6 +89,7 @@ const rows = [
 ];
 
 function RequestsTable() {
+  const classesMain = useStylesMain();
   const classes = useStyles();
 
   return (
@@ -134,7 +136,7 @@ function RequestsTable() {
                   variant="contained"
                   color="primary"
                   size="small"
-                  className={classes.button}
+                  className={`${classesMain.commonButton} ${classes.button}`}
                 >
                   Approve
                 </Button>

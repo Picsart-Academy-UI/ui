@@ -1,5 +1,10 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
+import { fetchPendingApprovedReservations } from '../../store/slices/reservationsSlice';
+import useStylesMain from '../../hooks/useStylesMain';
+import useDate from './hooks/useDate';
+import useReservation from './hooks/useReservation';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
 import Pickers from './components/Pickers';
@@ -7,12 +12,20 @@ import Loader from './components/Loader';
 import useStylesLocal from './style';
 
 const ReservationsCreate = () => {
+  const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
   // default value
-  const defaultValue = new Date();
-  defaultValue.setDate(defaultValue.getDate() + 1);
-  defaultValue.setHours(0, 0, 0, 0);
+  const defaultValue = useMemo(() => {
+    const value = new Date();
+    value.setDate(value.getDate() + 1);
+    value.setHours(0, 0, 0, 0);
+    return value;
+  }, []);
+
+  const token = useSelector((state) => state.signin.token);
+  const reservs = useSelector((state) => state.reservations.reservsApprPend);
+  const dispatch = useDispatch();
 
   const [isSubmited, setIsSubmited] = useState(false);
   const [reservations, setReservations] = useState([]);
@@ -25,56 +38,16 @@ const ReservationsCreate = () => {
   const refFrom = useRef();
   const refTo = useRef();
 
-  const reservationsAlreadyInForce = useMemo(
-    () => [
-      {
-        table_id: 'table0',
-        chair_id: 'chair0',
-        team_id: 'team0',
-        user_id: 'user0',
-        status: 'approved',
-        start_date: '2021-01-27',
-        end_date: '2021-01-27',
-      },
-      {
-        table_id: 'table1',
-        chair_id: 'chair1',
-        team_id: 'team1',
-        user_id: 'user1',
-        status: 'approved',
-        start_date: '2021-01-27',
-        end_date: '2021-01-27',
-      },
-      {
-        table_id: 'table2',
-        chair_id: 'chair2',
-        team_id: 'team2',
-        user_id: 'user2',
-        status: 'approved',
-        start_date: '2021-01-27',
-        end_date: '2021-01-27',
-      },
-      {
-        table_id: 'table3',
-        chair_id: 'chair3',
-        team_id: 'team3',
-        user_id: 'user3',
-        status: 'approved',
-        start_date: '2021-01-27',
-        end_date: '2021-01-27',
-      },
-      {
-        table_id: 'table4',
-        chair_id: 'chair4',
-        team_id: 'team4',
-        user_id: 'user4',
-        status: 'approved',
-        start_date: '2021-01-27',
-        end_date: '2021-02-15',
-      },
-    ],
-    []
-  );
+  const {
+    createRange,
+    withoutHours,
+    calculateDiffInDays,
+    getNextPrevDays,
+  } = useDate();
+  const {
+    getReservationOnSameDate,
+    getReservationsAvailableMerging,
+  } = useReservation();
   const chairsOfTheTeam = useMemo(
     () => [
       {
@@ -84,154 +57,37 @@ const ReservationsCreate = () => {
         table_id: 'table0',
         _id: 'chair0',
       },
-      {
-        table_name: 'B',
-        team_id: 'team1',
-        chair_name: 'C',
-        table_id: 'table1',
-        _id: 'chair1',
-      },
-      {
-        table_name: 'C',
-        team_id: 'team2',
-        chair_name: 'D',
-        table_id: 'table2',
-        _id: 'chair2',
-      },
-      {
-        table_name: 'D',
-        team_id: 'team3',
-        chair_name: 'E',
-        table_id: 'table3',
-        _id: 'chair3',
-      },
-      {
-        table_name: 'E',
-        team_id: 'team4',
-        chair_name: 'F',
-        table_id: 'table4',
-        _id: 'chair4',
-      },
-      {
-        table_name: 'F',
-        team_id: 'team4',
-        chair_name: 'J',
-        table_id: 'table5',
-        _id: 'chair5',
-      },
-      {
-        table_name: 'J',
-        team_id: 'team4',
-        chair_name: 'H',
-        table_id: 'table6',
-        _id: 'chair6',
-      },
-      {
-        table_name: 'H',
-        team_id: 'team4',
-        chair_name: 'I',
-        table_id: 'table7',
-        _id: 'chair7',
-      },
-      {
-        table_name: 'I',
-        team_id: 'team4',
-        chair_name: 'J',
-        table_id: 'table8',
-        _id: 'chair8',
-      },
-      {
-        table_name: 'J',
-        team_id: 'team4',
-        chair_name: 'K',
-        table_id: 'table9',
-        _id: 'chair9',
-      },
-      {
-        table_name: 'K',
-        team_id: 'team4',
-        chair_name: 'L',
-        table_id: 'table10',
-        _id: 'chair10',
-      },
-      {
-        table_name: 'L',
-        team_id: 'team4',
-        chair_name: 'M',
-        table_id: 'table11',
-        _id: 'chair11',
-      },
-      {
-        table_name: 'M',
-        team_id: 'team4',
-        chair_name: 'N',
-        table_id: 'table12',
-        _id: 'chair12',
-      },
     ],
     []
   );
-
-  // creates an Array of dates
-  const createRange = (start, stop) => {
-    const range = [];
-    const currentDate = new Date(start);
-    while (currentDate <= stop) {
-      range.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return range;
-  };
-  // returns the date without houts
-  const withoutHours = (date) => {
-    const newDate = new Date(date);
-    newDate.setHours(0, 0, 0);
-    return newDate;
-  };
   // creates the data for the table
-  const createTableData = (chairs, reservsApprPend, range) =>
-    chairs.map((chair) => {
+  const createTableData = (chairs, reservsApprPend, range) => {
+    setIsLoading(true);
+    return chairs.map((chair) => {
       const reservationsSatisfied = reservsApprPend.filter(
         (res) =>
           res.chair_id === chair._id &&
-          withoutHours(res.start_date) >= withoutHours(range[0])
+          withoutHours(res.end_date) >= withoutHours(range[0])
       );
       const dates = range.map((date) => {
-        const reservOnSameDate = reservationsSatisfied.find(
-          (res) =>
-            withoutHours(date) >= withoutHours(res.start_date) &&
-            withoutHours(date) <= withoutHours(res.end_date)
+        const reservOnSameDate = getReservationOnSameDate(
+          reservationsSatisfied,
+          date
         );
         const isFree = reservOnSameDate === undefined;
         return { date, isFree };
       });
-
+      setIsLoading(false);
       return {
-        // eslint-disable-next-line
         name: `${chair.chair_name}/${chair.table_name}`,
         dates,
-        // eslint-disable-next-line
         id: chair._id,
       };
     });
-
-  // gets next and previous dates of the given date
-  const getNextPrevDays = (date) => {
-    const nextDay = new Date(date);
-    const prevDay = new Date(date);
-    nextDay.setDate(nextDay.getDate() + 1);
-    prevDay.setDate(prevDay.getDate() - 1);
-    return { nextDay, prevDay };
-  };
-
-  // calculates the differance between two days
-  const calculateDiffInDays = (start, stop) => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    return Math.round((start - stop) / oneDay);
   };
   // handles the event of changing the date in date picker
   const handleEvent = () => {
-    setIsLoading(true);
+    // error handling
     const start = new Date(refFrom.current.value);
     const stop = new Date(refTo.current.value);
     const diffFromToday = calculateDiffInDays(start, new Date());
@@ -240,7 +96,7 @@ const ReservationsCreate = () => {
       setError('both');
       return;
       // eslint-disable-next-line
-    } else if (diffFromToday < 0) {
+    } else if (diffFromToday <= 0) {
       setError('from');
       return;
       // eslint-disable-next-line
@@ -251,42 +107,27 @@ const ReservationsCreate = () => {
     } else {
       setError('none');
     }
-    const range = createRange(start, stop);
 
-    // should send request to get the requests that have status pending or active and are in range of the two dates
+    const range = createRange(start, stop);
     // should send a request to get the chair
-    const dataForTable = createTableData(
-      chairsOfTheTeam,
-      reservationsAlreadyInForce,
-      range,
-      start,
-      stop
-    );
-    setData(dataForTable);
-    setIsLoading(false);
-    // setReservations([]);
     setDateRange(range);
   };
-
   // selects the chair
   const choseChair = (chair) => {
+    // creates new arr to avoid mutation
     const newReservations = [...reservations];
-    const reservationSameDate = newReservations.find(
-      ({ startDate, endDate }) =>
-        chair.date >= startDate && chair.date <= endDate
+    // finds reservation that occupy the column(i.e day) that we clicked on
+    const reservationSameDate = getReservationOnSameDate(
+      newReservations,
+      chair.date
+    );
+    // finds already clicked reservations that are available for merging
+    const reservationAvailableForMerging = getReservationsAvailableMerging(
+      newReservations,
+      chair.chairName,
+      chair.date
     );
 
-    const reservationAvailableForMerging = newReservations.find(
-      ({ startDate, endDate, chairName }) => {
-        const { nextDay, prevDay } = getNextPrevDays(chair.date);
-        return (
-          (nextDay.getDate() === startDate.getDate() &&
-            chairName === chair.chairName) ||
-          (prevDay.getDate() === endDate.getDate() &&
-            chairName === chair.chairName)
-        );
-      }
-    );
     const indexOfDate = newReservations.indexOf(reservationSameDate);
     const indexOfAvailable = newReservations.indexOf(
       reservationAvailableForMerging
@@ -298,85 +139,89 @@ const ReservationsCreate = () => {
       reservationSameDate &&
       reservationSameDate.chairName !== chair.chairName
     ) {
+      // 1
       // case when the chosen chair has an option of merging with already selected chair
       if (reservationAvailableForMerging) {
+        // 1.1
         // case when the previously selected chair was just one day i.e it should be delted
-        if (reservationSameDate.startDate === reservationSameDate.endDate) {
+        if (reservationSameDate.start_date === reservationSameDate.end_date) {
+          // 1.1.1
           newReservations.splice(indexOfDate, 1);
         } else {
+          // 1.1.2
           // case when the previously selected chair was stretching for a minimum of 2 days
           newReservations[indexOfDate] = {
             ...reservationSameDate,
-            startDate:
-              chair.date.getDate() === reservationSameDate.startDate.getDate()
+            start_date:
+              chair.date.getDate() === reservationSameDate.start_date.getDate()
                 ? nextDay
-                : reservationSameDate.startDate,
-            endDate:
-              chair.date.getDate() === reservationSameDate.endDate.getDate()
+                : reservationSameDate.start_date,
+            end_date:
+              chair.date.getDate() === reservationSameDate.end_date.getDate()
                 ? prevDay
-                : reservationSameDate.endDate,
+                : reservationSameDate.end_date,
           };
         }
-
+        // merges  with already existant reservation
         newReservations[indexOfAvailable] = {
           ...reservationAvailableForMerging,
-          startDate:
-            reservationAvailableForMerging.startDate < chair.date
-              ? reservationAvailableForMerging.startDate
+          start_date:
+            reservationAvailableForMerging.start_date < chair.date
+              ? reservationAvailableForMerging.start_date
               : chair.date,
-          endDate:
-            reservationAvailableForMerging.endDate > chair.date
-              ? reservationAvailableForMerging.endDate
+          end_date:
+            reservationAvailableForMerging.end_date > chair.date
+              ? reservationAvailableForMerging.end_date
               : chair.date,
         };
       } else if (reservationAvailableForMerging === undefined) {
         // eslint-disable-next-line
-        if (reservationSameDate.startDate === reservationSameDate.endDate) {
+        if (reservationSameDate.start_date === reservationSameDate.end_date) {
           newReservations.splice(indexOfDate, 1);
         } else if (
-          chair.date > reservationSameDate.startDate &&
-          chair.date < reservationSameDate.endDate
+          chair.date > reservationSameDate.start_date &&
+          chair.date < reservationSameDate.end_date
         ) {
-          newReservations.push({ ...reservationSameDate, startDate: nextDay });
-          newReservations[indexOfDate].endDate = prevDay;
-        } else if (chair.date === reservationSameDate.startDate) {
-          newReservations[indexOfDate].startDate = nextDay;
+          newReservations.push({ ...reservationSameDate, start_date: nextDay });
+          newReservations[indexOfDate].end_date = prevDay;
+        } else if (chair.date === reservationSameDate.start_date) {
+          newReservations[indexOfDate].start_date = nextDay;
         } else {
           newReservations[indexOfDate].endDate = prevDay;
         }
         newReservations.push({
           chairName: chair.chairName,
           id: chair.id,
-          startDate: chair.date,
-          endDate: chair.date,
+          start_date: chair.date,
+          end_date: chair.date,
           isFree: chair.isFree,
         });
       }
     } else if (reservationSameDate) {
       // case when chair clicked is already chosen
       if (
-        chair.date > reservationSameDate.startDate &&
-        chair.date < reservationSameDate.endDate
+        chair.date > reservationSameDate.start_date &&
+        chair.date < reservationSameDate.end_date
       ) {
         // case when the one reservation should be split in half
-        newReservations.push({ ...reservationSameDate, startDate: nextDay });
-        newReservations[indexOfDate].endDate = prevDay;
+        newReservations.push({ ...reservationSameDate, start_date: nextDay });
+        newReservations[indexOfDate].end_date = prevDay;
       } else if (
-        chair.date.getDate() === reservationSameDate.startDate.getDate() &&
-        chair.date.getDate() === reservationSameDate.endDate.getDate()
+        reservationSameDate.start_date.getDate() ===
+        reservationSameDate.end_date.getDate()
       ) {
         // case when the prev selected chair is just for one day
         newReservations.splice(indexOfDate, 1);
       } else if (
-        chair.date.getDate() === reservationSameDate.startDate.getDate()
+        chair.date.getDate() === reservationSameDate.start_date.getDate()
       ) {
         // case when the one reservation should change its start date
-        newReservations[indexOfDate].startDate = nextDay;
+        newReservations[indexOfDate].start_date = nextDay;
       } else if (
-        chair.date.getDate() === reservationSameDate.endDate.getDate()
+        chair.date.getDate() === reservationSameDate.end_date.getDate()
       ) {
         // case when the one reservation should change its end date
-        newReservations[indexOfDate].endDate = prevDay;
+        newReservations[indexOfDate].end_date = prevDay;
       }
     } else {
       // case when no chair was selected on that day
@@ -384,64 +229,56 @@ const ReservationsCreate = () => {
       if (reservationAvailableForMerging) {
         newReservations[indexOfAvailable] = {
           ...reservationAvailableForMerging,
-          startDate:
-            reservationAvailableForMerging.startDate < chair.date
-              ? reservationAvailableForMerging.startDate
+          start_date:
+            reservationAvailableForMerging.start_date < chair.date
+              ? reservationAvailableForMerging.start_date
               : chair.date,
-          endDate:
-            reservationAvailableForMerging.endDate > chair.date
-              ? reservationAvailableForMerging.endDate
+          end_date:
+            reservationAvailableForMerging.end_date > chair.date
+              ? reservationAvailableForMerging.end_date
               : chair.date,
         };
       } else {
         newReservations.push({
           chairName: chair.chairName,
           id: chair.id,
-          startDate: chair.date,
-          endDate: chair.date,
+          start_date: chair.date,
+          end_date: chair.date,
           isFree: chair.isFree,
         });
       }
     }
     setReservations(newReservations);
   };
-
   // selects the row
   const choseRow = (row) => {
     const newReservations = row.dates.reduce((accumilator, item) => {
       if (item.date.getDay() !== 0 && item.date.getDay() !== 6 && item.isFree) {
-        const reservationAvailableForMerging = accumilator.find(
-          ({ startDate, endDate, chairName }) => {
-            const { nextDay, prevDay } = getNextPrevDays(item.date);
-            return (
-              (nextDay.getDate() === startDate.getDate() &&
-                chairName === row.name) ||
-              (prevDay.getDate() === endDate.getDate() &&
-                chairName === row.name)
-            );
-          }
+        const reservationAvailableForMerging = getReservationsAvailableMerging(
+          accumilator,
+          row.name,
+          item.date
         );
-
         if (reservationAvailableForMerging) {
           const indexOfMerge = accumilator.indexOf(
             reservationAvailableForMerging
           );
           accumilator[indexOfMerge] = {
             ...reservationAvailableForMerging,
-            startDate:
-              reservationAvailableForMerging.startDate < item.date
-                ? reservationAvailableForMerging.startDate
+            start_date:
+              reservationAvailableForMerging.start_date < item.date
+                ? reservationAvailableForMerging.start_date
                 : item.date,
-            endDate:
-              reservationAvailableForMerging.endDate > item.date
-                ? reservationAvailableForMerging.endDate
+            end_date:
+              reservationAvailableForMerging.end_date > item.date
+                ? reservationAvailableForMerging.end_date
                 : item.date,
           };
         } else {
           accumilator.push({
             isFree: item.isFree,
-            endDate: item.date,
-            startDate: item.date,
+            end_date: item.date,
+            start_date: item.date,
             chairName: row.name,
             id: row.id,
           });
@@ -453,12 +290,9 @@ const ReservationsCreate = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    setData(
-      createTableData(chairsOfTheTeam, reservationsAlreadyInForce, dateRange)
-    );
-    setIsLoading(false);
-  }, [chairsOfTheTeam, reservationsAlreadyInForce, dateRange]);
+    dispatch(fetchPendingApprovedReservations(token));
+    setData(createTableData(chairsOfTheTeam, reservs, dateRange));
+  }, [chairsOfTheTeam, dateRange]);
 
   return (
     <Container className={classesLocal.contWrapper}>
@@ -498,7 +332,7 @@ const ReservationsCreate = () => {
           onClick={() => {
             setIsSubmited(!isSubmited);
           }}
-          className={classesLocal.submitBtn}
+          className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
           disabled={reservations.length === 0 || error !== 'none'}
         >
           {' '}
@@ -511,4 +345,4 @@ const ReservationsCreate = () => {
   );
 };
 
-export default ReservationsCreate;
+export default memo(ReservationsCreate);

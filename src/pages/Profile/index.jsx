@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PICSART_LOGO } from '../../constants';
+import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
 import updateUserHook from './helpers/updateUser';
@@ -20,6 +21,7 @@ import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
 const Profile = (props) => {
+  const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
   const dispatch = useDispatch();
@@ -138,7 +140,7 @@ const Profile = (props) => {
         />
         <Hidden xsUp={!isAdmin}>
           <Button
-            className={classesLocal.sbmtButton}
+            className={classesMain.picsartButton}
             onClick={handleEnterEditAndSubmit}
           >
             {isEditing ? 'Submit Change' : 'Edit'}
@@ -146,7 +148,7 @@ const Profile = (props) => {
         </Hidden>
         <Hidden xsUp={!isEditing}>
           <Button
-            className={classesLocal.sbmtButton}
+            className={classesMain.picsartButton}
             onClick={handleCancel}
             hidden={!isEditing}
           >
