@@ -36,9 +36,9 @@ export const getFilteredUsersRequestData = (
   value
 ) =>
   new Request(
-    `${MAIN_URL}users/all?${
-      teamId ? `team_id=${teamId}` : ''
-    }&first_name=${value}&limit=${limit}&page=${page}`,
+    `${MAIN_URL}users/all?${teamId ? `team_id=${teamId}` : ''}${
+      value ? `&first_name=${value}` : ''
+    }&limit=${limit}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

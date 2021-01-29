@@ -18,7 +18,6 @@ const Form = ({ submitForm }) => {
     submitForm,
     validate
   );
-
   return (
     <div className={classesLocal.formWrapper}>
       <form onSubmit={handleSubmit}>

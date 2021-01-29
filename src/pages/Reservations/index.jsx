@@ -12,10 +12,11 @@ const Reservations = () => {
   const history = useHistory();
 
   const createRes = (status) => {
-    const date = new Date();
+    const date = new Date().toISOString();
 
     return {
-      date: `${date.getDay()} ${date.getMonth() + 1} ${date.getFullYear()}`,
+      end_date: date,
+      start_date: date,
       place: '0/0',
       status,
       id: Math.floor(Math.random() * 10000),
