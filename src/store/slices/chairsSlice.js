@@ -11,3 +11,5 @@ export const chairSlice = createSlice({
     },
   },
 });
+
+export default chairSlice.reducers;
