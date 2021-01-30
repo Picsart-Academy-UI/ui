@@ -38,12 +38,6 @@ function LoadsDialog({ row }) {
   const { token } = useMemoSelector((state) => tokenSelector(state));
 
   useEffect(() => {
-    console.log(
-      date.start,
-      date.end,
-      user.teamId,
-      'stexic vercnel team_id, start, end'
-    );
     seeLoad(token, date.start, date.end, user.teamId)
       .then((res) => new Promise((r) => setTimeout(() => r(res), 1500)))
       .then((res) => {
