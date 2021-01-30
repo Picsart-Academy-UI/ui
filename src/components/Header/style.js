@@ -34,6 +34,10 @@ const useStylesLocal = makeStyles((theme) => ({
       display: 'flex',
     },
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
 }));
 
 export default useStylesLocal;

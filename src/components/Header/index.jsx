@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
   Toolbar,
@@ -10,9 +10,9 @@ import {
   Menu,
   Tabs,
   Tab,
+  Avatar,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
@@ -27,6 +27,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  const user = useSelector((state) => state.signin.curUser);
 
   const [
     mobileMenuProfileMenuAnchorEl,
@@ -136,7 +137,11 @@ const Header = () => {
           aria-haspopup="true"
         >
           <Badge color="secondary">
-            <AccountCircle />
+            <Avatar
+              alt="Remy Sharp"
+              src={`${user.profile_picture}`}
+              className={classesLocal.small}
+            />
           </Badge>
         </IconButton>
         <p>Profile</p>
@@ -177,7 +182,11 @@ const Header = () => {
         onClick={handleMobileMenuProfileMenuOpen}
         color="inherit"
       >
-        <AccountCircle />
+        <Avatar
+          alt="Remy Sharp"
+          src={`${user.profile_picture}`}
+          className={classesLocal.small}
+        />
       </IconButton>
     </div>
   );
