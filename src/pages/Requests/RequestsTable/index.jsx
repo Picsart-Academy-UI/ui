@@ -90,11 +90,15 @@ const rows = [
 
 function RequestsTable() {
   const classesMain = useStylesMain();
-  const classes = useStyles();
+  const classesLocal = useStyles();
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table stickyHeader className={classes.table} aria-label="requests table">
+    <TableContainer component={Paper} className={classesMain.tableContainer}>
+      <Table
+        stickyHeader
+        className={classesLocal.table}
+        aria-label="requests table"
+      >
         <TableHead>
           <TableRow>
             <TableCell>User</TableCell>
@@ -111,14 +115,14 @@ function RequestsTable() {
                 <UserInfo user={row.user} />
               </TableCell>
               <TableCell align="right">
-                <Typography variant="body2" className={classes.range}>
+                <Typography variant="body2" className={classesLocal.range}>
                   {row.date.range}
                 </Typography>
-                <Box className={classes.subtext}>
+                <Box className={classesLocal.subtext}>
                   <Typography
                     variant="caption"
                     color="textSecondary"
-                    className={classes.dateYear}
+                    className={classesLocal.dateYear}
                   >
                     {row.date.year}
                   </Typography>
@@ -136,7 +140,7 @@ function RequestsTable() {
                   variant="contained"
                   color="primary"
                   size="small"
-                  className={`${classesMain.commonButton} ${classes.button}`}
+                  className={`${classesMain.commonButton} ${classesLocal.button}`}
                 >
                   Approve
                 </Button>

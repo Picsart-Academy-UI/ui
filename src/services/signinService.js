@@ -1,4 +1,4 @@
-import { MAIN_URL } from '../../constants';
+import { MAIN_URL } from '../constants';
 
 const getGoogleRequestData = (response) =>
   new Request(`${MAIN_URL}auth/signin/`, {
