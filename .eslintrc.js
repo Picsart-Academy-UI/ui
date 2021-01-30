@@ -17,6 +17,7 @@ module.exports = {
     "no-console": "off",
     "no-named-as-default-member": "off",
     "no-plusplus": "off",
+    "no-nested-ternary": "off",
     "import/order": ["error", {
       "groups": ["builtin", "external", "parent", "sibling", "index"],
       "newlines-between": "never",
