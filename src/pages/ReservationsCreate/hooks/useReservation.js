@@ -1,4 +1,4 @@
-import useDate from './useDate';
+import useDate from '../../../hooks/useDate';
 
 const useReservation = () => {
   const { withoutHours, getNextPrevDays } = useDate();

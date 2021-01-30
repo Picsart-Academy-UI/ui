@@ -15,7 +15,7 @@ import {
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import { postReservation } from '../../../../services/reservationsService';
 import { addReservation } from '../../../../store/slices/reservationsSlice';
-import useDate from '../../hooks/useDate';
+import useDate from '../../../../hooks/useDate';
 import useStyles from './style';
 
 const Receipt = ({ reservs }) => {

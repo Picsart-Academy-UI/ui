@@ -4,7 +4,6 @@ const InputDate = ({ setDateType, ...props }) => {
   const onDateTypeFocus = () => setDateType('date');
 
   const onDateTypeBlur = () => setDateType('text');
-
   return (
     <Input
       id="birthday"

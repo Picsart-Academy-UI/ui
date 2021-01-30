@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
 import { fetchPendingApprovedReservations } from '../../store/slices/reservationsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
-import useDate from './hooks/useDate';
+import useDate from '../../hooks/useDate';
 import useReservation from './hooks/useReservation';
 import TableOfTables from './components/TableOfTables';
 import Receipt from './components/Receipt';
@@ -19,7 +19,6 @@ const ReservationsCreate = () => {
   const defaultValue = useMemo(() => {
     const value = new Date();
     value.setDate(value.getDate() + 1);
-    value.setHours(0, 0, 0, 0);
     return value;
   }, []);
 
@@ -43,11 +42,14 @@ const ReservationsCreate = () => {
     withoutHours,
     calculateDiffInDays,
     getNextPrevDays,
+    transformISOToAMT,
   } = useDate();
+
   const {
     getReservationOnSameDate,
     getReservationsAvailableMerging,
   } = useReservation();
+
   const chairsOfTheTeam = useMemo(
     () => [
       {
@@ -56,6 +58,13 @@ const ReservationsCreate = () => {
         chair_name: 'B',
         table_id: 'table0',
         _id: 'chair0',
+      },
+      {
+        table_name: 'B',
+        team_id: 'team1',
+        chair_name: 'A',
+        table_id: 'table1',
+        _id: 'chair1',
       },
     ],
     []
@@ -90,8 +99,12 @@ const ReservationsCreate = () => {
     // error handling
     const start = new Date(refFrom.current.value);
     const stop = new Date(refTo.current.value);
-    const diffFromToday = calculateDiffInDays(start, new Date());
+    const diffFromToday = calculateDiffInDays(
+      start,
+      transformISOToAMT(new Date().toISOString())
+    );
     const diffFromTo = calculateDiffInDays(start, stop);
+
     if (diffFromToday < 0 && (start > stop || diffFromTo < -29)) {
       setError('both');
       return;
