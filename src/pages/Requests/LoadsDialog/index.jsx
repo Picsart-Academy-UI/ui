@@ -43,7 +43,7 @@ function LoadsDialog({ row }) {
       .then((res) => {
         setData(res.data);
       });
-  }, [token]);
+  }, [token, date.start, date.end, user.teamId]);
 
   const handleClose = () => {
     setData([]);

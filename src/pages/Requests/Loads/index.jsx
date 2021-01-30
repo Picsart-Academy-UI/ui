@@ -67,7 +67,7 @@ export default function Loads({ data, teamCount }) {
         )
       );
     setRows(r);
-  }, [data]);
+  }, [data, teamCount]);
 
   return (
     <Box className={classes.root}>

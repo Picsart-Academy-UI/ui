@@ -108,7 +108,6 @@ function RequestsTable({
 
   const handleReject = useCallback(
     async (reservationId) => {
-      // eslint-disable-line
       try {
         const response = await dispatch(reject(token, reservationId));
         if (response.error || response instanceof Error) {
