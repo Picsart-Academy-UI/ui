@@ -2,9 +2,9 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import mockstore from '../../../__mocks__/index';
-import { Grid } from '@material-ui/core';
 import Users from '../index';
 import UsersTable from '../components/UsersTable';
+import SearchUsers from '../components/SearchBox';
 
 const get = (Cmp, props) =>
   mount(
@@ -34,14 +34,14 @@ describe('Users: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(users, Grid).length).toBeGreaterThanOrEqual(1);
+    expect(find(users, SearchUsers).length).toBeGreaterThanOrEqual(1);
     expect(find(users, UsersTable).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should change the dynamic value during input', () => {
-    const grid = find(users, Grid);
-    grid.at(1).props().children.props.onChange('val');
-    grid.at(1).props().children.props.onPageChange(101);
+    const search = find(users, SearchUsers);
+    search.props().onChange('val');
+    search.props().onPageChange(101);
     expect(setState).toHaveBeenCalledWith('val');
     expect(setState).toHaveBeenCalledWith(101);
   });
