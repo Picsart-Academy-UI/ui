@@ -26,3 +26,13 @@ export const rejectReservation = (token, id) =>
     method: 'PUT',
     body: { status: 'rejected' },
   });
+
+export const seeLoad = (token, start, end, teamId) =>
+  makeRequest(
+    `reservations/seeload?start_date=${start}&end_date=${end}&team_id=${teamId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

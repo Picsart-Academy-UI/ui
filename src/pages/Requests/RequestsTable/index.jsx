@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -15,7 +15,6 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import UserInfo from '../UserInfo';
-import ScrollDialog from '../LoadsDialog';
 import Snackbar from '../../../components/Snackbar';
 import ButtonLoading from '../../../components/ButtonLoading';
 import AlertDialog from '../../../components/AlertDialog';
@@ -66,6 +65,13 @@ function RequestsTable({
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [resId, setResId] = useState(null);
   const { token } = useMemoSelector((state) => tokenSelector(state));
+
+  const [views, setViews] = useState([]); // eslint-disable-line
+
+  const showView = async (row) => {
+    const View = await lazy(() => import('../LoadsDialog'));
+    setViews([<View row={row} key={1} />]);
+  };
 
   const handleRemoveModalOpen = useCallback((reservationId) => {
     setRemoveModalOpen(true);
@@ -154,11 +160,15 @@ function RequestsTable({
       return createRequestData(
         {
           name: `${user_id?.first_name} ${user_id?.last_name}`,
-          avatar: '',
+          avatar: user_id?.profile_picture,
           team: teams?.find((t) => t._id === team_id)?.team_name,
           position: user_id?.position,
+          teamCount: teams?.find((t) => t._id === team_id)?.members_count,
+          teamId: team_id,
         },
         {
+          start: start_date,
+          end: end_date,
           range: `${new Date(start_date)?.toLocaleString('en-EN', {
             month: 'short',
             day: 'numeric',
@@ -251,7 +261,14 @@ function RequestsTable({
                   </TableCell>
                   <TableCell align="right">{row.seat}</TableCell>
                   <TableCell align="right">
-                    <ScrollDialog />
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      onClick={() => showView(row)}
+                    >
+                      See Load
+                    </Button>
                   </TableCell>
                   <TableCell align="right">
                     <div className={classes.actionsContainer}>
@@ -293,6 +310,9 @@ function RequestsTable({
         handleDeleteClick={handleDeleteClick}
         titleText="Are you sure?"
       />
+      <Suspense fallback="Loading...">
+        <div>{views}</div>
+      </Suspense>
     </>
   );
 }
