@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from '@material-ui/core';
 import SelectDropdown from '../../components/SelectDropdown';
@@ -6,6 +6,7 @@ import Filter from '../../components/Filter';
 import useMemoSelector from '../../hooks/useMemoSelector';
 import { fetchPendingReservationsWithData } from '../../store/slices/reservationsSlice'; // eslint-disable-line
 import { tokenSelector } from '../../store/selectors';
+import ButtonLoading from '../../components/ButtonLoading';
 import RequestsTable from './RequestsTable';
 import useStyles from './style';
 
@@ -41,15 +42,24 @@ const Requests = () => {
 
   return (
     <div className="requests">
-      <Box className={classes.filterContainer}>
-        <SelectDropdown
-          label="Select Team"
-          options={teamsList}
-          property="team_name"
-          className={classes.selectDropdown}
-          onChange={handleTeamSelect}
-        />
-        <Filter className={classes.filter} onChange={handleUsernameChange} />
+      <Box className={classes.topBar}>
+        <Box className={classes.filterContainer}>
+          <SelectDropdown
+            label="Select Team"
+            options={teamsList}
+            property="team_name"
+            className={classes.selectDropdown}
+            onChange={handleTeamSelect}
+          />
+          <Filter className={classes.filter} onChange={handleUsernameChange} />
+        </Box>
+        <ButtonLoading
+          onClick={() => dispatch(fetchPendingReservationsWithData(token))}
+          color="secondary"
+          className={classes.refreshButton}
+        >
+          Refresh
+        </ButtonLoading>
       </Box>
 
       <Box fontSize="h4.fontSize" my={3}>
