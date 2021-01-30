@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Dialog,
@@ -29,6 +29,10 @@ const useStyles = makeStyles({
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log('stex fetch anel load@');
+  }, []);
 
   const handleClickOpen = () => () => {
     setOpen(true);

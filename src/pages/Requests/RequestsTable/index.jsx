@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -17,7 +17,9 @@ import {
 import UserInfo from '../UserInfo';
 import ScrollDialog from '../LoadsDialog';
 import Snackbar from '../../../components/Snackbar';
-import { approve } from '../../../store/slices/reservationsSlice';
+import ButtonLoading from '../../../components/ButtonLoading';
+import AlertDialog from '../../../components/AlertDialog';
+import { approve, reject } from '../../../store/slices/reservationsSlice';
 import { tokenSelector } from '../../../store/selectors';
 import {
   createRequestData,
@@ -42,6 +44,11 @@ const useStyles = makeStyles({
   loadingContainer: {
     padding: '48px 0',
   },
+  actionsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
 });
 
 function RequestsTable({
@@ -56,29 +63,71 @@ function RequestsTable({
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [msgState, setMsgState] = useState({ open: false });
+  const [removeModalOpen, setRemoveModalOpen] = useState(false);
+  const [resId, setResId] = useState(null);
   const { token } = useMemoSelector((state) => tokenSelector(state));
 
-  const handleApprove = async (reservationId) => {
-    try {
-      await dispatch(approve(token, reservationId));
-      console.log('approved');
-      setMsgState({
-        open: true,
-        type: 'success',
-        message: 'Approved!',
-      });
-    } catch (e) {
-      setMsgState({
-        open: true,
-        type: 'error',
-        message: 'Something went wrong!',
-      });
-      console.log(e);
-    }
-  };
+  const handleRemoveModalOpen = useCallback((reservationId) => {
+    setRemoveModalOpen(true);
+    setResId(reservationId);
+  }, []);
+  const handleRemoveModalClose = useCallback(
+    () => setRemoveModalOpen(false),
+    []
+  );
 
-  const handleReject = () => {
-    console.log('rejected');
+  const handleApprove = useCallback(
+    async (reservationId) => {
+      try {
+        const response = await dispatch(approve(token, reservationId));
+        if (response.error || response instanceof Error) {
+          throw new Error(response);
+        }
+        setMsgState({
+          open: true,
+          type: 'success',
+          message: 'Approved!',
+        });
+      } catch (e) {
+        setMsgState({
+          open: true,
+          type: 'error',
+          message: 'Something went wrong!',
+        });
+        console.log(e);
+      }
+    },
+    [dispatch, token]
+  );
+
+  const handleReject = useCallback(
+    async (reservationId) => {
+      // eslint-disable-line
+      try {
+        const response = await dispatch(reject(token, reservationId));
+        if (response.error || response instanceof Error) {
+          throw new Error(response);
+        }
+        setMsgState({
+          open: true,
+          type: 'info',
+          message: 'Rejected!',
+        });
+      } catch (e) {
+        setMsgState({
+          open: true,
+          type: 'error',
+          message: 'Something went wrong!',
+        });
+        console.log(e);
+      }
+    },
+    [dispatch, token]
+  );
+
+  const handleDeleteClick = async () => {
+    await handleReject(resId);
+    handleRemoveModalClose();
   };
 
   const filteredRows = rows
@@ -205,23 +254,24 @@ function RequestsTable({
                     <ScrollDialog />
                   </TableCell>
                   <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      className={classes.button}
-                      onClick={() => handleApprove(row.reservationId)}
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      onClick={handleReject}
-                    >
-                      Reject
-                    </Button>
+                    <div className={classes.actionsContainer}>
+                      <ButtonLoading
+                        className={classes.button}
+                        onClick={handleApprove}
+                        size="small"
+                        reservationId={row.reservationId}
+                      >
+                        Approve
+                      </ButtonLoading>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        onClick={() => handleRemoveModalOpen(row.reservationId)}
+                      >
+                        Reject
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -229,28 +279,6 @@ function RequestsTable({
           )}
         </Table>
       </TableContainer>
-      <h1
-        onClick={() =>
-          setMsgState({
-            open: true,
-            type: 'success',
-            message: 'Approved!',
-          })
-        }
-      >
-        Success
-      </h1>
-      <h1
-        onClick={() =>
-          setMsgState({
-            open: true,
-            type: 'error',
-            message: 'not approved!',
-          })
-        }
-      >
-        Error
-      </h1>
       {msgState.open && (
         <Snackbar
           type={msgState.type}
@@ -259,6 +287,12 @@ function RequestsTable({
           handleClose={() => setMsgState({ open: false })}
         />
       )}
+      <AlertDialog
+        open={removeModalOpen}
+        handleClose={handleRemoveModalClose}
+        handleDeleteClick={handleDeleteClick}
+        titleText="Are you sure?"
+      />
     </>
   );
 }

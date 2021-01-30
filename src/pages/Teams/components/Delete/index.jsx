@@ -35,7 +35,7 @@ const Delete = ({ id, name, membersCount }) => {
         color="secondary"
         disabled={!!membersCount}
         startIcon={<DeleteOutlineIcon />}
-      ></Button>
+      />
       <AlertDialog
         open={open}
         handleClickOpen={handleClickOpen}

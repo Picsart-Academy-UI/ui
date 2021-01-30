@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTeams } from '../../services/teamsService';
 import { getTables } from '../../services/tablesService';
-import { setTeams } from './teamsSlice';
-import { setTables } from './tablesSlice';
 import {
   getReservations,
   approveReservation,
   rejectReservation,
 } from '../../services/reservationsService'; // eslint-disable-line
+import { setTeams } from './teamsSlice';
+import { setTables } from './tablesSlice';
 
 export const reservationsSlice = createSlice({
   name: 'reservations',
@@ -89,14 +89,19 @@ export const fetchPendingReservationsWithData = (token) => async (
 };
 
 export const approve = (token, reservationId) => async (dispatch) => {
-  // eslint-disable-line
-  console.log(reservationId, 'res');
-  dispatch(removeFromPendingReservations(reservationId));
-  // const res = await approveReservation(token, reservationId);
-  // if(res.data) {
-  //   dispatch(removeFromPendingReservations(res.data._id))
-  // }
-  // return res
+  const res = await approveReservation(token, reservationId);
+  if (res.data) {
+    dispatch(removeFromPendingReservations(res.data._id));
+  }
+  return res;
+};
+
+export const reject = (token, reservationId) => async (dispatch) => {
+  const res = await rejectReservation(token, reservationId);
+  if (res.data) {
+    dispatch(removeFromPendingReservations(res.data._id));
+  }
+  return res;
 };
 
 export default reservationsSlice.reducer;

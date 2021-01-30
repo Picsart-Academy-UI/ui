@@ -1,5 +1,5 @@
 import React from 'react';
-import { Snackbar, Fade } from '@material-ui/core'; // eslint-disable-line
+import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 export default function CustomSnackbar({

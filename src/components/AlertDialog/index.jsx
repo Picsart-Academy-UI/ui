@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ButtonLoading from '../ButtonLoading';
 import useStylesLocal, { theme } from './style';
 
 const AlertDialog = ({ open, handleClose, handleDeleteClick, titleText }) => {
@@ -25,14 +26,13 @@ const AlertDialog = ({ open, handleClose, handleDeleteClick, titleText }) => {
             <Button onClick={handleClose} color="secondary" variant="outlined">
               Cancel
             </Button>
-            <Button
+            <ButtonLoading
               onClick={handleDeleteClick}
-              variant="contained"
               color="secondary"
               autoFocus
             >
               Delete
-            </Button>
+            </ButtonLoading>
           </DialogActions>
         </div>
       </Dialog>
