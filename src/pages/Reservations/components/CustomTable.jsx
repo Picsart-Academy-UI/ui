@@ -19,7 +19,7 @@ const ResTable = ({ isHistory, data, edit, cancel }) => {
   const classesLocal = useStylesLocal();
   return (
     <Paper>
-      <TableContainer>
+      <TableContainer className={classesMain.tableContainer}>
         <Table>
           <TableHead>
             <TableRow>
