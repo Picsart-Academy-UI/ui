@@ -43,9 +43,13 @@ const Profile = (props) => {
   useEffect(() => setEdited(user), [user, id]);
 
   useEffect(() => {
-    if (id && id !== 'me' && props.location.user)
-      dispatch(setNotMe(props.location.user));
-  }, [id]);
+    if (
+      (id && id !== 'me' && props.location.state && !other) ||
+      (other && props.location.state && other._id !== props.location.state._id)
+    ) {
+      dispatch(setNotMe(props.location.state));
+    }
+  }, []);
 
   const updateUser = updateUserHook();
 
@@ -63,8 +67,6 @@ const Profile = (props) => {
     !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
   const handleCancel = () =>
     (isEditing && setIsEditing(false)) || setEdited({ ...user });
-
-  console.log(edited);
 
   return (
     <>
