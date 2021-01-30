@@ -1,8 +1,6 @@
 import {
   Avatar,
   Box,
-  Card,
-  CardContent,
   Typography,
   Grid,
   TextField,
@@ -12,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PICSART_LOGO } from '../../constants';
 import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
@@ -43,9 +40,13 @@ const Profile = (props) => {
   useEffect(() => setEdited(user), [user, id]);
 
   useEffect(() => {
-    if (id && id !== 'me' && props.location.user)
-      dispatch(setNotMe(props.location.user));
-  }, [id]);
+    if (
+      (id && id !== 'me' && props.location.state && !other) ||
+      (other && props.location.state && other._id !== props.location.state._id)
+    ) {
+      dispatch(setNotMe(props.location.state));
+    }
+  }, []);
 
   const updateUser = updateUserHook();
 
@@ -64,26 +65,18 @@ const Profile = (props) => {
   const handleCancel = () =>
     (isEditing && setIsEditing(false)) || setEdited({ ...user });
 
-  console.log(edited);
-
   return (
     <>
-      <Card>
-        <CardContent>
-          <Box alignItems="center" display="flex" flexDirection="column">
-            <Button
-              variant="contained"
-              component="label"
-              className={classesLocal.chngAvtr}
-            >
-              <input type="file" hidden />
-              <Avatar className={classesLocal.avatar} src={PICSART_LOGO} />
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Box alignItems="center" display="flex" flexDirection="column">
+        <Avatar className={classesLocal.avatar} src={edited.profile_picture} />
+      </Box>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Typography className={classesLocal.textHeader}>Name:</Typography>
         <TextField
           className={classesLocal.textField}
@@ -98,6 +91,14 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('last_name', e.target.value)}
         />
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
           className={classesLocal.textField}
@@ -105,6 +106,14 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('email', e.target.value)}
         />
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <TeamList
@@ -122,14 +131,22 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('position', e.target.value)}
         />
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Typography className={classesLocal.textHeader}>
           Phone Number:
         </Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.phoneNumber || ''}
+          value={edited.phone || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('phone_number', e.target.value)}
+          onChange={(e) => handleUserEdit('phone', e.target.value)}
         />
         <Typography className={classesLocal.textHeader}>Birthday:</Typography>
         <TextField
@@ -138,6 +155,14 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('birthday', e.target.value)}
         />
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Hidden xsUp={!isAdmin}>
           <Button
             className={classesMain.picsartButton}

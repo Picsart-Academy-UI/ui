@@ -23,10 +23,6 @@ describe('Add User Button: ', () => {
     cmp = get();
   });
 
-  test('should render properly', () => {
-    expect(find(cmp, Box).length).toBeGreaterThanOrEqual(1);
-  });
-
   test('should have an add button', () => {
     expect(find(cmp, Button).length).toEqual(1);
   });

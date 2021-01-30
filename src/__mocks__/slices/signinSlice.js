@@ -6,7 +6,7 @@ export const signinSlice = createSlice({
     isLoggedIn: true,
     token: 'aw3kscLsYCi-c',
     curUser: {
-      _id: '5ff9abbad15b18a330bb578a',
+      _id: '1',
       is_admin: true,
       created_at: '2021-01-09T13:01:13.313Z',
       updated_at: '2021-01-09T13:01:13.313Z',
