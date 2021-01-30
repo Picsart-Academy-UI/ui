@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import {
+  Button,
+  FormControlLabel,
+  Checkbox,
+  CircularProgress,
+} from '@material-ui/core';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import Input from '../Input';
 import InputDate from '../InputDate';
@@ -8,7 +13,7 @@ import validate from './helpers/validateInfo';
 import useForm from './helpers/useForm';
 import useStylesLocal from './style';
 
-const Form = ({ submitForm }) => {
+const Form = ({ submitForm, isRequestNow }) => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
 
@@ -104,8 +109,13 @@ const Form = ({ submitForm }) => {
             type="submit"
             variant="contained"
             className={classesMain.picsartButton}
+            disabled={isRequestNow}
           >
-            Invite
+            {isRequestNow ? (
+              <CircularProgress size={24} style={{ color: 'white' }} />
+            ) : (
+              'Invite'
+            )}
           </Button>
         </div>
       </form>
