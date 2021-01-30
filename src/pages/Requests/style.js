@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     flexDirection: 'column-reverse',
     width: '100%',
   },
-  '@media (min-width: 676px)': {
+  '@media (min-width: 900px)': {
     filterContainer: {
       display: 'flex',
       justifyContent: 'flex-start',
