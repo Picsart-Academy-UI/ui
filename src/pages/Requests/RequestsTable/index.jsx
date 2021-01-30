@@ -66,7 +66,7 @@ function RequestsTable({
   const [resId, setResId] = useState(null);
   const { token } = useMemoSelector((state) => tokenSelector(state));
 
-  const [views, setViews] = useState([]); // eslint-disable-line
+  const [views, setViews] = useState([]);
 
   const showView = async (row) => {
     const View = await lazy(() => import('../LoadsDialog'));

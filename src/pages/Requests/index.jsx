@@ -4,7 +4,7 @@ import { Box } from '@material-ui/core';
 import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
 import useMemoSelector from '../../hooks/useMemoSelector';
-import { fetchPendingReservationsWithData } from '../../store/slices/reservationsSlice'; // eslint-disable-line
+import { fetchPendingReservationsWithData } from '../../store/slices/reservationsSlice';
 import { tokenSelector } from '../../store/selectors';
 import ButtonLoading from '../../components/ButtonLoading';
 import RequestsTable from './RequestsTable';

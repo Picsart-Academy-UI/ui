@@ -5,7 +5,7 @@ import {
   getReservations,
   approveReservation,
   rejectReservation,
-} from '../../services/reservationsService'; // eslint-disable-line
+} from '../../services/reservationsService';
 import { setTeams } from './teamsSlice';
 import { setTables } from './tablesSlice';
 
