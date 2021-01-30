@@ -31,12 +31,7 @@ const Delete = ({ id, name }) => {
 
   return (
     <>
-      <Button
-        title="Delete"
-        onClick={handleClickOpen}
-        color="secondary"
-        // disabled={!!chairCount}
-      >
+      <Button title="Delete" onClick={handleClickOpen} color="secondary">
         <DeleteOutlineIcon className={classesMain.iconColorRed} />
       </Button>
       <AlertDialog

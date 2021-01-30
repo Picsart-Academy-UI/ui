@@ -1,7 +1,6 @@
 import { TableRow, TableCell } from '@material-ui/core';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import DeleteRow from '../DeleteRow';
-// import EditRow from '../EditRow';
 
 const TeamTableRow = ({ name, chairCount, id }) => {
   const classesMain = useStylesMain();
@@ -14,8 +13,7 @@ const TeamTableRow = ({ name, chairCount, id }) => {
       <TableCell align="center">{chairCount}</TableCell>
       <TableCell align="right">
         <div className={classesMain.cellActionsWrapper}>
-          {/* <EditRow id={id} name={name} /> */}
-          <DeleteRow id={id} name={name} chairCount={chairCount} />
+          <DeleteRow id={id} name={name} />
         </div>
       </TableCell>
     </TableRow>
