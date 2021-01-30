@@ -19,6 +19,7 @@ export const reservationsSlice = createSlice({
       pendingReservations: [],
       tables: [],
     },
+    reservsApprPend: [],
   },
   reducers: {
     setReservations: (state, action) => {
@@ -38,6 +39,12 @@ export const reservationsSlice = createSlice({
         1
       );
     },
+    setPendingApprovedReservations: (state, action) => {
+      state.reservsApprPend = action.payload;
+    },
+    addReservation: (state, action) => {
+      state.reservations = [...state.reservations, action.payload];
+    },
   },
 });
 
@@ -46,6 +53,8 @@ export const {
   setPendingReservations,
   setPendingReservationsWithData,
   removeFromPendingReservations,
+  setPendingApprovedReservations,
+  addReservation,
 } = reservationsSlice.actions;
 
 export const fetchReservations = (token) => async (dispatch) => {
@@ -102,6 +111,11 @@ export const reject = (token, reservationId) => async (dispatch) => {
     dispatch(removeFromPendingReservations(res.data._id));
   }
   return res;
+};
+
+export const fetchPendingApprovedReservations = (token) => async (dispatch) => {
+  const res = await getReservations(token, 'status=pending,approved');
+  dispatch(setPendingApprovedReservations(res.data || []));
 };
 
 export default reservationsSlice.reducer;

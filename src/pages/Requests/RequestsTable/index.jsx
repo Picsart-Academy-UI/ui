@@ -14,6 +14,7 @@ import {
   Box,
   CircularProgress,
 } from '@material-ui/core';
+import useStylesMain from '../../../hooks/useStylesMain';
 import UserInfo from '../UserInfo';
 import Snackbar from '../../../components/Snackbar';
 import ButtonLoading from '../../../components/ButtonLoading';
@@ -58,6 +59,7 @@ function RequestsTable({
   usernameChangeValue,
   loading,
 }) {
+  const classesMain = useStylesMain();
   const classes = useStyles();
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
@@ -272,7 +274,7 @@ function RequestsTable({
                   <TableCell align="right">
                     <div className={classes.actionsContainer}>
                       <ButtonLoading
-                        className={classes.button}
+                        className={`${classes.button} ${classesMain.commonButton}`}
                         onClick={handleApprove}
                         size="small"
                         reservationId={row.reservationId}

@@ -5,24 +5,25 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Box,
+  Paper,
 } from '@material-ui/core';
-import UserRow from '../UserRow';
 import Pagination from '../../../../components/Pagination';
-import useStylesLocal from './style';
+// import TablePaper from '../../../../components/TablePaper';
+import useStylesMain from '../../../../hooks/useStylesMain';
+import UserRow from '../UserRow';
 
 const UsersTable = ({
   rows,
+  count,
   page,
   rowsPerPage,
+  isAdmin,
   onChangePage,
   onChangeRowsPerPage,
 }) => {
-  const classes = useStylesLocal();
-
-  const { data, count } = rows.usersList;
-
+  const classesMain = useStylesMain();
+  const { data } = rows;
   // console.log('data', data);
 
   const handleChangePage = (newPage) => {
@@ -33,14 +34,9 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  const emptyRows =
-    data && data.length
-      ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-      : 0;
-
   return data ? (
     <Paper>
-      <TableContainer className={classes.container}>
+      <TableContainer className={classesMain.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -49,36 +45,44 @@ const UsersTable = ({
               <TableCell align="center">Surname</TableCell>
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
-              <TableCell align="right">
-                <Box mr={9}>Actions</Box>
-              </TableCell>
+              {isAdmin && (
+                <TableCell align="right">
+                  <Box mr={9}>Actions</Box>
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
           {data && !data.length ? (
             <TableBody>
-              <TableRow>Nothing Found</TableRow>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={classesMain.searchRes}
+                >
+                  Nothing Found
+                </TableCell>
+              </TableRow>
             </TableBody>
           ) : (
             <TableBody>
               {rowsPerPage > 0 &&
-                data.map((user) => <UserRow key={user._id} user={user} />)}
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 17 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
+                data.map((user) => (
+                  <UserRow key={user._id} user={user} isAdmin={isAdmin} />
+                ))}
             </TableBody>
           )}
         </Table>
       </TableContainer>
-      <Pagination
-        rows={count}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {isAdmin && (
+        <Pagination
+          rows={count}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   ) : (
     <>

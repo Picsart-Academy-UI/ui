@@ -17,28 +17,6 @@ const useStyles = makeStyles({
   datePicker: {
     marginRight: '2rem',
   },
-  canvasCont: {
-    marginTop: '2rem',
-  },
-  selectedDate: {
-    border: '0.125rem solid #000000',
-  },
-  table: {
-    margin: '2rem auto',
-  },
-  isFreeBox: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: '1rem',
-  },
-  check: {
-    marginLeft: '1rem',
-    color: '#193F32',
-  },
-  cross: {
-    marginLeft: '1rem',
-    color: '#f50057',
-  },
 });
 
 export default useStyles;
