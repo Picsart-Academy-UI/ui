@@ -39,7 +39,7 @@ function LoadsDialog({ row }) {
 
   useEffect(() => {
     seeLoad(token, date.start, date.end, user.teamId)
-      .then((res) => new Promise((r) => setTimeout(() => r(res), 1500)))
+      .then((res) => new Promise((r) => setTimeout(() => r(res), 300)))
       .then((res) => {
         setData(res.data);
       });
