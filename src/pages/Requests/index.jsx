@@ -44,17 +44,17 @@ const Requests = () => {
     <div className="requests">
       <Box className={classes.topBar}>
         <Box className={classes.filterContainer}>
+          <Filter
+            className={classes.filter}
+            onChange={handleUsernameChange}
+            placeholder="Search By Name"
+          />
           <SelectDropdown
             label="Team"
             options={teamsList}
             property="team_name"
             className={classes.selectDropdown}
             onChange={handleTeamSelect}
-          />
-          <Filter
-            className={classes.filter}
-            onChange={handleUsernameChange}
-            placeholder="Search By Name"
           />
         </Box>
         <ButtonLoading
