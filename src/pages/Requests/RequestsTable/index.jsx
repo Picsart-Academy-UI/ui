@@ -185,7 +185,7 @@ function RequestsTable({
           ),
         },
         `${tables?.find((t) => t._id === table_id)?.table_number || 0}/${
-          chair_id?.number
+          chair_id?.number || 0
         }`,
         5,
         reservationId
