@@ -8,7 +8,7 @@ import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 
-const Delete = ({ id, userFullName }) => {
+const Delete = ({ id, userFullName, onDelete }) => {
   const classesMain = useStylesMain();
   const dispatch = useDispatch();
   const makeRequest = useFetch();
@@ -24,6 +24,7 @@ const Delete = ({ id, userFullName }) => {
     if (res.message) {
       handleClose();
       dispatch(deleteUser(id));
+      onDelete();
     }
   };
 
