@@ -1,19 +1,24 @@
 import { TableRow, TableCell } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import DeleteRow from '../DeleteRow';
 
-const TeamTableRow = ({ name, chairCount, id }) => {
+const TeamTableRow = ({ teamId, number, chairCount, id }) => {
   const classesMain = useStylesMain();
+  const teams = useSelector((state) => state.teams.teams);
+
+  const teamName = (teams.find((t) => t._id === teamId) || {}).team_name;
 
   return (
-    <TableRow key={name}>
+    <TableRow key={number}>
       <TableCell component="th" scope="row">
-        {name}
+        {teamName}
       </TableCell>
+      <TableCell align="center">{number}</TableCell>
       <TableCell align="center">{chairCount}</TableCell>
       <TableCell align="right">
         <div className={classesMain.cellActionsWrapper}>
-          <DeleteRow id={id} name={name} />
+          <DeleteRow id={id} name={number} />
         </div>
       </TableCell>
     </TableRow>

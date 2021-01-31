@@ -6,6 +6,7 @@ export const setPath = (path) => {
   if (pathArr.includes('reservations/create')) return '/reservations/create';
   if (pathArr.includes('teams')) return '/teams';
   if (pathArr.includes('users')) return '/users';
+  if (pathArr.includes('tables')) return '/tables';
   if (pathArr.includes('requests')) return '/requests';
   return false;
 };

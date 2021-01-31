@@ -17,6 +17,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import { PICSART_LOGO_WHITE } from '../../constants';
@@ -130,6 +131,14 @@ const Header = () => {
         </IconButton>
         <p>Teams</p>
       </MenuItem>
+      <MenuItem data-route="/tables" onClick={handleMobileMenuLeftRoute}>
+        <IconButton>
+          <Badge color="secondary">
+            <DashboardOutlinedIcon />
+          </Badge>
+        </IconButton>
+        <p>Tables</p>
+      </MenuItem>
       <MenuItem data-route="/users" onClick={handleMobileMenuLeftRoute}>
         <IconButton>
           <Badge color="secondary">
@@ -163,6 +172,7 @@ const Header = () => {
           className={classesLocal.linkTab}
         />
         <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        <Tab label="Tables" value="/tables" className={classesLocal.linkTab} />
         <Tab label="Users" value="/users" className={classesLocal.linkTab} />
         <Tab
           label="Requests"

@@ -10,44 +10,52 @@ import {
 } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { getTablesAllRequestData } from '../../services/tables';
 import { setTables } from '../../store/slices/tablesSlice';
+import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
-import BackButton from '../../components/BackButton';
+import { getTeamsAllRequestData } from '../../services/teams';
 import TeamTableRow from './components/TeamTableRow';
 import AddTable from './components/AddTable';
 import useStylesLocal from './style';
 
 const TablesList = () => {
   const classesMain = useStylesMain();
-  const token = useSelector((state) => state.signin.token);
+  const classesLocal = useStylesLocal();
   const makeRequest = useFetch();
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const classesLocal = useStylesLocal();
+
+  const { token, tables } = useSelector((state) => ({
+    token: state.signin.token,
+    tables: state.tables.tables,
+  }));
 
   useEffect(() => {
     const getTables = async () => {
-      const requestData = getTablesAllRequestData(token);
-      const res = await makeRequest(requestData);
-      if (res.data) {
-        dispatch(setTables(res));
+      const requestTablesData = getTablesAllRequestData(token);
+      const tablesRes = await makeRequest(requestTablesData);
+      const requestTeamsData = getTeamsAllRequestData(token);
+      const teamsRes = await makeRequest(requestTeamsData);
+      if (teamsRes.data) {
+        dispatch(setTeams(teamsRes));
+      }
+      if (tablesRes.data) {
+        dispatch(setTables(tablesRes));
       }
     };
 
+    const getTeams = async () => {};
+
     getTables();
+    getTeams();
   }, [dispatch, makeRequest, token]);
 
-  const tables = useSelector((state) =>
-    state.tables.tables.filter((table) => table.team_id === id)
-  );
+  useEffect(() => {}, [dispatch, makeRequest, token]);
 
   return (
     <>
       <div className={classesLocal.wrapper}>
-        <BackButton />
         <AddTable />
       </div>
       <Paper>
@@ -55,7 +63,8 @@ const TablesList = () => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>Table</TableCell>
+                <TableCell>Team</TableCell>
+                <TableCell align="center">Table</TableCell>
                 <TableCell align="center">Chair Count</TableCell>
                 <TableCell align="right">
                   <Box mr={5}>Actions</Box>
@@ -70,7 +79,7 @@ const TablesList = () => {
                     colSpan={6}
                     className={classesMain.searchRes}
                   >
-                    This team has no chairs.
+                    This team has no tables.
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -78,7 +87,8 @@ const TablesList = () => {
               <TableBody>
                 {tables.map((table) => (
                   <TeamTableRow
-                    name={table.table_name}
+                    teamId={table.team_id}
+                    number={table.table_number}
                     chairCount={table.chairs_count}
                     key={table._id}
                     id={table._id}

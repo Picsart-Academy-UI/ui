@@ -14,7 +14,7 @@ import ReservationsEdit from '../pages/ReservationsEdit';
 import Requests from '../pages/Requests';
 import useStylesMain from '../hooks/useStylesMain';
 import { ROUTES } from '../constants';
-import TablesList from '../pages/TablesList';
+import Tables from '../pages/Tables';
 import TablesCreate from '../pages/TablesCreate';
 
 const Router = () => {
@@ -44,8 +44,9 @@ const Router = () => {
         <Route exact path="/teams" component={Teams} />
         <Route exact path="/teams/create" component={TeamsCreate} />
         <Route exact path="/teams/edit/:id" component={TeamsEdit} />
-        <Route exact path="/teams/:id/tables" component={TablesList} />
-        <Route exact path="/teams/:id/tables/create" component={TablesCreate} />
+        <Route exact path="/tables" component={Tables} />
+        {/* <Route exact path="/tables/:id" component={TablesList} /> */}
+        <Route exact path="/tables/create" component={TablesCreate} />
         <Route exact path="/users" component={Users} />
         <Route exact path="/users/invite" component={UsersInvite} />
         <Route exact path="/users/edit" component={UsersEdit} />

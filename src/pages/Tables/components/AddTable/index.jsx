@@ -1,14 +1,13 @@
 import { Button, Grid } from '@material-ui/core';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useStylesMain from '../../../../hooks/useStylesMain';
 
 const AddTable = () => {
   const classesMain = useStylesMain();
   const history = useHistory();
-  const { id } = useParams();
 
   const handleAddClick = () => {
-    history.push(`/teams/${id}/tables/create`);
+    history.push('tables/create');
   };
 
   return (
