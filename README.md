@@ -7,10 +7,6 @@
   ```
     REACT_APP_MAIN_URL=http://localhost:6789/api/v1/
   ```
- Create a `.env.production` file and add the following variable in it
-  ```
-    REACT_APP_MAIN_URL=https://api.officeorg.ninja/api/v1/
-  ```
 
 # Getting Started with Create React App
 
