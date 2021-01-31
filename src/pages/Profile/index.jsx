@@ -68,7 +68,10 @@ const Profile = (props) => {
   return (
     <>
       <Box alignItems="center" display="flex" flexDirection="column">
-        <Avatar className={classesLocal.avatar} src={edited.profile_picture} />
+        <Avatar
+          className={classesLocal.avatar}
+          src={edited.profile_picture || ''}
+        />
       </Box>
       <Grid
         container
