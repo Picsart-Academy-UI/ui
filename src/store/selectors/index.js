@@ -1,5 +1,4 @@
 // eslint-disable-next-line
-export const teamTokenSelector = (state) => ({
+export const tokenSelector = (state) => ({
   token: state.signin.token,
-  teams: state.teams.teams,
 });
