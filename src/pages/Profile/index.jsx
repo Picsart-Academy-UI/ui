@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
+import validateInfo from '../UsersInvite/components/Form/helpers/validateInfo';
 import updateUserHook from './helpers/updateUser';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
@@ -36,6 +37,7 @@ const Profile = (props) => {
   const user = (id !== 'me' && other) || curUser;
 
   const [edited, setEdited] = useState(user);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => setEdited(user), [user, id]);
 
@@ -60,19 +62,35 @@ const Profile = (props) => {
     setEdited(editedUser);
   };
 
-  const handleEnterEditAndSubmit = () =>
-    !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
+  const handleEnterEditAndSubmit = () => {
+    const potentialErrors = validateInfo(edited);
+    console.log(potentialErrors);
+    if (Object.keys(potentialErrors).length) {
+      setErrors(potentialErrors);
+      return;
+    }
+    setErrors(potentialErrors);
+    if (!isEditing) setIsEditing(true);
+    else {
+      startUpdateUser();
+      setIsEditing(false);
+    }
+  };
+
   const handleCancel = () =>
     (isEditing && setIsEditing(false)) || setEdited({ ...user });
 
   return (
     <>
       <Box alignItems="center" display="flex" flexDirection="column">
-        <Avatar className={classesLocal.avatar} src={edited.profile_picture} />
+        <Avatar
+          className={classesLocal.avatar}
+          src={edited.profile_picture || ''}
+        />
       </Box>
       <Grid
         container
-        direction="row"
+        direction="column"
         justify="center"
         alignItems="center"
         className={classesLocal.upperGrid}
@@ -83,6 +101,8 @@ const Profile = (props) => {
           disabled={!isEditing}
           value={edited.first_name || ''}
           onChange={(e) => handleUserEdit('first_name', e.target.value)}
+          helperText={errors.first_name || ''}
+          error={(errors.first_name && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Surname:</Typography>
         <TextField
@@ -90,30 +110,18 @@ const Profile = (props) => {
           value={edited.last_name || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('last_name', e.target.value)}
+          helperText={errors.last_name || ''}
+          error={(errors.last_name && true) || false}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
           className={classesLocal.textField}
           value={edited.email || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('email', e.target.value)}
+          helperText={errors.email || ''}
+          error={(errors.email && true) || false}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <TeamList
@@ -130,15 +138,9 @@ const Profile = (props) => {
           value={edited.position || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('position', e.target.value)}
+          helperText={errors.position || ''}
+          error={(errors.position && true) || false}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>
           Phone Number:
         </Typography>
@@ -147,22 +149,30 @@ const Profile = (props) => {
           value={edited.phone || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('phone', e.target.value)}
+          helperText={errors.phone_number || ''}
+          error={(errors.phone_number && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Birthday:</Typography>
         <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          value={
+            (edited.birthday &&
+              new Date(edited.birthday).toISOString().split('T')[0]) ||
+            ''
+          }
           className={classesLocal.textField}
-          value={edited.birthday || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('birthday', e.target.value)}
+          onChange={(e) =>
+            handleUserEdit('birthday', new Date(e.target.value).toISOString())
+          }
+          InputLabelProps={{
+            shrink: true,
+          }}
+          helperText={errors.birthday || ''}
+          error={(errors.birthday && true) || false}
         />
-      </Grid>
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Hidden xsUp={!isAdmin}>
           <Button
             className={classesMain.picsartButton}

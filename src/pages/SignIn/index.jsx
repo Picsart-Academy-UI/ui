@@ -27,10 +27,7 @@ const SignIn = () => {
   console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
   return (
-    <div
-      className={classesMain.paperContainer}
-      // className={classesLocal.wrapper}
-    >
+    <>
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         <div>We Make Office</div>
         <div>Space Management</div>
@@ -57,7 +54,7 @@ const SignIn = () => {
           />
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   Box,
   Paper,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import React, { useCallback } from 'react';
 import clsx from 'clsx';
@@ -27,7 +28,6 @@ const UsersTable = ({
 }) => {
   const classesMain = useStylesMain();
   const { data } = rows;
-  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -39,7 +39,7 @@ const UsersTable = ({
 
   const onDelete = useCallback(() => onChangePage(page), [page]);
 
-  return data || !isLoading ? (
+  return (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
         <Table
@@ -60,7 +60,20 @@ const UsersTable = ({
               )}
             </TableRow>
           </TableHead>
-          {data && !data.length ? (
+          {isLoading && (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
+                >
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+          {!isLoading && data && !data.length ? (
             <TableBody className={classesMain.tableBody}>
               <TableRow className={classesMain.tableRow}>
                 <TableCell
@@ -99,10 +112,6 @@ const UsersTable = ({
         />
       )}
     </Paper>
-  ) : (
-    <>
-      <h1>Loading</h1>
-    </>
   );
 };
 
