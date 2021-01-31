@@ -67,12 +67,12 @@ const Users = () => {
       if (!isAdmin) {
         setFetched(true);
       }
+
       setIsLoading(false);
     } else if (
       (isAdmin && currentSearchValue) ||
       currentSelectedTeamId !== ''
     ) {
-      setIsLoading(true);
       const requestData = getFilteredUsersRequestData(
         token,
         currentRowsPerPage,
@@ -82,6 +82,7 @@ const Users = () => {
       );
       const selectedUsers = await makeRequest(requestData);
       await dispatch(fetchedUsersList(selectedUsers));
+
       setIsLoading(false);
     }
   };
@@ -101,6 +102,7 @@ const Users = () => {
 
   const handleInputChange = (value) => {
     if (isAdmin) {
+      setIsLoading(true);
       debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
     }
     setSearchValue(value);
@@ -128,7 +130,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(fetchTeams());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
