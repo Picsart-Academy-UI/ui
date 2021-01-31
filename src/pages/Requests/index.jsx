@@ -45,7 +45,7 @@ const Requests = () => {
       <Box className={classes.topBar}>
         <Box className={classes.filterContainer}>
           <SelectDropdown
-            label="Select Team"
+            label="Team"
             options={teamsList}
             property="team_name"
             className={classes.selectDropdown}

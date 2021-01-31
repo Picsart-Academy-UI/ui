@@ -3,8 +3,8 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const Filter = ({
-  label,
-  placeholder = 'Search',
+  label = 'Search',
+  placeholder = 'Search By Name',
   onChange,
   className,
   ...props
@@ -27,7 +27,7 @@ const Filter = ({
       onChange={onInputChange}
       placeholder={placeholder}
       id="outlined-search"
-      label="Search field"
+      label={label}
       type="search"
       variant="outlined"
       InputProps={{
