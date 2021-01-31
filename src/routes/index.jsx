@@ -19,7 +19,10 @@ const Router = () => {
   const classesMain = useStylesMain();
   const location = useLocation();
 
-  const { isLoggedIn } = useSelector((state) => state.signin);
+  const { isLoggedIn, isAdmin } = useSelector((state) => ({
+    isLoggedIn: state.signin.isLoggedIn,
+    isAdmin: state.signin.curUser.is_admin,
+  }));
 
   const isPageContainTable = Object.values(ROUTES).some(
     (path) => path === location.pathname
@@ -35,13 +38,17 @@ const Router = () => {
         <Route exact path="/reservations" component={Reservations} />
         <Route path="/reservations/create" component={ReservationsCreate} />
         <Route exact path="/reservations/edit" component={ReservationsEdit} />
-        <Route exact path="/teams" component={Teams} />
-        <Route exact path="/teams/create" component={TeamsCreate} />
-        <Route exact path="/teams/edit/:id" component={TeamsEdit} />
+        {isAdmin && (
+          <>
+            <Route exact path="/users/invite" component={UsersInvite} />
+            <Route exact path="/teams" component={Teams} />
+            <Route exact path="/requests" component={Requests} />
+            <Route exact path="/teams/create" component={TeamsCreate} />
+            <Route exact path="/teams/edit/:id" component={TeamsEdit} />
+          </>
+        )}
         <Route exact path="/users" component={Users} />
-        <Route exact path="/users/invite" component={UsersInvite} />
         <Route exact path="/users/edit" component={UsersEdit} />
-        <Route exact path="/requests" component={Requests} />
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}
         {isLoggedIn && <Redirect exact from="/signin" to="/reservations" />}
