@@ -3,14 +3,7 @@ import { Provider } from 'react-redux';
 
 import Profile from '../index';
 import mockstore from '../../../__mocks__/index';
-import {
-  Avatar,
-  Grid,
-  FormControl,
-  Typography,
-  Hidden,
-  Button,
-} from '@material-ui/core';
+import { Avatar, Grid, FormControl, Typography } from '@material-ui/core';
 
 const get = (props) =>
   mount(
@@ -28,7 +21,7 @@ const props = {
     },
   },
   location: {
-    user: {
+    state: {
       _id: '1',
       is_admin: true,
       created_at: '2021-01-09T13:01:13.313Z',
@@ -41,6 +34,7 @@ const props = {
       accepted: true,
       profile_picture: null,
       updatedAt: '2021-01-09T15:06:58.831Z',
+      birthday: '1996-03-10T00:00:00.000Z',
     },
   },
 };
@@ -52,7 +46,7 @@ describe('Profile: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(cmp, Grid).length).toBeGreaterThanOrEqual(3);
+    expect(find(cmp, Grid).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should have an avatar', () => {
@@ -60,7 +54,7 @@ describe('Profile: ', () => {
   });
 
   test('should have a name surname typography', () => {
-    expect(find(cmp, Typography).length).toBeGreaterThanOrEqual(1);
+    expect(find(cmp, Typography).length).toBeGreaterThanOrEqual(2);
   });
 
   test('should have an dropdown to select team', () => {

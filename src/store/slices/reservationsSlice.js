@@ -80,20 +80,22 @@ export const fetchPendingReservationsWithData = (token) => async (
     getReservations(token, 'status=pending&include_usersAndChairs=true'),
     !state.teams.teams.length && getTeams(token),
     !state.tables.tables.length && getTables(token),
-  ]).then(([pendingReservations, teams, tables]) =>
-    Promise.all([
-      dispatch(
-        setPendingReservationsWithData({
-          pendingReservations: pendingReservations.data,
-          teams: !state.teams.teams.length ? teams.data : state.teams.teams,
-          tables: !state.tables.tables.length
-            ? tables.data
-            : state.tables.tables,
-        })
-      ),
-      teams && dispatch(setTeams(teams)),
-      tables && dispatch(setTables(tables)),
-    ])
+  ]).then(
+    ([pendingReservations, teams, tables]) =>
+      pendingReservations.data &&
+      Promise.all([
+        dispatch(
+          setPendingReservationsWithData({
+            pendingReservations: pendingReservations.data,
+            teams: !state.teams.teams.length ? teams.data : state.teams.teams,
+            tables: !state.tables.tables.length
+              ? tables.data
+              : state.tables.tables,
+          })
+        ),
+        teams && dispatch(setTeams(teams)),
+        tables && dispatch(setTables(tables)),
+      ])
   );
 };
 

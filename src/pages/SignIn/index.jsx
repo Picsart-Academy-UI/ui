@@ -28,10 +28,7 @@ const SignIn = () => {
   console.log(process.env);
 
   return (
-    <div
-    // className={classesMain.paperContainer}
-    // test="div-wrapper"
-    >
+    <>
       <Typography component="h1" variant="h4" className={classesLocal.header}>
         We Make Office Space Management Awesome
       </Typography>
@@ -56,7 +53,7 @@ const SignIn = () => {
           />
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 
