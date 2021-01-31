@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import mockstore from '../../../__mocks__/index';
 import Users from '../index';
 import UsersTable from '../components/UsersTable';
-import SearchUsers from '../components/SearchBox';
+import Filter from '../../../components/Filter/index';
 
 const get = (Cmp, props) =>
   mount(
@@ -34,23 +34,12 @@ describe('Users: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(users, SearchUsers).length).toBeGreaterThanOrEqual(1);
     expect(find(users, UsersTable).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should change the dynamic value during input', () => {
-    const search = find(users, SearchUsers);
+    const search = find(users, Filter);
     search.props().onChange('val');
-    search.props().onPageChange(101);
     expect(setState).toHaveBeenCalledWith('val');
-    expect(setState).toHaveBeenCalledWith(101);
-  });
-
-  test('should correctly manipulate the pagination', () => {
-    const userstable = find(users, UsersTable);
-    userstable.props().onChangePage('val');
-    userstable.props().onChangeRowsPerPage(101);
-    expect(setState).toHaveBeenCalledWith('val');
-    expect(setState).toHaveBeenCalledWith(101);
   });
 });
