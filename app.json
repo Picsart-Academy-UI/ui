@@ -1,6 +1,18 @@
 {
   "name": "ui",
   "env": {
+    "REACT_APP_GOOGLE_CLIENT_ID": {
+      "description": "A secret key for verifying Google client.",
+      "value": "885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"
+    },
+    "REACT_APP_MAIN_URL": {
+      "description": "API url.",
+      "value": "https://api.officeorg.ninja/api/v1/"
+    },
+    "REACT_APP_PUBLIC_VAPID_KEY": {
+      "description": "A secret key for verifying vapid.",
+      "value": "BOjfhJMEPQh3NggRpL_6ZTv4JWXsK8kHyo8xTJiUitepCzYDAg7d0cKuOiGclJgNrHKsFA7xQwuHJLj6icDp-5I/"
+    }
   },
   "buildpacks": [
     {
