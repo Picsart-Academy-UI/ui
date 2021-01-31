@@ -310,6 +310,7 @@ function RequestsTable({
         handleClose={handleRemoveModalClose}
         handleDeleteClick={handleDeleteClick}
         titleText="Are you sure?"
+        deleteText="Reject"
       />
       <Suspense fallback="Loading...">
         <div>{views}</div>

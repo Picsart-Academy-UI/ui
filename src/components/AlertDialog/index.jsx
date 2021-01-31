@@ -4,7 +4,13 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ButtonLoading from '../ButtonLoading';
 import useStylesLocal, { theme } from './style';
 
-const AlertDialog = ({ open, handleClose, handleDeleteClick, titleText }) => {
+const AlertDialog = ({
+  open,
+  handleClose,
+  handleDeleteClick,
+  titleText,
+  deleteText = 'Delete',
+}) => {
   const classesLocal = useStylesLocal();
 
   return (
@@ -31,7 +37,7 @@ const AlertDialog = ({ open, handleClose, handleDeleteClick, titleText }) => {
               color="secondary"
               autoFocus
             >
-              Delete
+              {deleteText}
             </ButtonLoading>
           </DialogActions>
         </div>
