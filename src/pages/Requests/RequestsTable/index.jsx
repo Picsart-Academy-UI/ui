@@ -29,6 +29,9 @@ import {
 import useMemoSelector from '../../../hooks/useMemoSelector';
 
 const useStyles = makeStyles({
+  tableContainer: {
+    maxHeight: 480,
+  },
   table: {
     minWidth: 960,
   },
