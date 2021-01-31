@@ -49,8 +49,21 @@ const useStylesMain = makeStyles((theme) => ({
   },
   tableContainer: {
     // fullheight - header - margin - pagepadding - searchpadding - search - pagination
-    maxHeight: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
-    minWidth: '500px',
+    height: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
+    minHeight: 410,
+    minWidth: 500,
+  },
+  tableEmpty: {
+    height: '100%',
+  },
+  tableBody: {
+    height: '100%',
+  },
+  tableRow: {
+    height: '100%',
+  },
+  tableCell: {
+    height: '100%',
   },
   searchRes: {
     fontSize: theme.spacing(3),

@@ -7,10 +7,11 @@ import {
   TableRow,
   Box,
   Paper,
+  Typography,
 } from '@material-ui/core';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import Pagination from '../../../../components/Pagination';
-// import TablePaper from '../../../../components/TablePaper';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import UserRow from '../UserRow';
 
@@ -36,16 +37,15 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  // const onDelete = () => {
-  //   onChangePage(page);
-  // }
-
   const onDelete = useCallback(() => onChangePage(page), [page]);
 
   return data || !isLoading ? (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: data && !data.length })}
+        >
           <TableHead>
             <TableRow>
               <TableCell />
@@ -61,14 +61,16 @@ const UsersTable = ({
             </TableRow>
           </TableHead>
           {data && !data.length ? (
-            <TableBody>
-              <TableRow>
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={6}
-                  className={classesMain.searchRes}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
                 >
-                  Nothing Found
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>

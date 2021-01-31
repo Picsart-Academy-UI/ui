@@ -37,7 +37,6 @@ const SelectDropdown = ({
       onChange={onSelectChange}
       disableClearable
       getOptionLabel={(option) => option[property]}
-      getOptionSelected={(option) => option[property]}
       style={style}
       disabled={isDisabled}
       renderInput={(params) => (

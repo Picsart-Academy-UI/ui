@@ -5,18 +5,26 @@ const useStylesLocal = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: theme.spacing(2, 0),
+    marginBottom: theme.spacing(2),
   },
   searchWrapper: {
     display: 'flex',
     alignItems: 'center',
   },
   selectDropdown: {
-    marginLeft: 25,
+    marginLeft: 20,
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 240,
+      flexShrink: 0,
+    },
   },
   filter: {
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 240,
+      flexShrink: 0,
+    },
   },
 }));
 

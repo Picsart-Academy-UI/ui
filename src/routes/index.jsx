@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import NotFound from '../pages/NotFound';

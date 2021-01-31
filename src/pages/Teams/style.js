@@ -4,9 +4,13 @@ const useStylesLocal = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
-    margin: theme.spacing(2, 0),
-    '& > div': {
-      width: 'calc(100% / 2)',
+    marginBottom: theme.spacing(2),
+  },
+  filter: {
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 240,
+      flexShrink: 0,
     },
   },
 }));

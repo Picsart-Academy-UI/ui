@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
@@ -29,9 +30,6 @@ import {
 import useMemoSelector from '../../../hooks/useMemoSelector';
 
 const useStyles = makeStyles({
-  tableContainer: {
-    maxHeight: 480,
-  },
   table: {
     minWidth: 960,
   },
@@ -186,7 +184,7 @@ function RequestsTable({
             new Date(end_date)
           ),
         },
-        `${tables?.find((t) => t._id === table_id)?.table_name}/${
+        `${tables?.find((t) => t._id === table_id)?.table_number || 0}/${
           chair_id?.number
         }`,
         5,
@@ -195,13 +193,19 @@ function RequestsTable({
     });
     setRows(r);
   }, [pendingReservations, tables, teams]);
+  const notFound = !(filteredRows && filteredRows.length);
 
   return (
     <>
-      <TableContainer component={Paper} className={classes.tableContainer}>
+      <TableContainer
+        component={Paper}
+        className={`${classes.tableContainer} ${classesMain.tableContainer}`}
+      >
         <Table
           stickyHeader
-          className={classes.table}
+          className={clsx(classes.table, {
+            [classesMain.tableEmpty]: loading || notFound,
+          })}
           aria-label="requests table"
         >
           <TableHead>
@@ -214,24 +218,30 @@ function RequestsTable({
             </TableRow>
           </TableHead>
           {loading ? ( // eslint-disable-line
-            <TableBody>
-              <TableRow>
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={5}
-                  className={classes.loadingContainer}
+                  className={clsx(
+                    classes.loadingContainer,
+                    classesMain.tableCell
+                  )}
                 >
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             </TableBody>
-          ) : !(filteredRows && filteredRows.length) ? (
-            <TableBody>
-              <TableRow>
+          ) : notFound ? (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={5}
-                  className={classes.loadingContainer}
+                  className={clsx(
+                    classes.loadingContainer,
+                    classesMain.tableCell
+                  )}
                 >
                   <Typography variant="h4" component="div">
                     No requests!

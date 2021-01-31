@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxHeight: 150,
     overflow: 'auto',
@@ -23,28 +23,33 @@ const useStyles = makeStyles({
   },
   refreshButton: {
     marginTop: 32,
+    marginBottom: 32,
   },
   filter: {
-    marginBottom: 40,
     width: '100%',
+    marginBottom: 40,
   },
   selectDropdown: {
+    width: '100%',
     marginRight: 0,
   },
   filterContainer: {
     display: 'flex',
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
     width: '100%',
+    marginBottom: 0,
   },
-  '@media (min-width: 900px)': {
+  [theme.breakpoints.up('md')]: {
     filterContainer: {
       display: 'flex',
       justifyContent: 'flex-start',
       flexDirection: 'row',
+      marginBottom: theme.spacing(2),
     },
     filter: {
-      marginBottom: 0,
+      marginRight: 20,
       width: 240,
+      marginBottom: 0,
     },
     selectDropdown: {
       marginRight: 20,
@@ -57,8 +62,9 @@ const useStyles = makeStyles({
     },
     refreshButton: {
       marginTop: 0,
+      marginBottom: 0,
     },
   },
-});
+}));
 
 export default useStyles;

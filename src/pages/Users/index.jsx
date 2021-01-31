@@ -100,7 +100,6 @@ const Users = () => {
   };
 
   const handleInputChange = (value) => {
-    console.log('value', value);
     if (isAdmin) {
       debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
     }
@@ -145,11 +144,16 @@ const Users = () => {
     <>
       <div className={classesLocal.wrapper}>
         <div className={classesLocal.searchWrapper}>
-          <Filter value={searchValue} onChange={handleInputChange} />
+          <Filter
+            value={searchValue}
+            onChange={handleInputChange}
+            className={classesLocal.filter}
+            placeholder="Search By Name"
+          />
           {isAdmin && (
             <SelectDropdown
               property="team_name"
-              label="Teams"
+              label="Team"
               options={teamsOptions}
               onChange={onSelectChange}
               className={classesLocal.selectDropdown}
