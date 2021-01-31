@@ -1,16 +1,26 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
+  wrapper: {
+    width: '100vw',
+    height: '100vh',
+    // background: '#e0eafc',
+    // background: '-webkit-linear-gradient(to right, #e0eafc, #cfdef3)',
+    background: 'linear-gradient(to right, #e0eafc, #cfdef3)',
+    // backgroundClip: 'text',
+    // color: 'transparent'
+  },
   header: {
-    fontSize: '3rem',
+    fontSize: '4rem',
     letterSpacing: 7,
-    paddingTop: theme.spacing(5),
+    // padding: theme.spacing(5,0),
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
   signInContainer: {
     display: 'flex',
     justifyContent: 'center',
-    paddingTop: theme.spacing(5),
+    padding: theme.spacing(5, 0),
   },
   google: {
     width: 24,
