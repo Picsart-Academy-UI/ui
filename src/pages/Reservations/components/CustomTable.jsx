@@ -22,7 +22,7 @@ const ResTable = ({ isHistory, data, edit, cancel }) => {
 
   return (
     <Paper>
-      <TableContainer>
+      <TableContainer className={classesMain.tableContainer}>
         <Table>
           <TableHead>
             <TableRow>

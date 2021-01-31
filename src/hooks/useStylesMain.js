@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CHAIR, STYLES } from '../constants';
+import { CHAIR } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
@@ -11,7 +11,7 @@ const useStylesMain = makeStyles((theme) => ({
     height: '100vh',
   },
   paperPadding: {
-    minWidth: STYLES.appMinWidth,
+    minWidth: '564px',
     margin: 'auto',
     marginTop: theme.spacing(6),
     padding: theme.spacing(4),
@@ -48,8 +48,9 @@ const useStylesMain = makeStyles((theme) => ({
     color: 'rgb(253, 19, 85)',
   },
   tableContainer: {
-    maxHeight: STYLES.tableMaxHeight,
-    minWidth: STYLES.tableMinWidth,
+    // fullheight - header - margin - pagepadding - searchpadding - search - pagination
+    maxHeight: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
+    minWidth: '500px',
   },
   searchRes: {
     fontSize: theme.spacing(3),

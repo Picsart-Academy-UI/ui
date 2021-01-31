@@ -5,7 +5,7 @@ import { GOOGLE_LOGO } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 // import useStylesMain from '../../hooks/useStylesMain';
-import getGoogleRequestData from '../../services/signin';
+import getGoogleRequestData from '../../services/signinService';
 import useStylesLocal from './style';
 
 const SignIn = () => {
