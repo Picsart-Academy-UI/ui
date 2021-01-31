@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     flexDirection: 'column',
     alignItems: 'flex-end',
+    marginBottom: 0,
   },
   refreshButton: {
     marginTop: 32,
@@ -37,14 +38,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    marginBottom: 0,
   },
   [theme.breakpoints.up('md')]: {
     filterContainer: {
       display: 'flex',
       justifyContent: 'flex-start',
       flexDirection: 'row',
-      marginBottom: theme.spacing(2),
     },
     filter: {
       marginRight: 20,
@@ -59,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
+      marginBottom: theme.spacing(2),
     },
     refreshButton: {
       marginTop: 0,
