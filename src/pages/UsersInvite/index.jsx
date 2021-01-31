@@ -31,14 +31,12 @@ const UserInvite = () => {
         ({ team_name }) => team_name === values.team_id
       );
       body.team_id = teamItem._id;
-      console.log(values.birthday);
-      body.birthday = formatISO(new Date(values.birthday));
-      console.log(body.birthday);
+      body.birthday = values.birthday
+        ? formatISO(new Date(values.birthday))
+        : '';
       const res = await makeRequest(
         getUserInvitationRequestData({ token, body })
       );
-
-      // console.log(res);
 
       if (res.data) {
         resetValues();
@@ -62,8 +60,6 @@ const UserInvite = () => {
     },
     [makeRequest, teams, token]
   );
-
-  // console.log(isSubmitted, message);
 
   return (
     <>

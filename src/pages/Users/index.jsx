@@ -1,17 +1,16 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useDebounce } from 'use-debounce';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTeams } from '../../store/slices/teamsSlice';
+import { fetchTeams } from '../../store/slices/teamsSlice';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
-import { getTeamsAllRequestData } from '../../services/teams';
 import useFetch from '../../hooks/useFetch';
+import useDebounce from '../../hooks/useDebounce';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,
 } from '../../services/users';
-import TeamsDropDown from './components/TeamsDropDown';
+import Filter from '../../components/Filter';
+import SelectDropdown from '../../components/SelectDropdown';
 import UsersTable from './components/UsersTable';
-import SearchUsers from './components/SearchBox';
 import AddUser from './components/AddUser';
 import useStylesLocal from './style';
 
@@ -21,7 +20,7 @@ const Users = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
-  const [debouncedSearchValue] = useDebounce(searchValue, 100);
+  const [isLoading, setIsLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
   const { token, isAdmin, teams, usersData } = useSelector((state) => ({
     token: state.signin.token,
@@ -29,9 +28,6 @@ const Users = () => {
     teams: state.teams.teams,
     usersData: state.users.usersList,
   }));
-
-  // console.log('isAdmin', isAdmin);
-  // console.log('usersData', usersData);
 
   const users = useMemo(
     () => ({
@@ -42,26 +38,86 @@ const Users = () => {
     [usersData.data, searchValue]
   );
 
+  const teamsOptions = useMemo(
+    () => [{ team_name: 'All', _id: 'all' }, ...teams],
+    [teams]
+  );
+
   const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
+  const fetchings = async (
+    currentPage,
+    currentRowsPerPage,
+    currentSelectedTeamId,
+    currentSearchValue
+  ) => {
+    if (!currentSearchValue && currentSelectedTeamId === '' && !fetched) {
+      setIsLoading(true);
+      const requestData = getLimitedUsersRequestData(
+        token,
+        currentRowsPerPage,
+        currentPage,
+        isAdmin
+      );
+      const fetchedUsers = await makeRequest(requestData);
+      await dispatch(fetchedUsersList(fetchedUsers));
 
-  const handleChangePage = (newPage) => {
+      if (!isAdmin) {
+        setFetched(true);
+      }
+      setIsLoading(false);
+    } else if (
+      (isAdmin && currentSearchValue) ||
+      currentSelectedTeamId !== ''
+    ) {
+      setIsLoading(true);
+      const requestData = getFilteredUsersRequestData(
+        token,
+        currentRowsPerPage,
+        currentPage,
+        currentSelectedTeamId,
+        currentSearchValue
+      );
+      const selectedUsers = await makeRequest(requestData);
+      await dispatch(fetchedUsersList(selectedUsers));
+      setIsLoading(false);
+    }
+  };
+
+  const debouncedFetchings = useDebounce(fetchings, 100);
+
+  const handleChangePage = async (newPage) => {
+    await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (value) => {
+  const handleChangeRowsPerPage = async (value) => {
+    await fetchings(1, value, selectedTeamId, searchValue);
     setRowsPerPage(value);
     setPage(0);
   };
 
   const handleInputChange = (value) => {
+    if (isAdmin) {
+      debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
+    }
     setSearchValue(value);
   };
 
-  const handleSelectedTeamChange = (teamId) => {
+  const handleSelectedTeamChange = async (teamId) => {
+    await fetchings(page + 1, rowsPerPage, teamId, searchValue);
     setSelectedTeamId(teamId);
+  };
+
+  const onSelectChange = (teamObj) => {
+    if (teamObj.team_name === 'All') {
+      handleSelectedTeamChange('');
+      return;
+    }
+    const { _id } = teams.find((team) => team.team_name === teamObj.team_name);
+    handleSelectedTeamChange(_id);
   };
 
   useEffect(() => {
@@ -71,81 +127,43 @@ const Users = () => {
   }, [users.data?.length, page, usersCount, rowsPerPage]);
 
   useEffect(() => {
-    if (!teams.length) {
-      const fetchTeams = async () => {
-        const requestData = getTeamsAllRequestData(token);
-        const getTeams = await makeRequest(requestData);
-        if (getTeams.data) {
-          dispatch(setTeams(getTeams));
-        }
-      };
-      fetchTeams();
-    }
-  }, [teams, dispatch, makeRequest, token]);
+    dispatch(fetchTeams());
+  }, []);
 
   useEffect(() => {
-    if (!debouncedSearchValue && selectedTeamId === '' && !fetched) {
-      const fetchUsers = async () => {
-        const requestData = getLimitedUsersRequestData(
-          token,
-          rowsPerPage,
-          page + 1,
-          isAdmin
-        );
-        const fetchedUsers = await makeRequest(requestData);
-        dispatch(fetchedUsersList(fetchedUsers));
-      };
+    fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
+  }, []);
 
-      fetchUsers();
-
-      if (!isAdmin) {
-        setFetched(true);
-      }
-    } else if ((isAdmin && debouncedSearchValue) || selectedTeamId !== '') {
-      const fetchBySelectedTeam = async () => {
-        const requestData = getFilteredUsersRequestData(
-          token,
-          rowsPerPage,
-          page + 1,
-          selectedTeamId,
-          debouncedSearchValue
-        );
-        const selectedUsers = await makeRequest(requestData);
-        dispatch(fetchedUsersList(selectedUsers));
-      };
-      fetchBySelectedTeam();
+  useEffect(() => {
+    if (page !== 0) {
+      handleChangePage(0);
     }
-  }, [
-    page,
-    rowsPerPage,
-    debouncedSearchValue,
-    selectedTeamId,
-    dispatch,
-    makeRequest,
-    token,
-  ]);
-
-  // console.log({ users, page, usersCount, rowsPerPage });
+  }, [searchValue]);
 
   return (
     <>
       <div className={classesLocal.wrapper}>
         <div className={classesLocal.searchWrapper}>
-          <SearchUsers
+          <Filter
             value={searchValue}
             onChange={handleInputChange}
-            onPageChange={handleChangePage}
+            className={classesLocal.filter}
+            placeholder="Search By Name"
           />
           {isAdmin && (
-            <TeamsDropDown
-              teams={teams}
-              onSelectChange={handleSelectedTeamChange}
+            <SelectDropdown
+              property="team_name"
+              label="Team"
+              options={teamsOptions}
+              onChange={onSelectChange}
+              className={classesLocal.selectDropdown}
             />
           )}
         </div>
         {isAdmin && <AddUser />}
       </div>
       <UsersTable
+        isLoading={isLoading}
         rows={users}
         count={usersCount}
         page={page}

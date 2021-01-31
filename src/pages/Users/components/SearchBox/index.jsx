@@ -1,9 +1,9 @@
 import { TextField } from '@material-ui/core';
 
-const SearchBox = ({ value, onChange, onPageChange }) => {
+const SearchBox = ({ value, onChange, onChangePage }) => {
   const handleInputChange = (e) => {
     onChange(e.target.value);
-    onPageChange(0);
+    onChangePage(0);
   };
 
   return (

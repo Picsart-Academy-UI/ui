@@ -32,7 +32,7 @@ const useStylesMain = makeStyles((theme) => ({
     padding: theme.spacing(1, 2),
     background:
       '-webkit-linear-gradient(120deg, rgba(219,68,218,1) 0%, rgba(89,192,246,1) 78%, rgba(58,231,255,1) 100%)',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
     fontWeight: 500,
     color: 'white',
   },
@@ -49,8 +49,21 @@ const useStylesMain = makeStyles((theme) => ({
   },
   tableContainer: {
     // fullheight - header - margin - pagepadding - searchpadding - search - pagination
-    maxHeight: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
-    minWidth: '500px',
+    height: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
+    minHeight: 410,
+    minWidth: 500,
+  },
+  tableEmpty: {
+    height: '100%',
+  },
+  tableBody: {
+    height: '100%',
+  },
+  tableRow: {
+    height: '100%',
+  },
+  tableCell: {
+    height: '100%',
   },
   searchRes: {
     fontSize: theme.spacing(3),
