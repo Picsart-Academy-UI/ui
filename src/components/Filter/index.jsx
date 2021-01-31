@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const Filter = ({
   label = 'Search',
-  placeholder = 'Search By Name',
+  placeholder = 'Search',
   onChange,
   className,
   ...props

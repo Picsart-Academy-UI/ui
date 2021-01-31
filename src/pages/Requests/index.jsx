@@ -51,7 +51,11 @@ const Requests = () => {
             className={classes.selectDropdown}
             onChange={handleTeamSelect}
           />
-          <Filter className={classes.filter} onChange={handleUsernameChange} />
+          <Filter
+            className={classes.filter}
+            onChange={handleUsernameChange}
+            placeholder="Search By Name"
+          />
         </Box>
         <ButtonLoading
           onClick={() => dispatch(fetchPendingReservationsWithData(token))}
