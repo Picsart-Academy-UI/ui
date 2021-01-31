@@ -14,7 +14,7 @@ const validateInfo = (values) => {
     (!GMAIL_REGEXP.test(values.email) ||
       !PICSART_MAIL_REGEXP.test(values.email))
   ) {
-    errors.email = 'invalid email address';
+    errors.email = 'Invalid email address';
   }
 
   if (!values.first_name.trim()) {
