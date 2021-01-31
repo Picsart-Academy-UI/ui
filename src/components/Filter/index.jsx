@@ -3,7 +3,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const Filter = ({
-  label,
+  label = 'Search',
   placeholder = 'Search',
   onChange,
   className,
@@ -21,24 +21,23 @@ const Filter = ({
   };
 
   return (
-    <div className={className}>
-      <TextField
-        value={currentValue}
-        onChange={onInputChange}
-        placeholder={placeholder}
-        id="outlined-search"
-        label="Search field"
-        type="search"
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </div>
+    <TextField
+      className={className}
+      value={currentValue}
+      onChange={onInputChange}
+      placeholder={placeholder}
+      id="outlined-search"
+      label={label}
+      type="search"
+      variant="outlined"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 

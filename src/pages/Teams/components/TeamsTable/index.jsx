@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 import {
   Table,
   TableBody,
@@ -8,86 +9,60 @@ import {
   TableRow,
   Paper,
   Box,
+  Typography,
 } from '@material-ui/core';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import TeamRow from '../TeamRow';
-import Pagination from '../../../../components/Pagination';
-import useStylesLocal from './style';
 
-const createData = (name, membersCount, tablesCount) => ({
-  name,
-  membersCount,
-  tablesCount,
-});
-
-const rows = [
-  // rows array containing each row as object
-  createData('Team 1', 6, 1),
-  createData('Team 2', 10, 2),
-  createData('Team 3', 12, 2),
-  createData('Team 4', 8, 2),
-  createData('Team 5', 5, 1),
-  createData('Team 6', 5, 1),
-  createData('Team 7', 5, 1),
-];
-
-const TeamsTable = () => {
-  const classes = useStylesLocal();
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (value) => {
-    setRowsPerPage(value);
-    setPage(0);
-  };
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
+const TeamsTable = ({ teams }) => {
+  const classesMain = useStylesMain();
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Teams</TableCell>
-            <TableCell align="center">MembersCount</TableCell>
-            <TableCell align="center">TablesCount</TableCell>
-            <TableCell align="right">
-              <Box mr={5}>Actions</Box>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TeamRow
-              name={row.name}
-              membersCount={row.membersCount}
-              tablesCount={row.tablesCount}
-            />
-          ))}
-
-          {emptyRows > 0 && (
+    <Paper>
+      <TableContainer className={classesMain.tableContainer}>
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: !teams.length })}
+        >
+          <TableHead>
             <TableRow>
-              <TableCell />
+              <TableCell>Teams</TableCell>
+              <TableCell align="center">MembersCount</TableCell>
+              <TableCell align="center">TablesCount</TableCell>
+              <TableCell align="right">
+                <Box mr={5}>Actions</Box>
+              </TableCell>
             </TableRow>
+          </TableHead>
+          {!teams.length ? (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
+                >
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {teams.map((team) => (
+                <TeamRow
+                  name={team.team_name}
+                  membersCount={team.members_count}
+                  tablesCount={team.tables.length}
+                  key={team._id}
+                  id={team._id}
+                />
+              ))}
+            </TableBody>
           )}
-        </TableBody>
-      </Table>
-      <Pagination
-        rows={rows}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </TableContainer>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 

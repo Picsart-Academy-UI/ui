@@ -1,114 +1,174 @@
-import { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTeams } from '../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { fetchTeams } from '../../store/slices/teamsSlice';
+import { fetchedUsersList } from '../../store/slices/usersSlice';
 import useFetch from '../../hooks/useFetch';
+import useDebounce from '../../hooks/useDebounce';
 import {
   getLimitedUsersRequestData,
-  getUsersSearchRequestData,
+  getFilteredUsersRequestData,
 } from '../../services/users';
-import { fetchedUsersList } from '../../store/slices/usersSlice';
-import DropDown from './components/DropDown';
+import Filter from '../../components/Filter';
+import SelectDropdown from '../../components/SelectDropdown';
 import UsersTable from './components/UsersTable';
-import SearchBox from './components/SearchBox';
 import AddUser from './components/AddUser';
+import useStylesLocal from './style';
 
 const Users = () => {
+  const classesLocal = useStylesLocal();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
-  const { token, teams } = useSelector((state) => ({
+  const [selectedTeamId, setSelectedTeamId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
+  const { token, isAdmin, teams, usersData } = useSelector((state) => ({
     token: state.signin.token,
+    isAdmin: state.signin.curUser.is_admin,
     teams: state.teams.teams,
+    usersData: state.users.usersList,
   }));
 
+  const users = useMemo(
+    () => ({
+      data: (usersData.data || []).filter(({ first_name }) =>
+        first_name.toLowerCase().startsWith(searchValue.toLowerCase())
+      ),
+    }),
+    [usersData.data, searchValue]
+  );
+
+  const teamsOptions = useMemo(
+    () => [{ team_name: 'All', _id: 'all' }, ...teams],
+    [teams]
+  );
+
+  const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
+  const fetchings = async (
+    currentPage,
+    currentRowsPerPage,
+    currentSelectedTeamId,
+    currentSearchValue
+  ) => {
+    if (!currentSearchValue && currentSelectedTeamId === '' && !fetched) {
+      setIsLoading(true);
+      const requestData = getLimitedUsersRequestData(
+        token,
+        currentRowsPerPage,
+        currentPage,
+        isAdmin
+      );
+      const fetchedUsers = await makeRequest(requestData);
+      await dispatch(fetchedUsersList(fetchedUsers));
 
-  const handleChangePage = (newPage) => {
+      if (!isAdmin) {
+        setFetched(true);
+      }
+      setIsLoading(false);
+    } else if (
+      (isAdmin && currentSearchValue) ||
+      currentSelectedTeamId !== ''
+    ) {
+      setIsLoading(true);
+      const requestData = getFilteredUsersRequestData(
+        token,
+        currentRowsPerPage,
+        currentPage,
+        currentSelectedTeamId,
+        currentSearchValue
+      );
+      const selectedUsers = await makeRequest(requestData);
+      await dispatch(fetchedUsersList(selectedUsers));
+      setIsLoading(false);
+    }
+  };
+
+  const debouncedFetchings = useDebounce(fetchings, 100);
+
+  const handleChangePage = async (newPage) => {
+    await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (value) => {
+  const handleChangeRowsPerPage = async (value) => {
+    await fetchings(1, value, selectedTeamId, searchValue);
     setRowsPerPage(value);
     setPage(0);
   };
 
   const handleInputChange = (value) => {
+    if (isAdmin) {
+      debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
+    }
     setSearchValue(value);
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const requestData = getLimitedUsersRequestData(
-        token,
-        rowsPerPage,
-        page + 1
-      );
-      const res = await makeRequest(requestData);
-      dispatch(fetchedUsersList(res));
-    };
+  const handleSelectedTeamChange = async (teamId) => {
+    await fetchings(page + 1, rowsPerPage, teamId, searchValue);
+    setSelectedTeamId(teamId);
+  };
 
-    const fetchBySearch = async () => {
-      const requestData = getUsersSearchRequestData(
-        token,
-        rowsPerPage,
-        page + 1,
-        searchValue
-      );
-      const searchedUsers = await makeRequest(requestData);
-      // console.log('searchedUsers', searchedUsers);
-      dispatch(fetchedUsersList(searchedUsers));
-    };
-    if (!searchValue) {
-      fetchUsers();
-    } else {
-      // console.log('searchValue', searchValue);
-      // console.log("page", page + 1);
-      fetchBySearch();
+  const onSelectChange = (teamObj) => {
+    if (teamObj.team_name === 'All') {
+      handleSelectedTeamChange('');
+      return;
     }
-  }, [page, rowsPerPage, searchValue, dispatch, makeRequest, token]);
+    const { _id } = teams.find((team) => team.team_name === teamObj.team_name);
+    handleSelectedTeamChange(_id);
+  };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const getTeams = await makeRequest(requestData);
-      // console.log('getTeams', getTeams);
-      if (getTeams.data) {
-        dispatch(setTeams(getTeams.data));
-      }
-    };
-    if (!teams.length) {
-      fetchTeams();
+    if (!users.data?.length && page !== 0 && usersCount / rowsPerPage <= page) {
+      setPage(page - 1);
     }
-  }, [teams, dispatch, makeRequest, token]);
+  }, [users.data?.length, page, usersCount, rowsPerPage]);
 
-  const usersData = useSelector((state) => state.users);
-  // console.log('usersData', usersData);
+  useEffect(() => {
+    dispatch(fetchTeams());
+  }, []);
+
+  useEffect(() => {
+    fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
+  }, []);
+
+  useEffect(() => {
+    if (page !== 0) {
+      handleChangePage(0);
+    }
+  }, [searchValue]);
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs>
-          <SearchBox
+      <div className={classesLocal.wrapper}>
+        <div className={classesLocal.searchWrapper}>
+          <Filter
             value={searchValue}
             onChange={handleInputChange}
-            onPageChange={handleChangePage}
+            className={classesLocal.filter}
+            placeholder="Search By Name"
           />
-        </Grid>
-        <Grid item xs>
-          <DropDown />
-        </Grid>
-        <Grid item xs>
-          <AddUser />
-        </Grid>
-      </Grid>
+          {isAdmin && (
+            <SelectDropdown
+              property="team_name"
+              label="Team"
+              options={teamsOptions}
+              onChange={onSelectChange}
+              className={classesLocal.selectDropdown}
+            />
+          )}
+        </div>
+        {isAdmin && <AddUser />}
+      </div>
       <UsersTable
-        rows={usersData}
+        isLoading={isLoading}
+        rows={users}
+        count={usersCount}
         page={page}
         rowsPerPage={rowsPerPage}
+        isAdmin={isAdmin}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

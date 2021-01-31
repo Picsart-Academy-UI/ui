@@ -5,24 +5,28 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Box,
+  Paper,
+  Typography,
 } from '@material-ui/core';
-import UserRow from '../UserRow';
+import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import Pagination from '../../../../components/Pagination';
-import useStylesLocal from './style';
+import useStylesMain from '../../../../hooks/useStylesMain';
+import UserRow from '../UserRow';
 
 const UsersTable = ({
+  isLoading,
   rows,
+  count,
   page,
   rowsPerPage,
+  isAdmin,
   onChangePage,
   onChangeRowsPerPage,
 }) => {
-  const classes = useStylesLocal();
-
-  const { data, count } = rows.usersList;
-
+  const classesMain = useStylesMain();
+  const { data } = rows;
   // console.log('data', data);
 
   const handleChangePage = (newPage) => {
@@ -33,19 +37,15 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  const emptyRows =
-    data && data.length
-      ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-      : 0;
+  const onDelete = useCallback(() => onChangePage(page), [page]);
 
-  if (data && !data.length) {
-    return <h1>Nothing Found</h1>;
-  }
-
-  return data ? (
+  return data || !isLoading ? (
     <Paper>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer className={classesMain.tableContainer}>
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: data && !data.length })}
+        >
           <TableHead>
             <TableRow>
               <TableCell />
@@ -53,30 +53,51 @@ const UsersTable = ({
               <TableCell align="center">Surname</TableCell>
               <TableCell align="center">Team</TableCell>
               <TableCell align="center">Gmail</TableCell>
-              <TableCell align="right">
-                <Box mr={9}>Actions</Box>
-              </TableCell>
+              {isAdmin && (
+                <TableCell align="right">
+                  <Box mr={9}>Actions</Box>
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rowsPerPage > 0 &&
-              data.map((user) => <UserRow key={user._id} user={user} />)}
-
-            {emptyRows > 0 && (
-              <TableRow>
-                <TableCell />
+          {data && !data.length ? (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
+                >
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
+                </TableCell>
               </TableRow>
-            )}
-          </TableBody>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {rowsPerPage > 0 &&
+                data.map((user) => (
+                  <UserRow
+                    key={user._id}
+                    user={user}
+                    isAdmin={isAdmin}
+                    onDelete={onDelete}
+                  />
+                ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
-      <Pagination
-        rows={count}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {isAdmin && (
+        <Pagination
+          rows={count}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   ) : (
     <>

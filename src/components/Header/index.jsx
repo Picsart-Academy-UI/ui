@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
@@ -10,110 +10,94 @@ import {
   Menu,
   Tabs,
   Tab,
+  Avatar,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
+import { PICSART_LOGO_WHITE } from '../../constants';
 import { setIsLoggedOut } from '../../store/slices/signinSlice';
-import { setPath } from './desktopMenuLeftUtils';
+import { setPath } from './utils';
 import useStylesLocal from './style';
 
 const Header = () => {
+  const classesLocal = useStylesLocal();
   const dispatch = useDispatch();
-
-  const classes = useStylesLocal();
-
   const history = useHistory();
   const location = useLocation();
-
-  const { curUser } = useSelector((state) => state.signin);
+  const user = useSelector((state) => state.signin.curUser);
+  const isAdmin = user.is_admin;
 
   const [
-    mobileMenuRightProfileMenuAnchorEl,
-    setMobileMenuRightProfileMenuAnchorEl,
+    mobileMenuProfileMenuAnchorEl,
+    setMobileMenuProfileMenuAnchorEl,
   ] = useState(null);
-  const [mobileMoreRightAnchorEl, setMobileMoreRightAnchorEl] = useState(null);
-  const [mobileMoreLeftAnchorEl, setMobileMoreLeftAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMobileMenuRightProfileMenuOpen = Boolean(
-    mobileMenuRightProfileMenuAnchorEl
-  );
-  const isMobileMenuRightOpen = Boolean(mobileMoreRightAnchorEl);
-  const isMobileMenuLeftOpen = Boolean(mobileMoreLeftAnchorEl);
+  const isMobileMenuProfileMenuOpen = Boolean(mobileMenuProfileMenuAnchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const menuId = 'primary-search-account-menu';
-  const mobileMenuRightIconId = 'primary-search-account-menu-mobile-right-icon';
-  const mobileMenuLeftIconId = 'primary-search-account-menu-mobile-left-icon';
+  const mobileMenuIconId = 'primary-search-account-menu-mobile-icon';
 
   const handleDesktopMenuLeftRoute = (event, newValue) => {
     history.push(newValue);
   };
 
   const handleMobileMenuProfileMenuOpen = (event) => {
-    setMobileMenuRightProfileMenuAnchorEl(event.currentTarget);
+    setMobileMenuProfileMenuAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuRightIconClose = () => {
-    setMobileMoreRightAnchorEl(null);
+  const handleMobileMenuIconClose = () => {
+    setMobileMoreAnchorEl(null);
   };
 
-  const handleMobileMenuRightProfileMenuClose = () => {
-    setMobileMenuRightProfileMenuAnchorEl(null);
-    handleMobileMenuRightIconClose();
+  const handleMobileMenuProfileMenuClose = () => {
+    setMobileMenuProfileMenuAnchorEl(null);
+    handleMobileMenuIconClose();
   };
 
-  const handleMobileMenuRightIconOpen = (event) => {
-    setMobileMoreRightAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuLeftIconOpen = (event) => {
-    setMobileMoreLeftAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuLeftIconClose = () => {
-    setMobileMoreLeftAnchorEl(null);
+  const handleMobileMenuIconOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const handleMobileMenuLeftRoute = (e) => {
-    handleMobileMenuLeftIconClose();
+    handleMobileMenuIconClose();
     history.push(e.currentTarget.dataset.route);
   };
 
-  const handleMobileMenuRightProfileMenuRoute = (e, isLogOut = false) => {
-    handleMobileMenuRightProfileMenuClose();
+  const handleMobileMenuProfileMenuRoute = (e, isLogOut = false) => {
+    handleMobileMenuProfileMenuClose();
     history.push(e.currentTarget.dataset.route);
     if (isLogOut) {
       dispatch(setIsLoggedOut());
     }
   };
 
-  const mobileMenuLeftIcon = (
+  const mobileMenuIcon = (
     <IconButton
       aria-label="show more"
-      aria-controls={mobileMenuLeftIconId}
+      aria-controls={mobileMenuIconId}
       aria-haspopup="true"
-      onClick={handleMobileMenuLeftIconOpen}
+      onClick={handleMobileMenuIconOpen}
       color="inherit"
-      className={classes.mobileMenuLeftIcon}
+      className={classesLocal.mobileMenuIcon}
     >
       <MenuIcon />
     </IconButton>
   );
 
-  const mobileMenuLeft = (
+  const mobileMenu = (
     <Menu
-      anchorEl={mobileMoreLeftAnchorEl}
+      anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuLeftIconId}
+      id={mobileMenuIconId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuLeftOpen}
-      onClose={handleMobileMenuLeftIconClose}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuIconClose}
     >
       <MenuItem data-route="/reservations" onClick={handleMobileMenuLeftRoute}>
         <IconButton>
@@ -123,14 +107,16 @@ const Header = () => {
         </IconButton>
         <p>Reservations</p>
       </MenuItem>
-      <MenuItem data-route="/teams" onClick={handleMobileMenuLeftRoute}>
-        <IconButton>
-          <Badge color="secondary">
-            <PeopleAltRoundedIcon />
-          </Badge>
-        </IconButton>
-        <p>Teams</p>
-      </MenuItem>
+      {isAdmin && (
+        <MenuItem data-route="/teams" onClick={handleMobileMenuLeftRoute}>
+          <IconButton>
+            <Badge color="secondary">
+              <PeopleAltRoundedIcon />
+            </Badge>
+          </IconButton>
+          <p>Teams</p>
+        </MenuItem>
+      )}
       <MenuItem data-route="/users" onClick={handleMobileMenuLeftRoute}>
         <IconButton>
           <Badge color="secondary">
@@ -139,19 +125,37 @@ const Header = () => {
         </IconButton>
         <p>Users</p>
       </MenuItem>
-      <MenuItem data-route="/requests" onClick={handleMobileMenuLeftRoute}>
-        <IconButton>
+      {isAdmin && (
+        <MenuItem data-route="/requests" onClick={handleMobileMenuLeftRoute}>
+          <IconButton>
+            <Badge color="secondary">
+              <DirectionsWalkIcon />
+            </Badge>
+          </IconButton>
+          <p>Requests</p>
+        </MenuItem>
+      )}
+      <MenuItem onClick={handleMobileMenuProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+        >
           <Badge color="secondary">
-            <DirectionsWalkIcon />
+            <Avatar
+              alt="Remy Sharp"
+              src={`${user.profile_picture}`}
+              className={classesLocal.small}
+            />
           </Badge>
         </IconButton>
-        <p>Requests</p>
+        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
 
   const desktopMenuLeft = (
-    <div className={classes.desktopMenuLeft}>
+    <div className={classesLocal.desktopMenuLeft}>
       {/* value={setPath(location.pathname) ? setPath(location.pathname) : false} for not included paths in menu */}
       <Tabs
         value={setPath(location.pathname) ? setPath(location.pathname) : false}
@@ -161,102 +165,59 @@ const Header = () => {
         <Tab
           label="Reservations"
           value="/reservations"
-          className={classes.linkTab}
-          wrapped
+          className={classesLocal.linkTab}
         />
-        <Tab label="Teams" value="/teams" className={classes.linkTab} />
-        <Tab label="Users" value="/users" className={classes.linkTab} />
-        <Tab label="Requests" value="/requests" className={classes.linkTab} />
+        {isAdmin && (
+          <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        )}
+        <Tab label="Users" value="/users" className={classesLocal.linkTab} />
+        {isAdmin && (
+          <Tab
+            label="Requests"
+            value="/requests"
+            className={classesLocal.linkTab}
+          />
+        )}
       </Tabs>
     </div>
   );
 
   const desktopMenuRight = (
-    <div className={classes.desktopMenuRight}>
-      <IconButton aria-label="show 17 new notifications" color="inherit">
-        <Badge badgeContent={17} color="secondary">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
+    <div className={classesLocal.desktopMenuRight}>
       <IconButton
-        edge="end"
         aria-label="account of current user"
         aria-controls={menuId}
         aria-haspopup="true"
         onClick={handleMobileMenuProfileMenuOpen}
         color="inherit"
       >
-        <AccountCircle />
+        <Avatar
+          alt="Remy Sharp"
+          src={`${user.profile_picture}`}
+          className={classesLocal.small}
+        />
       </IconButton>
     </div>
-  );
-
-  const mobileMenuRightIcon = (
-    <div className={classes.mobileMenuRightIcon}>
-      <IconButton
-        aria-label="show more"
-        aria-controls={mobileMenuRightIconId}
-        aria-haspopup="true"
-        onClick={handleMobileMenuRightIconOpen}
-        color="inherit"
-      >
-        <MoreIcon />
-      </IconButton>
-    </div>
-  );
-
-  const mobileMenuRight = (
-    <Menu
-      anchorEl={mobileMoreRightAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuRightIconId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuRightOpen}
-      onClose={handleMobileMenuRightIconClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 17 new notifications" color="inherit">
-          <Badge badgeContent={17} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleMobileMenuProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
   );
 
   const mobileMenuRightProfileMenu = (
     <Menu
-      anchorEl={mobileMenuRightProfileMenuAnchorEl}
+      anchorEl={mobileMenuProfileMenuAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuRightProfileMenuOpen}
-      onClose={handleMobileMenuRightProfileMenuClose}
+      open={isMobileMenuProfileMenuOpen}
+      onClose={handleMobileMenuProfileMenuClose}
     >
-      <Link
-        to={{ pathname: '/profile/me', user: curUser }}
-        style={{ textDecoration: 'none' }}
-      >
-        <MenuItem onClick={handleMobileMenuRightProfileMenuRoute}>
-          Profile
-        </MenuItem>
-      </Link>
       <MenuItem
-        onClick={(e) => handleMobileMenuRightProfileMenuRoute(e, true)}
+        onClick={handleMobileMenuProfileMenuRoute}
+        data-route="/profile/me"
+      >
+        Profile
+      </MenuItem>
+      <MenuItem
+        onClick={(e) => handleMobileMenuProfileMenuRoute(e, true)}
         data-route="/signin"
       >
         Log Out
@@ -265,20 +226,22 @@ const Header = () => {
   );
 
   return (
-    <div className={classes.grow}>
-      {mobileMenuLeft}
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          {mobileMenuLeftIcon}
-          {desktopMenuLeft}
-          <div className={classes.grow} />
-          {desktopMenuRight}
-          {mobileMenuRightIcon}
+    <>
+      <AppBar position="fixed" className={classesLocal.header}>
+        <Toolbar className={classesLocal.toolbar}>
+          <div>
+            <img src={PICSART_LOGO_WHITE} alt="Logo" />
+          </div>
+          <div>{desktopMenuLeft}</div>
+          <div>
+            {mobileMenuIcon}
+            {desktopMenuRight}
+          </div>
         </Toolbar>
       </AppBar>
-      {mobileMenuRight}
+      {mobileMenu}
       {mobileMenuRightProfileMenu}
-    </div>
+    </>
   );
 };
 

@@ -1,4 +1,8 @@
-import { EMAIL_REGEXP, GMAIL_REGEXP } from '../../../../../constants';
+import {
+  EMAIL_REGEXP,
+  GMAIL_REGEXP,
+  PICSART_MAIL_REGEXP,
+} from '../../../../../constants';
 
 const validateInfo = (values) => {
   const errors = {};
@@ -6,8 +10,9 @@ const validateInfo = (values) => {
   if (!values.email) {
     errors.email = 'Email address required';
   } else if (
-    !EMAIL_REGEXP.test(values.email) ||
-    !GMAIL_REGEXP.test(values.email)
+    !EMAIL_REGEXP.test(values.email) &&
+    (!GMAIL_REGEXP.test(values.email) ||
+      !PICSART_MAIL_REGEXP.test(values.email))
   ) {
     errors.email = 'invalid email address';
   }
@@ -20,13 +25,13 @@ const validateInfo = (values) => {
     errors.last_name = 'Surname required';
   }
 
-  if (values.birthdate) {
+  if (values.birthday) {
     const nowYear = new Date().getFullYear();
-    const birthYear = Number(values.birthdate.split('-')[0]);
+    const birthYear = Number(values.birthday.split('-')[0]);
     const isOlder100 = nowYear - birthYear > 100;
-    const isFromFuture = new Date(values.birthdate) > new Date();
+    const isFromFuture = new Date(values.birthday) > new Date();
     if (isFromFuture || isOlder100) {
-      errors.birthdate = 'Invalid date';
+      errors.birthday = 'Invalid date';
     }
   }
 
