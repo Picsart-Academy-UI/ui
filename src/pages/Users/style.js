@@ -21,8 +21,3 @@ const useStylesLocal = makeStyles((theme) => ({
 }));
 
 export default useStylesLocal;
-
-// searchWrapper: {
-//   display: 'flex',
-//   alignItems: 'center',
-// },

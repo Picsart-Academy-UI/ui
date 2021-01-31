@@ -10,13 +10,9 @@ import {
 } from '../../services/users';
 import Filter from '../../components/Filter';
 import SelectDropdown from '../../components/SelectDropdown';
-// import TeamsDropDown from './components/TeamsDropDown';
 import UsersTable from './components/UsersTable';
-// import SearchUsers from './components/SearchBox';
 import AddUser from './components/AddUser';
 import useStylesLocal from './style';
-
-// git commit --amend
 
 const Users = () => {
   const classesLocal = useStylesLocal();
@@ -45,13 +41,12 @@ const Users = () => {
   const teamsOptions = useMemo(
     () => [{ team_name: 'All', _id: 'all' }, ...teams],
     [teams]
-  ); // new Added
+  );
 
   const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
   const makeRequest = useFetch();
 
   const dispatch = useDispatch();
-  // common js  require - production
   const fetchings = async (
     currentPage,
     currentRowsPerPage,
@@ -91,9 +86,7 @@ const Users = () => {
     }
   };
 
-  // const debouncedFetchings = useMemo(() => useDebounce(fetchings, 100), []);
-  const debouncedFetchings = useDebounce(fetchings, 100); // returns Function
-  console.log({ debouncedFetchings });
+  const debouncedFetchings = useDebounce(fetchings, 100);
 
   const handleChangePage = async (newPage) => {
     await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
@@ -109,7 +102,7 @@ const Users = () => {
   const handleInputChange = (value) => {
     console.log('value', value);
     if (isAdmin) {
-      debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value); // give to that function params
+      debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
     }
     setSearchValue(value);
   };
@@ -120,7 +113,6 @@ const Users = () => {
   };
 
   const onSelectChange = (teamObj) => {
-    // new Added
     if (teamObj.team_name === 'All') {
       handleSelectedTeamChange('');
       return;
@@ -140,12 +132,10 @@ const Users = () => {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect Users request');
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
   }, []);
 
   useEffect(() => {
-    // new Added
     if (page !== 0) {
       handleChangePage(0);
     }
@@ -183,14 +173,3 @@ const Users = () => {
 };
 
 export default Users;
-
-// <SearchUsers
-//             value={searchValue}
-//             onChange={handleInputChange}
-//             onChangePage={handleChangePage}
-//           />
-
-// <TeamsDropDown
-//               teams={teams}
-//               onSelectChange={handleSelectedTeamChange}
-//             />

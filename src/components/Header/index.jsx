@@ -28,6 +28,7 @@ const Header = () => {
   const history = useHistory();
   const location = useLocation();
   const user = useSelector((state) => state.signin.curUser);
+  const isAdmin = user.is_admin;
 
   const [
     mobileMenuProfileMenuAnchorEl,
@@ -106,14 +107,16 @@ const Header = () => {
         </IconButton>
         <p>Reservations</p>
       </MenuItem>
-      <MenuItem data-route="/teams" onClick={handleMobileMenuLeftRoute}>
-        <IconButton>
-          <Badge color="secondary">
-            <PeopleAltRoundedIcon />
-          </Badge>
-        </IconButton>
-        <p>Teams</p>
-      </MenuItem>
+      {isAdmin && (
+        <MenuItem data-route="/teams" onClick={handleMobileMenuLeftRoute}>
+          <IconButton>
+            <Badge color="secondary">
+              <PeopleAltRoundedIcon />
+            </Badge>
+          </IconButton>
+          <p>Teams</p>
+        </MenuItem>
+      )}
       <MenuItem data-route="/users" onClick={handleMobileMenuLeftRoute}>
         <IconButton>
           <Badge color="secondary">
@@ -122,14 +125,16 @@ const Header = () => {
         </IconButton>
         <p>Users</p>
       </MenuItem>
-      <MenuItem data-route="/requests" onClick={handleMobileMenuLeftRoute}>
-        <IconButton>
-          <Badge color="secondary">
-            <DirectionsWalkIcon />
-          </Badge>
-        </IconButton>
-        <p>Requests</p>
-      </MenuItem>
+      {isAdmin && (
+        <MenuItem data-route="/requests" onClick={handleMobileMenuLeftRoute}>
+          <IconButton>
+            <Badge color="secondary">
+              <DirectionsWalkIcon />
+            </Badge>
+          </IconButton>
+          <p>Requests</p>
+        </MenuItem>
+      )}
       <MenuItem onClick={handleMobileMenuProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -162,13 +167,17 @@ const Header = () => {
           value="/reservations"
           className={classesLocal.linkTab}
         />
-        <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        {isAdmin && (
+          <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        )}
         <Tab label="Users" value="/users" className={classesLocal.linkTab} />
-        <Tab
-          label="Requests"
-          value="/requests"
-          className={classesLocal.linkTab}
-        />
+        {isAdmin && (
+          <Tab
+            label="Requests"
+            value="/requests"
+            className={classesLocal.linkTab}
+          />
+        )}
       </Tabs>
     </div>
   );
