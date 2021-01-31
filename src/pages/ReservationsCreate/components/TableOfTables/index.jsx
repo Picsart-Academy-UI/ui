@@ -7,7 +7,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import useReservation from '../../hooks/useReservation';
-import useDate from '../../hooks/useDate';
+import useDate from '../../../../hooks/useDate';
 import useStyles from './style';
 
 const TableOfTables = ({

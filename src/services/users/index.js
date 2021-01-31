@@ -10,6 +10,16 @@ export const getUserInvitationRequestData = ({ token, body }) =>
     body: JSON.stringify(body),
   });
 
+export const getUserUpdateRequestData = ({ token, id, body }) =>
+  new Request(`${MAIN_URL}users/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
 export const getLimitedUsersRequestData = (token, limit, page, isAdmin) =>
   new Request(
     `${MAIN_URL}users${isAdmin ? `/all?limit=${limit}&page=${page}` : ''}`,
@@ -36,9 +46,9 @@ export const getFilteredUsersRequestData = (
   value
 ) =>
   new Request(
-    `${MAIN_URL}users/all?${
-      teamId ? `team_id=${teamId}` : ''
-    }&first_name=${value}&limit=${limit}&page=${page}`,
+    `${MAIN_URL}users/all?${teamId ? `team_id=${teamId}` : ''}${
+      value ? `&first_name=${value}` : ''
+    }&limit=${limit}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

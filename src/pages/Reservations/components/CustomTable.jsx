@@ -11,15 +11,18 @@ import {
 } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import useDate from '../../../hooks/useDate';
 import useStylesMain from '../../../hooks/useStylesMain';
 import useStylesLocal from '../style';
 
 const ResTable = ({ isHistory, data, edit, cancel }) => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
+  const { transformFromISOToFormat } = useDate();
+
   return (
     <Paper>
-      <TableContainer>
+      <TableContainer className={classesMain.tableContainer}>
         <Table>
           <TableHead>
             <TableRow>
@@ -38,7 +41,10 @@ const ResTable = ({ isHistory, data, edit, cancel }) => {
           <TableBody>
             {data.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.date}</TableCell>
+                <TableCell>
+                  {transformFromISOToFormat(item.start_date)} -{' '}
+                  {transformFromISOToFormat(item.end_date)}
+                </TableCell>
                 <TableCell align="center">{item.place}</TableCell>
                 <TableCell align="center" className={classesLocal[item.status]}>
                   {item.status}

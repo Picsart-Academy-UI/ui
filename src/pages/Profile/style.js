@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
+  upperGrid: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
   avatar: {
     height: 100,
     width: 100,
@@ -15,6 +19,8 @@ const useStylesLocal = makeStyles((theme) => ({
   textHeader: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
   textField: {
     minWidth: 250,

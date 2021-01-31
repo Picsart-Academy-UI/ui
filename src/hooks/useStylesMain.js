@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CHAIR, STYLES } from '../constants';
+import { CHAIR } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
@@ -11,7 +11,7 @@ const useStylesMain = makeStyles((theme) => ({
     height: '100vh',
   },
   paperPadding: {
-    minWidth: STYLES.appMinWidth,
+    minWidth: '564px',
     margin: 'auto',
     marginTop: theme.spacing(6),
     padding: theme.spacing(4),
@@ -32,7 +32,7 @@ const useStylesMain = makeStyles((theme) => ({
     padding: theme.spacing(1, 2),
     background:
       '-webkit-linear-gradient(120deg, rgba(219,68,218,1) 0%, rgba(89,192,246,1) 78%, rgba(58,231,255,1) 100%)',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
     fontWeight: 500,
     color: 'white',
   },
@@ -48,8 +48,22 @@ const useStylesMain = makeStyles((theme) => ({
     color: 'rgb(253, 19, 85)',
   },
   tableContainer: {
-    maxHeight: STYLES.tableMaxHeight,
-    minWidth: STYLES.tableMinWidth,
+    // fullheight - header - margin - pagepadding - searchpadding - search - pagination
+    height: 'calc(100vh - 60px - 60px - 64px - 16px - 61px - 52px)',
+    minHeight: 410,
+    minWidth: 500,
+  },
+  tableEmpty: {
+    height: '100%',
+  },
+  tableBody: {
+    height: '100%',
+  },
+  tableRow: {
+    height: '100%',
+  },
+  tableCell: {
+    height: '100%',
   },
   searchRes: {
     fontSize: theme.spacing(3),

@@ -5,10 +5,11 @@ import Profile from '../index';
 import mockstore from '../../../__mocks__/index';
 import {
   Avatar,
-  Button,
-  Card,
+  Grid,
   FormControl,
   Typography,
+  Hidden,
+  Button,
 } from '@material-ui/core';
 
 const get = (props) =>
@@ -28,12 +29,12 @@ const props = {
   },
   location: {
     user: {
-      _id: '5ff9abbad15b18a330bb578a',
+      _id: '1',
       is_admin: true,
       created_at: '2021-01-09T13:01:13.313Z',
       updated_at: '2021-01-09T13:01:13.313Z',
       email: 'mock@picsart.com',
-      team_id: '5fe23d54a710eb52a9fe0835',
+      team_id: '1',
       first_name: 'Mock',
       last_name: 'Mock',
       __v: 0,
@@ -51,7 +52,7 @@ describe('Profile: ', () => {
   });
 
   test('should render properly', () => {
-    expect(find(cmp, Card).length).toBeGreaterThanOrEqual(1);
+    expect(find(cmp, Grid).length).toBeGreaterThanOrEqual(3);
   });
 
   test('should have an avatar', () => {
@@ -64,9 +65,5 @@ describe('Profile: ', () => {
 
   test('should have an dropdown to select team', () => {
     expect(find(cmp, FormControl).length).toBeGreaterThanOrEqual(1);
-  });
-
-  test('should have a submit button', () => {
-    expect(find(cmp, Button).length).toBeGreaterThanOrEqual(1);
   });
 });

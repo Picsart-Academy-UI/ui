@@ -5,7 +5,7 @@ import { GOOGLE_LOGO } from '../../constants';
 import useFetch from '../../hooks/useFetch';
 import { setIsLoggedIn } from '../../store/slices/signinSlice';
 // import useStylesMain from '../../hooks/useStylesMain';
-import getGoogleRequestData from '../../services/signin';
+import getGoogleRequestData from '../../services/signinService';
 import useStylesLocal from './style';
 
 const SignIn = () => {
@@ -17,12 +17,15 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   const responseGoogle = async (response) => {
+    console.log(response);
     const request = getGoogleRequestData(response);
     const res = await makeRequest(request);
     if (res.token && res.data) {
       dispatch(setIsLoggedIn(res));
     }
   };
+
+  console.log(process.env);
 
   return (
     <div
@@ -35,7 +38,7 @@ const SignIn = () => {
       <Container component="div">
         <Box className={classesLocal.signInContainer}>
           <GoogleLogin
-            clientId="885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             render={(renderProps) => (
               <Button
                 className={classesLocal.buttonGoogle}

@@ -5,14 +5,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Box,
+  Paper,
+  Typography,
 } from '@material-ui/core';
+import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import Pagination from '../../../../components/Pagination';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import UserRow from '../UserRow';
 
 const UsersTable = ({
+  isLoading,
   rows,
   count,
   page,
@@ -33,10 +37,15 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  return data ? (
+  const onDelete = useCallback(() => onChangePage(page), [page]);
+
+  return data || !isLoading ? (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: data && !data.length })}
+        >
           <TableHead>
             <TableRow>
               <TableCell />
@@ -52,14 +61,16 @@ const UsersTable = ({
             </TableRow>
           </TableHead>
           {data && !data.length ? (
-            <TableBody>
-              <TableRow>
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={6}
-                  className={classesMain.searchRes}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
                 >
-                  Nothing Found
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -67,7 +78,12 @@ const UsersTable = ({
             <TableBody>
               {rowsPerPage > 0 &&
                 data.map((user) => (
-                  <UserRow key={user._id} user={user} isAdmin={isAdmin} />
+                  <UserRow
+                    key={user._id}
+                    user={user}
+                    isAdmin={isAdmin}
+                    onDelete={onDelete}
+                  />
                 ))}
             </TableBody>
           )}

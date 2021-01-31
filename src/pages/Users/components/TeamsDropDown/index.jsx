@@ -2,7 +2,6 @@ import { FormHelperText, FormControl, NativeSelect } from '@material-ui/core';
 import useStylesLocal from './style';
 
 const TeamsDropDown = ({ teams, onSelectChange }) => {
-  // console.log("dropDownteams", teams)
   const classes = useStylesLocal();
 
   const handleSelectChange = (event) => {
