@@ -1,3 +1,17 @@
+## App Launch
+ Create a `.env` file and add the following variable in it
+  ```
+    REACT_APP_GOOGLE_CLIENT_ID=885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com
+  ```
+ Create a `.env.development` file and add the following variable in it
+  ```
+    REACT_APP_MAIN_URL=http://localhost:6789/api/v1/
+  ```
+ Create a `.env.production` file and add the following variable in it
+  ```
+    REACT_APP_MAIN_URL=https://api.officeorg.ninja/api/v1/
+  ```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
