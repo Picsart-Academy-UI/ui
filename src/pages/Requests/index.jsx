@@ -65,10 +65,6 @@ const Requests = () => {
           Refresh
         </ButtonLoading>
       </Box>
-
-      <Box fontSize="h4.fontSize" my={3}>
-        Active Requests
-      </Box>
       <RequestsTable
         loading={loading}
         teams={teamsList}
