@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import {
   Table,
   TableBody,
@@ -19,7 +19,7 @@ import GoToProfile from '../GoToProfile';
 import Delete from '../Delete';
 import useStylesLocal from './style';
 
-const UserRow = ({ user, name, isAdmin }) => {
+const UserRow = ({ user, name, isAdmin, onDelete }) => {
   const [open, setOpen] = useState(false);
   const [teamName, setTeamName] = useState('');
   // console.log("isADmin", isAdmin);
@@ -32,7 +32,8 @@ const UserRow = ({ user, name, isAdmin }) => {
 
   useEffect(() => {
     if (teams.length) {
-      const { team_name } = teams.find((team) => team._id === user.team_id);
+      const { team_name = '-' } =
+        teams.find((team) => team._id === user.team_id) || {};
       setTeamName(team_name);
     }
   }, [teams, user]);
@@ -63,6 +64,7 @@ const UserRow = ({ user, name, isAdmin }) => {
               <Delete
                 id={user._id}
                 userFullName={`${user.first_name} ${user.last_name}`}
+                onDelete={onDelete}
               />
             </div>
           </TableCell>
@@ -87,15 +89,16 @@ const UserRow = ({ user, name, isAdmin }) => {
                 <TableBody>
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
-                      {user.birthday &&
+                      {(user.birthday &&
                         new Date(user.birthday).toLocaleString('en', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
-                        })}
+                        })) ||
+                        '-'}
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
-                    <TableCell align="center">{user.phone}</TableCell>
+                    <TableCell align="center">{user.phone || '-'}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -107,4 +110,4 @@ const UserRow = ({ user, name, isAdmin }) => {
   );
 };
 
-export default UserRow;
+export default memo(UserRow);

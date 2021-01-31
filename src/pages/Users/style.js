@@ -11,6 +11,18 @@ const useStylesLocal = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  selectDropdown: {
+    marginLeft: 25,
+    width: '100%',
+  },
+  filter: {
+    width: '100%',
+  },
 }));
 
 export default useStylesLocal;
+
+// searchWrapper: {
+//   display: 'flex',
+//   alignItems: 'center',
+// },

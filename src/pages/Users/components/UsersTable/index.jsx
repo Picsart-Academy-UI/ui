@@ -8,11 +8,13 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
+import { useCallback } from 'react';
 import Pagination from '../../../../components/Pagination';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import UserRow from '../UserRow';
 
 const UsersTable = ({
+  isLoading,
   rows,
   count,
   page,
@@ -33,7 +35,13 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  return data ? (
+  // const onDelete = () => {
+  //   onChangePage(page);
+  // }
+
+  const onDelete = useCallback(() => onChangePage(page), [page]);
+
+  return data || !isLoading ? (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
@@ -67,7 +75,12 @@ const UsersTable = ({
             <TableBody>
               {rowsPerPage > 0 &&
                 data.map((user) => (
-                  <UserRow key={user._id} user={user} isAdmin={isAdmin} />
+                  <UserRow
+                    key={user._id}
+                    user={user}
+                    isAdmin={isAdmin}
+                    onDelete={onDelete}
+                  />
                 ))}
             </TableBody>
           )}
