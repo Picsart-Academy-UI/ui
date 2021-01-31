@@ -15,6 +15,15 @@ const useStyles = makeStyles({
       boxShadow: '1px 1px 3px 1px #D2D2D2',
     },
   },
+  topBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
+  refreshButton: {
+    marginTop: 32,
+  },
   filter: {
     marginBottom: 40,
     width: '100%',
@@ -25,8 +34,9 @@ const useStyles = makeStyles({
   filterContainer: {
     display: 'flex',
     flexDirection: 'column-reverse',
+    width: '100%',
   },
-  '@media (min-width: 676px)': {
+  '@media (min-width: 900px)': {
     filterContainer: {
       display: 'flex',
       justifyContent: 'flex-start',
@@ -39,6 +49,14 @@ const useStyles = makeStyles({
     selectDropdown: {
       marginRight: 20,
       width: 240,
+    },
+    topBar: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    refreshButton: {
+      marginTop: 0,
     },
   },
 });
