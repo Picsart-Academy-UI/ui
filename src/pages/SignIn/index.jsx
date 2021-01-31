@@ -35,7 +35,7 @@ const SignIn = () => {
       <Container component="div">
         <Box className={classesLocal.signInContainer}>
           <GoogleLogin
-            clientId="885648500880-etufj82ca1c83bsol4a04bvljs4lsouf.apps.googleusercontent.com"
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             render={(renderProps) => (
               <Button
                 className={classesLocal.buttonGoogle}
