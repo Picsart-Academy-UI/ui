@@ -38,7 +38,14 @@ function LoadsDialog({ row }) {
   const { token } = useMemoSelector((state) => tokenSelector(state));
 
   useEffect(() => {
-    seeLoad(token, date.start, date.end, user.teamId)
+    const start = new Date(date.start);
+    let end = new Date(date.start); // eslint-disable-line
+    if (date.days >= 30) {
+      end.setDate(end.getDate() + 30);
+    } else {
+      end = new Date(date.end);
+    }
+    seeLoad(token, start, end, user.teamId)
       .then((res) => new Promise((r) => setTimeout(() => r(res), 300)))
       .then((res) => {
         setData(res.data);

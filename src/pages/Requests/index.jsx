@@ -45,13 +45,17 @@ const Requests = () => {
       <Box className={classes.topBar}>
         <Box className={classes.filterContainer}>
           <SelectDropdown
-            label="Select Team"
+            label="Team"
             options={teamsList}
             property="team_name"
             className={classes.selectDropdown}
             onChange={handleTeamSelect}
           />
-          <Filter className={classes.filter} onChange={handleUsernameChange} />
+          <Filter
+            className={classes.filter}
+            onChange={handleUsernameChange}
+            placeholder="Search By Name"
+          />
         </Box>
         <ButtonLoading
           onClick={() => dispatch(fetchPendingReservationsWithData(token))}
