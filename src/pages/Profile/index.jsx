@@ -72,7 +72,7 @@ const Profile = (props) => {
       </Box>
       <Grid
         container
-        direction="row"
+        direction="column"
         justify="center"
         alignItems="center"
         className={classesLocal.upperGrid}
@@ -91,14 +91,6 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('last_name', e.target.value)}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
           className={classesLocal.textField}
@@ -106,14 +98,6 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('email', e.target.value)}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
           <TeamList
@@ -131,14 +115,6 @@ const Profile = (props) => {
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('position', e.target.value)}
         />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Typography className={classesLocal.textHeader}>
           Phone Number:
         </Typography>
@@ -150,19 +126,23 @@ const Profile = (props) => {
         />
         <Typography className={classesLocal.textHeader}>Birthday:</Typography>
         <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          value={
+            (edited.birthday &&
+              new Date(edited.birthday).toISOString().split('T')[0]) ||
+            ''
+          }
           className={classesLocal.textField}
-          value={edited.birthday || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('birthday', e.target.value)}
+          onChange={(e) =>
+            handleUserEdit('birthday', new Date(e.target.value).toISOString())
+          }
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
-      </Grid>
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        className={classesLocal.upperGrid}
-      >
         <Hidden xsUp={!isAdmin}>
           <Button
             className={classesMain.picsartButton}

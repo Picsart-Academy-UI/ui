@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStylesLocal = makeStyles((theme) => ({
   upperGrid: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(1),
   },
   avatar: {
-    height: 100,
-    width: 100,
+    height: 60,
+    width: 60,
   },
   emailField: {
     fontSize: '1rem',
