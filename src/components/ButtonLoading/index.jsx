@@ -35,7 +35,7 @@ function ButtonLoading({
 
   const handleButtonClick = () => {
     setLoading(true);
-    onClick(reservationId && reservationId).finally(() => {
+    onClick(reservationId).finally(() => {
       if (isMountedRef.current) {
         setLoading(false);
       }
