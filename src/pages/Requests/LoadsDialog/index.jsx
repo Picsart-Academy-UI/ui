@@ -50,7 +50,7 @@ function LoadsDialog({ row }) {
       .then((res) => {
         setData(res.data);
       });
-  }, [token, date.start, date.end, user.teamId]);
+  }, [token, date.days, date.start, date.end, user.teamId]);
 
   const handleClose = () => {
     setData([]);

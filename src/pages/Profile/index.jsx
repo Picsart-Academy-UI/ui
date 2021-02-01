@@ -39,7 +39,7 @@ const Profile = (props) => {
   const [edited, setEdited] = useState(user);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => setEdited(user), [user, id]);
+  useEffect(() => setEdited(user), [user]);
 
   useEffect(() => {
     if (
@@ -48,7 +48,7 @@ const Profile = (props) => {
     ) {
       dispatch(setNotMe(props.location.state));
     }
-  }, []);
+  }, [dispatch, id, other, props.location.state]);
 
   const updateUser = updateUserHook();
 
@@ -64,7 +64,6 @@ const Profile = (props) => {
 
   const handleEnterEditAndSubmit = () => {
     const potentialErrors = validateInfo(edited);
-    console.log(potentialErrors);
     if (Object.keys(potentialErrors).length) {
       setErrors(potentialErrors);
       return;
@@ -83,10 +82,7 @@ const Profile = (props) => {
   return (
     <>
       <Box alignItems="center" display="flex" flexDirection="column">
-        <Avatar
-          className={classesLocal.avatar}
-          src={edited.profile_picture || ''}
-        />
+        <Avatar className={classesLocal.avatar} src={curUser.profile_picture} />
       </Box>
       <Grid
         container

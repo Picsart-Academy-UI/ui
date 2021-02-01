@@ -10,7 +10,7 @@ const ChairTableRow = ({ item }) => {
   const dispatch = useDispatch();
   const choseCallback = useCallback(() => {
     dispatch(setSelectedRow(item));
-  }, [item]);
+  }, [dispatch, item]);
 
   return (
     <TableRow className={styles.tableRow}>

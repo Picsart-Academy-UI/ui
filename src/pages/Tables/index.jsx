@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useFetch from '../../hooks/useFetch';
+import makeFetch from '../../services';
 import { getTablesAllRequestData } from '../../services/tables';
 import { setTables } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
@@ -23,7 +23,6 @@ import useStylesLocal from './style';
 const TablesList = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
-  const makeRequest = useFetch();
   const dispatch = useDispatch();
 
   const { token, tables } = useSelector((state) => ({
@@ -31,27 +30,20 @@ const TablesList = () => {
     tables: state.tables.tables,
   }));
 
+  const fetchTables = async () => {
+    const tablesRes = await makeFetch(getTablesAllRequestData(token));
+    const teamsRes = await makeFetch(getTeamsAllRequestData(token));
+    if (teamsRes.data && tablesRes.data) {
+      dispatch(setTeams(teamsRes));
+      dispatch(setTables(tablesRes));
+    }
+  };
+
   useEffect(() => {
-    const getTables = async () => {
-      const requestTablesData = getTablesAllRequestData(token);
-      const tablesRes = await makeRequest(requestTablesData);
-      const requestTeamsData = getTeamsAllRequestData(token);
-      const teamsRes = await makeRequest(requestTeamsData);
-      if (teamsRes.data) {
-        dispatch(setTeams(teamsRes));
-      }
-      if (tablesRes.data) {
-        dispatch(setTables(tablesRes));
-      }
-    };
-
-    const getTeams = async () => {};
-
-    getTables();
-    getTeams();
-  }, [dispatch, makeRequest, token]);
-
-  useEffect(() => {}, [dispatch, makeRequest, token]);
+    if (!tables.length) {
+      fetchTables();
+    }
+  }, [tables.length]);
 
   return (
     <>
