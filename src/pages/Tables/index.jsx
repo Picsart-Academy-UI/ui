@@ -17,12 +17,12 @@ import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 import { getTeamsAllRequestData } from '../../services/teams';
 import TeamTableRow from './components/TeamTableRow';
-import AddTable from './components/AddTable';
-import useStylesLocal from './style';
+// import AddTable from './components/AddTable';
+// import useStylesLocal from './style';
 
 const TablesList = () => {
   const classesMain = useStylesMain();
-  const classesLocal = useStylesLocal();
+  // const classesLocal = useStylesLocal();
   const makeRequest = useFetch();
   const dispatch = useDispatch();
 
@@ -55,9 +55,9 @@ const TablesList = () => {
 
   return (
     <>
-      <div className={classesLocal.wrapper}>
-        <AddTable />
-      </div>
+      {/* <div className={classesLocal.wrapper}> */}
+      {/* <AddTable /> */}
+      {/* </div> */}
       <Paper>
         <TableContainer className={classesMain.tableContainer}>
           <Table stickyHeader aria-label="sticky table">
