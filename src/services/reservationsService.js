@@ -39,7 +39,7 @@ export const seeLoad = (token, start, end, teamId) =>
 
 // eslint-disable-next-line
 export const postReservation = (token, body) => {
-  makeRequest(`reservations`, {
+  makeRequest('reservations', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

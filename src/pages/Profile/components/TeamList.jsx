@@ -31,8 +31,9 @@ function TeamList({ changeCallback, isEditing, userTeam }) {
 
   useEffect(() => {
     if (teams.length) {
-      const teamItem = teams.find((t) => t._id === userTeam);
-      const optionsArr = teams.map((t) => ({ title: t.team_name, id: t._id }));
+      const teamItem = teams && teams.find((t) => t._id === userTeam);
+      const optionsArr =
+        teams && teams.map((t) => ({ title: t.team_name, id: t._id }));
       setDefaultTeam({ title: teamItem.team_name, id: teamItem._id });
       setOptions(optionsArr);
     }

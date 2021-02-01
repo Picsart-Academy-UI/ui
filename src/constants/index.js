@@ -1,4 +1,5 @@
 export const CHAIR = `${process.env.PUBLIC_URL}/images/chair.png`;
+export const SPACE = `${process.env.PUBLIC_URL}/images/background.jpg`;
 export const GOOGLE_LOGO = `${process.env.PUBLIC_URL}/images/google.png`;
 export const PICSART_LOGO = `${process.env.PUBLIC_URL}/images/picsart.jpg`;
 export const PICSART_LOGO_WHITE =
@@ -13,6 +14,10 @@ export const ROUTES = {
   reservations: '/reservations',
   reservationsCreate: '/reservations/create',
   teams: '/teams',
+  tables: '/tables',
   users: '/users',
   requests: '/requests',
 };
+export const publicVapidKey =
+  process.env.REACT_APP_PUBLIC_VAPID_KEY ||
+  'BOjfhJMEPQh3NggRpL_6ZTv4JWXsK8kHyo8xTJiUitepCzYDAg7d0cKuOiGclJgNrHKsFA7xQwuHJLj6icDp-5I';
