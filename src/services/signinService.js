@@ -1,3 +1,4 @@
+import makeRequest from '../utils/makeRequest';
 import { MAIN_URL } from '../constants';
 
 const getGoogleRequestData = (response) =>
@@ -12,3 +13,13 @@ const getGoogleRequestData = (response) =>
   });
 
 export default getGoogleRequestData;
+
+export const logout = (token, endpoint) =>
+  makeRequest('auth/logout', {
+    method: 'POST',
+    body: { endpoint },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  });

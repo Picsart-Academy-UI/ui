@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTeams } from '../../store/slices/teamsSlice';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
+import { setTeams } from '../../store/slices/teamsSlice';
 import useFetch from '../../hooks/useFetch';
 import useDebounce from '../../hooks/useDebounce';
+import { getTeamsAllRequestData } from '../../services/teams';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,
@@ -39,7 +40,7 @@ const Users = () => {
   );
 
   const teamsOptions = useMemo(
-    () => [{ team_name: 'All', _id: 'all' }, ...teams],
+    () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
     [teams]
   );
 
@@ -128,9 +129,12 @@ const Users = () => {
     }
   }, [users.data?.length, page, usersCount, rowsPerPage]);
 
-  useEffect(() => {
-    dispatch(fetchTeams());
-  }, [dispatch]);
+  useEffect(async () => {
+    if (!teams.length) {
+      const res = await makeRequest(getTeamsAllRequestData(token));
+      dispatch(setTeams(res));
+    }
+  }, [dispatch, makeRequest, token]);
 
   useEffect(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);

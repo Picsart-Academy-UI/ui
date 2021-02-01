@@ -15,10 +15,11 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import { PICSART_LOGO_WHITE } from '../../constants';
-import { setIsLoggedOut } from '../../store/slices/signinSlice';
+import { logoutAction } from '../../store/slices/signinSlice';
 import { setPath } from './utils';
 import useStylesLocal from './style';
 
@@ -28,6 +29,7 @@ const Header = () => {
   const history = useHistory();
   const location = useLocation();
   const user = useSelector((state) => state.signin.curUser);
+  const token = useSelector((state) => state.signin.token);
   const isAdmin = user.is_admin;
 
   const [
@@ -72,7 +74,7 @@ const Header = () => {
     handleMobileMenuProfileMenuClose();
     history.push(e.currentTarget.dataset.route);
     if (isLogOut) {
-      dispatch(setIsLoggedOut());
+      dispatch(logoutAction(token));
     }
   };
 
@@ -115,6 +117,16 @@ const Header = () => {
             </Badge>
           </IconButton>
           <p>Teams</p>
+        </MenuItem>
+      )}
+      {isAdmin && (
+        <MenuItem data-route="/tables" onClick={handleMobileMenuLeftRoute}>
+          <IconButton>
+            <Badge color="secondary">
+              <DashboardOutlinedIcon />
+            </Badge>
+          </IconButton>
+          <p>Tables</p>
         </MenuItem>
       )}
       <MenuItem data-route="/users" onClick={handleMobileMenuLeftRoute}>
@@ -169,6 +181,13 @@ const Header = () => {
         />
         {isAdmin && (
           <Tab label="Teams" value="/teams" className={classesLocal.linkTab} />
+        )}
+        {isAdmin && (
+          <Tab
+            label="Tables"
+            value="/tables"
+            className={classesLocal.linkTab}
+          />
         )}
         <Tab label="Users" value="/users" className={classesLocal.linkTab} />
         {isAdmin && (

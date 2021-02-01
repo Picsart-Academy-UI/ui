@@ -2,7 +2,6 @@ import { MAIN_URL } from '../constants';
 
 const makeRequest = async (url, { body, headers, method }) => {
   try {
-    console.log(JSON.stringify(body));
     const res = await fetch(`${MAIN_URL}${url}`, {
       body: JSON.stringify(body) || undefined,
       headers: headers || {},

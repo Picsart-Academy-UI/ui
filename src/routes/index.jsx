@@ -13,6 +13,8 @@ import ReservationsEdit from '../pages/ReservationsEdit';
 import Requests from '../pages/Requests';
 import useStylesMain from '../hooks/useStylesMain';
 import { ROUTES } from '../constants';
+import Tables from '../pages/Tables';
+import TablesCreate from '../pages/TablesCreate';
 
 const Router = () => {
   const classesMain = useStylesMain();
@@ -37,6 +39,7 @@ const Router = () => {
         <Route exact path="/reservations" component={Reservations} />
         <Route path="/reservations/create" component={ReservationsCreate} />
         <Route exact path="/reservations/edit" component={ReservationsEdit} />
+
         <Route exact path="/users" component={Users} />
         {isAdmin && (
           <Route exact path="/users/invite" component={UsersInvite} />
@@ -49,6 +52,11 @@ const Router = () => {
         {isAdmin && (
           <Route exact path="/teams/edit/:id" component={TeamsEdit} />
         )}
+        {isAdmin && <Route exact path="/tables" component={Tables} />}
+        {isAdmin && (
+          <Route exact path="/tables/create" component={TablesCreate} />
+        )}
+        {/* {isAdmin && <Route exact path="/tables/:id" component={TablesList} />} */}
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}
         {isLoggedIn && <Redirect exact from="/signin" to="/reservations" />}

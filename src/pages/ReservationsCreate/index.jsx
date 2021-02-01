@@ -67,7 +67,6 @@ const ReservationsCreate = () => {
 
   useEffect(() => {
     setData(createTableData(chairsOfTheTeam, reservs, dateRange));
-    console.log(chairsOfTheTeam);
   }, [dateRange, reservs, chairsOfTheTeam]);
 
   return (

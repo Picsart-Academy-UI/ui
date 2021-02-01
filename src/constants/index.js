@@ -14,6 +14,10 @@ export const ROUTES = {
   reservations: '/reservations',
   reservationsCreate: '/reservations/create',
   teams: '/teams',
+  tables: '/tables',
   users: '/users',
   requests: '/requests',
 };
+export const publicVapidKey =
+  process.env.REACT_APP_PUBLIC_VAPID_KEY ||
+  'BOjfhJMEPQh3NggRpL_6ZTv4JWXsK8kHyo8xTJiUitepCzYDAg7d0cKuOiGclJgNrHKsFA7xQwuHJLj6icDp-5I';
