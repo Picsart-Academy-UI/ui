@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import makeFetch from '../../../services';
-import { getUserUpdateRequestData } from '../../../services/users';
+import { getUserUpdateRequestData } from '../../../services/usersService';
 
 const useUpdateUserHook = () => {
   const token = useSelector((state) => state.signin.token);

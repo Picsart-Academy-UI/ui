@@ -8,7 +8,7 @@ import { getTeamsAllRequestData } from '../../services/teamsService';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,
-} from '../../services/users';
+} from '../../services/usersService';
 import Filter from '../../components/Filter';
 import SelectDropdown from '../../components/SelectDropdown';
 import UsersTable from './components/UsersTable';

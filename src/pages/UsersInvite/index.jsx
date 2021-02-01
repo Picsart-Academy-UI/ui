@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { formatISO } from 'date-fns';
 import makeFetch from '../../services';
-import { getUserInvitationRequestData } from '../../services/users';
+import { getUserInvitationRequestData } from '../../services/usersService';
 import BackButton from '../../components/BackButton';
 import Form from './components/Form';
 import PositionedSnackbar from './components/SnackBar';

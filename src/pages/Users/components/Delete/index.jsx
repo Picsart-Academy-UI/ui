@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import makeFetch from '../../../../services';
-import { getUserDeleteRequestData } from '../../../../services/users';
+import { getUserDeleteRequestData } from '../../../../services/usersService';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 
