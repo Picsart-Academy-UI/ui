@@ -42,8 +42,16 @@ export const postReservation = (token, body) => {
   makeRequest('reservations', {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json;charset=utf-8',
     },
     method: 'POST',
     body,
   });
 };
+export const deleteReservation = (token, resId) =>
+  makeRequest(`reservations/${resId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'DELETE',
+  });

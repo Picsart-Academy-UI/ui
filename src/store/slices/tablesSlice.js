@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTables } from '../../services/tablesService';
+import { getTables, getTablesQuery } from '../../services/tablesService';
 
 export const tablesSlice = createSlice({
   name: 'tables',
   initialState: {
+    chairs: [],
     tables: [],
   },
   reducers: {
@@ -18,10 +19,29 @@ export const tablesSlice = createSlice({
     addTable: (state, action) => {
       state.tables.push(action.payload);
     },
+    setChairs: (state, action) => {
+      const chairArr = [];
+      action.payload.map((table) =>
+        table.chairs.map((chair) =>
+          chairArr.push({
+            table_id: table._id,
+            table_number: table.table_number,
+            _id: chair._id,
+            chair_number: chair.chair_number,
+          })
+        )
+      );
+      state.chairs = chairArr;
+    },
   },
 });
 
-export const { setTables, deleteTable, addTable } = tablesSlice.actions;
+export const {
+  setTables,
+  setChairs,
+  deleteTable,
+  addTable,
+} = tablesSlice.actions;
 
 export const fetchTables = (token) => async (dispatch, getState) => {
   const state = getState();
@@ -30,6 +50,11 @@ export const fetchTables = (token) => async (dispatch, getState) => {
   }
   const res = await getTables(token);
   dispatch(setTables(res || []));
+};
+
+export const fetchChairs = (token, team_id) => async (dispatch) => {
+  const res = await getTablesQuery(token, team_id);
+  dispatch(setChairs(res?.data || []));
 };
 
 export default tablesSlice.reducer;

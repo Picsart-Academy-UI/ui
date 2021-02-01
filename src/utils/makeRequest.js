@@ -7,7 +7,6 @@ const makeRequest = async (url, { body, headers, method }) => {
       headers: headers || {},
       method: method || 'GET',
     });
-
     return await res.json();
   } catch (err) {
     return new Error(err.message);

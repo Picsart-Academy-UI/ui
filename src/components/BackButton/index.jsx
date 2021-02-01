@@ -4,12 +4,13 @@ import { useHistory } from 'react-router-dom';
 import useStylesMain from '../../hooks/useStylesMain';
 import useStylesLocal from './style';
 
-const BackButton = () => {
+const BackButton = ({ handleEvent }) => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
   const history = useHistory();
 
-  const handleBackClick = () => history.goBack();
+  const handleBackClick = () =>
+    handleEvent ? handleEvent() : history.goBack();
 
   return (
     <Button

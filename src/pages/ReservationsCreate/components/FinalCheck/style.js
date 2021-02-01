@@ -1,13 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  loaderWrapper: {
-    width: '100%',
-    height: '100%',
+  tableCont: {
+    flex: '1 1 auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '2rem',
   },
 });
 
