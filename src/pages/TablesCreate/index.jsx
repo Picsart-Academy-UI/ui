@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import SelectTeam from '../UsersInvite/components/SelectTeam';
 import BackButton from '../../components/BackButton';
-import useFetch from '../../hooks/useFetch';
+import makeFetch from '../../services';
 import { getTableCreateRequestData } from '../../services/tables';
 import { addTable } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
@@ -24,7 +24,6 @@ const TablesCreate = () => {
     teams: state.teams.teams,
   }));
 
-  const makeRequest = useFetch();
   const classesMain = useStylesMain();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,14 +33,14 @@ const TablesCreate = () => {
   useEffect(() => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
-      const res = await makeRequest(requestData);
+      const res = await makeFetch(requestData);
       if (res.data) {
         dispatch(setTeams(res));
       }
     };
 
     getTeams();
-  }, [dispatch, makeRequest, token]);
+  }, [dispatch, token]);
 
   const onAddTeam = async (e) => {
     e.preventDefault();
@@ -52,9 +51,7 @@ const TablesCreate = () => {
       table_number: Number(countRef.current.value),
       team_id: teamItem._id,
     };
-    console.log(body, token);
-    const res = await makeRequest(getTableCreateRequestData({ token, body }));
-    // console.log('body', history);
+    const res = await makeFetch(getTableCreateRequestData({ token, body }));
     if (res.data) {
       countRef.current.value = '';
       history.push('/tables');
@@ -64,7 +61,6 @@ const TablesCreate = () => {
 
   const handleChange = (e) => {
     const team = e.target.value;
-    console.log(team);
     setSelectedTeam(team);
   };
   return (

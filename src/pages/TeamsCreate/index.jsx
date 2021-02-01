@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
 import BackButton from '../../components/BackButton';
-import useFetch from '../../hooks/useFetch';
+import makeFetch from '../../services';
 import { getTeamCreateRequestData } from '../../services/teams';
 import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 
 const TeamsCreate = () => {
   const token = useSelector((state) => state.signin.token);
-  const makeRequest = useFetch();
   const classesMain = useStylesMain();
   const history = useHistory();
 
@@ -23,7 +22,7 @@ const TeamsCreate = () => {
       team_name: nameRef.current.value,
     };
 
-    const res = await makeRequest(getTeamCreateRequestData({ token, body }));
+    const res = await makeFetch(getTeamCreateRequestData({ token, body }));
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');

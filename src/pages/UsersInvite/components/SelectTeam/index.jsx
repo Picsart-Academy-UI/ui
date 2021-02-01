@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { setTeams } from '../../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../../services/teams';
-import useFetch from '../../../../hooks/useFetch';
+import makeFetch from '../../../../services';
 import useStylesLocal, { getStyleMenuItem } from './style';
 
 const ITEM_HEIGHT = 48;
@@ -33,18 +33,16 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
     teams: state.teams.teams,
   }));
 
-  const makeRequest = useFetch();
-
   const classesLocal = useStylesLocal();
   const theme = useTheme();
 
   const getTeams = useCallback(async () => {
-    const res = await makeRequest(getTeamsAllRequestData(token));
+    const res = await makeFetch(getTeamsAllRequestData(token));
 
     if (res.data) {
       dispatch(setTeams(res));
     }
-  }, [dispatch, makeRequest, token]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (!teams.length) {

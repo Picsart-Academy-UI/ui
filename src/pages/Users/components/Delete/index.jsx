@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import useStylesMain from '../../../../hooks/useStylesMain';
-import useFetch from '../../../../hooks/useFetch';
+import makeFetch from '../../../../services';
 import { getUserDeleteRequestData } from '../../../../services/users';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 import AlertDialog from '../../../../components/AlertDialog';
@@ -11,7 +11,6 @@ import AlertDialog from '../../../../components/AlertDialog';
 const Delete = ({ id, userFullName, onDelete }) => {
   const classesMain = useStylesMain();
   const dispatch = useDispatch();
-  const makeRequest = useFetch();
   const token = useSelector((state) => state.signin.token);
   const [open, setOpen] = useState(false);
 
@@ -20,7 +19,7 @@ const Delete = ({ id, userFullName, onDelete }) => {
   const handleClose = () => setOpen(false);
 
   const handleDeleteClick = async () => {
-    const res = await makeRequest(getUserDeleteRequestData({ token, id }));
+    const res = await makeFetch(getUserDeleteRequestData({ token, id }));
     if (res.message) {
       handleClose();
       dispatch(deleteUser(id));
@@ -28,11 +27,7 @@ const Delete = ({ id, userFullName, onDelete }) => {
     }
   };
 
-  const titleText = (
-    <span>
-      Delete&nbsp;&nbsp;<span>{userFullName}</span>&nbsp;&nbsp;account?
-    </span>
-  );
+  const titleText = <span>Delete {userFullName} account?</span>;
 
   return (
     <>

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
-import useFetch from '../../hooks/useFetch';
+import makeFetch from '../../services';
 import useDebounce from '../../hooks/useDebounce';
 import { getTeamsAllRequestData } from '../../services/teams';
 import {
@@ -29,6 +29,7 @@ const Users = () => {
     teams: state.teams.teams,
     usersData: state.users.usersList,
   }));
+  const dispatch = useDispatch();
 
   const users = useMemo(
     () => ({
@@ -45,9 +46,7 @@ const Users = () => {
   );
 
   const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
-  const makeRequest = useFetch();
 
-  const dispatch = useDispatch();
   const fetchings = async (
     currentPage,
     currentRowsPerPage,
@@ -62,7 +61,7 @@ const Users = () => {
         currentPage,
         isAdmin
       );
-      const fetchedUsers = await makeRequest(requestData);
+      const fetchedUsers = await makeFetch(requestData);
       await dispatch(fetchedUsersList(fetchedUsers));
 
       if (!isAdmin) {
@@ -81,7 +80,7 @@ const Users = () => {
         currentSelectedTeamId,
         currentSearchValue
       );
-      const selectedUsers = await makeRequest(requestData);
+      const selectedUsers = await makeFetch(requestData);
       await dispatch(fetchedUsersList(selectedUsers));
 
       setIsLoading(false);
@@ -131,10 +130,10 @@ const Users = () => {
 
   useEffect(async () => {
     if (!teams.length) {
-      const res = await makeRequest(getTeamsAllRequestData(token));
+      const res = await makeFetch(getTeamsAllRequestData(token));
       dispatch(setTeams(res));
     }
-  }, [dispatch, makeRequest, token]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
