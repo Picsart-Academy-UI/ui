@@ -1,19 +1,9 @@
 import { MAIN_URL } from '../constants';
-import makeRequest from '../utils/makeRequest';
 import { getHeaders } from './utils';
 
-export const getTables = (token) =>
-  makeRequest('tables', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-export const getTablesQuery = (token, team_id) =>
-  makeRequest(`tables/all?team_id=${team_id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export const getTablesQueryRequestData = ({ token, team_id }) =>
+  new Request(`${MAIN_URL}tables/all?team_id=${team_id}`, {
+    headers: getHeaders(token),
   });
 
 export const getTableDeleteRequestData = ({ token, id }) =>

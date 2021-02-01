@@ -1,5 +1,5 @@
-import makeRequest from '../utils/makeRequest';
 import { MAIN_URL } from '../constants';
+import { getHeaders } from './utils';
 
 export const getGoogleRequestData = (response) =>
   new Request(`${MAIN_URL}auth/signin/`, {
@@ -12,12 +12,9 @@ export const getGoogleRequestData = (response) =>
     }),
   });
 
-export const logout = (token, endpoint) =>
-  makeRequest('auth/logout', {
+export const logout = ({ token, endpoint }) =>
+  new Request(`${MAIN_URL}auth/logout/`, {
     method: 'POST',
     body: { endpoint },
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=utf-8',
-    },
+    headers: getHeaders(token),
   });

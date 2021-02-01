@@ -12,8 +12,9 @@ import {
   deleteFromRes,
 } from '../../utils/reservationHelper';
 import { withoutHours } from '../../utils/dateHelper';
+import makeFetch from '../../services';
 import { getTeamsAllRequestData } from '../../services/teamsService';
-import { getTables } from '../../services/tablesService';
+import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTeams } from './teamsSlice';
 import { setTables } from './tablesSlice';
 
@@ -173,7 +174,7 @@ export const fetchPendingReservationsWithData = (token) => async (
   return Promise.all([
     getReservations(token, 'status=pending&include_usersAndChairs=true'),
     !state.teams.teams.length && getTeamsAllRequestData(token),
-    !state.tables.tables.length && getTables(token),
+    !state.tables.tables.length && makeFetch(getTablesAllRequestData(token)),
   ]).then(
     ([pendingReservations, teams, tables]) =>
       pendingReservations.data &&
