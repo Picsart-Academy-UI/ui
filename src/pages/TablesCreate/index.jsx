@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -8,6 +8,7 @@ import {
   TextField,
   Container,
 } from '@material-ui/core';
+import SelectTeam from '../UsersInvite/components/SelectTeam';
 import BackButton from '../../components/BackButton';
 import useFetch from '../../hooks/useFetch';
 import { getTableCreateRequestData } from '../../services/tables';
@@ -17,9 +18,10 @@ import useStylesMain from '../../hooks/useStylesMain';
 import { getTeamsAllRequestData } from '../../services/teams';
 
 const TablesCreate = () => {
-  const { token } = useSelector((state) => ({
+  const [selected, setSelectedTeam] = useState('');
+  const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
-    // teams: state.teams.teams
+    teams: state.teams.teams,
   }));
 
   const makeRequest = useFetch();
@@ -28,7 +30,6 @@ const TablesCreate = () => {
   const dispatch = useDispatch();
 
   const countRef = useRef();
-  const teamRef = useRef();
 
   useEffect(() => {
     const getTeams = async () => {
@@ -45,13 +46,17 @@ const TablesCreate = () => {
   const onAddTeam = async (e) => {
     e.preventDefault();
 
+    const teamItem = teams.find(
+      ({ team_name }) => team_name === selected.team_id
+    );
+
     const body = {
       table_number: countRef.current.value,
-      team_id: teamRef.current.value,
+      team_id: teamItem._id,
     };
 
     const res = await makeRequest(getTableCreateRequestData({ token, body }));
-    console.log('body', history);
+    // console.log('body', history);
     if (res.data) {
       countRef.current.value = '';
       history.push('/tables');
@@ -59,6 +64,10 @@ const TablesCreate = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const team = e.target.value;
+    setSelectedTeam(team);
+  };
   return (
     <>
       <BackButton />
@@ -70,27 +79,15 @@ const TablesCreate = () => {
             required
             fullWidth
             id="name"
-            label="Table Count"
+            label="Table Number"
             inputRef={countRef}
           />
-          {/* <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={selectedTeam || 'Select team'}
-            onChange={onChange}
-            label="Team"
-            MenuProps={teams}
-          >
-            {teams.map(({ _id, team_name }) => (
-              <MenuItem
-                key={_id + team_name}
-                value={team_name}
-                // style={getStyleMenuItem(team_name, selectedTeam, theme)}
-              >
-                {team_name}
-              </MenuItem>
-            ))}
-          </Select> */}
+          <SelectTeam
+            id="team_id"
+            team_id="team_id"
+            value={selected}
+            onChange={handleChange}
+          />
           <Button
             type="submit"
             fullWidth
