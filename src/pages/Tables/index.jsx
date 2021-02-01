@@ -11,7 +11,7 @@ import {
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeFetch from '../../services';
-import { getTablesAllRequestData } from '../../services/tables';
+import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTables } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';

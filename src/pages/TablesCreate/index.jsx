@@ -11,7 +11,7 @@ import {
 import SelectTeam from '../UsersInvite/components/SelectTeam';
 import BackButton from '../../components/BackButton';
 import makeFetch from '../../services';
-import { getTableCreateRequestData } from '../../services/tables';
+import { getTableCreateRequestData } from '../../services/tablesService';
 import { addTable } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
