@@ -48,7 +48,7 @@ const Receipt = () => {
           const { id, start_date, end_date, table_id } = reservs[
             numOfReservations
           ];
-          // console.log(start_date.toISOString(), end_date.toISOString())
+          console.log(table_id);
           const res = await postReservation(token, {
             start_date: start_date.toISOString(),
             end_date: end_date.toISOString(),

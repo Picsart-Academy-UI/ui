@@ -43,6 +43,7 @@ export const postReservation = (token, body) => {
   return makeRequest('reservations', {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json;charset=utf-8',
     },
     method: 'POST',
     body,
