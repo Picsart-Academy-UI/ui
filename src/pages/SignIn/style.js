@@ -2,15 +2,18 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
   header: {
-    fontSize: '3rem',
+    fontSize: theme.spacing(6),
     letterSpacing: 7,
-    paddingTop: theme.spacing(5),
     textAlign: 'center',
+    textTransform: 'uppercase',
+    [theme.breakpoints.up('md')]: {
+      fontSize: theme.spacing(8),
+    },
   },
   signInContainer: {
     display: 'flex',
     justifyContent: 'center',
-    paddingTop: theme.spacing(5),
+    margin: theme.spacing(5, 0, 15),
   },
   google: {
     width: 24,

@@ -17,6 +17,12 @@ const get = (props) =>
 
 const find = (cmp, attr) => cmp.find(attr);
 
+const props = {
+  id: '1',
+  userFullName: 'test',
+  onDelete: jest.fn(),
+};
+
 describe('Delete User Button: ', () => {
   let cmp;
   let mockDispatch;
@@ -31,7 +37,7 @@ describe('Delete User Button: ', () => {
     mockDispatch = jest.fn();
     const useDSpy = jest.spyOn(redux, 'useDispatch');
     useDSpy.mockImplementation(() => mockDispatch);
-    cmp = get();
+    cmp = get(props);
   });
 
   test('should render properly', () => {

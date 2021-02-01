@@ -1,14 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CHAIR } from '../constants';
+import { SPACE } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
-    backgroundImage: `url(${CHAIR})`,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundImage: `url(${SPACE})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%',
     width: '100vw',
     height: '100vh',
+    backgroundClip: 'text',
+    '-webkitBackgroundClip': 'text',
+    color: 'transparent',
+    backgroundColor:
+      '-webkit-linear-gradient(120deg, rgba(219,68,218,1) 0%, rgba(89,192,246,1) 78%, rgba(58,231,255,1) 100%)',
   },
   paperPadding: {
     minWidth: '564px',
@@ -67,6 +75,10 @@ const useStylesMain = makeStyles((theme) => ({
   },
   searchRes: {
     fontSize: theme.spacing(3),
+  },
+  snackbarLeftBottom: {
+    left: theme.spacing(4),
+    bottom: theme.spacing(4),
   },
 }));
 
