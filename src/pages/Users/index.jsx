@@ -40,7 +40,7 @@ const Users = () => {
   );
 
   const teamsOptions = useMemo(
-    () => [{ team_name: 'All', _id: 'all' }, ...teams],
+    () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
     [teams]
   );
 
