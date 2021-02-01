@@ -1,7 +1,7 @@
 import makeRequest from '../utils/makeRequest';
 import { MAIN_URL } from '../constants';
 
-const getGoogleRequestData = (response) =>
+export const getGoogleRequestData = (response) =>
   new Request(`${MAIN_URL}auth/signin/`, {
     method: 'POST',
     headers: {
@@ -11,8 +11,6 @@ const getGoogleRequestData = (response) =>
       token: response.tokenId,
     }),
   });
-
-export default getGoogleRequestData;
 
 export const logout = (token, endpoint) =>
   makeRequest('auth/logout', {

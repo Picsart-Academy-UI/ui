@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logout } from '../../services/signinService';
+import { logout } from '../../services/authService';
 
 export const signinSlice = createSlice({
   name: 'signin',
