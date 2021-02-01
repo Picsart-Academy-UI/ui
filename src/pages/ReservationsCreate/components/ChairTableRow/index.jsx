@@ -1,12 +1,15 @@
 import { useCallback, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import { TableCell, TableRow } from '@material-ui/core';
+import { setSelectedRow } from '../../../../store/slices/reservationsSlice';
 import ChairTableCell from '../ChairTableCell';
 import useStyles from './style';
 
-const ChairTableRow = ({ item, choseRow, choseChair, reservations }) => {
+const ChairTableRow = ({ item }) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
   const choseCallback = useCallback(() => {
-    choseRow(item);
+    dispatch(setSelectedRow(item));
   }, [item]);
 
   return (
@@ -18,11 +21,9 @@ const ChairTableRow = ({ item, choseRow, choseChair, reservations }) => {
         <ChairTableCell
           key={`${item.id}+${date.date}`}
           date={date}
-          choseChair={choseChair}
           chairName={item.name}
           chairId={item.id}
           tableId={item.id}
-          reservations={reservations}
         />
       ))}
     </TableRow>

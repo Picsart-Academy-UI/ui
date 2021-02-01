@@ -1,6 +1,11 @@
 import { memo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
-import useDate from '../../../../hooks/useDate';
+import {
+  createRange,
+  calculateDiffInDays,
+  transformLocalToAMT,
+} from '../../../../utils/dateHelper';
 import Pickers from '../Pickers';
 import TableOfTables from '../TableOfTables';
 import useStylesMain from '../../../../hooks/useStylesMain';
@@ -9,15 +14,14 @@ import useStylesLocal from './style';
 const SelectionPart = ({
   refFrom,
   refTo,
-  choseChair,
-  choseRow,
   dateRange,
-  reservations,
   data,
   setDateRange,
   handleSubmit,
 }) => {
-  const { createRange, calculateDiffInDays, transformLocalToAMT } = useDate();
+  const reservations = useSelector(
+    (state) => state.reservations.selectedReservations
+  );
   const [error, setError] = useState('none');
   const classesLocal = useStylesLocal();
   const classesMain = useStylesMain();
@@ -64,13 +68,7 @@ const SelectionPart = ({
         error={error}
       />
       <Container className={classesLocal.tableCont}>
-        <TableOfTables
-          dateRange={dateRange}
-          choseChair={choseChair}
-          reservations={reservations}
-          choseRow={choseRow}
-          data={data}
-        />
+        <TableOfTables dateRange={dateRange} data={data} />
       </Container>
       <Button
         variant="contained"

@@ -1,8 +1,9 @@
 import { useState, useCallback, memo } from 'react';
+import { useSelector } from 'react-redux';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { TableCell, TableRow, IconButton } from '@material-ui/core';
 import AlertDialog from '../../../../components/AlertDialog';
-import useDate from '../../../../hooks/useDate';
+import { transformFromISOToFormat } from '../../../../utils/dateHelper';
 import useStyles from './style';
 
 const ResTableRow = ({
@@ -22,7 +23,7 @@ const ResTableRow = ({
     deleteRes(_id);
     handleChange();
   }, [handleChange]);
-  const { transformFromISOToFormat } = useDate();
+  const curUserId = useSelector((state) => state.signin.curUser._id);
 
   return (
     <TableRow key={_id}>
@@ -31,7 +32,7 @@ const ResTableRow = ({
         {transformFromISOToFormat(end_date)}
       </TableCell>
       <TableCell align="center">
-        {table_id?.table_number}/{chair_id?.number}
+        {chair_id?.number}/{table_id?.table_number}
       </TableCell>
       <TableCell align="center" className={styles[status]}>
         {status}
@@ -40,7 +41,11 @@ const ResTableRow = ({
         {user_id.first_name.slice(0, 1)}. {user_id.last_name}
       </TableCell>
       <TableCell align="right">
-        <IconButton onClick={handleChange} color="secondary">
+        <IconButton
+          disabled={user_id._id !== curUserId}
+          onClick={handleChange}
+          color="secondary"
+        >
           <DeleteOutlineIcon className={styles.iconColorRed} />
         </IconButton>
         <AlertDialog

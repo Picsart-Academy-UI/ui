@@ -1,9 +1,12 @@
 import { Container, TextField, Box } from '@material-ui/core';
-import useDate from '../../../../hooks/useDate';
+import {
+  transformDataISO,
+  getNextPrevDays,
+  transformLocalToAMT,
+} from '../../../../utils/dateHelper';
 import useStyles from './style';
 
 const Pickers = ({ refFrom, refTo, handleEvent, error }) => {
-  const { transformDataISO, getNextPrevDays, transformLocalToAMT } = useDate();
   const styles = useStyles();
 
   return (

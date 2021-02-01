@@ -4,13 +4,13 @@ import BackButton from '../../../../components/BackButton';
 import Receipt from '../Receipt';
 import useStyles from './style';
 
-const FinalCheck = ({ reservations, handleBack }) => {
+const FinalCheck = ({ handleBack }) => {
   const styles = useStyles();
   return (
     <>
       <BackButton handleEvent={handleBack} />
       <Container className={styles.tableCont}>
-        <Receipt reservs={reservations} />
+        <Receipt />
       </Container>
     </>
   );

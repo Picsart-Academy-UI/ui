@@ -14,18 +14,23 @@ import {
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import LoadingModal from '../LoadingModal';
 import { postReservation } from '../../../../services/reservationsService';
-import { addReservation } from '../../../../store/slices/reservationsSlice';
+import {
+  addReservation,
+  setSelected,
+} from '../../../../store/slices/reservationsSlice';
 import useQuery from '../../../../hooks/useQuery';
-import useDate from '../../../../hooks/useDate';
+import { transformDateLocale } from '../../../../utils/dateHelper';
 import useStyles from './style';
 
-const Receipt = ({ reservs }) => {
+const Receipt = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [numOfReservations, setNumOfReservations] = useState(0);
-  const { transformDateLocale } = useDate();
   const history = useHistory();
   const token = useSelector((state) => state.signin.token);
   const userTeamId = useSelector((state) => state.signin.curUser.team_id);
+  const reservs = useSelector(
+    (state) => state.reservations.selectedReservations
+  );
   const dispatch = useDispatch();
   const query = useQuery();
   const styles = useStyles();
@@ -62,6 +67,7 @@ const Receipt = ({ reservs }) => {
           }
           setNumOfReservations((prev) => 1 + prev);
         } else {
+          dispatch(setSelected([]));
           history.push('/');
         }
       };

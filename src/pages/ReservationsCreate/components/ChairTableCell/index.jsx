@@ -1,18 +1,15 @@
 import { useMemo, useCallback, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { TableCell } from '@material-ui/core';
-import useReservation from '../../hooks/useReservation';
+import { getReservationOnSameDate } from '../../../../utils/reservationHelper';
+import { setSelectedReservations } from '../../../../store/slices/reservationsSlice';
 import useStyles from './style';
 
-const ChairTableCell = ({
-  date,
-  reservations,
-  chairName,
-  chairId,
-  tableId,
-  choseChair,
-}) => {
-  const { getReservationOnSameDate } = useReservation();
-
+const ChairTableCell = ({ date, chairName, chairId, tableId }) => {
+  const reservations = useSelector(
+    (state) => state.reservations.selectedReservations
+  );
+  const dispatch = useDispatch();
   const reservOnSameDate = getReservationOnSameDate(reservations, date.date);
   const isSelected =
     reservOnSameDate && reservOnSameDate.chairName === chairName;
@@ -34,12 +31,14 @@ const ChairTableCell = ({
   const choseCallback = useCallback(() => {
     // eslint-disable-next-line
     if (isNotWeekendDay && date.isFree) {
-      choseChair({
-        ...date,
-        chairName,
-        id: chairId,
-        table_id: tableId,
-      });
+      dispatch(
+        setSelectedReservations({
+          ...date,
+          chairName,
+          id: chairId,
+          table_id: tableId,
+        })
+      );
     }
   }, [date, reservations]);
 
