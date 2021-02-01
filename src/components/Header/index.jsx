@@ -19,7 +19,7 @@ import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import { PICSART_LOGO_WHITE } from '../../constants';
-import { setIsLoggedOut } from '../../store/slices/signinSlice';
+import { logoutAction } from '../../store/slices/signinSlice';
 import { setPath } from './utils';
 import useStylesLocal from './style';
 
@@ -29,6 +29,7 @@ const Header = () => {
   const history = useHistory();
   const location = useLocation();
   const user = useSelector((state) => state.signin.curUser);
+  const token = useSelector((state) => state.signin.token);
   const isAdmin = user.is_admin;
 
   const [
@@ -73,7 +74,7 @@ const Header = () => {
     handleMobileMenuProfileMenuClose();
     history.push(e.currentTarget.dataset.route);
     if (isLogOut) {
-      dispatch(setIsLoggedOut());
+      dispatch(logoutAction(token));
     }
   };
 
