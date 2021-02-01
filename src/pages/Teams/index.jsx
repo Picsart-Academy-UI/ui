@@ -1,52 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTeamsAllRequestData } from '../../services/teams';
-import useFetch from '../../hooks/useFetch';
 import { setTeams } from '../../store/slices/teamsSlice';
+import { getTeamsAllRequestData } from '../../services/teams';
+import Filter from '../../components/Filter';
+import useFetch from '../../hooks/useFetch';
 import TeamsTable from './components/TeamsTable';
 import AddTeam from './components/AddTeam';
-import Search from './components/Search';
 import useStylesLocal from './style';
 
 const Teams = () => {
   const token = useSelector((state) => state.signin.token);
   const teams = useSelector((state) => state.teams.teams);
-  const [filterTeam, setFilterTeam] = useState([]);
-  const makeRequest = useFetch();
+  const [searchValue, setSearchValue] = useState('');
+
   const dispatch = useDispatch();
+  const makeRequest = useFetch();
   const classesLocal = useStylesLocal();
 
-  const handleChange = (e) => {
-    setFilterTeam(() =>
-      teams.filter((item) =>
-        item.team_name.toLowerCase().includes(e.target.value.toLowerCase())
-      )
-    );
-  };
+  const filteredTeams = useMemo(
+    () =>
+      (teams || []).filter((item) =>
+        item.team_name.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [searchValue, teams]
+  );
 
   useEffect(() => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
       const res = await makeRequest(requestData);
-      if (res.data) {
+      if (res) {
         dispatch(setTeams(res));
       }
     };
-
     getTeams();
   }, [dispatch, makeRequest, token]);
-
-  useEffect(() => {
-    setFilterTeam(teams);
-  }, [teams]);
 
   return (
     <>
       <div className={classesLocal.wrapper}>
-        <Search handleChange={handleChange} />
+        <Filter
+          value={searchValue}
+          onChange={setSearchValue}
+          className={classesLocal.filter}
+          placeholder="Search By Name"
+        />
         <AddTeam />
       </div>
-      <TeamsTable teams={filterTeam} />
+      <TeamsTable teams={filteredTeams} />
     </>
   );
 };

@@ -1,9 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
+  upperGrid: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
   avatar: {
-    height: 100,
-    width: 100,
+    height: 60,
+    width: 60,
   },
   emailField: {
     fontSize: '1rem',
@@ -15,6 +19,8 @@ const useStylesLocal = makeStyles((theme) => ({
   textHeader: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
   textField: {
     minWidth: 250,

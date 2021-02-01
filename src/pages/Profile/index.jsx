@@ -1,8 +1,6 @@
 import {
   Avatar,
   Box,
-  Card,
-  CardContent,
   Typography,
   Grid,
   TextField,
@@ -12,10 +10,10 @@ import {
 } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PICSART_LOGO } from '../../constants';
 import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
+import validateInfo from '../UsersInvite/components/Form/helpers/validateInfo';
 import updateUserHook from './helpers/updateUser';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
@@ -39,13 +37,18 @@ const Profile = (props) => {
   const user = (id !== 'me' && other) || curUser;
 
   const [edited, setEdited] = useState(user);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => setEdited(user), [user, id]);
 
   useEffect(() => {
-    if (id && id !== 'me' && props.location.user)
-      dispatch(setNotMe(props.location.user));
-  }, [id]);
+    if (
+      (id && id !== 'me' && props.location.state && !other) ||
+      (other && props.location.state && other._id !== props.location.state._id)
+    ) {
+      dispatch(setNotMe(props.location.state));
+    }
+  }, []);
 
   const updateUser = updateUserHook();
 
@@ -59,37 +62,47 @@ const Profile = (props) => {
     setEdited(editedUser);
   };
 
-  const handleEnterEditAndSubmit = () =>
-    !isEditing ? setIsEditing(true) : startUpdateUser() || setIsEditing(false);
+  const handleEnterEditAndSubmit = () => {
+    const potentialErrors = validateInfo(edited);
+    console.log(potentialErrors);
+    if (Object.keys(potentialErrors).length) {
+      setErrors(potentialErrors);
+      return;
+    }
+    setErrors(potentialErrors);
+    if (!isEditing) setIsEditing(true);
+    else {
+      startUpdateUser();
+      setIsEditing(false);
+    }
+  };
+
   const handleCancel = () =>
     (isEditing && setIsEditing(false)) || setEdited({ ...user });
 
-  console.log(edited);
-
   return (
     <>
-      <Card>
-        <CardContent>
-          <Box alignItems="center" display="flex" flexDirection="column">
-            <Button
-              variant="contained"
-              component="label"
-              className={classesLocal.chngAvtr}
-            >
-              <input type="file" hidden />
-              <Avatar className={classesLocal.avatar} src={PICSART_LOGO} />
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Box alignItems="center" display="flex" flexDirection="column">
+        <Avatar
+          className={classesLocal.avatar}
+          src={edited.profile_picture || ''}
+        />
+      </Box>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className={classesLocal.upperGrid}
+      >
         <Typography className={classesLocal.textHeader}>Name:</Typography>
         <TextField
           className={classesLocal.textField}
           disabled={!isEditing}
           value={edited.first_name || ''}
           onChange={(e) => handleUserEdit('first_name', e.target.value)}
+          helperText={errors.first_name || ''}
+          error={(errors.first_name && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Surname:</Typography>
         <TextField
@@ -97,6 +110,8 @@ const Profile = (props) => {
           value={edited.last_name || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('last_name', e.target.value)}
+          helperText={errors.last_name || ''}
+          error={(errors.last_name && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Email:</Typography>
         <TextField
@@ -104,6 +119,8 @@ const Profile = (props) => {
           value={edited.email || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('email', e.target.value)}
+          helperText={errors.email || ''}
+          error={(errors.email && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Team:</Typography>
         <FormControl className={classesLocal.formControl}>
@@ -121,22 +138,40 @@ const Profile = (props) => {
           value={edited.position || ''}
           disabled={!isEditing}
           onChange={(e) => handleUserEdit('position', e.target.value)}
+          helperText={errors.position || ''}
+          error={(errors.position && true) || false}
         />
         <Typography className={classesLocal.textHeader}>
           Phone Number:
         </Typography>
         <TextField
           className={classesLocal.textField}
-          value={edited.phoneNumber || ''}
+          value={edited.phone || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('phone_number', e.target.value)}
+          onChange={(e) => handleUserEdit('phone', e.target.value)}
+          helperText={errors.phone_number || ''}
+          error={(errors.phone_number && true) || false}
         />
         <Typography className={classesLocal.textHeader}>Birthday:</Typography>
         <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          value={
+            (edited.birthday &&
+              new Date(edited.birthday).toISOString().split('T')[0]) ||
+            ''
+          }
           className={classesLocal.textField}
-          value={edited.birthday || ''}
           disabled={!isEditing}
-          onChange={(e) => handleUserEdit('birthday', e.target.value)}
+          onChange={(e) =>
+            handleUserEdit('birthday', new Date(e.target.value).toISOString())
+          }
+          InputLabelProps={{
+            shrink: true,
+          }}
+          helperText={errors.birthday || ''}
+          error={(errors.birthday && true) || false}
         />
         <Hidden xsUp={!isAdmin}>
           <Button

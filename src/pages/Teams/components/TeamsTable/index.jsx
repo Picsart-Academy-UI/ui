@@ -1,3 +1,5 @@
+import React from 'react';
+import clsx from 'clsx';
 import {
   Table,
   TableBody,
@@ -7,6 +9,7 @@ import {
   TableRow,
   Paper,
   Box,
+  Typography,
 } from '@material-ui/core';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import TeamRow from '../TeamRow';
@@ -16,7 +19,10 @@ const TeamsTable = ({ teams }) => {
   return (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: !teams.length })}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Teams</TableCell>
@@ -28,14 +34,16 @@ const TeamsTable = ({ teams }) => {
             </TableRow>
           </TableHead>
           {!teams.length ? (
-            <TableBody>
-              <TableRow>
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={6}
-                  className={classesMain.searchRes}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
                 >
-                  Nothing Found
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>

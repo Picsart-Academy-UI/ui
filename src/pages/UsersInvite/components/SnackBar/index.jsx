@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import Alert from '../Alert';
 
 const PositionedSnackbar = ({
@@ -8,6 +9,8 @@ const PositionedSnackbar = ({
   setIsSubmitted,
   setMessage,
 }) => {
+  const classesMain = useStylesMain();
+
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -23,8 +26,9 @@ const PositionedSnackbar = ({
 
   return (
     <Snackbar
+      className={classesMain.snackbarLeftBottom}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-      autoHideDuration={3000}
+      autoHideDuration={10000}
       open={open}
       onClose={handleClose}
       // message={message}

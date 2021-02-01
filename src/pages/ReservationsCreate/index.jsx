@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container } from '@material-ui/core';
 import { fetchPendingApprovedTeamReservations } from '../../store/slices/reservationsSlice';
-import { fetchTables } from '../../store/slices/tableSlice';
+import { fetchChairs } from '../../store/slices/tablesSlice';
 import { withoutHours, getNextPrevDays } from '../../utils/dateHelper';
 import useQuery from '../../hooks/useQuery';
 import { getReservationOnSameDate } from '../../utils/reservationHelper';
@@ -62,11 +62,12 @@ const ReservationsCreate = () => {
   useEffect(() => {
     const team_id = query.get('team_id') ? query.get('team_id') : userTeamId;
     dispatch(fetchPendingApprovedTeamReservations(token, team_id));
-    dispatch(fetchTables(token, team_id));
+    dispatch(fetchChairs(token, team_id));
   }, []);
 
   useEffect(() => {
     setData(createTableData(chairsOfTheTeam, reservs, dateRange));
+    console.log(chairsOfTheTeam);
   }, [dateRange, reservs, chairsOfTheTeam]);
 
   return (

@@ -32,7 +32,9 @@ export const fetchTeams = (token) => async (dispatch, getState) => {
     return;
   }
   const res = await getTeams(token);
-  dispatch(setTeams(res || []));
+  if (res.data) {
+    dispatch(setTeams(res || []));
+  }
 };
 
 export default teams.reducer;

@@ -5,14 +5,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Box,
+  Paper,
+  Typography,
+  CircularProgress,
 } from '@material-ui/core';
+import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import Pagination from '../../../../components/Pagination';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import UserRow from '../UserRow';
 
 const UsersTable = ({
+  isLoading,
   rows,
   count,
   page,
@@ -23,7 +28,6 @@ const UsersTable = ({
 }) => {
   const classesMain = useStylesMain();
   const { data } = rows;
-  // console.log('data', data);
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -33,10 +37,15 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  return data ? (
+  const onDelete = useCallback(() => onChangePage(page), [page]);
+
+  return (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table
+          stickyHeader
+          className={clsx({ [classesMain.tableEmpty]: data && !data.length })}
+        >
           <TableHead>
             <TableRow>
               <TableCell />
@@ -51,15 +60,30 @@ const UsersTable = ({
               )}
             </TableRow>
           </TableHead>
-          {data && !data.length ? (
-            <TableBody>
-              <TableRow>
+          {isLoading && (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
                 <TableCell
                   align="center"
                   colSpan={6}
-                  className={classesMain.searchRes}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
                 >
-                  Nothing Found
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+          {!isLoading && data && !data.length ? (
+            <TableBody className={classesMain.tableBody}>
+              <TableRow className={classesMain.tableRow}>
+                <TableCell
+                  align="center"
+                  colSpan={6}
+                  className={clsx(classesMain.searchRes, classesMain.tableCell)}
+                >
+                  <Typography variant="h4" component="div">
+                    Nothing Found
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -67,7 +91,12 @@ const UsersTable = ({
             <TableBody>
               {rowsPerPage > 0 &&
                 data.map((user) => (
-                  <UserRow key={user._id} user={user} isAdmin={isAdmin} />
+                  <UserRow
+                    key={user._id}
+                    user={user}
+                    isAdmin={isAdmin}
+                    onDelete={onDelete}
+                  />
                 ))}
             </TableBody>
           )}
@@ -83,10 +112,6 @@ const UsersTable = ({
         />
       )}
     </Paper>
-  ) : (
-    <>
-      <h1>Loading</h1>
-    </>
   );
 };
 

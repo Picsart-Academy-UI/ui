@@ -15,7 +15,7 @@ import usersReducer from './slices/usersSlice';
 import profileReducer from './slices/profileSlice';
 import teamsReducer from './slices/teamsSlice';
 import reservationsReducer from './slices/reservationsSlice';
-import tablesReducer from './slices/tableSlice';
+import tablesReducer from './slices/tablesSlice';
 
 const reducers = combineReducers({
   signin: signinReducer,
