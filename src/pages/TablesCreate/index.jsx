@@ -46,15 +46,13 @@ const TablesCreate = () => {
   const onAddTeam = async (e) => {
     e.preventDefault();
 
-    const teamItem = teams.find(
-      ({ team_name }) => team_name === selected.team_id
-    );
+    const teamItem = teams.find(({ team_name }) => team_name === selected);
 
     const body = {
-      table_number: countRef.current.value,
+      table_number: Number(countRef.current.value),
       team_id: teamItem._id,
     };
-
+    console.log(body, token);
     const res = await makeRequest(getTableCreateRequestData({ token, body }));
     // console.log('body', history);
     if (res.data) {
@@ -66,6 +64,7 @@ const TablesCreate = () => {
 
   const handleChange = (e) => {
     const team = e.target.value;
+    console.log(team);
     setSelectedTeam(team);
   };
   return (
@@ -87,6 +86,7 @@ const TablesCreate = () => {
             team_id="team_id"
             value={selected}
             onChange={handleChange}
+            fullWidth
           />
           <Button
             type="submit"
