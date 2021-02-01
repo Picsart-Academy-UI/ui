@@ -1,81 +1,51 @@
-import { useState, useRef, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Button } from '@material-ui/core';
-import { fetchPendingApprovedReservations } from '../../store/slices/reservationsSlice';
-import useStylesMain from '../../hooks/useStylesMain';
+import { Container } from '@material-ui/core';
+import { fetchPendingApprovedTeamReservations } from '../../store/slices/reservationsSlice';
+import { fetchTables } from '../../store/slices/tableSlice';
 import useDate from '../../hooks/useDate';
+import useQuery from '../../hooks/useQuery';
 import useReservation from './hooks/useReservation';
-import TableOfTables from './components/TableOfTables';
-import Receipt from './components/Receipt';
-import Pickers from './components/Pickers';
-import Loader from './components/Loader';
-import useStylesLocal from './style';
+import useStyles from './style';
+import FinalCheck from './components/FinalCheck';
+import SelectionPart from './components/SelectionPart';
 
 const ReservationsCreate = () => {
-  const classesMain = useStylesMain();
-  const classesLocal = useStylesLocal();
-
-  // default value
-  const defaultValue = useMemo(() => {
-    const value = new Date();
-    value.setDate(value.getDate() + 1);
-    return value;
-  }, []);
+  const styles = useStyles();
 
   const token = useSelector((state) => state.signin.token);
-  const reservs = useSelector((state) => state.reservations.reservsApprPend);
+  const reservs = useSelector(
+    (state) => state.reservations.reservsApprPendTeam
+  );
+  const chairsOfTheTeam = useSelector((state) => state.tables.chairs);
+  const userTeamId = useSelector((state) => state.signin.curUser.team_id);
   const dispatch = useDispatch();
+  const query = useQuery();
 
-  const [isSubmited, setIsSubmited] = useState(false);
-  const [reservations, setReservations] = useState([]);
-  const [data, setData] = useState(null);
-  const [dateRange, setDateRange] = useState([defaultValue]);
-  const [error, setError] = useState('none');
-  const [isLoading, setIsLoading] = useState(true);
+  const { withoutHours, getNextPrevDays } = useDate();
 
   // ref data
   const refFrom = useRef();
   const refTo = useRef();
 
-  const {
-    createRange,
-    withoutHours,
-    calculateDiffInDays,
-    getNextPrevDays,
-    transformISOToAMT,
-  } = useDate();
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [reservations, setReservations] = useState([]);
+  const [data, setData] = useState([]);
+  const [dateRange, setDateRange] = useState([
+    getNextPrevDays(new Date()).nextDay,
+  ]);
 
   const {
     getReservationOnSameDate,
     getReservationsAvailableMerging,
   } = useReservation();
 
-  const chairsOfTheTeam = useMemo(
-    () => [
-      {
-        table_name: 'A',
-        team_id: 'team0',
-        chair_name: 'B',
-        table_id: 'table0',
-        _id: 'chair0',
-      },
-      {
-        table_name: 'B',
-        team_id: 'team1',
-        chair_name: 'A',
-        table_id: 'table1',
-        _id: 'chair1',
-      },
-    ],
-    []
-  );
   // creates the data for the table
-  const createTableData = (chairs, reservsApprPend, range) => {
-    setIsLoading(true);
-    return chairs.map((chair) => {
+  const createTableData = (chairs, reservsApprPend, range) =>
+    chairs.map((chair) => {
       const reservationsSatisfied = reservsApprPend.filter(
         (res) =>
-          res.chair_id === chair._id &&
+          res?.chair_id?._id === chair._id &&
           withoutHours(res.end_date) >= withoutHours(range[0])
       );
       const dates = range.map((date) => {
@@ -86,45 +56,14 @@ const ReservationsCreate = () => {
         const isFree = reservOnSameDate === undefined;
         return { date, isFree };
       });
-      setIsLoading(false);
       return {
-        name: `${chair.chair_name}/${chair.table_name}`,
+        name: `${chair.chair_number}/${chair.table_number}`,
         dates,
         id: chair._id,
+        table_id: chair.table_id,
       };
     });
-  };
-  // handles the event of changing the date in date picker
-  const handleEvent = () => {
-    // error handling
-    const start = new Date(refFrom.current.value);
-    const stop = new Date(refTo.current.value);
-    const diffFromToday = calculateDiffInDays(
-      start,
-      transformISOToAMT(new Date().toISOString())
-    );
-    const diffFromTo = calculateDiffInDays(start, stop);
 
-    if (diffFromToday < 0 && (start > stop || diffFromTo < -29)) {
-      setError('both');
-      return;
-      // eslint-disable-next-line
-    } else if (diffFromToday <= 0) {
-      setError('from');
-      return;
-      // eslint-disable-next-line
-    } else if (start > stop || diffFromTo < -29) {
-      setError('to');
-      return;
-      // eslint-disable-next-line
-    } else {
-      setError('none');
-    }
-
-    const range = createRange(start, stop);
-    // should send a request to get the chair
-    setDateRange(range);
-  };
   // selects the chair
   const choseChair = (chair) => {
     // creates new arr to avoid mutation
@@ -208,6 +147,7 @@ const ReservationsCreate = () => {
           start_date: chair.date,
           end_date: chair.date,
           isFree: chair.isFree,
+          table_id: chair.table_id,
         });
       }
     } else if (reservationSameDate) {
@@ -258,6 +198,7 @@ const ReservationsCreate = () => {
           start_date: chair.date,
           end_date: chair.date,
           isFree: chair.isFree,
+          table_id: chair.table_id,
         });
       }
     }
@@ -290,69 +231,48 @@ const ReservationsCreate = () => {
         } else {
           accumilator.push({
             isFree: item.isFree,
-            end_date: item.date,
-            start_date: item.date,
+            end_date: withoutHours(item.date),
+            start_date: withoutHours(item.date),
             chairName: row.name,
+            table_id: row.table_id,
             id: row.id,
           });
         }
       }
       return accumilator;
     }, []);
+    console.log(newReservations);
     setReservations(newReservations);
   };
+  // handles the click event on BackButton
+  const handleButton = () => setIsSubmited((prev) => !prev);
 
   useEffect(() => {
-    dispatch(fetchPendingApprovedReservations(token));
+    const team_id = query.get('team_id') ? query.get('team_id') : userTeamId;
+    dispatch(fetchPendingApprovedTeamReservations(token, team_id));
+    dispatch(fetchTables(token, team_id));
+  }, []);
+
+  useEffect(() => {
     setData(createTableData(chairsOfTheTeam, reservs, dateRange));
-  }, [chairsOfTheTeam, dateRange]);
+  }, [dateRange, reservs, chairsOfTheTeam]);
 
   return (
-    <Container className={classesLocal.contWrapper}>
-      {!isSubmited ? (
-        <Pickers
-          refTo={refTo}
-          refFrom={refFrom}
-          handleEvent={handleEvent}
-          defaultValue={defaultValue}
-          error={error}
-        />
-      ) : null}
-
-      <Container className={classesLocal.tableCont}>
-        {isSubmited ? (
-          <Receipt reservs={reservations} />
-        ) : (
-          <>
-            {!isLoading ? (
-              <TableOfTables
-                dateRange={dateRange}
-                choseChair={choseChair}
-                reservations={reservations}
-                choseRow={choseRow}
-                data={data}
-              />
-            ) : (
-              <Loader />
-            )}
-          </>
-        )}
-      </Container>
-      {!isSubmited ? (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setIsSubmited(!isSubmited);
-          }}
-          className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
-          disabled={reservations.length === 0 || error !== 'none'}
-        >
-          {' '}
-          Submit{' '}
-        </Button>
+    <Container className={styles.contWrapper}>
+      {isSubmited ? (
+        <FinalCheck reservations={reservations} handleBack={handleButton} />
       ) : (
-        ''
+        <SelectionPart
+          refFrom={refFrom}
+          refTo={refTo}
+          choseChair={choseChair}
+          choseRow={choseRow}
+          dateRange={dateRange}
+          reservations={reservations}
+          data={data}
+          setDateRange={setDateRange}
+          handleSubmit={handleButton}
+        />
       )}
     </Container>
   );

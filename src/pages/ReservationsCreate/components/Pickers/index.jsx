@@ -2,8 +2,8 @@ import { Container, TextField, Box } from '@material-ui/core';
 import useDate from '../../../../hooks/useDate';
 import useStyles from './style';
 
-const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
-  const { transformDataISO } = useDate();
+const Pickers = ({ refFrom, refTo, handleEvent, error }) => {
+  const { transformDataISO, getNextPrevDays, transformLocalToAMT } = useDate();
   const styles = useStyles();
 
   return (
@@ -15,7 +15,9 @@ const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
         variant="outlined"
         label="From"
         type="date"
-        defaultValue={transformDataISO(defaultValue)}
+        defaultValue={transformDataISO(
+          getNextPrevDays(transformLocalToAMT(new Date())).nextDay
+        )}
         inputRef={refFrom}
         onChange={handleEvent}
         helperText="Should be later than today"
@@ -26,11 +28,16 @@ const Pickers = ({ refFrom, refTo, handleEvent, defaultValue, error }) => {
         variant="outlined"
         label="To"
         type="date"
-        defaultValue={transformDataISO(defaultValue)}
+        defaultValue={transformDataISO(
+          getNextPrevDays(transformLocalToAMT(new Date())).nextDay
+        )}
         inputRef={refTo}
         onChange={handleEvent}
         helperText="Max: 30 days later Min: same day"
       />
+      <Box className={styles.smallText}>
+        Remember that the date that is being shown to you is UTC+4
+      </Box>
     </Container>
   );
 };

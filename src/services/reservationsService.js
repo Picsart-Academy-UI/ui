@@ -9,7 +9,8 @@ export const getReservations = (token, query) =>
 
 // eslint-disable-next-line
 export const postReservation = (token, body) => {
-  makeRequest(`reservations`, {
+  console.log(body);
+  return makeRequest(`reservations`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -17,3 +18,10 @@ export const postReservation = (token, body) => {
     body,
   });
 };
+export const deleteReservation = (token, resId) =>
+  makeRequest(`reservations/${resId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'DELETE',
+  });

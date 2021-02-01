@@ -17,6 +17,10 @@ const useStyles = makeStyles({
   datePicker: {
     marginRight: '2rem',
   },
+  smallText: {
+    fontSize: '0.75rem',
+    fontWeight: '700',
+  },
 });
 
 export default useStyles;

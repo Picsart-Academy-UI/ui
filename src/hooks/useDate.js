@@ -23,8 +23,7 @@ const useDate = () => {
   // returns the date without houts
   const withoutHours = (date) => {
     const newDate = new Date(date);
-    newDate.setHours(0, 0, 0);
-    return newDate;
+    return startOfDay(newDate);
   };
 
   // calculates the differance between two days
@@ -43,7 +42,6 @@ const useDate = () => {
 
   const transformISOToAMT = (date) => {
     const timezone = 'AMT';
-    console.log(zonedTimeToUtc(date, timezone));
     return zonedTimeToUtc(date, timezone);
   };
 
@@ -51,6 +49,8 @@ const useDate = () => {
 
   const transformFromISOToFormat = (date) =>
     transformDateLocale(transformFromISOToLocal(date));
+
+  const transformLocalToAMT = (date) => transformISOToAMT(date.toISOString());
 
   return {
     createRange,
@@ -62,6 +62,7 @@ const useDate = () => {
     transformFromISOToLocal,
     transformISOToAMT,
     transformFromISOToFormat,
+    transformLocalToAMT,
   };
 };
 
