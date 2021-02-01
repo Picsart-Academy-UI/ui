@@ -173,7 +173,7 @@ export const fetchPendingReservationsWithData = (token) => async (
 
   return Promise.all([
     getReservations(token, 'status=pending&include_usersAndChairs=true'),
-    !state.teams.teams.length && getTeamsAllRequestData(token),
+    !state.teams.teams.length && makeFetch(getTeamsAllRequestData(token)),
     !state.tables.tables.length && makeFetch(getTablesAllRequestData(token)),
   ]).then(
     ([pendingReservations, teams, tables]) =>
