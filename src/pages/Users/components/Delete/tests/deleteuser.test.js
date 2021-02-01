@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import * as redux from 'react-redux';
-import * as useRequest from '../../../../../hooks/useFetch';
+import makeFetch from '../../../../../services';
 import mockstore from '../../../../../__mocks__/index';
 import Delete from '..';
 import { Button } from '@material-ui/core';
@@ -32,7 +32,7 @@ describe('Delete User Button: ', () => {
   });
 
   beforeEach(() => {
-    const useRSpy = jest.spyOn(useRequest, 'default');
+    const useRSpy = jest.spyOn(makeFetch, 'default');
     useRSpy.mockReturnValue(mockMakeRequest);
     mockDispatch = jest.fn();
     const useDSpy = jest.spyOn(redux, 'useDispatch');
