@@ -4,20 +4,28 @@ import { getTables } from '../../services/tablesService';
 export const tablesSlice = createSlice({
   name: 'tables',
   initialState: {
-    tablesList: [],
+    tables: [],
   },
   reducers: {
     setTables: (state, action) => {
-      state.tablesList = action.payload.data;
+      state.tables = action.payload.data;
+    },
+    deleteTable: (state, action) => {
+      state.tables = state.tables.filter(
+        (table) => table._id !== action.payload.id
+      );
+    },
+    addTable: (state, action) => {
+      state.tables.push(action.payload);
     },
   },
 });
 
-export const { setTables } = tablesSlice.actions;
+export const { setTables, deleteTable, addTable } = tablesSlice.actions;
 
 export const fetchTables = (token) => async (dispatch, getState) => {
   const state = getState();
-  if (state.tables.tablesList?.length) {
+  if (state.tables.tables?.length) {
     return;
   }
   const res = await getTables(token);

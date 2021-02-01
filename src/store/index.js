@@ -13,9 +13,9 @@ import storage from 'redux-persist/lib/storage/session';
 import signinReducer from './slices/signinSlice';
 import usersReducer from './slices/usersSlice';
 import profileReducer from './slices/profileSlice';
+import tablesReducer from './slices/tablesSlice';
 import teamsReducer from './slices/teamsSlice';
 import reservationsReducer from './slices/reservationsSlice';
-import tablesReducer from './slices/tablesSlice';
 
 const reducers = combineReducers({
   signin: signinReducer,

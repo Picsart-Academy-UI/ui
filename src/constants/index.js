@@ -14,6 +14,7 @@ export const ROUTES = {
   reservations: '/reservations',
   reservationsCreate: '/reservations/create',
   teams: '/teams',
+  tables: '/tables',
   users: '/users',
   requests: '/requests',
 };

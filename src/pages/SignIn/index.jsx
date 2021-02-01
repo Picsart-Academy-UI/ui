@@ -17,12 +17,15 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   const responseGoogle = async (response) => {
+    console.log(response);
     const request = getGoogleRequestData(response);
     const res = await makeRequest(request);
     if (res.token && res.data) {
       dispatch(setIsLoggedIn(res));
     }
   };
+
+  console.log(process.env);
 
   return (
     <div className={classesMain.paperContainer}>
