@@ -10,6 +10,7 @@ import {
   Zoom,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import makeFetch from '../../../services';
 import { seeLoad } from '../../../services/reservationsService';
 import { tokenSelector } from '../../../store/selectors';
 import Loads from '../Loads';
@@ -45,7 +46,7 @@ function LoadsDialog({ row }) {
     } else {
       end = new Date(date.end);
     }
-    seeLoad(token, start, end, user.teamId)
+    makeFetch(seeLoad(token, start, end, user.teamId))
       .then((res) => new Promise((r) => setTimeout(() => r(res), 300)))
       .then((res) => {
         setData(res.data);
