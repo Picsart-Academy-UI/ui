@@ -11,7 +11,7 @@ export const getTableCreateRequestData = ({ token, body }) =>
   });
 
 export const getTablesAllRequestData = (token) =>
-  new Request(`${MAIN_URL}tables`, {
+  new Request(`${MAIN_URL}tables/all`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
