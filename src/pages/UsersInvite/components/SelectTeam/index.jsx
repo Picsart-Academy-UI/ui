@@ -9,7 +9,7 @@ import {
   Select,
 } from '@material-ui/core';
 import { setTeams } from '../../../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../../../services/teams';
+import { getTeamsAllRequestData } from '../../../../services/teamsService';
 import makeFetch from '../../../../services';
 import useStylesLocal, { getStyleMenuItem } from './style';
 

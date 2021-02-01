@@ -12,7 +12,7 @@ import {
   deleteFromRes,
 } from '../../utils/reservationHelper';
 import { withoutHours } from '../../utils/dateHelper';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 import { getTables } from '../../services/tablesService';
 import { setTeams } from './teamsSlice';
 import { setTables } from './tablesSlice';

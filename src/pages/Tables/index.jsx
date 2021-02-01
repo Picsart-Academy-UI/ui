@@ -15,7 +15,7 @@ import { getTablesAllRequestData } from '../../services/tables';
 import { setTables } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 import TeamTableRow from './components/TeamTableRow';
 import AddTable from './components/AddTable';
 import useStylesLocal from './style';

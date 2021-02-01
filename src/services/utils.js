@@ -1,8 +1,8 @@
-import store from '../store';
+// import store from '../store';
 
-export const getHeaders = () => {
+// eslint-disable-next-line
+export const getHeaders = (token) =>
   new Headers({
     'Content-Type': 'application/json;charset=utf-8',
-    Authorization: `Bearer ${store.getState().signin.token}`,
+    Authorization: `Bearer ${token}`,
   });
-};

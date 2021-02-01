@@ -4,7 +4,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useSelector, useDispatch } from 'react-redux';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import makeFetch from '../../../../services';
-import { getTeamDeleteRequestData } from '../../../../services/teams';
+import { getTeamDeleteRequestData } from '../../../../services/teamsService';
 import { deleteTeam } from '../../../../store/slices/teamsSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 

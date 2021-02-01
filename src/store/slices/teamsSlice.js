@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 
 export const teams = createSlice({
   name: 'teamsData',

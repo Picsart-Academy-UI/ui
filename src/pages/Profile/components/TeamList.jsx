@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import SelectDropdown from '../../../components/SelectDropdown';
 import makeFetch from '../../../services';
 import { setTeams } from '../../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../../services/teams';
+import { getTeamsAllRequestData } from '../../../services/teamsService';
 
 function TeamList({ changeCallback, isEditing, userTeam }) {
   const dispatch = useDispatch();

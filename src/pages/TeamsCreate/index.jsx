@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
 import BackButton from '../../components/BackButton';
 import makeFetch from '../../services';
-import { getTeamCreateRequestData } from '../../services/teams';
+import { getTeamCreateRequestData } from '../../services/teamsService';
 import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 

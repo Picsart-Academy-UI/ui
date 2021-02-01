@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 import Filter from '../../components/Filter';
 import makeFetch from '../../services';
 import TeamsTable from './components/TeamsTable';

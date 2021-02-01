@@ -4,7 +4,7 @@ import { fetchedUsersList } from '../../store/slices/usersSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
 import useDebounce from '../../hooks/useDebounce';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,

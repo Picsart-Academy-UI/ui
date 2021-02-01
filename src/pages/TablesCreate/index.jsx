@@ -15,7 +15,7 @@ import { getTableCreateRequestData } from '../../services/tables';
 import { addTable } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 
 const TablesCreate = () => {
   const [selected, setSelectedTeam] = useState('');
