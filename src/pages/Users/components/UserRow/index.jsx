@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import useStylesMain from '../../../../hooks/useStylesMain';
+import { transformFromISOToFormat } from '../../../../utils/dateHelper';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
 import Delete from '../Delete';
@@ -87,11 +88,7 @@ const UserRow = ({ user, name, isAdmin, onDelete }) => {
                   <TableRow key={name}>
                     <TableCell align="center" component="th" scope="row">
                       {(user.birthday &&
-                        new Date(user.birthday).toLocaleString('en', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })) ||
+                        transformFromISOToFormat(user.birthday)) ||
                         '-'}
                     </TableCell>
                     <TableCell align="center">{user.position}</TableCell>
