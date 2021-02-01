@@ -5,7 +5,6 @@ const useStylesMain = makeStyles((theme) => ({
   paperContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
     backgroundImage: `url(${SPACE})`,
     backgroundPosition: 'center',
@@ -76,6 +75,10 @@ const useStylesMain = makeStyles((theme) => ({
   },
   searchRes: {
     fontSize: theme.spacing(3),
+  },
+  snackbarLeftBottom: {
+    left: theme.spacing(4),
+    bottom: theme.spacing(4),
   },
 }));
 

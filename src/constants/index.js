@@ -1,5 +1,5 @@
 export const CHAIR = `${process.env.PUBLIC_URL}/images/chair.png`;
-export const SPACE = `${process.env.PUBLIC_URL}/images/space2.jpg`;
+export const SPACE = `${process.env.PUBLIC_URL}/images/background.jpg`;
 export const GOOGLE_LOGO = `${process.env.PUBLIC_URL}/images/google.png`;
 export const PICSART_LOGO = `${process.env.PUBLIC_URL}/images/picsart.jpg`;
 export const PICSART_LOGO_WHITE =

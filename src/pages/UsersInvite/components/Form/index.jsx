@@ -103,6 +103,7 @@ const Form = ({ submitForm, isRequestNow }) => {
                   <Checkbox
                     id="is_admin"
                     name="is_admin"
+                    checked={values.is_admin}
                     value={values.is_admin}
                     onChange={handleChange}
                     color="primary"
