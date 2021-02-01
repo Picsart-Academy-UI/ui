@@ -12,7 +12,7 @@ import {
   deleteFromRes,
 } from '../../utils/reservationHelper';
 import { withoutHours } from '../../utils/dateHelper';
-import { getTeams } from '../../services/teamsService';
+import { getTeamsAllRequestData } from '../../services/teams';
 import { getTables } from '../../services/tablesService';
 import { setTeams } from './teamsSlice';
 import { setTables } from './tablesSlice';
@@ -172,7 +172,7 @@ export const fetchPendingReservationsWithData = (token) => async (
 
   return Promise.all([
     getReservations(token, 'status=pending&include_usersAndChairs=true'),
-    !state.teams.teams.length && getTeams(token),
+    !state.teams.teams.length && getTeamsAllRequestData(token),
     !state.tables.tables.length && getTables(token),
   ]).then(
     ([pendingReservations, teams, tables]) =>
