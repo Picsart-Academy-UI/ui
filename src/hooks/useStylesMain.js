@@ -80,6 +80,14 @@ const useStylesMain = makeStyles((theme) => ({
     left: theme.spacing(4),
     bottom: theme.spacing(4),
   },
+  inputLong: {
+    width: 360,
+  },
+  centeredColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 }));
 
 export default useStylesMain;

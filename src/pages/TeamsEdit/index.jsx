@@ -47,12 +47,13 @@ const TeamsCreate = () => {
             label="Name"
             defaultValue={history.location.state}
             inputRef={nameRef}
+            className={classesMain.inputLong}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            className={classesMain.picsartButton}
+            className={`${classesMain.inputLong} ${classesMain.picsartButton}`}
           >
             Change
           </Button>

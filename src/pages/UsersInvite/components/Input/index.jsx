@@ -1,14 +1,14 @@
 import { TextField } from '@material-ui/core';
-import useStylesLocal from './style';
+import useStylesMain from '../../../../hooks/useStylesMain';
 
 const Input = (props) => {
-  const classesLocal = useStylesLocal();
+  const classesMain = useStylesMain();
   return (
     <TextField
       variant="outlined"
       margin="normal"
       {...props}
-      className={classesLocal.width}
+      className={classesMain.inputLong}
     />
   );
 };

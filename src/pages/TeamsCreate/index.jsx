@@ -9,11 +9,11 @@ import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 
 const TeamsCreate = () => {
-  const token = useSelector((state) => state.signin.token);
   const classesMain = useStylesMain();
   const history = useHistory();
-
   const nameRef = useRef();
+
+  const token = useSelector((state) => state.signin.token);
 
   const onAddTeam = async (e) => {
     e.preventDefault();
@@ -33,8 +33,12 @@ const TeamsCreate = () => {
   return (
     <>
       <BackButton />
-      <Container component="main" maxWidth="xs">
-        <form noValidate={false} onSubmit={onAddTeam}>
+      <Container component="div">
+        <form
+          noValidate={false}
+          onSubmit={onAddTeam}
+          className={classesMain.centeredColumn}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -43,12 +47,13 @@ const TeamsCreate = () => {
             id="name"
             label="Name"
             inputRef={nameRef}
+            className={classesMain.inputLong}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            className={classesMain.picsartButton}
+            className={`${classesMain.inputLong} ${classesMain.picsartButton}`}
           >
             Add
           </Button>

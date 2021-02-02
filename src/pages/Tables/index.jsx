@@ -16,8 +16,8 @@ import { setTables } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 import { getTeamsAllRequestData } from '../../services/teamsService';
-import TeamTableRow from './components/TeamTableRow';
-import AddTable from './components/AddTable';
+import TableListRow from './components/TableListRow';
+import Add from './components/Add';
 import useStylesLocal from './style';
 
 const TablesList = () => {
@@ -48,7 +48,7 @@ const TablesList = () => {
   return (
     <>
       <div className={classesLocal.wrapper}>
-        <AddTable />
+        <Add />
       </div>
       <Paper>
         <TableContainer className={classesMain.tableContainer}>
@@ -56,8 +56,8 @@ const TablesList = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Team</TableCell>
-                <TableCell align="center">Table</TableCell>
-                <TableCell align="center">Chair Count</TableCell>
+                <TableCell align="center">Table Number</TableCell>
+                <TableCell align="center">Chairs Count</TableCell>
                 <TableCell align="right">
                   <Box mr={5}>Actions</Box>
                 </TableCell>
@@ -78,7 +78,7 @@ const TablesList = () => {
             ) : (
               <TableBody>
                 {tables.map((table) => (
-                  <TeamTableRow
+                  <TableListRow
                     teamId={table.team_id}
                     number={table.table_number}
                     chairCount={table.chairs_count}

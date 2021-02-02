@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles(() => ({
   formControl: {
-    width: 360,
     minWidth: 120,
   },
 }));

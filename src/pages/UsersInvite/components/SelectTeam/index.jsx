@@ -11,6 +11,7 @@ import {
 import { setTeams } from '../../../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../../../services/teamsService';
 import makeFetch from '../../../../services';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import useStylesLocal, { getStyleMenuItem } from './style';
 
 const ITEM_HEIGHT = 48;
@@ -26,15 +27,16 @@ const MenuProps = {
 };
 
 const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
+  const classesMain = useStylesMain();
+  const classesLocal = useStylesLocal();
+  const theme = useTheme();
+
   const dispatch = useDispatch();
 
   const { token, teams } = useSelector((state) => ({
     token: state.signin.token,
     teams: state.teams.teams,
   }));
-
-  const classesLocal = useStylesLocal();
-  const theme = useTheme();
 
   const getTeams = useCallback(async () => {
     const res = await makeFetch(getTeamsAllRequestData(token));
@@ -53,7 +55,7 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
   return (
     <FormControl
       variant="outlined"
-      className={classesLocal.formControl}
+      className={`${classesMain.inputLong} ${classesLocal.formControl}`}
       margin="normal"
       error={error}
     >
