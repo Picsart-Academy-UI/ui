@@ -8,55 +8,51 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useFetch from '../../hooks/useFetch';
-import { getTablesAllRequestData } from '../../services/tables';
+import { useParams } from 'react-router-dom';
+import TablePageWrapper from '../../components/TablePageWrapper';
+import makeFetch from '../../services';
+import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTables } from '../../store/slices/tablesSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
-import { getTeamsAllRequestData } from '../../services/teams';
-import TeamTableRow from './components/TeamTableRow';
-import AddTable from './components/AddTable';
+import { getTeamsAllRequestData } from '../../services/teamsService';
+import TableListRow from './components/TableListRow';
+import Add from './components/Add';
 import useStylesLocal from './style';
 
 const TablesList = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
-  const makeRequest = useFetch();
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const { token, tables } = useSelector((state) => ({
     token: state.signin.token,
     tables: state.tables.tables,
   }));
 
+  const fetchTables = useCallback(async () => {
+    const tablesRes = await makeFetch(getTablesAllRequestData(token));
+    const teamsRes = await makeFetch(getTeamsAllRequestData(token));
+    if (teamsRes.data && tablesRes.data) {
+      dispatch(setTeams(teamsRes));
+      dispatch(setTables(tablesRes));
+    }
+  }, [dispatch, token]);
+
   useEffect(() => {
-    const getTables = async () => {
-      const requestTablesData = getTablesAllRequestData(token);
-      const tablesRes = await makeRequest(requestTablesData);
-      const requestTeamsData = getTeamsAllRequestData(token);
-      const teamsRes = await makeRequest(requestTeamsData);
-      if (teamsRes.data) {
-        dispatch(setTeams(teamsRes));
-      }
-      if (tablesRes.data) {
-        dispatch(setTables(tablesRes));
-      }
-    };
+    if (!tables.length) {
+      fetchTables();
+    }
+  }, [tables.length, fetchTables]);
 
-    const getTeams = async () => {};
-
-    getTables();
-    getTeams();
-  }, [dispatch, makeRequest, token]);
-
-  useEffect(() => {}, [dispatch, makeRequest, token]);
-
+  console.log(id);
   return (
-    <>
+    <TablePageWrapper>
       <div className={classesLocal.wrapper}>
-        <AddTable />
+        <Add />
       </div>
       <Paper>
         <TableContainer className={classesMain.tableContainer}>
@@ -64,8 +60,8 @@ const TablesList = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Team</TableCell>
-                <TableCell align="center">Table</TableCell>
-                <TableCell align="center">Chair Count</TableCell>
+                <TableCell align="center">Table Number</TableCell>
+                <TableCell align="center">Chairs Count</TableCell>
                 <TableCell align="right">
                   <Box mr={5}>Actions</Box>
                 </TableCell>
@@ -85,21 +81,33 @@ const TablesList = () => {
               </TableBody>
             ) : (
               <TableBody>
-                {tables.map((table) => (
-                  <TeamTableRow
-                    teamId={table.team_id}
-                    number={table.table_number}
-                    chairCount={table.chairs_count}
-                    key={table._id}
-                    id={table._id}
-                  />
-                ))}
+                {id
+                  ? tables
+                      .filter((table) => table.team_id === id)
+                      .map((table) => (
+                        <TableListRow
+                          teamId={table.team_id}
+                          number={table.table_number}
+                          chairCount={table.chairs_count}
+                          key={table._id}
+                          id={table._id}
+                        />
+                      ))
+                  : tables.map((table) => (
+                      <TableListRow
+                        teamId={table.team_id}
+                        number={table.table_number}
+                        chairCount={table.chairs_count}
+                        key={table._id}
+                        id={table._id}
+                      />
+                    ))}
               </TableBody>
             )}
           </Table>
         </TableContainer>
       </Paper>
-    </>
+    </TablePageWrapper>
   );
 };
 

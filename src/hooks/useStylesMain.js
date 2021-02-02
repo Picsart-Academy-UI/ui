@@ -2,6 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SPACE } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
+  tablePageWidth: {
+    width: '80%',
+    margin: 'auto',
+  },
   paperContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -79,6 +83,14 @@ const useStylesMain = makeStyles((theme) => ({
   snackbarLeftBottom: {
     left: theme.spacing(4),
     bottom: theme.spacing(4),
+  },
+  inputLong: {
+    width: 360,
+  },
+  centeredColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 }));
 

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTeams } from '../../services/teamsService';
+import makeFetch from '../../services';
+import { getTeamsAllRequestData } from '../../services/teamsService';
 
 export const teams = createSlice({
   name: 'teamsData',
@@ -31,7 +32,7 @@ export const fetchTeams = (token) => async (dispatch, getState) => {
   if (state.teams.teams?.length) {
     return;
   }
-  const res = await getTeams(token);
+  const res = await makeFetch(getTeamsAllRequestData(token));
   if (res.data) {
     dispatch(setTeams(res || []));
   }

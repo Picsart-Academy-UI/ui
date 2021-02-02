@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTables, getTablesQuery } from '../../services/tablesService';
+import makeFetch from '../../services';
+import {
+  getTablesAllRequestData,
+  getTablesQueryRequestData,
+} from '../../services/tablesService';
 
 export const tablesSlice = createSlice({
   name: 'tables',
@@ -48,12 +52,12 @@ export const fetchTables = (token) => async (dispatch, getState) => {
   if (state.tables.tables?.length) {
     return;
   }
-  const res = await getTables(token);
+  const res = await makeFetch(getTablesAllRequestData(token));
   dispatch(setTables(res || []));
 };
 
 export const fetchChairs = (token, team_id) => async (dispatch) => {
-  const res = await getTablesQuery(token, team_id);
+  const res = await makeFetch(getTablesQueryRequestData({ token, team_id }));
   dispatch(setChairs(res?.data || []));
 };
 

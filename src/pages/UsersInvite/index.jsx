@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { formatISO } from 'date-fns';
-import useFetch from '../../hooks/useFetch';
-import { getUserInvitationRequestData } from '../../services/users';
+import makeFetch from '../../services';
+import { getUserInvitationRequestData } from '../../services/usersService';
 import BackButton from '../../components/BackButton';
 import Form from './components/Form';
 import PositionedSnackbar from './components/SnackBar';
@@ -13,15 +13,12 @@ const UserInvite = () => {
     teams: state.teams.teams,
   }));
 
-  const makeRequest = useFetch();
-
   const [isRequestNow, setIsRequestNow] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [message, setMessage] = useState({
     msg: '',
     severity: 'info',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const submitForm = useCallback(
     async (values, resetValues) => {
@@ -34,7 +31,7 @@ const UserInvite = () => {
       body.birthday = values.birthday
         ? formatISO(new Date(values.birthday))
         : '';
-      const res = await makeRequest(
+      const res = await makeFetch(
         getUserInvitationRequestData({ token, body })
       );
 
@@ -58,7 +55,7 @@ const UserInvite = () => {
         });
       }
     },
-    [makeRequest, teams, token]
+    [teams, token]
   );
 
   return (

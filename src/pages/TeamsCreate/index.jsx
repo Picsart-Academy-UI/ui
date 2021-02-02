@@ -3,18 +3,17 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField, Container } from '@material-ui/core';
 import BackButton from '../../components/BackButton';
-import useFetch from '../../hooks/useFetch';
-import { getTeamCreateRequestData } from '../../services/teams';
+import makeFetch from '../../services';
+import { getTeamCreateRequestData } from '../../services/teamsService';
 import { addTeam } from '../../store/slices/teamsSlice';
 import useStylesMain from '../../hooks/useStylesMain';
 
 const TeamsCreate = () => {
-  const token = useSelector((state) => state.signin.token);
-  const makeRequest = useFetch();
   const classesMain = useStylesMain();
   const history = useHistory();
-
   const nameRef = useRef();
+
+  const token = useSelector((state) => state.signin.token);
 
   const onAddTeam = async (e) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ const TeamsCreate = () => {
       team_name: nameRef.current.value,
     };
 
-    const res = await makeRequest(getTeamCreateRequestData({ token, body }));
+    const res = await makeFetch(getTeamCreateRequestData({ token, body }));
     if (res.data) {
       nameRef.current.value = '';
       history.push('/teams');
@@ -34,8 +33,12 @@ const TeamsCreate = () => {
   return (
     <>
       <BackButton />
-      <Container component="main" maxWidth="xs">
-        <form noValidate={false} onSubmit={onAddTeam}>
+      <Container component="div">
+        <form
+          noValidate={false}
+          onSubmit={onAddTeam}
+          className={classesMain.centeredColumn}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -44,12 +47,13 @@ const TeamsCreate = () => {
             id="name"
             label="Name"
             inputRef={nameRef}
+            className={classesMain.inputLong}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            className={classesMain.picsartButton}
+            className={`${classesMain.inputLong} ${classesMain.picsartButton}`}
           >
             Add
           </Button>

@@ -4,11 +4,7 @@ const useStylesLocal = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: theme.spacing(2, 0),
-    '& > div': {
-      width: 'calc(100% / 2)',
-    },
+    marginBottom: theme.spacing(2),
   },
 }));
 

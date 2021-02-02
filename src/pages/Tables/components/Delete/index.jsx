@@ -3,15 +3,14 @@ import { Button } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useSelector, useDispatch } from 'react-redux';
 import useStylesMain from '../../../../hooks/useStylesMain';
-import useFetch from '../../../../hooks/useFetch';
-import { getTableDeleteRequestData } from '../../../../services/tables';
+import makeFetch from '../../../../services';
+import { getTableDeleteRequestData } from '../../../../services/tablesService';
 import AlertDialog from '../../../../components/AlertDialog';
 import { deleteTable } from '../../../../store/slices/tablesSlice';
 
 const Delete = ({ id, name }) => {
   const classesMain = useStylesMain();
   const token = useSelector((state) => state.signin.token);
-  const makeRequest = useFetch();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -20,7 +19,7 @@ const Delete = ({ id, name }) => {
   const handleClose = () => setOpen(false);
 
   const handleDeleteClick = async () => {
-    const res = await makeRequest(getTableDeleteRequestData({ token, id }));
+    const res = await makeFetch(getTableDeleteRequestData({ token, id }));
     if (res.message) {
       handleClose();
       dispatch(deleteTable({ id }));

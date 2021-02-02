@@ -7,15 +7,19 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import useStylesMain from '../../../../hooks/useStylesMain';
 import ChairTableRow from '../ChairTableRow';
 import { transformDateLocale } from '../../../../utils/dateHelper';
 import useStyles from './style';
 
 const TableOfTables = ({ dateRange, choseChair, data }) => {
+  const classesMain = useStylesMain();
   const styles = useStyles();
 
   return (
-    <TableContainer className={styles.container}>
+    <TableContainer
+      className={`${styles.container} ${classesMain.tableContainer}`}
+    >
       <Table stickyHeader>
         <TableHead>
           <TableRow className={styles.dateRow}>

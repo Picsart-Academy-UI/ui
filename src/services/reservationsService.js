@@ -1,57 +1,42 @@
-import makeRequest from '../utils/makeRequest';
-// eslint-disable-next-line
+import { MAIN_URL } from '../constants';
+import { getHeaders } from './utils';
+
 export const getReservations = (token, query) =>
-  makeRequest(`reservations?${query}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  new Request(`${MAIN_URL}reservations?${query}`, {
+    headers: getHeaders(token),
   });
 
 export const approveReservation = (token, id) =>
-  makeRequest(`reservations/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=utf-8',
-    },
+  new Request(`${MAIN_URL}reservations/${id}`, {
+    headers: getHeaders(token),
     method: 'PUT',
     body: { status: 'approved' },
   });
 
 export const rejectReservation = (token, id) =>
-  makeRequest(`reservations/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=utf-8',
-    },
+  new Request(`${MAIN_URL}reservations/${id}`, {
+    headers: getHeaders(token),
     method: 'PUT',
     body: { status: 'rejected' },
   });
 
+export const deleteReservation = (token, resId) =>
+  new Request(`${MAIN_URL}reservations/${resId}`, {
+    headers: getHeaders(token),
+    method: 'DELETE',
+  });
+
 export const seeLoad = (token, start, end, teamId) =>
-  makeRequest(
-    `reservations/seeload?start_date=${start}&end_date=${end}&team_id=${teamId}`,
+  new Request(
+    `${MAIN_URL}reservations/seeload?start_date=${start}&end_date=${end}&team_id=${teamId}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: getHeaders(token),
     }
   );
 
-// eslint-disable-next-line
-export const postReservation = (token, body) => {
-  makeRequest('reservations', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=utf-8',
-    },
+export const postReservation = (token, body) =>
+  new Request(`${MAIN_URL}reservations`, {
+    headers: getHeaders(token),
     method: 'POST',
     body,
-  });
-};
-export const deleteReservation = (token, resId) =>
-  makeRequest(`reservations/${resId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    method: 'DELETE',
   });

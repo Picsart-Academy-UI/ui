@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../services/teams';
+import { getTeamsAllRequestData } from '../../services/teamsService';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import Filter from '../../components/Filter';
-import useFetch from '../../hooks/useFetch';
+import makeFetch from '../../services';
 import TeamsTable from './components/TeamsTable';
 import AddTeam from './components/AddTeam';
 import useStylesLocal from './style';
@@ -14,7 +15,6 @@ const Teams = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useDispatch();
-  const makeRequest = useFetch();
   const classesLocal = useStylesLocal();
 
   const filteredTeams = useMemo(
@@ -28,16 +28,16 @@ const Teams = () => {
   useEffect(() => {
     const getTeams = async () => {
       const requestData = getTeamsAllRequestData(token);
-      const res = await makeRequest(requestData);
+      const res = await makeFetch(requestData);
       if (res) {
         dispatch(setTeams(res));
       }
     };
     getTeams();
-  }, [dispatch, makeRequest, token]);
+  }, [dispatch, token]);
 
   return (
-    <>
+    <TablePageWrapper>
       <div className={classesLocal.wrapper}>
         <Filter
           value={searchValue}
@@ -48,7 +48,7 @@ const Teams = () => {
         <AddTeam />
       </div>
       <TeamsTable teams={filteredTeams} />
-    </>
+    </TablePageWrapper>
   );
 };
 

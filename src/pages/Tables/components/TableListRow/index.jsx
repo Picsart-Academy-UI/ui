@@ -1,7 +1,8 @@
 import { TableRow, TableCell } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useStylesMain from '../../../../hooks/useStylesMain';
-import DeleteRow from '../DeleteRow';
+// import Edit from '../Edit';
+import Delete from '../Delete';
 
 const TeamTableRow = ({ teamId, number, chairCount, id }) => {
   const classesMain = useStylesMain();
@@ -18,7 +19,8 @@ const TeamTableRow = ({ teamId, number, chairCount, id }) => {
       <TableCell align="center">{chairCount}</TableCell>
       <TableCell align="right">
         <div className={classesMain.cellActionsWrapper}>
-          <DeleteRow id={id} name={number} />
+          {/* <Edit id={id} name={number} /> */}
+          <Delete id={id} name={number} />
         </div>
       </TableCell>
     </TableRow>

@@ -12,8 +12,9 @@ import {
   deleteFromRes,
 } from '../../utils/reservationHelper';
 import { withoutHours } from '../../utils/dateHelper';
-import { getTeams } from '../../services/teamsService';
-import { getTables } from '../../services/tablesService';
+import makeFetch from '../../services';
+import { getTeamsAllRequestData } from '../../services/teamsService';
+import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTeams } from './teamsSlice';
 import { setTables } from './tablesSlice';
 
@@ -152,14 +153,13 @@ export const {
 } = reservationsSlice.actions;
 
 export const fetchReservations = (token) => async (dispatch) => {
-  const res = await getReservations(token);
+  const res = await makeFetch(getReservations(token));
   dispatch(setReservations(res.data || []));
 };
 
 export const fetchPendingReservations = (token) => async (dispatch) => {
-  const res = await getReservations(
-    token,
-    'status=pending&include_usersAndChairs=true'
+  const res = await makeFetch(
+    getReservations(token, 'status=pending&include_usersAndChairs=true')
   );
   dispatch(setPendingReservations(res.data || []));
 };
@@ -171,9 +171,11 @@ export const fetchPendingReservationsWithData = (token) => async (
   const state = getState();
 
   return Promise.all([
-    getReservations(token, 'status=pending&include_usersAndChairs=true'),
-    !state.teams.teams.length && getTeams(token),
-    !state.tables.tables.length && getTables(token),
+    makeFetch(
+      getReservations(token, 'status=pending&include_usersAndChairs=true')
+    ),
+    !state.teams.teams.length && makeFetch(getTeamsAllRequestData(token)),
+    !state.tables.tables.length && makeFetch(getTablesAllRequestData(token)),
   ]).then(
     ([pendingReservations, teams, tables]) =>
       pendingReservations.data &&
@@ -194,7 +196,7 @@ export const fetchPendingReservationsWithData = (token) => async (
 };
 
 export const approve = (token, reservationId) => async (dispatch) => {
-  const res = await approveReservation(token, reservationId);
+  const res = await makeFetch(approveReservation(token, reservationId));
   if (res.data) {
     dispatch(removeFromPendingReservations(res.data._id));
   }
@@ -202,7 +204,7 @@ export const approve = (token, reservationId) => async (dispatch) => {
 };
 
 export const reject = (token, reservationId) => async (dispatch) => {
-  const res = await rejectReservation(token, reservationId);
+  const res = await makeFetch(rejectReservation(token, reservationId));
   if (res.data) {
     dispatch(removeFromPendingReservations(res.data._id));
   }
@@ -210,11 +212,13 @@ export const reject = (token, reservationId) => async (dispatch) => {
 };
 
 export const fetchPendingApprovedReservations = (token) => async (dispatch) => {
-  const res = await getReservations(
-    token,
-    `status=approved,pending&include_usersAndChairs=true&from=${new Date()
-      .toISOString()
-      .slice(0, 10)}`
+  const res = await makeFetch(
+    getReservations(
+      token,
+      `status=approved,pending&include_usersAndChairs=true&from=${new Date()
+        .toISOString()
+        .slice(0, 10)}`
+    )
   );
   dispatch(setPendingApprovedReservations(res.data || []));
 };
@@ -222,17 +226,19 @@ export const fetchPendingApprovedReservations = (token) => async (dispatch) => {
 export const fetchPendingApprovedTeamReservations = (token, teamId) => async (
   dispatch
 ) => {
-  const res = await getReservations(
-    token,
-    `status=approved,pending&include_usersAndChairs=true&from=${new Date()
-      .toISOString()
-      .slice(0, 10)}&team_id=${teamId}`
+  const res = await makeFetch(
+    getReservations(
+      token,
+      `status=approved,pending&include_usersAndChairs=true&from=${new Date()
+        .toISOString()
+        .slice(0, 10)}&team_id=${teamId}`
+    )
   );
   dispatch(setPendingApprovedTeamReservations(res.data || []));
 };
 
 export const deleteReservationRequest = (token, resId) => async (dispatch) => {
-  const res = await deleteReservation(token, resId);
+  const res = await makeFetch(deleteReservation(token, resId));
   dispatch(deleteLocalReservation(res.error ? null : resId));
 };
 

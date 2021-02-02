@@ -3,7 +3,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useHistory } from 'react-router-dom';
 import useStylesMain from '../../../../hooks/useStylesMain';
 
-const EditRow = ({ id, name }) => {
+const Edit = ({ id, name }) => {
   const classesMain = useStylesMain();
   const history = useHistory();
 
@@ -17,4 +17,4 @@ const EditRow = ({ id, name }) => {
   );
 };
 
-export default EditRow;
+export default Edit;

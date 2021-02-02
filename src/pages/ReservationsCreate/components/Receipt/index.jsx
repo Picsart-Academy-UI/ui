@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import LoadingModal from '../LoadingModal';
+import makeFetch from '../../../../services';
 import { postReservation } from '../../../../services/reservationsService';
 import {
   addReservation,
@@ -48,14 +49,16 @@ const Receipt = () => {
           const { id, start_date, end_date, table_id } = reservs[
             numOfReservations
           ];
-          const res = await postReservation(token, {
-            start_date: start_date.toISOString(),
-            end_date: end_date.toISOString(),
-            chair_id: id,
-            table_id,
-            user_id: queryUserId !== null ? queryUserId : undefined,
-            team_id: queryTeamId !== null ? queryTeamId : userTeamId,
-          });
+          const res = await makeFetch(
+            postReservation(token, {
+              start_date: start_date.toISOString(),
+              end_date: end_date.toISOString(),
+              chair_id: id,
+              table_id,
+              user_id: queryUserId !== null ? queryUserId : undefined,
+              team_id: queryTeamId !== null ? queryTeamId : userTeamId,
+            })
+          );
           console.log(res);
           const promise = new Promise((resolve) => {
             setTimeout(() => resolve('a'), 2000);

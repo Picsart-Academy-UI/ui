@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logout } from '../../services/signinService';
+import makeFetch from '../../services';
+import { logout } from '../../services/authService';
 
 export const signinSlice = createSlice({
   name: 'signin',
@@ -51,7 +52,7 @@ export const logoutAction = (token) => async (dispatch, getState) => {
   const endpoint = state.signin.pushSubscriptionEndpoint;
   dispatch(setIsLoggedOut());
   dispatch(removePushSubscription(endpoint));
-  await logout(token, endpoint);
+  await makeFetch(logout({ token, endpoint }));
 };
 
 export default signinSlice.reducer;

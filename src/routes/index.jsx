@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
@@ -12,28 +12,19 @@ import ReservationsCreate from '../pages/ReservationsCreate';
 import ReservationsEdit from '../pages/ReservationsEdit';
 import Requests from '../pages/Requests';
 import useStylesMain from '../hooks/useStylesMain';
-import { ROUTES } from '../constants';
 import Tables from '../pages/Tables';
 import TablesCreate from '../pages/TablesCreate';
 
 const Router = () => {
   const classesMain = useStylesMain();
-  const location = useLocation();
 
   const { isLoggedIn, isAdmin } = useSelector((state) => ({
     isLoggedIn: state.signin.isLoggedIn,
     isAdmin: state.signin.curUser.is_admin,
   }));
 
-  const isPageContainTable = Object.values(ROUTES).some(
-    (path) => path === location.pathname
-  );
-
   return (
-    <div
-      className={classesMain.paperPadding}
-      style={{ width: isPageContainTable ? '80%' : '100%' }}
-    >
+    <div className={classesMain.paperPadding}>
       <Switch>
         <Route exact path="/profile/:id" component={Profile} />
         <Route exact path="/reservations" component={Reservations} />
@@ -56,7 +47,7 @@ const Router = () => {
         {isAdmin && (
           <Route exact path="/tables/create" component={TablesCreate} />
         )}
-        {/* {isAdmin && <Route exact path="/tables/:id" component={TablesList} />} */}
+        {isAdmin && <Route exact path="/tables/:id" component={Tables} />}
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}
         {isLoggedIn && <Redirect exact from="/signin" to="/reservations" />}
