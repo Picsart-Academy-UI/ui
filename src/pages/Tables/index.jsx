@@ -11,6 +11,7 @@ import {
 import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import makeFetch from '../../services';
 import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTables } from '../../store/slices/tablesSlice';
@@ -49,7 +50,7 @@ const TablesList = () => {
 
   console.log(id);
   return (
-    <>
+    <TablePageWrapper>
       <div className={classesLocal.wrapper}>
         <Add />
       </div>
@@ -106,7 +107,7 @@ const TablesList = () => {
           </Table>
         </TableContainer>
       </Paper>
-    </>
+    </TablePageWrapper>
   );
 };
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Box, Button } from '@material-ui/core';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import {
   fetchPendingApprovedReservations,
   deleteReservationRequest,
@@ -33,7 +34,7 @@ const Reservations = () => {
   }, []);
 
   return (
-    <>
+    <TablePageWrapper>
       <Container>
         <Box
           display="flex"
@@ -52,7 +53,7 @@ const Reservations = () => {
         </Box>
         <ResTable data={reservs} isHistory={false} deleteRes={deleteRes} />
       </Container>
-    </>
+    </TablePageWrapper>
   );
 };
 

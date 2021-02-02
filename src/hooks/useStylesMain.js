@@ -2,6 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SPACE } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
+  tablePageWidth: {
+    width: '80%',
+    margin: 'auto',
+  },
   paperContainer: {
     display: 'flex',
     flexDirection: 'column',

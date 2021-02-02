@@ -11,14 +11,6 @@ export const MAIN_URL = process.env.REACT_APP_MAIN_URL;
 export const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 export const GMAIL_REGEXP = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/i;
 export const PICSART_MAIL_REGEXP = /^[a-z0-9](\.?[a-z0-9]){5,}@picsart\.com$/i;
-export const ROUTES = {
-  reservations: '/reservations',
-  reservationsCreate: '/reservations/create',
-  teams: '/teams',
-  tables: '/tables',
-  users: '/users',
-  requests: '/requests',
-};
 export const publicVapidKey =
   process.env.REACT_APP_PUBLIC_VAPID_KEY ||
   'BOjfhJMEPQh3NggRpL_6ZTv4JWXsK8kHyo8xTJiUitepCzYDAg7d0cKuOiGclJgNrHKsFA7xQwuHJLj6icDp-5I';

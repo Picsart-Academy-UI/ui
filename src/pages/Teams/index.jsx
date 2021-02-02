@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTeams } from '../../store/slices/teamsSlice';
 import { getTeamsAllRequestData } from '../../services/teamsService';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import Filter from '../../components/Filter';
 import makeFetch from '../../services';
 import TeamsTable from './components/TeamsTable';
@@ -36,7 +37,7 @@ const Teams = () => {
   }, [dispatch, token]);
 
   return (
-    <>
+    <TablePageWrapper>
       <div className={classesLocal.wrapper}>
         <Filter
           value={searchValue}
@@ -47,7 +48,7 @@ const Teams = () => {
         <AddTeam />
       </div>
       <TeamsTable teams={filteredTeams} />
-    </>
+    </TablePageWrapper>
   );
 };
 

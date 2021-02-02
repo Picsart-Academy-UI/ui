@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import { fetchedUsersList } from '../../store/slices/usersSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
@@ -146,7 +147,7 @@ const Users = () => {
   }, [searchValue]);
 
   return (
-    <>
+    <TablePageWrapper>
       <div className={classesLocal.wrapper}>
         <div className={classesLocal.searchWrapper}>
           <Filter
@@ -177,7 +178,7 @@ const Users = () => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </>
+    </TablePageWrapper>
   );
 };
 

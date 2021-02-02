@@ -1,4 +1,3 @@
-// import {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { Box, Typography, Container, Avatar, Button } from '@material-ui/core';
@@ -12,11 +11,9 @@ import useStylesLocal from './style';
 const SignIn = () => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
-  // const [isButtonReady, setIsButtonReady] = useState(false);
   const dispatch = useDispatch();
 
   const responseGoogle = async (response) => {
-    console.log(111);
     const res = await makeFetch(getGoogleRequestData(response));
     if (res.token && res.data) {
       dispatch(setIsLoggedIn(res));
