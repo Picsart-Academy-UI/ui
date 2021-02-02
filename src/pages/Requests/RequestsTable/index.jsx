@@ -15,7 +15,6 @@ import {
   Box,
   CircularProgress,
 } from '@material-ui/core';
-import TablePageWrapper from '../../../components/TablePageWrapper';
 import useStylesMain from '../../../hooks/useStylesMain';
 import UserInfo from '../UserInfo';
 import Snackbar from '../../../components/Snackbar';
@@ -197,7 +196,7 @@ function RequestsTable({
   const notFound = !(filteredRows && filteredRows.length);
 
   return (
-    <TablePageWrapper>
+    <>
       <TableContainer
         component={Paper}
         className={`${classes.tableContainer} ${classesMain.tableContainer}`}
@@ -329,7 +328,7 @@ function RequestsTable({
       <Suspense fallback="Loading...">
         <div>{views}</div>
       </Suspense>
-    </TablePageWrapper>
+    </>
   );
 }
 

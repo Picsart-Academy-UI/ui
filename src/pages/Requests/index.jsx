@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from '@material-ui/core';
+import TablePageWrapper from '../../components/TablePageWrapper';
 import SelectDropdown from '../../components/SelectDropdown';
 import Filter from '../../components/Filter';
 import useMemoSelector from '../../hooks/useMemoSelector';
@@ -41,39 +42,41 @@ const Requests = () => {
   };
 
   return (
-    <div className="requests">
-      <Box className={classes.topBar}>
-        <Box className={classes.filterContainer}>
-          <Filter
-            className={classes.filter}
-            onChange={handleUsernameChange}
-            placeholder="Search By Name"
-          />
-          <SelectDropdown
-            label="Team"
-            options={teamsList}
-            property="team_name"
-            className={classes.selectDropdown}
-            onChange={handleTeamSelect}
-          />
+    <TablePageWrapper>
+      <div className="requests">
+        <Box className={classes.topBar}>
+          <Box className={classes.filterContainer}>
+            <Filter
+              className={classes.filter}
+              onChange={handleUsernameChange}
+              placeholder="Search By Name"
+            />
+            <SelectDropdown
+              label="Team"
+              options={teamsList}
+              property="team_name"
+              className={classes.selectDropdown}
+              onChange={handleTeamSelect}
+            />
+          </Box>
+          <ButtonLoading
+            onClick={() => dispatch(fetchPendingReservationsWithData(token))}
+            color="secondary"
+            className={classes.refreshButton}
+          >
+            Refresh
+          </ButtonLoading>
         </Box>
-        <ButtonLoading
-          onClick={() => dispatch(fetchPendingReservationsWithData(token))}
-          color="secondary"
-          className={classes.refreshButton}
-        >
-          Refresh
-        </ButtonLoading>
-      </Box>
-      <RequestsTable
-        loading={loading}
-        teams={teamsList}
-        pendingReservations={pendingReservations}
-        tables={tables}
-        teamFilterValue={teamValue}
-        usernameChangeValue={usernameValue}
-      />
-    </div>
+        <RequestsTable
+          loading={loading}
+          teams={teamsList}
+          pendingReservations={pendingReservations}
+          tables={tables}
+          teamFilterValue={teamValue}
+          usernameChangeValue={usernameValue}
+        />
+      </div>
+    </TablePageWrapper>
   );
 };
 
