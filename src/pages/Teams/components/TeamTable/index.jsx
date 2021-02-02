@@ -7,12 +7,12 @@ const SeeTeamTables = ({ id }) => {
   const classesMain = useStylesMain();
   const history = useHistory();
 
-  const handleTableCountClick = () => {
+  const handleClick = () => {
     history.push(`/tables/${id}`);
   };
 
   return (
-    <Button title="Show Tables" onClick={handleTableCountClick} color="primary">
+    <Button title="Show Tables" onClick={handleClick} color="primary">
       <DashboardOutlinedIcon className={classesMain.iconColorBlue} />
     </Button>
   );

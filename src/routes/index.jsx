@@ -56,7 +56,7 @@ const Router = () => {
         {isAdmin && (
           <Route exact path="/tables/create" component={TablesCreate} />
         )}
-        {/* {isAdmin && <Route exact path="/tables/:id" component={TablesList} />} */}
+        {isAdmin && <Route exact path="/tables/:id" component={Tables} />}
         <Route path="/notfound" component={NotFound} />
         {isLoggedIn && <Redirect exact from="/" to="/reservations" />}
         {isLoggedIn && <Redirect exact from="/signin" to="/reservations" />}

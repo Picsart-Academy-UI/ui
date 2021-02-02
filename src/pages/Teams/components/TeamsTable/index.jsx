@@ -29,7 +29,7 @@ const TeamsTable = ({ teams }) => {
               <TableCell align="center">MembersCount</TableCell>
               <TableCell align="center">TablesCount</TableCell>
               <TableCell align="right">
-                <Box mr={5}>Actions</Box>
+                <Box mr={9}>Actions</Box>
               </TableCell>
             </TableRow>
           </TableHead>

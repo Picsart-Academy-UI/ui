@@ -2,7 +2,7 @@ import { TableRow, TableCell } from '@material-ui/core';
 import useStylesMain from '../../../../hooks/useStylesMain';
 import DeleteRow from '../Delete';
 import Edit from '../Edit';
-// import SeeTeamTables from '../SeeTeamTables';
+import TeamTable from '../TeamTable';
 
 const TeamRow = ({ name, membersCount, tablesCount, id }) => {
   const classesMain = useStylesMain();
@@ -16,7 +16,7 @@ const TeamRow = ({ name, membersCount, tablesCount, id }) => {
       <TableCell align="center">{tablesCount}</TableCell>
       <TableCell align="right">
         <div className={classesMain.cellActionsWrapper}>
-          {/* <SeeTeamTables id={id} /> */}
+          <TeamTable id={id} />
           <Edit id={id} name={name} />
           <DeleteRow id={id} name={name} membersCount={membersCount} />
         </div>
