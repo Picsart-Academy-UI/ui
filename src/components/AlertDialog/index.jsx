@@ -1,14 +1,20 @@
-import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Box,
+} from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ButtonLoading from '../ButtonLoading';
 import useStylesLocal, { theme } from './style';
 
 const AlertDialog = ({
-  open,
-  handleClose,
-  handleDeleteClick,
-  titleText,
+  open, //
+  handleClose, //
+  handleDeleteClick, //
+  titleText, //
   deleteText = 'Delete',
 }) => {
   const classesLocal = useStylesLocal();
@@ -21,10 +27,10 @@ const AlertDialog = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <div className={classesLocal.wrapper}>
-          <div className={classesLocal.deleteIconWrapper}>
+        <Box className={classesLocal.wrapper}>
+          <Box className={classesLocal.deleteIconWrapper}>
             <DeleteOutlineIcon className={classesLocal.deleteIcon} />
-          </div>
+          </Box>
           <DialogTitle id="alert-dialog-title" className={classesLocal.title}>
             {titleText}
           </DialogTitle>
@@ -40,7 +46,7 @@ const AlertDialog = ({
               {deleteText}
             </ButtonLoading>
           </DialogActions>
-        </div>
+        </Box>
       </Dialog>
     </MuiThemeProvider>
   );

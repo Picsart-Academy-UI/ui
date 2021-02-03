@@ -6,6 +6,7 @@ import { fetchChairs } from '../../store/slices/tablesSlice';
 import { withoutHours, getNextPrevDays } from '../../utils/dateHelper';
 import useQuery from '../../hooks/useQuery';
 import { getReservationOnSameDate } from '../../utils/reservationHelper';
+import BackButton from '../../components/BackButton';
 import useStyles from './style';
 import FinalCheck from './components/FinalCheck';
 import SelectionPart from './components/SelectionPart';
@@ -70,20 +71,23 @@ const ReservationsCreate = () => {
   }, [dateRange, reservs, chairsOfTheTeam]);
 
   return (
-    <Container className={styles.contWrapper}>
-      {isSubmited ? (
-        <FinalCheck handleBack={handleButton} />
-      ) : (
-        <SelectionPart
-          refFrom={refFrom}
-          refTo={refTo}
-          dateRange={dateRange}
-          data={data}
-          setDateRange={setDateRange}
-          handleSubmit={handleButton}
-        />
-      )}
-    </Container>
+    <>
+      <BackButton />
+      <Container className={styles.contWrapper}>
+        {isSubmited ? (
+          <FinalCheck handleBack={handleButton} />
+        ) : (
+          <SelectionPart
+            refFrom={refFrom}
+            refTo={refTo}
+            dateRange={dateRange}
+            data={data}
+            setDateRange={setDateRange}
+            handleSubmit={handleButton}
+          />
+        )}
+      </Container>
+    </>
   );
 };
 

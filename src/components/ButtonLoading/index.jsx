@@ -1,32 +1,15 @@
 import React, { useState, memo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress, Button } from '@material-ui/core';
 import useMountedRef from '../../hooks/useMountedRef';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  wrapper: {
-    position: 'relative',
-  },
-  buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-}));
+import useStyles from './style';
 
 function ButtonLoading({
-  children,
-  color = 'primary',
+  children, //
+  color = 'primary', //
   className,
   onClick,
   reservationId,
-  autoFocus,
+  autoFocus, //
   size,
 }) {
   const classes = useStyles();

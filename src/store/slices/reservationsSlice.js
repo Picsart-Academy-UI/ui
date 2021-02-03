@@ -68,6 +68,7 @@ export const reservationsSlice = createSlice({
       );
 
       if (reservationSameDate === undefined) {
+        console.log(action.payload);
         add(action.payload, newReservations);
       } else {
         deleteFromRes(action.payload, reservationSameDate, newReservations);
@@ -81,11 +82,7 @@ export const reservationsSlice = createSlice({
       // selects the row
       const newReservations = action.payload.dates.reduce(
         (accumilator, item) => {
-          if (
-            item.date.getDay() !== 0 &&
-            item.date.getDay() !== 6 &&
-            item.isFree
-          ) {
+          if (item.isFree) {
             const reservationAvailableForMerging = getReservationsAvailableMerging(
               accumilator,
               action.payload.name,
@@ -124,10 +121,11 @@ export const reservationsSlice = createSlice({
       console.log(newReservations);
       state.selectedReservations = newReservations;
     },
-    addReservation: (state, action) => {
-      state.reservations = [action.payload, ...state.reservations];
-      state.reservsApprPend = [action.payload, ...state.reservsApprPend];
-    },
+    // addReservation: (state, action) => {}
+    //   console.log(action.payload)
+    //   // state.reservations = [action.payload, ...state.reservations];
+    //   // state.reservsApprPend = [action.payload, ...state.reservsApprPend];
+    // ,
     deleteLocalReservation: (state, action) => {
       if (action.payload !== null) {
         const filterFunction = (item) => item._id !== action.payload;
