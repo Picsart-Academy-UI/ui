@@ -23,7 +23,7 @@ const ChairTableRow = ({ item }) => {
           date={date}
           chairName={item.name}
           chairId={item.id}
-          tableId={item.id}
+          tableId={item.table_id}
         />
       ))}
     </TableRow>

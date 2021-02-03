@@ -13,24 +13,19 @@ const ChairTableCell = ({ date, chairName, chairId, tableId }) => {
   const reservOnSameDate = getReservationOnSameDate(reservations, date.date);
   const isSelected =
     reservOnSameDate && reservOnSameDate.chairName === chairName;
-  const isNotWeekendDay = date.date.getDay() !== 0 && date.date.getDay() !== 6;
-  // console.log(isSelected, chairName, reservations);
 
   const text = useMemo(() => {
-    if (isNotWeekendDay) {
-      if (date.isFree) {
-        return 'free';
-        // eslint-disable-next-line
-      } else {
-        return 'reserved';
-      }
+    if (date.isFree) {
+      return 'free';
+      // eslint-disable-next-line
+    } else {
+      return 'reserved';
     }
-    return undefined;
   }, [date.isFree]);
 
   const choseCallback = useCallback(() => {
     // eslint-disable-next-line
-    if (isNotWeekendDay && date.isFree) {
+    if (date.isFree) {
       dispatch(
         setSelectedReservations({
           ...date,
@@ -47,9 +42,9 @@ const ChairTableCell = ({ date, chairName, chairId, tableId }) => {
   return (
     <TableCell
       onClick={choseCallback}
-      className={`${isNotWeekendDay ? '' : styles.weekend} ${
-        date.isFree ? styles.freeChair : styles.reservedChair
-      } ${isSelected ? styles.selected : ''} `}
+      className={` ${date.isFree ? styles.freeChair : styles.reservedChair} ${
+        isSelected ? styles.selected : ''
+      } `}
     >
       {text}
     </TableCell>

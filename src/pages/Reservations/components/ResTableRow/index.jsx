@@ -23,7 +23,7 @@ const ResTableRow = ({
     deleteRes(_id);
     handleChange();
   }, [handleChange]);
-  const curUserId = useSelector((state) => state.signin.curUser._id);
+  const curUser = useSelector((state) => state.signin.curUser);
 
   return (
     <TableRow key={_id}>
@@ -42,7 +42,7 @@ const ResTableRow = ({
       </TableCell>
       <TableCell align="right">
         <IconButton
-          disabled={user_id._id !== curUserId}
+          disabled={user_id._id !== curUser._id && !curUser.is_admin}
           onClick={handleChange}
           color="secondary"
         >
