@@ -1,10 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TablePageWrapper from '../../components/TablePageWrapper';
-import { fetchedUsersList } from '../../store/slices/usersSlice';
+import {
+  fetchedUsersList,
+  handleIsLoadingChange,
+} from '../../store/slices/usersSlice';
 import { setTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
 import useDebounce from '../../hooks/useDebounce';
+import useMount from '../../hooks/useMount';
 import { getTeamsAllRequestData } from '../../services/teamsService';
 import {
   getLimitedUsersRequestData,
@@ -22,14 +26,16 @@ const Users = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const { token, isAdmin, teams, usersData } = useSelector((state) => ({
-    token: state.signin.token,
-    isAdmin: state.signin.curUser.is_admin,
-    teams: state.teams.teams,
-    usersData: state.users.usersList,
-  }));
+  const { token, isAdmin, teams, usersData, isLoading } = useSelector(
+    (state) => ({
+      token: state.signin.token,
+      isAdmin: state.signin.curUser.is_admin,
+      teams: state.teams.teams,
+      usersData: state.users.usersList,
+      isLoading: state.users.isLoading,
+    })
+  );
   const dispatch = useDispatch();
 
   const users = useMemo(
@@ -40,6 +46,8 @@ const Users = () => {
     }),
     [usersData.data, searchValue]
   );
+
+  console.log('users', users);
 
   const teamsOptions = useMemo(
     () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
@@ -55,7 +63,7 @@ const Users = () => {
     currentSearchValue
   ) => {
     if (!currentSearchValue && currentSelectedTeamId === '' && !fetched) {
-      setIsLoading(true);
+      await dispatch(handleIsLoadingChange());
       const requestData = getLimitedUsersRequestData(
         token,
         currentRowsPerPage,
@@ -68,12 +76,11 @@ const Users = () => {
       if (!isAdmin) {
         setFetched(true);
       }
-
-      setIsLoading(false);
     } else if (
       (isAdmin && currentSearchValue) ||
       currentSelectedTeamId !== ''
     ) {
+      await dispatch(handleIsLoadingChange());
       const requestData = getFilteredUsersRequestData(
         token,
         currentRowsPerPage,
@@ -83,8 +90,6 @@ const Users = () => {
       );
       const selectedUsers = await makeFetch(requestData);
       await dispatch(fetchedUsersList(selectedUsers));
-
-      setIsLoading(false);
     }
   };
 
@@ -103,14 +108,15 @@ const Users = () => {
 
   const handleInputChange = (value) => {
     if (isAdmin) {
-      setIsLoading(true);
-      debouncedFetchings(page + 1, rowsPerPage, selectedTeamId, value);
+      debouncedFetchings(1, rowsPerPage, selectedTeamId, value);
     }
+    setPage(0);
     setSearchValue(value);
   };
 
   const handleSelectedTeamChange = async (teamId) => {
-    await fetchings(page + 1, rowsPerPage, teamId, searchValue);
+    await fetchings(1, rowsPerPage, teamId, searchValue);
+    setPage(0);
     setSelectedTeamId(teamId);
   };
 
@@ -129,22 +135,21 @@ const Users = () => {
     }
   }, [users.data?.length, page, usersCount, rowsPerPage]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!teams.length) {
-      const res = await makeFetch(getTeamsAllRequestData(token));
-      dispatch(setTeams(res));
+      const fetchTeams = async () => {
+        const res = await makeFetch(getTeamsAllRequestData(token));
+        dispatch(setTeams(res));
+      };
+      fetchTeams();
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, teams.length]);
 
-  useEffect(() => {
+  console.log('teams', teams);
+
+  useMount(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
-  }, []);
-
-  useEffect(() => {
-    if (page !== 0) {
-      handleChangePage(0);
-    }
-  }, [searchValue]);
+  });
 
   return (
     <TablePageWrapper>
@@ -169,8 +174,8 @@ const Users = () => {
         {isAdmin && <AddUser />}
       </div>
       <UsersTable
-        isLoading={isLoading}
-        rows={users}
+        isLoading={isAdmin ? isLoading : false}
+        users={users}
         count={usersCount}
         page={page}
         rowsPerPage={rowsPerPage}
