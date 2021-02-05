@@ -15,10 +15,7 @@ import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlin
 import LoadingModal from '../LoadingModal';
 import makeFetch from '../../../../services';
 import { postReservation } from '../../../../services/reservationsService';
-import {
-  addReservation,
-  setSelected,
-} from '../../../../store/slices/reservationsSlice';
+import { setSelected } from '../../../../store/slices/reservationsSlice';
 import useQuery from '../../../../hooks/useQuery';
 import { transformDateLocale } from '../../../../utils/dateHelper';
 import useStyles from './style';
@@ -49,7 +46,8 @@ const Receipt = () => {
           const { id, start_date, end_date, table_id } = reservs[
             numOfReservations
           ];
-          const res = await makeFetch(
+          console.log(table_id === id);
+          await makeFetch(
             postReservation(token, {
               start_date: start_date.toISOString(),
               end_date: end_date.toISOString(),
@@ -59,14 +57,9 @@ const Receipt = () => {
               team_id: queryTeamId !== null ? queryTeamId : userTeamId,
             })
           );
-          console.log(res);
-          const promise = new Promise((resolve) => {
-            setTimeout(() => resolve('a'), 2000);
-          });
-          await promise;
-          if (res?.data) {
-            dispatch(addReservation(res.data || []));
-          }
+          // if (res?.data) {
+          //   // dispatch(addReservation(res.data || []));
+          // }
           setNumOfReservations((prev) => 1 + prev);
         } else {
           dispatch(setSelected([]));

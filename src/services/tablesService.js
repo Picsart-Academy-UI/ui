@@ -2,7 +2,7 @@ import { MAIN_URL } from '../constants';
 import { getHeaders } from './utils';
 
 export const getTablesQueryRequestData = ({ token, team_id }) =>
-  new Request(`${MAIN_URL}tables/all?team_id=${team_id}`, {
+  new Request(`${MAIN_URL}tables?team_id=${team_id}`, {
     headers: getHeaders(token),
   });
 
@@ -13,7 +13,7 @@ export const getTableDeleteRequestData = ({ token, id }) =>
   });
 
 export const getTablesAllRequestData = (token) =>
-  new Request(`${MAIN_URL}tables/all`, {
+  new Request(`${MAIN_URL}tables`, {
     headers: getHeaders(token),
   });
 

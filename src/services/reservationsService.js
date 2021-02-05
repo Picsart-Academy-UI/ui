@@ -10,14 +10,14 @@ export const approveReservation = (token, id) =>
   new Request(`${MAIN_URL}reservations/${id}`, {
     headers: getHeaders(token),
     method: 'PUT',
-    body: { status: 'approved' },
+    body: JSON.stringify({ status: 'approved' }),
   });
 
 export const rejectReservation = (token, id) =>
   new Request(`${MAIN_URL}reservations/${id}`, {
     headers: getHeaders(token),
     method: 'PUT',
-    body: { status: 'rejected' },
+    body: JSON.stringify({ status: 'rejected' }),
   });
 
 export const deleteReservation = (token, resId) =>
@@ -38,5 +38,5 @@ export const postReservation = (token, body) =>
   new Request(`${MAIN_URL}reservations`, {
     headers: getHeaders(token),
     method: 'POST',
-    body,
+    body: JSON.stringify(body),
   });
