@@ -26,7 +26,7 @@ const Router = () => {
   return (
     <div className={classesMain.paperPadding}>
       <Switch>
-        <Route exact path="/profile/:id" component={Profile} />
+        {isAdmin && <Route exact path="/profile/:id" component={Profile} />}
         <Route exact path="/reservations" component={Reservations} />
         <Route path="/reservations/create" component={ReservationsCreate} />
         <Route exact path="/reservations/edit" component={ReservationsEdit} />
