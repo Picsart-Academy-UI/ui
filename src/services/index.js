@@ -4,7 +4,6 @@ const makeFetch = async (requestData) => {
     const result = await res.json();
     return result;
   } catch (err) {
-    console.log(err.message);
     return err;
   }
 };

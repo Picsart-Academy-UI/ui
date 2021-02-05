@@ -46,7 +46,7 @@ const Receipt = () => {
           const { id, start_date, end_date, table_id } = reservs[
             numOfReservations
           ];
-          console.log(table_id === id);
+          // console.log(table_id === id);
           await makeFetch(
             postReservation(token, {
               start_date: start_date.toISOString(),

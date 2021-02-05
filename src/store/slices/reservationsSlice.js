@@ -68,7 +68,7 @@ export const reservationsSlice = createSlice({
       );
 
       if (reservationSameDate === undefined) {
-        console.log(action.payload);
+        // console.log(action.payload);
         add(action.payload, newReservations);
       } else {
         deleteFromRes(action.payload, reservationSameDate, newReservations);
@@ -118,7 +118,7 @@ export const reservationsSlice = createSlice({
         },
         []
       );
-      console.log(newReservations);
+      // console.log(newReservations);
       state.selectedReservations = newReservations;
     },
     // addReservation: (state, action) => {}

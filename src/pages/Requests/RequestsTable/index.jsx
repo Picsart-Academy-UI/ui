@@ -103,7 +103,7 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        console.log(e);
+        // console.log(e);
       }
     },
     [dispatch, token]
@@ -127,7 +127,7 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        console.log(e);
+        // console.log(e);
       }
     },
     [dispatch, token]

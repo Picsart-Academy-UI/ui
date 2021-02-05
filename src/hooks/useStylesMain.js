@@ -3,8 +3,11 @@ import { SPACE } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   tablePageWidth: {
-    width: '80%',
+    width: '100%',
     margin: 'auto',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+    },
   },
   paperContainer: {
     display: 'flex',
