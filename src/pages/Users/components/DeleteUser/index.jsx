@@ -8,7 +8,7 @@ import { getUserDeleteRequestData } from '../../../../services/usersService';
 import { deleteUser } from '../../../../store/slices/usersSlice';
 import AlertDialog from '../../../../components/AlertDialog';
 
-const Delete = ({ id, userFullName, onDelete }) => {
+const DeleteUser = ({ id, userFullName, onDelete }) => {
   const classesMain = useStylesMain();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.signin.token);
@@ -45,4 +45,4 @@ const Delete = ({ id, userFullName, onDelete }) => {
   );
 };
 
-export default Delete;
+export default DeleteUser;
