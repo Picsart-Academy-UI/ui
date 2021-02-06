@@ -14,9 +14,7 @@ import {
 import { withoutHours } from '../../utils/dateHelper';
 import makeFetch from '../../services';
 import { getTeamsAllRequestData } from '../../services/teamsService';
-import { getTablesAllRequestData } from '../../services/tablesService';
 import { setTeams } from './teamsSlice';
-import { setTables } from './tablesSlice';
 
 export const reservationsSlice = createSlice({
   name: 'reservations',
@@ -26,7 +24,6 @@ export const reservationsSlice = createSlice({
     pendingReservationsWithData: {
       teams: [],
       pendingReservations: [],
-      tables: [],
     },
     reservsApprPend: [],
     reservsApprPendTeam: [],
@@ -173,22 +170,17 @@ export const fetchPendingReservationsWithData = (token) => async (
       getReservations(token, 'status=pending&include_usersAndChairs=true')
     ),
     !state.teams.teams.length && makeFetch(getTeamsAllRequestData(token)),
-    !state.tables.tables.length && makeFetch(getTablesAllRequestData(token)),
   ]).then(
-    ([pendingReservations, teams, tables]) =>
+    ([pendingReservations, teams]) =>
       pendingReservations.data &&
       Promise.all([
         dispatch(
           setPendingReservationsWithData({
             pendingReservations: pendingReservations.data,
             teams: !state.teams.teams.length ? teams.data : state.teams.teams,
-            tables: !state.tables.tables.length
-              ? tables.data
-              : state.tables.tables,
           })
         ),
         teams && dispatch(setTeams(teams)),
-        tables && dispatch(setTables(tables)),
       ])
   );
 };
