@@ -10,7 +10,7 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
-import React, { useCallback } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Pagination from '../../../../components/Pagination';
 import useStylesMain from '../../../../hooks/useStylesMain';
@@ -18,7 +18,7 @@ import UserRow from '../UserRow';
 
 const UsersTable = ({
   isLoading,
-  rows,
+  users,
   count,
   page,
   rowsPerPage,
@@ -27,7 +27,7 @@ const UsersTable = ({
   onChangeRowsPerPage,
 }) => {
   const classesMain = useStylesMain();
-  const { data } = rows;
+  const { data } = users;
 
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
@@ -37,7 +37,9 @@ const UsersTable = ({
     onChangeRowsPerPage(value);
   };
 
-  const onDelete = useCallback(() => onChangePage(page), [page]);
+  const onDelete = () => {
+    onChangePage(page);
+  };
 
   return (
     <Paper>
@@ -55,7 +57,7 @@ const UsersTable = ({
               <TableCell align="center">Gmail</TableCell>
               {isAdmin && (
                 <TableCell align="right">
-                  <Box mr={9}>Actions</Box>
+                  <Box mr={13}>Actions</Box>
                 </TableCell>
               )}
             </TableRow>
@@ -87,19 +89,21 @@ const UsersTable = ({
                 </TableCell>
               </TableRow>
             </TableBody>
-          ) : (
+          ) : null}
+          {!isLoading && data.length ? (
             <TableBody>
-              {rowsPerPage > 0 &&
-                data.map((user) => (
-                  <UserRow
-                    key={user._id}
-                    user={user}
-                    isAdmin={isAdmin}
-                    onDelete={onDelete}
-                  />
-                ))}
+              {rowsPerPage > 0
+                ? data.map((user) => (
+                    <UserRow
+                      key={user._id}
+                      user={user}
+                      isAdmin={isAdmin}
+                      onDelete={onDelete}
+                    />
+                  ))
+                : null}
             </TableBody>
-          )}
+          ) : null}
         </Table>
       </TableContainer>
       {isAdmin && (
