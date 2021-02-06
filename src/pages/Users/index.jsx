@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import TablePageWrapper from '../../components/TablePageWrapper';
 import {
   fetchedUsersList,
@@ -8,6 +8,7 @@ import {
 import { setTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
 import useDebounce from '../../hooks/useDebounce';
+import useMemoSelector from '../../hooks/useMemoSelector';
 import useMount from '../../hooks/useMount';
 import { getTeamsAllRequestData } from '../../services/teamsService';
 import {
@@ -27,7 +28,8 @@ const Users = () => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [fetched, setFetched] = useState(false);
-  const { token, isAdmin, teams, usersData, isLoading } = useSelector(
+
+  const { token, isAdmin, teams, usersData, isLoading } = useMemoSelector(
     (state) => ({
       token: state.signin.token,
       isAdmin: state.signin.curUser.is_admin,
@@ -36,6 +38,7 @@ const Users = () => {
       isLoading: state.users.isLoading,
     })
   );
+
   const dispatch = useDispatch();
 
   const users = useMemo(
@@ -46,8 +49,6 @@ const Users = () => {
     }),
     [usersData.data, searchValue]
   );
-
-  console.log('users', users);
 
   const teamsOptions = useMemo(
     () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
@@ -144,8 +145,6 @@ const Users = () => {
       fetchTeams();
     }
   }, [dispatch, token, teams.length]);
-
-  console.log('teams', teams);
 
   useMount(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);

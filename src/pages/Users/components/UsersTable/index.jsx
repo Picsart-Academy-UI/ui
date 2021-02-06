@@ -46,7 +46,9 @@ const UsersTable = ({
       <TableContainer className={classesMain.tableContainer}>
         <Table
           stickyHeader
-          className={clsx({ [classesMain.tableEmpty]: data && !data.length })}
+          className={clsx({
+            [classesMain.tableEmpty]: isLoading || (data && !data.length),
+          })}
         >
           <TableHead>
             <TableRow>
