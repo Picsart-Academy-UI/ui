@@ -7,7 +7,7 @@ const Add = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push('tables/create');
+    history.push('/tables/create');
   };
 
   return (
