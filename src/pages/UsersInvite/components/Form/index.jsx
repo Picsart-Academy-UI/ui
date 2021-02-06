@@ -6,13 +6,13 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import useStylesMain from '../../../../hooks/useStylesMain';
+import useStylesMain, { theme } from '../../../../hooks/useStylesMain';
 import Input from '../Input';
 import InputDate from '../InputDate';
 import TeamsDropdown from '../../../../components/TeamsDropdown';
 import validate from './helpers/validateInfo';
 import useForm from './helpers/useForm';
-import useStylesLocal, { theme } from './style';
+import useStylesLocal from './style';
 
 const Form = ({ submitForm, isRequestNow }) => {
   const classesMain = useStylesMain();

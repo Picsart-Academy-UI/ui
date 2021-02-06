@@ -1,4 +1,4 @@
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
   loader: {
@@ -24,29 +24,3 @@ const useStylesLocal = makeStyles((theme) => ({
 }));
 
 export default useStylesLocal;
-
-export const theme = createMuiTheme({
-  overrides: {
-    MuiFormHelperText: {
-      root: {
-        position: 'absolute',
-        top: '100%',
-      },
-    },
-    MuiFormControl: {
-      root: {
-        paddingTop: '16px',
-      },
-    },
-    MuiInputLabel: {
-      root: {
-        paddingTop: '16px',
-      },
-    },
-    MuiFormControlLabel: {
-      root: {
-        paddingTop: '16px',
-      },
-    },
-  },
-});

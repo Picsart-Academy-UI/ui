@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { SPACE } from '../constants';
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { GRADIENT } from '../constants';
 
 const useStylesMain = makeStyles((theme) => ({
   tablePageWidth: {
@@ -13,7 +13,7 @@ const useStylesMain = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundImage: `url(${SPACE})`,
+    backgroundImage: `url(${GRADIENT})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%',
@@ -47,7 +47,7 @@ const useStylesMain = makeStyles((theme) => ({
     padding: theme.spacing(1, 2),
     background:
       '-webkit-linear-gradient(120deg, rgba(219,68,218,1) 0%, rgba(89,192,246,1) 78%, rgba(58,231,255,1) 100%)',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(4),
     fontWeight: 500,
     color: 'white',
   },
@@ -96,5 +96,31 @@ const useStylesMain = makeStyles((theme) => ({
     alignItems: 'center',
   },
 }));
+
+export const theme = createMuiTheme({
+  overrides: {
+    MuiFormHelperText: {
+      root: {
+        position: 'absolute',
+        top: '100%',
+      },
+    },
+    MuiFormControl: {
+      root: {
+        paddingTop: '16px',
+      },
+    },
+    MuiInputLabel: {
+      root: {
+        paddingTop: '16px',
+      },
+    },
+    MuiFormControlLabel: {
+      root: {
+        paddingTop: '16px',
+      },
+    },
+  },
+});
 
 export default useStylesMain;
