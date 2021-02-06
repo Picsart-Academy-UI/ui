@@ -48,24 +48,16 @@ export default function Loads({ data, teamCount }) {
     } else {
       setLoading(true);
     }
-    const r = (data || [])
-      .filter(
-        (item) =>
-          !(
-            new Date(Object.keys(item)[0]).getDay() === 6 ||
-            new Date(Object.keys(item)[0]).getDay() === 0
-          )
+    const r = (data || []).map((item) =>
+      createData(
+        new Date(Object.keys(item)[0]).toLocaleString('en-EN', {
+          month: 'short',
+          day: 'numeric',
+        }),
+        (Object.values(item)[0] / teamCount) * 100,
+        Object.values(item)[0]
       )
-      .map((item) =>
-        createData(
-          new Date(Object.keys(item)[0]).toLocaleString('en-EN', {
-            month: 'short',
-            day: 'numeric',
-          }),
-          (Object.values(item)[0] / teamCount) * 100,
-          Object.values(item)[0]
-        )
-      );
+    );
     setRows(r);
   }, [data, teamCount]);
 
