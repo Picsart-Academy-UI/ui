@@ -46,9 +46,7 @@ const Users = () => {
     }),
     [usersData.data, searchValue]
   );
-
-  console.log('users', users);
-
+  
   const teamsOptions = useMemo(
     () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
     [teams]
@@ -144,8 +142,6 @@ const Users = () => {
       fetchTeams();
     }
   }, [dispatch, token, teams.length]);
-
-  console.log('teams', teams);
 
   useMount(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);
