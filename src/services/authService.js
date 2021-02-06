@@ -15,6 +15,6 @@ export const getGoogleRequestData = (response) =>
 export const logout = ({ token, endpoint }) =>
   new Request(`${MAIN_URL}auth/logout/`, {
     method: 'POST',
-    body: { endpoint },
+    body: JSON.stringify({ endpoint }),
     headers: getHeaders(token),
   });
