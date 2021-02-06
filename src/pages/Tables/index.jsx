@@ -48,7 +48,6 @@ const TablesList = () => {
     }
   }, [tables.length, fetchTables]);
 
-  console.log(id);
   return (
     <TablePageWrapper>
       <div className={classesLocal.wrapper}>

@@ -251,7 +251,7 @@ const Header = () => {
       <AppBar position="fixed" className={classesLocal.header}>
         <Toolbar className={classesLocal.toolbar}>
           <div>
-            <img src={PICSART_LOGO_WHITE} alt="Logo" />
+            <img src={PICSART_LOGO_WHITE} alt="PicsArt logo" />
           </div>
           <div>{desktopMenuLeft}</div>
           <div>
