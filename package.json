@@ -29,8 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint --fix src/",
-    "pretty:write": "prettier --write src/",
-    "flow": "flow"
+    "pretty:write": "prettier --write src/"
   },
   "browserslist": {
     "production": [

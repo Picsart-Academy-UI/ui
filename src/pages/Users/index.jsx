@@ -63,7 +63,7 @@ const Users = () => {
     currentSearchValue
   ) => {
     if (!currentSearchValue && currentSelectedTeamId === '' && !fetched) {
-      await dispatch(handleIsLoadingChange());
+      dispatch(handleIsLoadingChange());
       const requestData = getLimitedUsersRequestData(
         token,
         currentRowsPerPage,
@@ -71,7 +71,7 @@ const Users = () => {
         isAdmin
       );
       const fetchedUsers = await makeFetch(requestData);
-      await dispatch(fetchedUsersList(fetchedUsers));
+      dispatch(fetchedUsersList(fetchedUsers));
 
       if (!isAdmin) {
         setFetched(true);
@@ -80,7 +80,7 @@ const Users = () => {
       (isAdmin && currentSearchValue) ||
       currentSelectedTeamId !== ''
     ) {
-      await dispatch(handleIsLoadingChange());
+      dispatch(handleIsLoadingChange());
       const requestData = getFilteredUsersRequestData(
         token,
         currentRowsPerPage,
@@ -89,7 +89,7 @@ const Users = () => {
         currentSearchValue
       );
       const selectedUsers = await makeFetch(requestData);
-      await dispatch(fetchedUsersList(selectedUsers));
+      dispatch(fetchedUsersList(selectedUsers));
     }
   };
 

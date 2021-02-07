@@ -6,6 +6,9 @@ const useStylesLocal = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    [theme.breakpoints.up('md')]: {
+      height: 'calc(100vh - 124px)',
+    },
   },
   h404: {
     fontSize: theme.spacing(3),

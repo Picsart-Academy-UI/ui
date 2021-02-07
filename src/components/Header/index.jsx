@@ -15,7 +15,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import { PICSART_LOGO_WHITE } from '../../constants';
@@ -125,7 +125,7 @@ const Header = () => {
         <MenuItem data-route="/tables" onClick={handleMobileMenuLeftRoute}>
           <IconButton>
             <Badge color="secondary">
-              <DashboardOutlinedIcon />
+              <DashboardRoundedIcon />
             </Badge>
           </IconButton>
           <p>Tables</p>
