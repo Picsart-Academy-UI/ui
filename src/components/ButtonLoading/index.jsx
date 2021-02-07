@@ -4,12 +4,12 @@ import useMountedRef from '../../hooks/useMountedRef';
 import useStyles from './style';
 
 function ButtonLoading({
-  children, //
-  color = 'primary', //
+  children,
+  color = 'primary',
   className,
   onClick,
   reservationId,
-  autoFocus, //
+  autoFocus,
   size,
 }) {
   const classes = useStyles();

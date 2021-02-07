@@ -6,6 +6,7 @@ import {
   calculateDiffInDays,
   transformLocalToAMT,
 } from '../../../../utils/dateHelper';
+import BackButton from '../../../../components/BackButton';
 import Pickers from '../Pickers';
 import TableOfTables from '../TableOfTables';
 import useStylesMain from '../../../../hooks/useStylesMain';
@@ -19,8 +20,8 @@ const SelectionPart = ({
   setDateRange,
   handleSubmit,
 }) => {
-  const reservations = useSelector(
-    (state) => state.reservations.selectedReservations
+  const reservationsLength = useSelector(
+    (state) => state.reservations.selectedReservations.length
   );
   const [error, setError] = useState('none');
   const classesLocal = useStylesLocal();
@@ -61,6 +62,7 @@ const SelectionPart = ({
 
   return (
     <>
+      <BackButton />
       <Pickers
         refTo={refTo}
         refFrom={refFrom}
@@ -75,7 +77,7 @@ const SelectionPart = ({
         color="primary"
         onClick={handleSubmit}
         className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
-        disabled={reservations.length === 0 || error !== 'none'}
+        disabled={reservationsLength === 0 || error !== 'none'}
       >
         {' '}
         Submit{' '}

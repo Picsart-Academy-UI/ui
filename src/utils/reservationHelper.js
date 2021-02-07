@@ -1,55 +1,74 @@
-import { getNextPrevDays, withoutHours } from './dateHelper';
+import { getNextPrevDays, withoutHours, transformISOToAMT } from './dateHelper';
 
 export const getReservationOnSameDate = (reservArr, date) =>
-  // console.log(reservArr)
-  reservArr.find(
-    (res) =>
-      withoutHours(date) >= withoutHours(res.start_date) &&
-      withoutHours(date) <= withoutHours(res.end_date)
-  );
+  reservArr.find((res) => {
+    const dateAMT = transformISOToAMT(date);
+    const startDateAMT = transformISOToAMT(res.start_date);
+    const endDateAMT = transformISOToAMT(res.end_date);
+    return (
+      withoutHours(dateAMT) >= withoutHours(startDateAMT) &&
+      withoutHours(dateAMT) <= withoutHours(endDateAMT)
+    );
+  });
+export const getReservationsOnSameDate = (reservArr, date) =>
+  reservArr.filter((res) => {
+    const dateAMT = transformISOToAMT(date);
+    const startDateAMT = transformISOToAMT(res.start_date);
+    const endDateAMT = transformISOToAMT(res.end_date);
+    return (
+      withoutHours(dateAMT) >= withoutHours(startDateAMT) &&
+      withoutHours(dateAMT) <= withoutHours(endDateAMT)
+    );
+  });
 
 export const getReservationsAvailableMerging = (reservArr, name, date) =>
   reservArr.filter(({ start_date, end_date, chairName }) => {
-    const { nextDay, prevDay } = getNextPrevDays(date);
+    const { nextDay, prevDay } = getNextPrevDays(transformISOToAMT(date));
+    const startDate = transformISOToAMT(start_date);
+    const endDate = transformISOToAMT(end_date);
     return (
-      (nextDay.getDate() === start_date.getDate() && chairName === name) ||
-      (prevDay.getDate() === end_date.getDate() && chairName === name)
+      (nextDay.getDate() === startDate.getDate() && chairName === name) ||
+      (prevDay.getDate() === endDate.getDate() && chairName === name)
     );
   });
 
 export const deleteFromRes = (chair, res, newReservations) => {
   const index = newReservations.indexOf(res);
-  const { nextDay, prevDay } = getNextPrevDays(chair.date);
-  const dayOfDate = chair.date.getDate();
-  const endDay = res.end_date.getDate();
-  const startDay = res.start_date.getDate();
+  const { nextDay, prevDay } = getNextPrevDays(transformISOToAMT(chair.date));
+  const startDate = transformISOToAMT(res.start_date);
+  const endDate = transformISOToAMT(res.end_date);
+  const currDate = transformISOToAMT(chair.date);
+  const dayOfDate = currDate.getDate();
+  const endDay = endDate.getDate();
+  const startDay = startDate.getDate();
 
   if (startDay === endDay) {
     newReservations.splice(index, 1);
   } else if (dayOfDate === startDay) {
     newReservations[index] = {
       ...newReservations[index],
-      start_date: nextDay,
+      start_date: nextDay.toISOString(),
     };
   } else if (dayOfDate === endDay) {
     newReservations[index] = {
       ...newReservations[index],
-      end_date: prevDay,
+      end_date: prevDay.toISOString(),
     };
-  } else if (chair.date > res.start_date && chair.date < res.end_date) {
+  } else if (currDate > startDate && currDate < endDate) {
     newReservations.push({
       ...newReservations[index],
-      start_date: nextDay,
+      start_date: nextDay.toISOString(),
     });
 
     newReservations[index] = {
       ...newReservations[index],
-      end_date: prevDay,
+      end_date: prevDay.toISOString(),
     };
   }
 };
 
 export const add = (chair, newReservations) => {
+  const resDate = transformISOToAMT(chair.date);
   const resAvailableMerging = getReservationsAvailableMerging(
     newReservations,
     chair.chairName,
@@ -59,7 +78,9 @@ export const add = (chair, newReservations) => {
   const index1 = newReservations.indexOf(resAvailableMerging[1]);
 
   if (resAvailableMerging.length === 2) {
-    if (resAvailableMerging[0].start_date < resAvailableMerging[1].start_date) {
+    const startDate0 = transformISOToAMT(resAvailableMerging[0].start_date);
+    const startDate1 = transformISOToAMT(resAvailableMerging[1].start_date);
+    if (startDate0 < startDate1) {
       newReservations[index0] = {
         ...newReservations[index0],
         end_date: resAvailableMerging[1].end_date,
@@ -72,7 +93,8 @@ export const add = (chair, newReservations) => {
     }
     newReservations.splice(index1, 1);
   } else if (resAvailableMerging.length === 1) {
-    if (resAvailableMerging[0].end_date < chair.date) {
+    const endDate = transformISOToAMT(resAvailableMerging[0].end_date);
+    if (endDate < resDate) {
       newReservations[index0] = {
         ...newReservations[index0],
         end_date: chair.date,

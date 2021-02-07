@@ -11,10 +11,10 @@ import ButtonLoading from '../ButtonLoading';
 import useStylesLocal, { theme } from './style';
 
 const AlertDialog = ({
-  open, //
-  handleClose, //
-  handleDeleteClick, //
-  titleText, //
+  open,
+  handleClose,
+  handleDeleteClick,
+  titleText,
   deleteText = 'Delete',
 }) => {
   const classesLocal = useStylesLocal();
