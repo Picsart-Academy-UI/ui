@@ -54,7 +54,6 @@ const TableCreate = () => {
     [token, teams, dispatch]
   );
 
-  console.log('create');
   return (
     <>
       <BackButton />
