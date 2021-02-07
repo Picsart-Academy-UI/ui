@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import {
@@ -8,25 +8,11 @@ import {
   FormHelperText,
   Select,
 } from '@material-ui/core';
-import { setTeams } from '../../../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../../../services/teamsService';
-import makeFetch from '../../../../services';
-import useStylesMain from '../../../../hooks/useStylesMain';
-import useStylesLocal, { getStyleMenuItem } from './style';
+import { fetchTeams } from '../../store/slices/teamsSlice';
+import useStylesMain from '../../hooks/useStylesMain';
+import useStylesLocal, { getStyleMenuItem, MenuProps } from './style';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
+const TeamsDropdown = ({ team_id, value, onChange, error, helperText }) => {
   const classesMain = useStylesMain();
   const classesLocal = useStylesLocal();
   const theme = useTheme();
@@ -38,19 +24,9 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
     teams: state.teams.teams,
   }));
 
-  const getTeams = useCallback(async () => {
-    const res = await makeFetch(getTeamsAllRequestData(token));
-
-    if (res.data) {
-      dispatch(setTeams(res));
-    }
-  }, [dispatch, token]);
-
   useEffect(() => {
-    if (!teams.length) {
-      getTeams();
-    }
-  }, [teams, getTeams]);
+    dispatch(fetchTeams(token));
+  }, [dispatch, token]);
 
   return (
     <FormControl
@@ -84,4 +60,4 @@ const SelectTeam = ({ team_id, value, onChange, error, helperText }) => {
   );
 };
 
-export default SelectTeam;
+export default TeamsDropdown;

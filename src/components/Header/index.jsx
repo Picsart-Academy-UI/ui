@@ -28,8 +28,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const user = useSelector((state) => state.signin.curUser);
-  const token = useSelector((state) => state.signin.token);
+  const { user, token } = useSelector((state) => ({
+    user: state.signin.curUser,
+    token: state.signin.token,
+  }));
   const isAdmin = user.is_admin;
 
   const [
@@ -249,7 +251,7 @@ const Header = () => {
       <AppBar position="fixed" className={classesLocal.header}>
         <Toolbar className={classesLocal.toolbar}>
           <div>
-            <img src={PICSART_LOGO_WHITE} alt="Logo" />
+            <img src={PICSART_LOGO_WHITE} alt="PicsArt logo" />
           </div>
           <div>{desktopMenuLeft}</div>
           <div>

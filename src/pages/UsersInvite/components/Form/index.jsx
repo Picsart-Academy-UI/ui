@@ -6,13 +6,13 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import useStylesMain from '../../../../hooks/useStylesMain';
+import useStylesMain, { theme } from '../../../../hooks/useStylesMain';
 import Input from '../Input';
 import InputDate from '../InputDate';
-import SelectTeam from '../SelectTeam';
+import TeamsDropdown from '../../../../components/TeamsDropdown';
 import validate from './helpers/validateInfo';
 import useForm from './helpers/useForm';
-import useStylesLocal, { theme } from './style';
+import useStylesLocal from './style';
 
 const Form = ({ submitForm, isRequestNow }) => {
   const classesMain = useStylesMain();
@@ -80,7 +80,7 @@ const Form = ({ submitForm, isRequestNow }) => {
                 helperText={errors.phone}
                 type="number"
               />
-              <SelectTeam
+              <TeamsDropdown
                 id="team_id"
                 team_id="team_id"
                 value={values.team_id}

@@ -4,9 +4,6 @@ const useStylesLocal = makeStyles((theme) => ({
   loader: {
     color: 'white',
   },
-  checkbox: {
-    margin: theme.spacing(2, 0),
-  },
   inputsWrapper: {
     display: 'flex',
     flexDirection: 'column',

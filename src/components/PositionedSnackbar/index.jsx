@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
-import useStylesMain from '../../../../hooks/useStylesMain';
-import Alert from '../Alert';
+import useStylesMain from '../../hooks/useStylesMain';
+import Alert from './components/Alert';
 
 const PositionedSnackbar = ({
   message,
