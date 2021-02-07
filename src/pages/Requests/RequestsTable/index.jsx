@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
@@ -28,29 +27,7 @@ import {
   getDaysBetweenDates,
 } from '../../../utils/helpers';
 import useMemoSelector from '../../../hooks/useMemoSelector';
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 960,
-  },
-  button: {
-    marginRight: 8,
-  },
-  range: {
-    lineHeight: 1,
-  },
-  dateYear: {
-    marginRight: 30,
-  },
-  loadingContainer: {
-    padding: '48px 0',
-  },
-  actionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-});
+import useStylesLocal from './style';
 
 function RequestsTable({
   teams,
@@ -61,7 +38,7 @@ function RequestsTable({
   loading,
 }) {
   const classesMain = useStylesMain();
-  const classes = useStyles();
+  const classes = useStylesLocal();
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [msgState, setMsgState] = useState({ open: false });
@@ -103,7 +80,6 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        // console.log(e);
       }
     },
     [dispatch, token]
@@ -127,7 +103,6 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        // console.log(e);
       }
     },
     [dispatch, token]

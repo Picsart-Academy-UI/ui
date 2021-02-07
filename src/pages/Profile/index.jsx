@@ -14,7 +14,7 @@ import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
 import validateInfo from '../UsersInvite/components/Form/helpers/validateInfo';
-import updateUserHook from './helpers/updateUser';
+import useUpdateUserHook from './hooks/useUpdateUserHook';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
 
@@ -50,7 +50,7 @@ const Profile = (props) => {
     }
   }, [dispatch, id, other, props.location.state]);
 
-  const updateUser = updateUserHook();
+  const updateUser = useUpdateUserHook();
 
   const startUpdateUser = () => {
     dispatch(id !== 'me' ? setNotMe(edited) : setChangeCurUser(edited));
