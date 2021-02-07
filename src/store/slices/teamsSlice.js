@@ -34,7 +34,7 @@ export const fetchTeams = (token) => async (dispatch, getState) => {
   }
   const res = await makeFetch(getTeamsAllRequestData(token));
   if (res.data) {
-    dispatch(setTeams(res || []));
+    dispatch(setTeams(res));
   }
 };
 

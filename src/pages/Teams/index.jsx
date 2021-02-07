@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTeams } from '../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../services/teamsService';
+import { fetchTeams } from '../../store/slices/teamsSlice';
 import TablePageWrapper from '../../components/TablePageWrapper';
 import Filter from '../../components/Filter';
-import makeFetch from '../../services';
 import TeamsTable from './components/TeamsTable';
 import AddTeam from './components/AddTeam';
 import useStylesLocal from './style';
 
 const Teams = () => {
-  const token = useSelector((state) => state.signin.token);
-  const teams = useSelector((state) => state.teams.teams);
+  const { token, teams } = useSelector((state) => ({
+    token: state.signin.token,
+    teams: state.teams.teams,
+  }));
   const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useDispatch();
@@ -26,14 +26,7 @@ const Teams = () => {
   );
 
   useEffect(() => {
-    const getTeams = async () => {
-      const requestData = getTeamsAllRequestData(token);
-      const res = await makeFetch(requestData);
-      if (res) {
-        dispatch(setTeams(res));
-      }
-    };
-    getTeams();
+    dispatch(fetchTeams(token));
   }, [dispatch, token]);
 
   return (

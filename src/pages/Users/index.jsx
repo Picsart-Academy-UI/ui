@@ -5,12 +5,11 @@ import {
   fetchedUsersList,
   handleIsLoadingChange,
 } from '../../store/slices/usersSlice';
-import { setTeams } from '../../store/slices/teamsSlice';
+import { fetchTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
 import useDebounce from '../../hooks/useDebounce';
 import useMemoSelector from '../../hooks/useMemoSelector';
 import useMount from '../../hooks/useMount';
-import { getTeamsAllRequestData } from '../../services/teamsService';
 import {
   getLimitedUsersRequestData,
   getFilteredUsersRequestData,
@@ -137,14 +136,8 @@ const Users = () => {
   }, [users.data?.length, page, usersCount, rowsPerPage]);
 
   useEffect(() => {
-    if (!teams.length) {
-      const fetchTeams = async () => {
-        const res = await makeFetch(getTeamsAllRequestData(token));
-        dispatch(setTeams(res));
-      };
-      fetchTeams();
-    }
-  }, [dispatch, token, teams.length]);
+    dispatch(fetchTeams(token));
+  }, [dispatch, token]);
 
   useMount(() => {
     fetchings(page + 1, rowsPerPage, selectedTeamId, searchValue);

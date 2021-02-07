@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectDropdown from '../../../components/SelectDropdown';
-import makeFetch from '../../../services';
-import { setTeams } from '../../../store/slices/teamsSlice';
-import { getTeamsAllRequestData } from '../../../services/teamsService';
+import { fetchTeams } from '../../../store/slices/teamsSlice';
 
 function TeamList({ changeCallback, isEditing, userTeam }) {
   const dispatch = useDispatch();
@@ -15,18 +13,9 @@ function TeamList({ changeCallback, isEditing, userTeam }) {
     teams: state.teams.teams,
   }));
 
-  const fetchTeams = useCallback(async () => {
-    const res = await makeFetch(getTeamsAllRequestData(token));
-    if (res.data) {
-      dispatch(setTeams(res));
-    }
-  }, [token, dispatch]);
-
   useEffect(() => {
-    if (!teams.length) {
-      fetchTeams();
-    }
-  }, [teams, fetchTeams]);
+    dispatch(fetchTeams(token));
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (teams.length) {
