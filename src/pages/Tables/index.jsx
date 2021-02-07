@@ -1,3 +1,6 @@
+import { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -8,9 +11,6 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
-import { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import TablePageWrapper from '../../components/TablePageWrapper';
 import makeFetch from '../../services';
 import { getTablesAllRequestData } from '../../services/tablesService';
@@ -27,26 +27,41 @@ const TablesList = () => {
   const classesLocal = useStylesLocal();
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  const { token, tables } = useSelector((state) => ({
+  const { token, tables, teams } = useSelector((state) => ({
     token: state.signin.token,
     tables: state.tables.tables,
+    teams: state.teams.teams,
   }));
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const teamsLeng = teams.length;
+  const tablesLeng = tables.length;
 
   const fetchTables = useCallback(async () => {
     const tablesRes = await makeFetch(getTablesAllRequestData(token));
-    const teamsRes = await makeFetch(getTeamsAllRequestData(token));
-    if (teamsRes.data && tablesRes.data) {
-      dispatch(setTeams(teamsRes));
-      dispatch(setTables(tablesRes));
+    if (tablesRes.data) {
+      if (!teamsLeng) {
+        const teamsRes = await makeFetch(getTeamsAllRequestData(token));
+        if (teamsRes.data) {
+          dispatch(setTeams(teamsRes));
+          dispatch(setTables(tablesRes));
+        }
+      } else {
+        dispatch(setTables(tablesRes));
+      }
+      setIsFetching(false);
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, teamsLeng]);
 
   useEffect(() => {
-    if (!tables.length) {
-      fetchTables();
+    if (!isFetching) {
+      setIsFetching(true);
+      if (!tablesLeng) {
+        fetchTables();
+      }
     }
-  }, [tables.length, fetchTables]);
+  }, [tablesLeng, fetchTables, isFetching]);
 
   return (
     <TablePageWrapper>
