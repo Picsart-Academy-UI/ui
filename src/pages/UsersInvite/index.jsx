@@ -4,8 +4,8 @@ import { formatISO } from 'date-fns';
 import makeFetch from '../../services';
 import { getUserInvitationRequestData } from '../../services/usersService';
 import BackButton from '../../components/BackButton';
+import PositionedSnackbar from '../../components/PositionedSnackbar';
 import Form from './components/Form';
-import PositionedSnackbar from './components/SnackBar';
 
 const UserInvite = () => {
   const { token, teams } = useSelector((state) => ({

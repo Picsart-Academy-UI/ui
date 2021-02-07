@@ -5,9 +5,7 @@ const useStylesLocal = makeStyles((theme) => ({
     position: 'relative',
     borderTop: '4px solid #f50057',
     borderRadius: '4px',
-    paddingBottom: theme.spacing(2),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
+    padding: theme.spacing(0, 2, 2),
   },
   deleteIconWrapper: {
     width: theme.spacing(5),

@@ -17,7 +17,8 @@ import useStylesMain from '../../../../hooks/useStylesMain';
 import { transformFromISOToFormat } from '../../../../utils/dateHelper';
 import BookaSeat from '../BookaSeat';
 import GoToProfile from '../GoToProfile';
-import Delete from '../Delete';
+import DeleteUser from '../DeleteUser';
+import GoToReservations from '../GoToReservations';
 import useStylesLocal from './style';
 
 const UserRow = ({ user, name, isAdmin, onDelete }) => {
@@ -58,8 +59,9 @@ const UserRow = ({ user, name, isAdmin, onDelete }) => {
           <TableCell align="right">
             <div className={classesMain.cellActionsWrapper}>
               <GoToProfile user={user} />
+              <GoToReservations userId={user._id} />
               <BookaSeat id={user._id} team_id={user.team_id} />
-              <Delete
+              <DeleteUser
                 id={user._id}
                 userFullName={`${user.first_name} ${user.last_name}`}
                 onDelete={onDelete}

@@ -47,7 +47,7 @@ function LoadsDialog({ row }) {
       end = new Date(date.end);
     }
     makeFetch(seeLoad(token, start, end, user.teamId))
-      .then((res) => new Promise((r) => setTimeout(() => r(res), 300)))
+      .then((res) => new Promise((r) => setTimeout(() => r(res), 200)))
       .then((res) => {
         setData(res.data);
       });

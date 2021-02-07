@@ -25,7 +25,7 @@ import { tokenSelector } from '../../../store/selectors';
 import {
   createRequestData,
   getYear,
-  workingDaysBetweenDates,
+  getDaysBetweenDates,
 } from '../../../utils/helpers';
 import useMemoSelector from '../../../hooks/useMemoSelector';
 
@@ -103,7 +103,7 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        console.log(e);
+        // console.log(e);
       }
     },
     [dispatch, token]
@@ -127,7 +127,7 @@ function RequestsTable({
           type: 'error',
           message: 'Something went wrong!',
         });
-        console.log(e);
+        // console.log(e);
       }
     },
     [dispatch, token]
@@ -179,14 +179,9 @@ function RequestsTable({
             day: 'numeric',
           })}`,
           year: getYear(start_date, end_date),
-          days: workingDaysBetweenDates(
-            new Date(start_date),
-            new Date(end_date)
-          ),
+          days: getDaysBetweenDates(new Date(start_date), new Date(end_date)),
         },
-        `${tables?.find((t) => t._id === table_id)?.table_number || 0}/${
-          chair_id?.number || 0
-        }`,
+        `${table_id?.table_number || 0}/${chair_id?.chair_number || 0}`,
         5,
         reservationId
       );
@@ -325,7 +320,7 @@ function RequestsTable({
         titleText="Are you sure?"
         deleteText="Reject"
       />
-      <Suspense fallback="Loading...">
+      <Suspense fallback="">
         <div>{views}</div>
       </Suspense>
     </>
