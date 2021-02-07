@@ -28,11 +28,11 @@ const ResTableRow = ({
   return (
     <TableRow key={_id}>
       <TableCell>
-        {transformFromISOToFormat(end_date)} -{' '}
-        {transformFromISOToFormat(start_date)}
+        {transformFromISOToFormat(start_date)} -{' '}
+        {transformFromISOToFormat(end_date)}
       </TableCell>
       <TableCell align="center">
-        {table_id?.table_number}/{chair_id?.chair_number}
+        {chair_id?.chair_number}/{table_id?.table_number}
       </TableCell>
       <TableCell align="center" className={styles[status]}>
         {status}

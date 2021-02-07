@@ -39,6 +39,8 @@ export const transformDateLocale = (date) => format(date, 'MMM d  y');
 
 export const transformDataISO = (date) => date.toISOString().slice(0, 10);
 
+export const transformDateToISOFormat = (date) => format(date, 'yyyy-MM-dd');
+
 export const transformISOToAMT = (date) => {
   const timezone = 'AMT';
   return zonedTimeToUtc(date, timezone);

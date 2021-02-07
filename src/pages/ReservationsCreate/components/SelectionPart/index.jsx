@@ -19,6 +19,7 @@ const SelectionPart = ({
   data,
   setDateRange,
   handleSubmit,
+  isLoading,
 }) => {
   const reservationsLength = useSelector(
     (state) => state.reservations.selectedReservations.length
@@ -43,7 +44,7 @@ const SelectionPart = ({
       setError('both');
       return;
       // eslint-disable-next-line
-    } else if (diffFromToday <= 0) {
+    } else if (diffFromToday < 0) {
       setError('from');
       return;
       // eslint-disable-next-line
@@ -70,7 +71,11 @@ const SelectionPart = ({
         error={error}
       />
       <Container className={classesLocal.tableCont}>
-        <TableOfTables dateRange={dateRange} data={data} />
+        <TableOfTables
+          dateRange={dateRange}
+          data={data}
+          isLoading={isLoading}
+        />
       </Container>
       <Button
         variant="contained"

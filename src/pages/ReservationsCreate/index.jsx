@@ -6,7 +6,7 @@ import {
   setSelected,
 } from '../../store/slices/reservationsSlice';
 import { fetchChairs } from '../../store/slices/tablesSlice';
-import { withoutHours, getNextPrevDays } from '../../utils/dateHelper';
+import { withoutHours, transformLocalToAMT } from '../../utils/dateHelper';
 import useQuery from '../../hooks/useQuery';
 import { getReservationsOnSameDate } from '../../utils/reservationHelper';
 import useStyles from './style';
@@ -23,18 +23,18 @@ const ReservationsCreate = () => {
   const curUser = useSelector((state) => state.signin.curUser);
   const chairsOfTheTeam = useSelector((state) => state.tables.chairs);
   const userTeamId = useSelector((state) => state.signin.curUser.team_id);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const query = useQuery();
-
+  const team_id = query.get('team_id') ? query.get('team_id') : userTeamId;
+  const user_id = query.get('id') ? query.get('id') : curUser._id;
   // ref data
   const refFrom = useRef();
   const refTo = useRef();
 
   const [isSubmited, setIsSubmited] = useState(false);
   const [data, setData] = useState([]);
-  const [dateRange, setDateRange] = useState([
-    getNextPrevDays(new Date()).nextDay,
-  ]);
+  const [dateRange, setDateRange] = useState([transformLocalToAMT(new Date())]);
 
   // creates the data for the table
   const createTableData = useCallback(
@@ -48,7 +48,6 @@ const ReservationsCreate = () => {
             reservationsSatisfied,
             date.toISOString()
           );
-          const user_id = query.get('id') ? query.get('id') : curUser._id;
           let status;
           if (reservsOnSameDate.length === 0) {
             status = 'free';
@@ -86,18 +85,31 @@ const ReservationsCreate = () => {
           table_id: chair.table_id,
         };
       }),
-    [curUser._id]
+    [user_id]
   );
 
   // handles the click event on BackButton
   const handleButton = () => setIsSubmited((prev) => !prev);
 
   useEffect(() => {
+    // eslint-disable-next-line
+    let fetchAmount = 0;
+    const fetchCheck = () => {
+      ++fetchAmount;
+      if (fetchAmount >= 2) {
+        setIsLoading(false);
+      }
+    };
+
+    setIsLoading(true);
     dispatch(setSelected([]));
-    const team_id = query.get('team_id') ? query.get('team_id') : userTeamId;
-    dispatch(fetchPendingApprovedTeamReservations(token, team_id));
-    dispatch(fetchChairs(token, team_id));
-  }, [token, userTeamId, dispatch]);
+    dispatch(fetchPendingApprovedTeamReservations(token, team_id)).finally(() =>
+      fetchCheck(fetchAmount, setIsLoading)
+    );
+    dispatch(fetchChairs(token, team_id)).finally(() =>
+      fetchCheck(fetchAmount, setIsLoading)
+    );
+  }, [token, userTeamId, dispatch, team_id]);
 
   useEffect(() => {
     setData(createTableData(chairsOfTheTeam, reservs, dateRange));
@@ -116,6 +128,7 @@ const ReservationsCreate = () => {
             data={data}
             setDateRange={setDateRange}
             handleSubmit={handleButton}
+            isLoading={isLoading}
           />
         )}
       </Container>
