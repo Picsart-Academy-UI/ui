@@ -1,9 +1,13 @@
 import { TablePagination } from '@material-ui/core';
 import PaginationActions from '../PaginationActions';
 
-const Pagination = (props) => {
-  const { rows, page, rowsPerPage, onChangePage, onChangeRowsPerPage } = props;
-
+const Pagination = ({
+  rows,
+  page,
+  rowsPerPage,
+  onChangePage,
+  onChangeRowsPerPage,
+}) => {
   const handleChangePage = (newPage) => {
     onChangePage(newPage);
   };

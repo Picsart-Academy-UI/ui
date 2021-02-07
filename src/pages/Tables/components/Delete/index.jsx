@@ -26,7 +26,12 @@ const Delete = ({ id, name }) => {
     }
   };
 
-  const titleText = <span>Delete {name}?</span>;
+  const titleText = (
+    <span>
+      <div>Delete {name}?</div>
+      <div>Reservations connected with this table also will be deleted.</div>
+    </span>
+  );
 
   return (
     <>
