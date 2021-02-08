@@ -133,8 +133,8 @@ const Users = () => {
 
   const handleSelectedTeamChange = async (teamId) => {
     dispatch(setPage(0));
-    await fetchings(1, rowsPerPage, teamId, searchValue);
     dispatch(setSelectedTeamId(teamId));
+    await fetchings(1, rowsPerPage, teamId, searchValue);
   };
 
   const onSelectChange = (teamObj) => {
