@@ -4,6 +4,9 @@ import TablePageWrapper from '../../components/TablePageWrapper';
 import {
   fetchedUsersList,
   handleIsLoadingChange,
+  setSelectedTeamId,
+  setPage,
+  setRowsPerPage,
 } from '../../store/slices/usersSlice';
 import { fetchTeams } from '../../store/slices/teamsSlice';
 import makeFetch from '../../services';
@@ -22,21 +25,28 @@ import useStylesLocal from './style';
 
 const Users = () => {
   const classesLocal = useStylesLocal();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState('');
-  const [selectedTeamId, setSelectedTeamId] = useState('');
   const [fetched, setFetched] = useState(false);
 
-  const { token, isAdmin, teams, usersData, isLoading } = useMemoSelector(
-    (state) => ({
-      token: state.signin.token,
-      isAdmin: state.signin.curUser.is_admin,
-      teams: state.teams.teams,
-      usersData: state.users.usersList,
-      isLoading: state.users.isLoading,
-    })
-  );
+  const {
+    token,
+    isAdmin,
+    teams,
+    usersData,
+    isLoading,
+    page,
+    rowsPerPage,
+    selectedTeamId,
+  } = useMemoSelector((state) => ({
+    token: state.signin.token,
+    isAdmin: state.signin.curUser.is_admin,
+    teams: state.teams.teams,
+    usersData: state.users.usersList,
+    isLoading: state.users.isLoading,
+    page: state.users.page,
+    rowsPerPage: state.users.rowsPerPage,
+    selectedTeamId: state.users.selectedTeamId,
+  }));
 
   const dispatch = useDispatch();
 
@@ -50,8 +60,15 @@ const Users = () => {
   );
 
   const teamsOptions = useMemo(
-    () => (teams.length && [{ team_name: 'All', _id: 'all' }, ...teams]) || [],
+    () => (teams.length && [{ team_name: 'All', _id: '' }, ...teams]) || [],
     [teams]
+  );
+
+  const selectedTeamObj = useMemo(
+    () =>
+      teamsOptions.length &&
+      teamsOptions.find((team) => team._id === selectedTeamId),
+    [teamsOptions, selectedTeamId]
   );
 
   const usersCount = isAdmin ? usersData.count || 0 : users.data.length;
@@ -97,27 +114,27 @@ const Users = () => {
 
   const handleChangePage = async (newPage) => {
     await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
-    setPage(newPage);
+    dispatch(setPage(newPage));
   };
 
   const handleChangeRowsPerPage = async (value) => {
     await fetchings(1, value, selectedTeamId, searchValue);
-    setRowsPerPage(value);
-    setPage(0);
+    dispatch(setRowsPerPage(value));
+    dispatch(setPage(0));
   };
 
   const handleInputChange = (value) => {
     if (isAdmin) {
       debouncedFetchings(1, rowsPerPage, selectedTeamId, value);
     }
-    setPage(0);
+    dispatch(setPage(0));
     setSearchValue(value);
   };
 
   const handleSelectedTeamChange = async (teamId) => {
     await fetchings(1, rowsPerPage, teamId, searchValue);
-    setPage(0);
-    setSelectedTeamId(teamId);
+    dispatch(setPage(0));
+    dispatch(setSelectedTeamId(teamId));
   };
 
   const onSelectChange = (teamObj) => {
@@ -131,9 +148,9 @@ const Users = () => {
 
   useEffect(() => {
     if (!users.data?.length && page !== 0 && usersCount / rowsPerPage <= page) {
-      setPage(page - 1);
+      dispatch(setPage(page - 1));
     }
-  }, [users.data?.length, page, usersCount, rowsPerPage]);
+  }, [users.data?.length, page, usersCount, rowsPerPage, dispatch]);
 
   useEffect(() => {
     dispatch(fetchTeams(token));
@@ -156,6 +173,7 @@ const Users = () => {
           {isAdmin && (
             <SelectDropdown
               property="team_name"
+              defaultValue={selectedTeamObj}
               label="Team"
               options={teamsOptions}
               onChange={onSelectChange}
