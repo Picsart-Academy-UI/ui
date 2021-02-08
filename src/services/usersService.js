@@ -23,7 +23,7 @@ export const getUserDeleteRequestData = ({ token, id }) =>
 
 export const getLimitedUsersRequestData = (token, limit, page, isAdmin) =>
   new Request(
-    `${MAIN_URL}users${isAdmin ? `/all?limit=${limit}&page=${page}` : ''}`,
+    `${MAIN_URL}users${isAdmin ? `?limit=${limit}&page=${page}` : ''}`,
     {
       headers: getHeaders(token),
     }
@@ -37,7 +37,7 @@ export const getFilteredUsersRequestData = (
   value
 ) =>
   new Request(
-    `${MAIN_URL}users/all?${teamId ? `team_id=${teamId}` : ''}${
+    `${MAIN_URL}users?${teamId ? `team_id=${teamId}` : ''}${
       value ? `&first_name=${value}` : ''
     }&limit=${limit}&page=${page}`,
     {
