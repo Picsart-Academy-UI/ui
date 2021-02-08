@@ -120,6 +120,17 @@ export const theme = createMuiTheme({
         paddingTop: '16px',
       },
     },
+    MuiTextField: {
+      root: {
+        marginTop: '16px',
+        marginBottom: '8px',
+      },
+    },
+    MuiOutlinedInput: {
+      adornedStart: {
+        paddingLeft: '0',
+      },
+    },
   },
 });
 

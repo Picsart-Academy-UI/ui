@@ -8,7 +8,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import TeamsDropdown from '../../../../components/TeamsDropdown';
 import useStylesMain, { theme } from '../../../../hooks/useStylesMain';
 import useForm from './hooks/useForm';
-import validate from './hooks/validateInfo';
+import validate from './utils/validateInfo';
 import useStylesLocal from './style';
 
 const TableCreate = ({ submitForm, isRequestNow }) => {
@@ -32,7 +32,7 @@ const TableCreate = ({ submitForm, isRequestNow }) => {
             margin="normal"
             fullWidth
             id="name"
-            label="Table Number"
+            label="Table Number*"
             name="table_number"
             type="number"
             className={classesMain.inputLong}
@@ -46,7 +46,7 @@ const TableCreate = ({ submitForm, isRequestNow }) => {
             margin="normal"
             fullWidth
             id="name"
-            label="Chairs Count"
+            label="Chairs Count*"
             name="chairs_count"
             type="number"
             className={classesMain.inputLong}

@@ -23,11 +23,22 @@ const UserInvite = () => {
   const submitForm = useCallback(
     async (values, resetValues) => {
       setIsRequestNow(true);
-      const body = { ...values };
+
       const teamItem = teams.find(
         ({ team_name }) => team_name === values.team_id
       );
-      body.team_id = teamItem._id;
+
+      const body = {
+        email: values.email.trim(),
+        first_name: values.first_name.trim(),
+        last_name: values.last_name.trim(),
+        birthday: values.birthday,
+        phone: values.phone.phoneNumber?.number,
+        team_id: teamItem._id,
+        position: values.position.trim(),
+        is_admin: values.is_admin,
+      };
+
       body.birthday = values.birthday
         ? formatISO(new Date(values.birthday))
         : '';
@@ -39,7 +50,10 @@ const UserInvite = () => {
         resetValues();
         setIsSubmitted((prevState) => {
           if (!prevState) {
-            setMessage({ msg: 'Success.', severity: 'success' });
+            setMessage({
+              msg: 'User successfully invited.',
+              severity: 'success',
+            });
             setIsRequestNow(false);
           }
           return true;
