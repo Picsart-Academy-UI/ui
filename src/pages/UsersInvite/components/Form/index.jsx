@@ -34,7 +34,7 @@ const Form = ({ submitForm, isRequestNow }) => {
             <div className={classesLocal.columnWrapper}>
               <Input
                 id="email"
-                label="Email Address"
+                label="Email Address*"
                 name="email"
                 value={values.email}
                 onChange={handleChange}
@@ -44,7 +44,7 @@ const Form = ({ submitForm, isRequestNow }) => {
               />
               <Input
                 id="first_name"
-                label="Name"
+                label="Name*"
                 name="first_name"
                 value={values.first_name}
                 onChange={handleChange}
@@ -53,7 +53,7 @@ const Form = ({ submitForm, isRequestNow }) => {
               />
               <Input
                 id="last_name"
-                label="Surname"
+                label="Surname*"
                 name="last_name"
                 value={values.last_name}
                 onChange={handleChange}
@@ -88,7 +88,7 @@ const Form = ({ submitForm, isRequestNow }) => {
               />
               <Input
                 id="position"
-                label="Position"
+                label="Position*"
                 name="position"
                 value={values.position}
                 onChange={handleChange}

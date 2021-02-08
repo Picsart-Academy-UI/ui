@@ -5,7 +5,7 @@ const InputPhone = ({ country, value, onChange, error, helperText }) => (
     id="phone"
     name="phone"
     variant="outlined"
-    label="Phone"
+    label="Phone number"
     error={error}
     helperText={helperText}
     value={value}

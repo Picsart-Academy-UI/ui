@@ -35,7 +35,7 @@ const TeamsDropdown = ({ team_id, value, onChange, error, helperText }) => {
       margin="normal"
       error={error}
     >
-      <InputLabel id="demo-simple-select-outlined-label">Team</InputLabel>
+      <InputLabel id="demo-simple-select-outlined-label">Team*</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
