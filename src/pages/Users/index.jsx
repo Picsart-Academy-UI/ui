@@ -113,28 +113,28 @@ const Users = () => {
   const debouncedFetchings = useDebounce(fetchings, 100);
 
   const handleChangePage = async (newPage) => {
-    await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
     dispatch(setPage(newPage));
+    await fetchings(newPage + 1, rowsPerPage, selectedTeamId, searchValue);
   };
 
   const handleChangeRowsPerPage = async (value) => {
-    await fetchings(1, value, selectedTeamId, searchValue);
     dispatch(setRowsPerPage(value));
     dispatch(setPage(0));
+    await fetchings(1, value, selectedTeamId, searchValue);
   };
 
   const handleInputChange = (value) => {
+    dispatch(setPage(0));
+    setSearchValue(value);
     if (isAdmin) {
       debouncedFetchings(1, rowsPerPage, selectedTeamId, value);
     }
-    dispatch(setPage(0));
-    setSearchValue(value);
   };
 
   const handleSelectedTeamChange = async (teamId) => {
-    await fetchings(1, rowsPerPage, teamId, searchValue);
     dispatch(setPage(0));
     dispatch(setSelectedTeamId(teamId));
+    await fetchings(1, rowsPerPage, teamId, searchValue);
   };
 
   const onSelectChange = (teamObj) => {
