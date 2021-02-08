@@ -9,9 +9,10 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import useStylesMain, { theme } from '../../../../hooks/useStylesMain';
 import Input from '../Input';
 import InputDate from '../InputDate';
+import InputPhone from '../InputPhone';
 import TeamsDropdown from '../../../../components/TeamsDropdown';
-import validate from './helpers/validateInfo';
-import useForm from './helpers/useForm';
+import validate from '../../../../utils/validateInfo';
+import useForm from './hooks/useForm';
 import useStylesLocal from './style';
 
 const Form = ({ submitForm, isRequestNow }) => {
@@ -70,15 +71,12 @@ const Form = ({ submitForm, isRequestNow }) => {
               />
             </div>
             <div className={classesLocal.columnWrapper}>
-              <Input
-                id="phone"
-                label="Phone"
-                name="phone"
-                value={values.phone}
+              <InputPhone
+                value={values.phone.value}
+                country={values.phone.country}
                 onChange={handleChange}
                 error={Boolean(errors.phone)}
                 helperText={errors.phone}
-                type="number"
               />
               <TeamsDropdown
                 id="team_id"
