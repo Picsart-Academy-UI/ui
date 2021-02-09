@@ -1,4 +1,4 @@
-import { useMemo, useCallback, memo } from 'react';
+import { useCallback, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TableCell } from '@material-ui/core';
 import { getReservationOnSameDate } from '../../../../utils/reservationHelper';
@@ -13,19 +13,8 @@ const ChairTableCell = ({ date, chairName, chairId, tableId }) => {
   const reservOnSameDate = getReservationOnSameDate(reservations, date.date);
   const isSelected =
     reservOnSameDate && reservOnSameDate.chairName === chairName;
-
-  const text = useMemo(() => {
-    if (date.isFree) {
-      return 'free';
-      // eslint-disable-next-line
-    } else {
-      return 'reserved';
-    }
-  }, [date.isFree]);
-
   const choseCallback = useCallback(() => {
-    // eslint-disable-next-line
-    if (date.isFree) {
+    if (date.status === 'free') {
       dispatch(
         setSelectedReservations({
           ...date,
@@ -35,18 +24,15 @@ const ChairTableCell = ({ date, chairName, chairId, tableId }) => {
         })
       );
     }
-  }, [date, reservations]);
+  }, [date, chairName, chairId, tableId, dispatch]);
 
   const styles = useStyles();
-
   return (
     <TableCell
       onClick={choseCallback}
-      className={` ${date.isFree ? styles.freeChair : styles.reservedChair} ${
-        isSelected ? styles.selected : ''
-      } `}
+      className={`${styles[date.status]} ${isSelected ? styles.selected : ''} `}
     >
-      {text}
+      {date.status}
     </TableCell>
   );
 };

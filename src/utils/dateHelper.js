@@ -8,11 +8,15 @@ import {
 } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
+// calculates the differance between two days
+export const calculateDiffInDays = (start, stop) =>
+  differenceInDays(startOfDay(start), startOfDay(stop));
+
 // creates an Array of dates
 export const createRange = (start, stop) => {
   const range = [];
   const currentDate = new Date(start);
-  while (currentDate <= stop) {
+  while (calculateDiffInDays(stop, currentDate) > -1) {
     range.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
@@ -25,10 +29,6 @@ export const withoutHours = (date) => {
   return startOfDay(newDate);
 };
 
-// calculates the differance between two days
-export const calculateDiffInDays = (start, stop) =>
-  differenceInDays(startOfDay(start), startOfDay(stop));
-
 // gets next and previous dates of the given date
 export const getNextPrevDays = (date) => ({
   nextDay: addDays(date, 1),
@@ -38,6 +38,8 @@ export const getNextPrevDays = (date) => ({
 export const transformDateLocale = (date) => format(date, 'MMM d  y');
 
 export const transformDataISO = (date) => date.toISOString().slice(0, 10);
+
+export const transformDateToISOFormat = (date) => format(date, 'yyyy-MM-dd');
 
 export const transformISOToAMT = (date) => {
   const timezone = 'AMT';

@@ -9,15 +9,23 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
+import clsx from 'clsx';
 import useStylesMain from '../../../../hooks/useStylesMain';
+import Loading from '../../../../components/Loading';
 import ResTableRow from '../ResTableRow';
+import NoReservations from '../NoReservations';
 
-const ResTable = ({ data, deleteRes }) => {
+const ResTable = ({ data, deleteRes, isLoading }) => {
   const classesMain = useStylesMain();
   return (
     <Paper>
       <TableContainer className={classesMain.tableContainer}>
-        <Table>
+        <Table
+          stickyHeader
+          className={clsx({
+            [classesMain.tableEmpty]: isLoading || (data && !data.length),
+          })}
+        >
           <TableHead>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -31,11 +39,16 @@ const ResTable = ({ data, deleteRes }) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data.map((item) => (
-              <ResTableRow key={item._id} {...item} deleteRes={deleteRes} />
-            ))}
-          </TableBody>
+          {isLoading && <Loading />}
+
+          {!isLoading && data.length > 0 && (
+            <TableBody>
+              {data.map((item) => (
+                <ResTableRow key={item._id} {...item} deleteRes={deleteRes} />
+              ))}
+            </TableBody>
+          )}
+          {!isLoading && data.length === 0 && <NoReservations />}
         </Table>
       </TableContainer>
     </Paper>

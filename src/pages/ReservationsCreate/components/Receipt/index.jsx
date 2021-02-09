@@ -17,7 +17,10 @@ import makeFetch from '../../../../services';
 import { postReservation } from '../../../../services/reservationsService';
 import { setSelected } from '../../../../store/slices/reservationsSlice';
 import useQuery from '../../../../hooks/useQuery';
-import { transformDateLocale } from '../../../../utils/dateHelper';
+import {
+  transformDateLocale,
+  transformISOToAMT,
+} from '../../../../utils/dateHelper';
 import useStyles from './style';
 
 const Receipt = () => {
@@ -46,20 +49,16 @@ const Receipt = () => {
           const { id, start_date, end_date, table_id } = reservs[
             numOfReservations
           ];
-          // console.log(table_id === id);
           await makeFetch(
             postReservation(token, {
-              start_date: start_date.toISOString(),
-              end_date: end_date.toISOString(),
+              start_date,
+              end_date,
               chair_id: id,
               table_id,
               user_id: queryUserId !== null ? queryUserId : undefined,
               team_id: queryTeamId !== null ? queryTeamId : userTeamId,
             })
           );
-          // if (res?.data) {
-          //   // dispatch(addReservation(res.data || []));
-          // }
           setNumOfReservations((prev) => 1 + prev);
         } else {
           dispatch(setSelected([]));
@@ -68,7 +67,16 @@ const Receipt = () => {
       };
       callTheHR();
     }
-  }, [isLoading, numOfReservations]);
+  }, [
+    isLoading,
+    numOfReservations,
+    dispatch,
+    history,
+    query,
+    token,
+    reservs,
+    userTeamId,
+  ]);
 
   return (
     <>
@@ -79,8 +87,8 @@ const Receipt = () => {
               {reservs.map((item) => (
                 <TableRow key={Math.floor(Math.random() * 1000000)}>
                   <TableCell>
-                    {transformDateLocale(item.start_date)} -{' '}
-                    {transformDateLocale(item.end_date)}
+                    {transformDateLocale(transformISOToAMT(item.start_date))} -{' '}
+                    {transformDateLocale(transformISOToAMT(item.end_date))}
                   </TableCell>
                   <TableCell>
                     <Box className={styles.isFreeBox}>

@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStylesLocal = makeStyles((theme) => ({
   header: {
-    // backgroundColor: '#3a76e8',
     backgroundColor: 'rgb(35, 97, 211)',
   },
   toolbar: {

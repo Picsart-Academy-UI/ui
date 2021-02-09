@@ -3,12 +3,12 @@ import { Button } from '@material-ui/core';
 import SpeakerNotesOutlinedIcon from '@material-ui/icons/SpeakerNotesOutlined';
 import useStylesMain from '../../../../hooks/useStylesMain';
 
-const GoToReservations = ({ userId }) => {
+const GoToReservations = ({ user }) => {
   const classesMain = useStylesMain();
 
   const history = useHistory();
   const handleBtnClick = () => {
-    history.push(`/reservations?user_id=${userId}`);
+    history.push(`/reservations?user_id=${user._id}`, { ...user });
   };
 
   return (

@@ -1,11 +1,13 @@
 import { memo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, Box } from '@material-ui/core';
 import {
   createRange,
   calculateDiffInDays,
   transformLocalToAMT,
 } from '../../../../utils/dateHelper';
+import BackButton from '../../../../components/BackButton';
 import Pickers from '../Pickers';
 import TableOfTables from '../TableOfTables';
 import useStylesMain from '../../../../hooks/useStylesMain';
@@ -18,9 +20,11 @@ const SelectionPart = ({
   data,
   setDateRange,
   handleSubmit,
+  isLoading,
 }) => {
-  const reservations = useSelector(
-    (state) => state.reservations.selectedReservations
+  const location = useLocation();
+  const reservationsLength = useSelector(
+    (state) => state.reservations.selectedReservations.length
   );
   const [error, setError] = useState('none');
   const classesLocal = useStylesLocal();
@@ -42,7 +46,7 @@ const SelectionPart = ({
       setError('both');
       return;
       // eslint-disable-next-line
-    } else if (diffFromToday <= 0) {
+    } else if (diffFromToday < 0) {
       setError('from');
       return;
       // eslint-disable-next-line
@@ -61,6 +65,7 @@ const SelectionPart = ({
 
   return (
     <>
+      <BackButton />
       <Pickers
         refTo={refTo}
         refFrom={refFrom}
@@ -68,14 +73,23 @@ const SelectionPart = ({
         error={error}
       />
       <Container className={classesLocal.tableCont}>
-        <TableOfTables dateRange={dateRange} data={data} />
+        {location.state ? (
+          <Box className={classesLocal.userNameBox}>
+            {location.state.first_name} {location.state.last_name}
+          </Box>
+        ) : null}
+        <TableOfTables
+          dateRange={dateRange}
+          data={data}
+          isLoading={isLoading}
+        />
       </Container>
       <Button
         variant="contained"
         color="primary"
         onClick={handleSubmit}
         className={`${classesLocal.submitBtn} ${classesMain.commonButton}`}
-        disabled={reservations.length === 0 || error !== 'none'}
+        disabled={reservationsLength === 0 || error !== 'none'}
       >
         {' '}
         Submit{' '}
