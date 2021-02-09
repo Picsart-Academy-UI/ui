@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
   container: {
-    maxHeight: '40rem',
+    maxHeight: '35rem',
     maxWidth: '100%',
   },
 });

@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, Box } from '@material-ui/core';
 import {
   createRange,
   calculateDiffInDays,
@@ -21,6 +22,7 @@ const SelectionPart = ({
   handleSubmit,
   isLoading,
 }) => {
+  const location = useLocation();
   const reservationsLength = useSelector(
     (state) => state.reservations.selectedReservations.length
   );
@@ -71,6 +73,11 @@ const SelectionPart = ({
         error={error}
       />
       <Container className={classesLocal.tableCont}>
+        {location.state ? (
+          <Box className={classesLocal.userNameBox}>
+            {location.state.first_name} {location.state.last_name}
+          </Box>
+        ) : null}
         <TableOfTables
           dateRange={dateRange}
           data={data}

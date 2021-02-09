@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Box, Button } from '@material-ui/core';
 import TablePageWrapper from '../../components/TablePageWrapper';
@@ -18,13 +18,13 @@ const Reservations = () => {
   const styles = useStylesLocal();
 
   const history = useHistory();
+  const location = useLocation();
   const query = useQuery();
   const user_id = query.get('user_id');
   const token = useSelector((state) => state.signin.token);
   const reservs = useSelector((state) => state.reservations.reservations);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-
   const deleteRes = useCallback(
     (id, status) => {
       if (status === 'approved') {
@@ -61,7 +61,7 @@ const Reservations = () => {
           className={styles.boxHeader}
         >
           <Box> Active reservations </Box>
-          {!user_id ? (
+          {!user_id && !location.state ? (
             <Button
               onClick={onAddReservationClick}
               color="primary"
@@ -71,7 +71,12 @@ const Reservations = () => {
             >
               Add Reservation
             </Button>
-          ) : null}
+          ) : (
+            <Box>
+              {' '}
+              {location.state.first_name} {location.state.last_name}{' '}
+            </Box>
+          )}
         </Box>
         <ResTable
           isLoading={isLoading}

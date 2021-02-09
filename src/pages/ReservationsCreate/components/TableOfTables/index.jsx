@@ -16,7 +16,7 @@ const TableOfTables = ({ dateRange, choseChair, data, isLoading }) => {
   const styles = useStyles();
 
   return (
-    <TableContainer className={`${styles.container}`}>
+    <TableContainer className={styles.container}>
       <Table stickyHeader>
         <TableHead>
           <TableRow className={styles.dateRow}>
