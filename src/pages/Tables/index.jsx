@@ -33,7 +33,7 @@ const TablesList = () => {
     teams: state.teams.teams,
   }));
 
-  const [isFetching, setIsFetching] = useState(false);
+  const [isTeamsFetched, setIsTeamsFetched] = useState(false);
 
   const teamsLeng = teams.length;
   const tablesLeng = tables.length;
@@ -43,6 +43,7 @@ const TablesList = () => {
     if (tablesRes.data) {
       if (!teamsLeng) {
         const teamsRes = await makeFetch(getTeamsAllRequestData(token));
+        setIsTeamsFetched(true);
         if (teamsRes.data) {
           dispatch(setTeams(teamsRes));
           dispatch(setTables(tablesRes));
@@ -50,18 +51,16 @@ const TablesList = () => {
       } else {
         dispatch(setTables(tablesRes));
       }
-      setIsFetching(false);
     }
   }, [dispatch, token, teamsLeng]);
 
   useEffect(() => {
-    if (!isFetching) {
-      setIsFetching(true);
+    if (!isTeamsFetched) {
       if (!tablesLeng) {
         fetchTables();
       }
     }
-  }, [tablesLeng, fetchTables, isFetching]);
+  }, [tablesLeng, isTeamsFetched, fetchTables]);
 
   return (
     <TablePageWrapper>
