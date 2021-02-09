@@ -1,8 +1,4 @@
-import {
-  EMAIL_REGEXP,
-  GMAIL_REGEXP,
-  PICSART_MAIL_REGEXP,
-} from '../../../../../constants';
+import { EMAIL_REGEXP, GMAIL_REGEXP, PICSART_MAIL_REGEXP } from '../constants';
 
 const validateInfo = (values) => {
   const errors = {};
@@ -43,9 +39,12 @@ const validateInfo = (values) => {
     errors.position = 'Position required';
   }
 
-  // if (!values.phone.trim()) {
-  //   errors.phone = 'Invalid phone number';
-  // }
+  if (
+    values.phone.value &&
+    values.phone.phoneNumber?.country !== values.phone.country
+  ) {
+    errors.phone = 'Invalid phone number';
+  }
 
   return errors;
 };

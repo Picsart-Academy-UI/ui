@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStylesMain from '../../hooks/useStylesMain';
 import { setNotMe } from '../../store/slices/profileSlice';
 import { setChangeCurUser } from '../../store/slices/signinSlice';
-import validateInfo from '../UsersInvite/components/Form/helpers/validateInfo';
+import validateInfo from '../../utils/validateInfo';
 import useUpdateUserHook from './hooks/useUpdateUserHook';
 import TeamList from './components/TeamList';
 import useStylesLocal from './style';
