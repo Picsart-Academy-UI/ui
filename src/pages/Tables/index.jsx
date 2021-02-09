@@ -62,7 +62,6 @@ const TablesList = () => {
     }
   }, [tablesLeng, isTeamsFetched, fetchTables]);
 
-  console.log('render table');
   return (
     <TablePageWrapper>
       <div className={classesLocal.wrapper}>
