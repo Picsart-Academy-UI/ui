@@ -59,8 +59,8 @@ const UserRow = ({ user, name, isAdmin, onDelete }) => {
           <TableCell align="right">
             <div className={classesMain.cellActionsWrapper}>
               <GoToProfile user={user} />
-              <GoToReservations userId={user._id} />
-              <BookaSeat id={user._id} team_id={user.team_id} />
+              <GoToReservations user={user} />
+              <BookaSeat user={user} />
               <DeleteUser
                 id={user._id}
                 userFullName={`${user.first_name} ${user.last_name}`}

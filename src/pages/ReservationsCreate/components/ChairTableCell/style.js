@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  reservedChair: {
+  reserved: {
     minWidth: '6rem',
     maxWidth: '6rem',
     textAlign: 'center',
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     borderBottom: 'none',
     cursor: 'not-allowed',
   },
-  freeChair: {
+  free: {
     minWidth: '6rem',
     maxWidth: '6rem',
     textAlign: 'center',
@@ -18,6 +18,24 @@ const useStyles = makeStyles({
     color: '#ffffff',
     borderBottom: 'none',
     cursor: 'pointer',
+  },
+  yours: {
+    minWidth: '6rem',
+    maxWidth: '6rem',
+    textAlign: 'center',
+    backgroundColor: '#004B90',
+    color: '#ffffff',
+    borderBottom: 'none',
+    cursor: 'not-allowed',
+  },
+  unavailable: {
+    minWidth: '6rem',
+    maxWidth: '6rem',
+    textAlign: 'center',
+    backgroundColor: '#282F28',
+    color: '#ffffff',
+    borderBottom: 'none',
+    cursor: 'not-allowed',
   },
   weekend: {
     minWidth: '6rem',

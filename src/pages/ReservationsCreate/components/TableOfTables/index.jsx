@@ -8,14 +8,15 @@ import {
   TableRow,
 } from '@material-ui/core';
 import ChairTableRow from '../ChairTableRow';
+import Loading from '../../../../components/Loading';
 import { transformDateLocale } from '../../../../utils/dateHelper';
 import useStyles from './style';
 
-const TableOfTables = ({ dateRange, choseChair, data }) => {
+const TableOfTables = ({ dateRange, choseChair, data, isLoading }) => {
   const styles = useStyles();
 
   return (
-    <TableContainer className={`${styles.container}`}>
+    <TableContainer className={styles.container}>
       <Table stickyHeader>
         <TableHead>
           <TableRow className={styles.dateRow}>
@@ -27,11 +28,19 @@ const TableOfTables = ({ dateRange, choseChair, data }) => {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {data.map((item) => (
-            <ChairTableRow key={item.id} item={item} choseChair={choseChair} />
-          ))}
-        </TableBody>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <TableBody>
+            {data.map((item) => (
+              <ChairTableRow
+                key={item.id}
+                item={item}
+                choseChair={choseChair}
+              />
+            ))}
+          </TableBody>
+        )}
       </Table>
     </TableContainer>
   );

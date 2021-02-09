@@ -8,10 +8,8 @@ import {
 import {
   add,
   getReservationOnSameDate,
-  getReservationsAvailableMerging,
   deleteFromRes,
 } from '../../utils/reservationHelper';
-import { withoutHours } from '../../utils/dateHelper';
 import makeFetch from '../../services';
 import { getTeamsAllRequestData } from '../../services/teamsService';
 import { setTeams } from './teamsSlice';
@@ -25,7 +23,6 @@ export const reservationsSlice = createSlice({
       teams: [],
       pendingReservations: [],
     },
-    reservsApprPend: [],
     reservsApprPendTeam: [],
     selectedReservations: [],
   },
@@ -47,9 +44,6 @@ export const reservationsSlice = createSlice({
         1
       );
     },
-    setPendingApprovedReservations: (state, action) => {
-      state.reservsApprPend = action.payload;
-    },
     setPendingApprovedTeamReservations: (state, action) => {
       state.reservsApprPendTeam = action.payload;
     },
@@ -63,9 +57,7 @@ export const reservationsSlice = createSlice({
         newReservations,
         action.payload.date
       );
-
       if (reservationSameDate === undefined) {
-        // console.log(action.payload);
         add(action.payload, newReservations);
       } else {
         deleteFromRes(action.payload, reservationSameDate, newReservations);
@@ -76,58 +68,27 @@ export const reservationsSlice = createSlice({
       state.selectedReservations = newReservations;
     },
     setSelectedRow: (state, action) => {
-      // selects the row
       const newReservations = action.payload.dates.reduce(
         (accumilator, item) => {
-          if (item.isFree) {
-            const reservationAvailableForMerging = getReservationsAvailableMerging(
-              accumilator,
-              action.payload.name,
-              item.date
-            );
-            if (reservationAvailableForMerging.length > 0) {
-              const indexOfMerge = accumilator.indexOf(
-                reservationAvailableForMerging[0]
-              );
-              accumilator[indexOfMerge] = {
-                ...reservationAvailableForMerging[0],
-                start_date:
-                  reservationAvailableForMerging[0].start_date < item.date
-                    ? reservationAvailableForMerging[0].start_date
-                    : item.date,
-                end_date:
-                  reservationAvailableForMerging[0].end_date > item.date
-                    ? reservationAvailableForMerging[0].end_date
-                    : item.date,
-              };
-            } else {
-              accumilator.push({
-                isFree: item.isFree,
-                end_date: withoutHours(item.date),
-                start_date: withoutHours(item.date),
-                chairName: action.payload.name,
-                table_id: action.payload.table_id,
-                id: action.payload.id,
-              });
-            }
+          if (item.status === 'free') {
+            const chair = {
+              date: item.date,
+              chairName: action.payload.name,
+              table_id: action.payload.table_id,
+              id: action.payload.id,
+            };
+            add(chair, accumilator);
           }
           return accumilator;
         },
         []
       );
-      // console.log(newReservations);
       state.selectedReservations = newReservations;
     },
-    // addReservation: (state, action) => {}
-    //   console.log(action.payload)
-    //   // state.reservations = [action.payload, ...state.reservations];
-    //   // state.reservsApprPend = [action.payload, ...state.reservsApprPend];
-    // ,
     deleteLocalReservation: (state, action) => {
       if (action.payload !== null) {
         const filterFunction = (item) => item._id !== action.payload;
         state.reservations = state.reservations.filter(filterFunction);
-        state.reservsApprPend = state.reservsApprPend.filter(filterFunction);
       }
     },
   },
@@ -138,17 +99,19 @@ export const {
   setPendingReservations,
   setPendingReservationsWithData,
   removeFromPendingReservations,
-  setPendingApprovedReservations,
   setPendingApprovedTeamReservations,
   deleteLocalReservation,
-  addReservation,
   setSelectedReservations,
   setSelectedRow,
   setSelected,
 } = reservationsSlice.actions;
 
-export const fetchReservations = (token) => async (dispatch) => {
-  const res = await makeFetch(getReservations(token));
+export const fetchReservations = (token, user_id) => async (dispatch) => {
+  const currDate = new Date().toISOString().slice(0, 10);
+  const query = user_id
+    ? `status=approved,pending&include_usersAndChairs=true&from=${currDate}&user_id=${user_id}`
+    : `status=approved,pending&include_usersAndChairs=true&from=${currDate}`;
+  const res = await makeFetch(getReservations(token, query));
   dispatch(setReservations(res.data || []));
 };
 
@@ -199,18 +162,6 @@ export const reject = (token, reservationId) => async (dispatch) => {
     dispatch(removeFromPendingReservations(res.data._id));
   }
   return res;
-};
-
-export const fetchPendingApprovedReservations = (token) => async (dispatch) => {
-  const res = await makeFetch(
-    getReservations(
-      token,
-      `status=approved,pending&include_usersAndChairs=true&from=${new Date()
-        .toISOString()
-        .slice(0, 10)}`
-    )
-  );
-  dispatch(setPendingApprovedReservations(res.data || []));
 };
 
 export const fetchPendingApprovedTeamReservations = (token, teamId) => async (

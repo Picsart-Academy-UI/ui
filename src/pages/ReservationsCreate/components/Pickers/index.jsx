@@ -1,7 +1,7 @@
+import { memo } from 'react';
 import { Container, TextField, Box } from '@material-ui/core';
 import {
-  transformDataISO,
-  getNextPrevDays,
+  transformDateToISOFormat,
   transformLocalToAMT,
 } from '../../../../utils/dateHelper';
 import useStyles from './style';
@@ -18,12 +18,10 @@ const Pickers = ({ refFrom, refTo, handleEvent, error }) => {
         variant="outlined"
         label="From"
         type="date"
-        defaultValue={transformDataISO(
-          getNextPrevDays(transformLocalToAMT(new Date())).nextDay
-        )}
+        defaultValue={transformDateToISOFormat(transformLocalToAMT(new Date()))}
         inputRef={refFrom}
         onChange={handleEvent}
-        helperText="Should be later than today"
+        helperText="Should be or later than today"
       />
       <TextField
         className={styles.datePicker}
@@ -31,9 +29,7 @@ const Pickers = ({ refFrom, refTo, handleEvent, error }) => {
         variant="outlined"
         label="To"
         type="date"
-        defaultValue={transformDataISO(
-          getNextPrevDays(transformLocalToAMT(new Date())).nextDay
-        )}
+        defaultValue={transformDateToISOFormat(transformLocalToAMT(new Date()))}
         inputRef={refTo}
         onChange={handleEvent}
         helperText="Max: 30 days later Min: same day"
@@ -45,4 +41,4 @@ const Pickers = ({ refFrom, refTo, handleEvent, error }) => {
   );
 };
 
-export default Pickers;
+export default memo(Pickers);

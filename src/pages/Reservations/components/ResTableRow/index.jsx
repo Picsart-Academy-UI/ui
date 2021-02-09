@@ -19,10 +19,10 @@ const ResTableRow = ({
   const styles = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = useCallback(() => setIsOpen((prev) => !prev), []);
-  const deleteCallback = useCallback(() => {
-    deleteRes(_id);
+  const deleteCallback = useCallback(async () => {
+    deleteRes(_id, status);
     handleChange();
-  }, [handleChange]);
+  }, [_id, deleteRes, status, handleChange]);
   const curUser = useSelector((state) => state.signin.curUser);
 
   return (
@@ -32,7 +32,7 @@ const ResTableRow = ({
         {transformFromISOToFormat(end_date)}
       </TableCell>
       <TableCell align="center">
-        {table_id?.table_number}/{chair_id?.chair_number}
+        {chair_id?.chair_number}/{table_id?.table_number}
       </TableCell>
       <TableCell align="center" className={styles[status]}>
         {status}
@@ -42,19 +42,22 @@ const ResTableRow = ({
       </TableCell>
       <TableCell align="right">
         <IconButton
-          disabled={user_id._id !== curUser._id && !curUser.is_admin}
+          disabled={
+            user_id._id !== curUser._id &&
+            !(curUser.is_admin && status !== 'approved')
+          }
           onClick={handleChange}
           color="secondary"
         >
           <DeleteOutlineIcon className={styles.iconColorRed} />
         </IconButton>
-        <AlertDialog
-          open={isOpen}
-          handleClose={handleChange}
-          handleDeleteClick={deleteCallback}
-          titleText="Do you really want to delete this reservation?"
-        />
       </TableCell>
+      <AlertDialog
+        open={isOpen}
+        handleClose={handleChange}
+        handleDeleteClick={deleteCallback}
+        titleText="Do you really want to delete this reservation?"
+      />
     </TableRow>
   );
 };
