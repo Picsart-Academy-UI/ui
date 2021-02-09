@@ -104,11 +104,9 @@ const ReservationsCreate = () => {
     setIsLoading(true);
     dispatch(setSelected([]));
     dispatch(fetchPendingApprovedTeamReservations(token, team_id)).finally(() =>
-      fetchCheck(fetchAmount, setIsLoading)
+      fetchCheck()
     );
-    dispatch(fetchChairs(token, team_id)).finally(() =>
-      fetchCheck(fetchAmount, setIsLoading)
-    );
+    dispatch(fetchChairs(token, team_id)).finally(() => fetchCheck());
   }, [token, userTeamId, dispatch, team_id]);
 
   useEffect(() => {
