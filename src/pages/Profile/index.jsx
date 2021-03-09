@@ -25,13 +25,9 @@ const Profile = (props) => {
   const dispatch = useDispatch();
 
   const { curUser } = useSelector((state) => state.signin);
-
   const [isEditing, setIsEditing] = useState(false);
-
   const { is_admin: isAdmin } = curUser;
-
   const { id } = props.match.params;
-
   const other = useSelector((state) => state.profile.notme);
 
   const user = (id !== 'me' && other) || curUser;
@@ -82,7 +78,7 @@ const Profile = (props) => {
   return (
     <>
       <Box alignItems="center" display="flex" flexDirection="column">
-        <Avatar className={classesLocal.avatar} src={curUser.profile_picture} />
+        <Avatar className={classesLocal.avatar} src={user.profile_picture} />
       </Box>
       <Grid
         container
