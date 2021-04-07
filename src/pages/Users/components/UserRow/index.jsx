@@ -87,7 +87,7 @@ const UserRow = ({ user, name, isAdmin, onDelete }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow key={name}>
+                  <TableRow className={classesLocal.root} key={name}>
                     <TableCell align="center" component="th" scope="row">
                       {(user.birthday &&
                         transformFromISOToFormat(user.birthday)) ||
